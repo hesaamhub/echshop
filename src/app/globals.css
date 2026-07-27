@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600&family=Sora:wght@400;600;700&display=swap');
+/* فونت‌ها از دو منبع لود می‌شوند تا اگر یکی در دسترس نبود، دیگری کار کند */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource-variable/vazirmatn@5/index.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/sora@5/600.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/sora@5/700.css');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap');
 
 @theme {
-  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Vazirmatn", "Outfit", ui-sans-serif, sans-serif;
-  --font-latin: "Outfit", ui-sans-serif, sans-serif;
-  --font-wordmark: "Sora", "Outfit", ui-sans-serif, sans-serif;
+  --font-sans: "Vazirmatn", "Vazirmatn Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Vazirmatn", "Vazirmatn Variable", ui-sans-serif, sans-serif;
+  --font-latin: "Sora", ui-sans-serif, sans-serif;
+  --font-wordmark: "Sora", ui-sans-serif, sans-serif;
 
   --color-ink: #0a1b33;
   --color-ink-deep: #0a152d;
@@ -29,7 +33,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* اعداد لاتین در متن فارسی خواناتر دیده شوند */
+  /* اعداد و متن لاتین */
   .num {
     font-family: var(--font-latin);
     font-variant-numeric: tabular-nums;
@@ -41,7 +45,7 @@
   .wordmark {
     font-family: var(--font-wordmark);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     direction: ltr;
     unicode-bidi: embed;
   }
@@ -55,10 +59,10 @@
 /* اسکرولر بی‌نهایت لوگوها — دو گروه یکسان، جابه‌جایی دقیقاً به اندازهٔ یک گروه */
 @keyframes echshop-marquee {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -66,11 +70,8 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: echshop-marquee 46s linear infinite;
-}
-
-.echshop-marquee:hover .echshop-marquee-track {
-  animation-play-state: paused;
+  /* سرعت ثابت است و با حرکت موس تغییر نمی‌کند */
+  animation: echshop-marquee 70s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
