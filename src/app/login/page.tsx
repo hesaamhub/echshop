@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ShieldCheck } from "lucide-react"
 import { siteContent } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import Logo from "@/components/site/Logo"
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login")
@@ -15,10 +16,15 @@ export default function LoginPage() {
       <div className="flex items-center justify-center px-6 py-14">
         <div className="w-full max-w-sm">
           <Link href="/" className="flex items-center gap-2.5">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0a152d] text-white text-sm">
-              {siteContent.brand.logoMark}
+            <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
+              <Logo className="h-5 w-5" />
             </span>
-            <span className="text-[15px] font-bold text-[#0a1b33]">{siteContent.brand.nameFa}</span>
+            <span className="flex flex-col leading-none">
+              <span className="wordmark text-[16px] leading-none text-[#0a1b33]">echshop</span>
+              <span className="mt-1 text-[10.5px] font-semibold leading-none text-slate-400">
+                {siteContent.brand.nameFa}
+              </span>
+            </span>
           </Link>
 
           <h1 className="mt-8 font-display text-[24px] font-semibold text-[#0a1b33]">
@@ -30,7 +36,7 @@ export default function LoginPage() {
               : "فقط با شماره موبایل و ایمیل در دو دقیقه ثبت‌نام کنید."}
           </p>
 
-          <div className="mt-6 flex rounded-full bg-slate-100 p-1">
+          <div className="mt-6 flex rounded-full bg-[#1b39f5]/6 p-1">
             {(
               [
                 { key: "login", label: "ورود" },
@@ -43,7 +49,7 @@ export default function LoginPage() {
                 onClick={() => setMode(tab.key)}
                 className={cn(
                   "flex-1 rounded-full py-2 text-[12px] font-semibold transition-all",
-                  mode === tab.key ? "bg-white text-[#0a1b33] shadow-sm" : "text-slate-500",
+                  mode === tab.key ? "glass-solid" : "text-slate-500 hover:text-[#1b39f5]",
                 )}
               >
                 {tab.label}
@@ -56,7 +62,7 @@ export default function LoginPage() {
               <label className="block">
                 <span className="text-[12px] font-semibold text-[#0a1b33]">نام و نام خانوادگی</span>
                 <input
-                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12.5px] outline-none focus:border-[#2783de]"
+                  className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
                   placeholder="مانند: علی محمدی"
                 />
               </label>
@@ -65,7 +71,7 @@ export default function LoginPage() {
             <label className="block">
               <span className="text-[12px] font-semibold text-[#0a1b33]">موبایل یا ایمیل</span>
               <input
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12.5px] outline-none focus:border-[#2783de]"
+                className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
                 placeholder="۰۹۱۲۳۴۵۶۷۸۹"
               />
             </label>
@@ -74,21 +80,21 @@ export default function LoginPage() {
               <span className="text-[12px] font-semibold text-[#0a1b33]">کلمهٔ عبور</span>
               <input
                 type="password"
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12.5px] outline-none focus:border-[#2783de]"
+                className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
                 placeholder="••••••••"
               />
             </label>
 
             <Link
               href="/dashboard"
-              className="block rounded-full bg-[#0a152d] py-3.5 text-center text-[13px] font-semibold text-white"
+              className="glass-solid block rounded-full py-3.5 text-center text-[13px] font-semibold"
             >
               {mode === "login" ? "ورود به پنل" : "ثبت‌نام و ورود"}
             </Link>
           </form>
 
           <p className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
-            <ShieldCheck className="h-3.5 w-3.5" />
+            <ShieldCheck className="h-3.5 w-3.5 text-[#1b39f5]" />
             ورود امن با رمز یک‌بارمصرف پیامکی
           </p>
         </div>
@@ -96,8 +102,8 @@ export default function LoginPage() {
 
       {/* تصویر کناری */}
       <div className="relative hidden overflow-hidden bg-[#0a152d] lg:block">
-        <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#2783de]/25 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#2783de]/15 blur-3xl" />
+        <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#1b39f5]/45 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#1b39f5]/25 blur-3xl" />
         <div className="relative flex h-full flex-col justify-center px-16">
           <h2 className="font-display text-[34px] font-medium leading-[1.6] text-white">
             هر اشتراک دیجیتالی که لازم دارید،

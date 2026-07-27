@@ -14,8 +14,11 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
   const off = discountPercent(selected.price, selected.compareAt)
 
   return (
-    <div className="rounded-3xl border border-slate-200/70 bg-white p-6">
-      <h2 className="text-[14px] font-bold text-[#0a1b33]">انتخاب پلن و مدت اشتراک</h2>
+    <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+      <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+        <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+        انتخاب پلن و مدت اشتراک
+      </h2>
 
       <div className="mt-4 space-y-2.5">
         {plans.map((plan) => {
@@ -28,8 +31,8 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
               className={cn(
                 "w-full rounded-2xl border p-4 text-right transition-all",
                 active
-                  ? "border-[#2783de] bg-[#E5F2FC]"
-                  : "border-slate-200/80 bg-white hover:border-slate-300",
+                  ? "border-[#1b39f5]/40 bg-[#1b39f5]/8 shadow-[0_14px_30px_-22px_rgba(27,57,245,0.7)]"
+                  : "border-[#1b39f5]/10 bg-white hover:border-[#1b39f5]/25 hover:bg-[#1b39f5]/4",
               )}
             >
               <span className="flex items-center justify-between gap-3">
@@ -37,7 +40,7 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
                   <span
                     className={cn(
                       "grid h-4 w-4 place-items-center rounded-full border",
-                      active ? "border-[#2783de] bg-[#2783de]" : "border-slate-300",
+                      active ? "border-[#1b39f5] bg-[#1b39f5]" : "border-slate-300",
                     )}
                   >
                     {active ? <Check className="h-2.5 w-2.5 text-white" /> : null}
@@ -64,7 +67,7 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
         })}
       </div>
 
-      <div className="mt-5 rounded-2xl bg-slate-50 p-4">
+      <div className="mt-5 rounded-2xl border border-[#1b39f5]/10 bg-[#1b39f5]/5 p-4">
         <div className="flex items-center justify-between">
           <span className="text-[12px] text-slate-500">مبلغ قابل پرداخت</span>
           <span className="text-[18px] font-bold text-[#0a1b33]">
@@ -83,7 +86,7 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-4">
         <Link
           href="/cart"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] py-3.5 text-[13px] font-semibold text-white shadow-[0_10px_30px_rgba(10,21,45,0.22)]"
+          className="glass-solid flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-[13px] font-semibold"
         >
           <ShoppingCart className="h-4 w-4" />
           افزودن به سبد خرید

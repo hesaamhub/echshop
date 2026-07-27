@@ -20,8 +20,11 @@ export default function CheckoutPage() {
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-4">
-          <div className="rounded-3xl border border-slate-200/70 bg-white p-6">
-            <h2 className="text-[14px] font-bold text-[#0a1b33]">اطلاعات خریدار</h2>
+          <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+            <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+              <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+              اطلاعات خریدار
+            </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <Field label="نام و نام خانوادگی" placeholder="مانند: سارا رضایی" />
               <Field label="شماره موبایل" placeholder="۰۹۱۲۳۴۵۶۷۸۹" />
@@ -33,19 +36,22 @@ export default function CheckoutPage() {
               <textarea
                 rows={3}
                 placeholder="مانند: اشتراک را روی ایمیل دوم فعال کنید"
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#2783de]"
+                className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
               />
             </label>
           </div>
 
-          <div className="rounded-3xl border border-slate-200/70 bg-white p-6">
-            <h2 className="text-[14px] font-bold text-[#0a1b33]">روش پرداخت</h2>
+          <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+            <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+              <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+              روش پرداخت
+            </h2>
             <div className="mt-4 space-y-3">
-              <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#2783de] bg-[#E5F2FC] p-4">
-                <input type="radio" name="pay" defaultChecked className="mt-1 h-4 w-4 accent-[#2783de]" />
+              <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#1b39f5]/35 bg-[#1b39f5]/8 p-4">
+                <input type="radio" name="pay" defaultChecked className="mt-1 h-4 w-4 accent-[#1b39f5]" />
                 <span className="flex-1">
                   <span className="flex items-center gap-2 text-[12.5px] font-bold text-[#0a1b33]">
-                    <CreditCard className="h-4 w-4" /> درگاه پرداخت اینترنتی
+                    <CreditCard className="h-4 w-4 text-[#1b39f5]" /> درگاه پرداخت اینترنتی
                   </span>
                   <span className="mt-1.5 block text-[11.5px] leading-6 text-slate-600">
                     درگاه نهایی در بخش تنطیمات پنل مدیریت متصل می‌شود (فعلاً حالت نمایشی).
@@ -53,11 +59,11 @@ export default function CheckoutPage() {
                 </span>
               </label>
 
-              <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 p-4 hover:border-slate-300">
-                <input type="radio" name="pay" className="mt-1 h-4 w-4 accent-[#2783de]" />
+              <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#1b39f5]/10 p-4 transition-all hover:border-[#1b39f5]/25 hover:bg-[#1b39f5]/4">
+                <input type="radio" name="pay" className="mt-1 h-4 w-4 accent-[#1b39f5]" />
                 <span className="flex-1">
                   <span className="flex items-center gap-2 text-[12.5px] font-bold text-[#0a1b33]">
-                    <Wallet className="h-4 w-4" /> کیف پول اچ‌شاپ
+                    <Wallet className="h-4 w-4 text-[#1b39f5]" /> کیف پول اچ‌شاپ
                   </span>
                   <span className="mt-1.5 block text-[11.5px] text-slate-600">
                     موجودی فعلی: <span className="num">{toman(1_250_000)}</span> تومان
@@ -68,8 +74,11 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        <aside className="h-fit rounded-3xl border border-slate-200/70 bg-white p-6 lg:sticky lg:top-24">
-          <h2 className="text-[14px] font-bold text-[#0a1b33]">پرداخت نهایی</h2>
+        <aside className="h-fit rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] lg:sticky lg:top-24">
+          <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+            <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+            پرداخت نهایی
+          </h2>
           <div className="mt-4 flex items-center justify-between">
             <span className="text-[12.5px] text-slate-500">مبلغ قابل پرداخت</span>
             <span className="text-[17px] font-bold text-[#0a1b33]">
@@ -78,20 +87,17 @@ export default function CheckoutPage() {
             </span>
           </div>
           <label className="mt-5 flex items-start gap-2 text-[11.5px] leading-6 text-slate-500">
-            <input type="checkbox" defaultChecked className="mt-1 h-4 w-4 accent-[#2783de]" />
+            <input type="checkbox" defaultChecked className="mt-1 h-4 w-4 accent-[#1b39f5]" />
             <span>
               قوانین و مقررات و شرایط گارانتی را می‌پذیرم.
             </span>
           </label>
-          <button
-            type="button"
-            className="mt-5 w-full rounded-full bg-[#0a152d] py-3.5 text-[13px] font-semibold text-white"
-          >
+          <button type="button" className="glass-solid mt-5 w-full rounded-full py-3.5 text-[13px] font-semibold">
             پرداخت و ثبت سفارش
           </button>
           <Link
             href="/cart"
-            className="mt-3 block text-center text-[11.5px] text-slate-400 hover:text-[#0a1b33]"
+            className="mt-3 block text-center text-[11.5px] text-slate-400 transition-colors hover:text-[#1b39f5]"
           >
             بازگشت به سبد خرید
           </Link>
@@ -116,7 +122,7 @@ function Field({
       <input
         placeholder={placeholder}
         dir={latin ? "ltr" : undefined}
-        className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#2783de]"
+        className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
       />
     </label>
   )

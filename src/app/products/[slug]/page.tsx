@@ -37,7 +37,7 @@ export default async function ProductPage({
       <div className="grid gap-6 lg:grid-cols-[1fr_400px]">
         {/* معرفی محصول */}
         <div className="space-y-6">
-          <div className="overflow-hidden rounded-[32px] border border-slate-200/70 bg-white">
+          <div className="overflow-hidden rounded-[32px] border border-[#1b39f5]/10 bg-white shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
             <div className={`relative h-56 bg-gradient-to-br ${product.gradient}`}>
               <div className="absolute inset-0 grid place-items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -48,7 +48,7 @@ export default async function ProductPage({
                 />
               </div>
               {product.badge ? (
-                <span className="absolute top-5 right-5 rounded-full bg-white/95 px-3.5 py-1.5 text-[11px] font-bold text-[#0a1b33]">
+                <span className="glass absolute top-5 right-5 rounded-full px-3.5 py-1.5 text-[11px] font-bold text-[#0a1b33]">
                   {product.badge}
                 </span>
               ) : null}
@@ -77,9 +77,9 @@ export default async function ProductPage({
                 {product.features.map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-start gap-2.5 rounded-2xl bg-slate-50 px-4 py-3 text-[12px] text-slate-600"
+                    className="flex items-start gap-2.5 rounded-2xl border border-[#1b39f5]/10 bg-[#1b39f5]/5 px-4 py-3 text-[12px] text-slate-600"
                   >
-                    <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#46A171]" />
+                    <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#1b39f5]" />
                     {feature}
                   </li>
                 ))}
@@ -88,12 +88,15 @@ export default async function ProductPage({
           </div>
 
           {/* سوالات متداول */}
-          <div className="rounded-[32px] border border-slate-200/70 bg-white p-7">
-            <h2 className="text-[16px] font-bold text-[#0a1b33]">سوالات متداول</h2>
+          <div className="rounded-[32px] border border-[#1b39f5]/10 bg-white p-7 shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
+            <h2 className="flex items-center gap-2.5 text-[16px] font-bold text-[#0a1b33]">
+              <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+              سوالات متداول
+            </h2>
             <div className="mt-4 divide-y divide-slate-100">
               {product.faq.map((item) => (
                 <details key={item.q} className="group py-4">
-                  <summary className="cursor-pointer list-none text-[13px] font-semibold text-[#0a1b33]">
+                  <summary className="cursor-pointer list-none text-[13px] font-semibold text-[#0a1b33] transition-colors group-open:text-[#1b39f5]">
                     {item.q}
                   </summary>
                   <p className="mt-2.5 text-[12px] leading-7 text-slate-500">{item.a}</p>
@@ -103,15 +106,21 @@ export default async function ProductPage({
           </div>
 
           {/* نظرات */}
-          <div className="rounded-[32px] border border-slate-200/70 bg-white p-7">
-            <h2 className="text-[16px] font-bold text-[#0a1b33]">نظرات خریداران</h2>
+          <div className="rounded-[32px] border border-[#1b39f5]/10 bg-white p-7 shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
+            <h2 className="flex items-center gap-2.5 text-[16px] font-bold text-[#0a1b33]">
+              <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+              نظرات خریداران
+            </h2>
             <div className="mt-4 space-y-4">
               {[
                 { name: "مریم ا.", body: "خیلی سریع تحویل گرفتم، زیر ده دقیقه. همه‌چیز درست کار کرد.", rating: 5 },
                 { name: "سینا ک.", body: "پشتیبانی در تیکت سریع جواب داد و مشکل من حل شد.", rating: 5 },
                 { name: "نگار م.", body: "قیمت منطقی و روند خرید ساده. دوباره خرید می‌کنم.", rating: 4 },
               ].map((review) => (
-                <div key={review.name} className="rounded-2xl bg-slate-50 p-5">
+                <div
+                  key={review.name}
+                  className="rounded-2xl border border-[#1b39f5]/10 bg-[#1b39f5]/4 p-5"
+                >
                   <div className="flex items-center justify-between">
                     <span className="text-[13px] font-bold text-[#0a1b33]">{review.name}</span>
                     <span className="flex items-center gap-0.5">
@@ -131,21 +140,21 @@ export default async function ProductPage({
         <aside className="lg:sticky lg:top-24 h-fit space-y-4">
           <PlanPicker plans={product.plans} />
 
-          <div className="rounded-3xl border border-slate-200/70 bg-white p-6 space-y-4">
-            <Assurance icon={<ShieldCheck className="h-4 w-4 text-[#46A171]" />} title="گارانتی کامل مدت اشتراک">
+          <div className="space-y-4 rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+            <Assurance icon={<ShieldCheck className="h-4 w-4 text-[#1b39f5]" />} title="گارانتی کامل مدت اشتراک">
               در صورت قطع شدن سرویس، جایگزین یا مبلغ بازگردانده می‌شود.
             </Assurance>
-            <Assurance icon={<Clock className="h-4 w-4 text-[#2783de]" />} title="میانگین تحویل ۲ دقیقه">
+            <Assurance icon={<Clock className="h-4 w-4 text-[#1b39f5]" />} title="میانگین تحویل ۲ دقیقه">
               تحویل خودکار از انبار یا API تامین‌کننده انجام می‌شود.
             </Assurance>
-            <Assurance icon={<BadgeCheck className="h-4 w-4 text-[#D5803B]" />} title="محصول اورجینال">
+            <Assurance icon={<BadgeCheck className="h-4 w-4 text-[#1b39f5]" />} title="محصول اورجینال">
               تمام اکانت‌ها از تامین‌کنندگان رسمی تهیه می‌شوند.
             </Assurance>
           </div>
 
           <Link
             href="/dashboard/tickets"
-            className="block rounded-3xl border border-dashed border-slate-300 bg-white p-5 text-center text-[12px] text-slate-500 hover:border-slate-400"
+            className="block rounded-3xl border border-dashed border-[#1b39f5]/30 bg-[#1b39f5]/4 p-5 text-center text-[12px] text-[#1b39f5] transition-all hover:bg-[#1b39f5]/8"
           >
             سوالی دارید؟ پیش از خرید تیکت بزنید
           </Link>
@@ -154,7 +163,8 @@ export default async function ProductPage({
 
       {related.length ? (
         <section className="mt-14">
-          <h2 className="mb-5 font-display text-[20px] font-semibold text-[#0a1b33]">
+          <h2 className="mb-5 flex items-center gap-3 font-display text-[20px] font-semibold text-[#0a1b33]">
+            <span className="h-5 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
             محصولات مرتبط
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -179,7 +189,9 @@ function Assurance({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <span className="mt-0.5">{icon}</span>
+      <span className="glass-plate grid h-9 w-9 shrink-0 place-items-center rounded-[12px]">
+        {icon}
+      </span>
       <span>
         <span className="block text-[12.5px] font-bold text-[#0a1b33]">{title}</span>
         <span className="mt-1 block text-[11.5px] leading-6 text-slate-500">{children}</span>

@@ -28,7 +28,7 @@ export default function CartPage() {
           {lines.map((line) => (
             <div
               key={line.product.id}
-              className="flex flex-wrap items-center gap-4 rounded-3xl border border-slate-200/70 bg-white p-5"
+              className="flex flex-wrap items-center gap-4 rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]"
             >
               <div
                 className={`grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${line.product.gradient}`}
@@ -44,25 +44,31 @@ export default function CartPage() {
               <div className="min-w-[180px] flex-1">
                 <Link
                   href={`/products/${line.product.slug}`}
-                  className="text-[13.5px] font-bold text-[#0a1b33] hover:text-[#2783de]"
+                  className="text-[13.5px] font-bold text-[#0a1b33] transition-colors hover:text-[#1b39f5]"
                 >
                   {line.product.title}
                 </Link>
                 <p className="mt-1.5 text-[11.5px] text-slate-500">{line.plan.title}</p>
-                <span className="mt-2 inline-flex rounded-full bg-[#E5F2FC] px-2.5 py-1 text-[10px] font-semibold text-[#1c5f9e]">
+                <span className="mt-2 inline-flex rounded-full bg-[#1b39f5]/8 px-2.5 py-1 text-[10px] font-semibold text-[#1b39f5]">
                   {deliveryLabels[line.plan.delivery]}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1 rounded-full border border-slate-200 p-1">
-                <button type="button" className="grid h-7 w-7 place-items-center rounded-full hover:bg-slate-50">
-                  <Plus className="h-3.5 w-3.5 text-slate-500" />
+              <div className="glass-plate flex items-center gap-1 rounded-full p-1">
+                <button
+                  type="button"
+                  className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-white/70"
+                >
+                  <Plus className="h-3.5 w-3.5 text-[#1b39f5]" />
                 </button>
                 <span className="num w-8 text-center text-[12px] font-bold text-[#0a1b33]">
                   {line.quantity}
                 </span>
-                <button type="button" className="grid h-7 w-7 place-items-center rounded-full hover:bg-slate-50">
-                  <Minus className="h-3.5 w-3.5 text-slate-500" />
+                <button
+                  type="button"
+                  className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-white/70"
+                >
+                  <Minus className="h-3.5 w-3.5 text-[#1b39f5]" />
                 </button>
               </div>
 
@@ -75,7 +81,7 @@ export default function CartPage() {
 
               <button
                 type="button"
-                className="grid h-9 w-9 place-items-center rounded-full text-slate-400 hover:bg-red-50 hover:text-[#E56458]"
+                className="grid h-9 w-9 place-items-center rounded-full text-slate-400 transition-colors hover:bg-red-50 hover:text-[#E56458]"
                 aria-label="حذف"
               >
                 <Trash2 className="h-4 w-4" />
@@ -83,31 +89,31 @@ export default function CartPage() {
             </div>
           ))}
 
-          <div className="rounded-3xl border border-slate-200/70 bg-white p-5">
+          <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
             <label className="block text-[12.5px] font-bold text-[#0a1b33]">کد تخفیف</label>
             <div className="mt-3 flex gap-2">
               <input
                 placeholder="کد تخفیف را وارد کنید"
-                className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-[12px] outline-none focus:border-[#2783de]"
+                className="flex-1 rounded-full border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-2.5 text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
               />
-              <button
-                type="button"
-                className="rounded-full bg-[#0a152d] px-6 text-[12px] font-semibold text-white"
-              >
+              <button type="button" className="glass-solid rounded-full px-6 text-[12px] font-semibold">
                 اعمال
               </button>
             </div>
           </div>
         </div>
 
-        <aside className="h-fit rounded-3xl border border-slate-200/70 bg-white p-6 lg:sticky lg:top-24">
-          <h2 className="text-[14px] font-bold text-[#0a1b33]">خلاصهٔ سفارش</h2>
+        <aside className="h-fit rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] lg:sticky lg:top-24">
+          <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+            <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+            خلاصهٔ سفارش
+          </h2>
           <dl className="mt-4 space-y-3 text-[12.5px]">
             <Row label="جمع محصولات" value={`${toman(subtotal)} تومان`} />
             <Row label="تخفیف" value={`${toman(discount)} تومان`} accent />
             <Row label="کارمزد" value="۰ تومان" />
           </dl>
-          <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
+          <div className="mt-5 flex items-center justify-between border-t border-[#1b39f5]/10 pt-4">
             <span className="text-[12.5px] font-bold text-[#0a1b33]">مبلغ نهایی</span>
             <span className="text-[17px] font-bold text-[#0a1b33]">
               <span className="num">{toman(total)}</span>
@@ -116,13 +122,13 @@ export default function CartPage() {
           </div>
           <Link
             href="/checkout"
-            className="mt-5 block rounded-full bg-[#0a152d] py-3.5 text-center text-[13px] font-semibold text-white"
+            className="glass-solid mt-5 block rounded-full py-3.5 text-center text-[13px] font-semibold"
           >
             ادامهٔ فرایند خرید
           </Link>
           <Link
             href="/products"
-            className="mt-3 block rounded-full border border-slate-200 py-3 text-center text-[12px] font-semibold text-[#0a1b33] hover:border-slate-300"
+            className="glass-plate glass-plate-hover mt-3 block rounded-full py-3 text-center text-[12px] font-semibold text-[#1b39f5]"
           >
             ادامهٔ خرید
           </Link>

@@ -22,7 +22,7 @@ export default function Shell({
             {breadcrumb.map((item, index) => (
               <span key={`${item.label}-${index}`} className="flex items-center gap-2">
                 {item.href ? (
-                  <a href={item.href} className="hover:text-[#0a1b33] transition-colors">
+                  <a href={item.href} className="transition-colors hover:text-[#1b39f5]">
                     {item.label}
                   </a>
                 ) : (
@@ -36,7 +36,8 @@ export default function Shell({
 
         {title ? (
           <header className="mb-8">
-            <h1 className="font-display text-[26px] md:text-[32px] font-semibold text-[#0a1b33]">
+            <h1 className="flex items-center gap-3 font-display text-[26px] md:text-[32px] font-semibold text-[#0a1b33]">
+              <span className="h-7 w-1.5 shrink-0 rounded-full bg-[#1b39f5]" aria-hidden />
               {title}
             </h1>
             {subtitle ? (

@@ -20,7 +20,7 @@ export default function ProductsPage() {
             <div className="space-y-1">
               <Link
                 href="/products"
-                className="block rounded-xl bg-[#0a152d] px-3 py-2 text-[12px] font-semibold text-white"
+                className="glass-solid block rounded-xl px-3 py-2 text-[12px] font-semibold"
               >
                 همهٔ محصولات
               </Link>
@@ -28,7 +28,7 @@ export default function ProductsPage() {
                 <Link
                   key={category.slug}
                   href={`/category/${category.slug}`}
-                  className="flex items-center justify-between rounded-xl px-3 py-2 text-[12px] text-slate-600 hover:bg-slate-50"
+                  className="flex items-center justify-between rounded-xl px-3 py-2 text-[12px] text-slate-600 transition-all hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]"
                 >
                   {category.title}
                   <span className="num text-[10px] text-slate-400">{category.count}</span>
@@ -43,7 +43,7 @@ export default function ProductsPage() {
                 <label key={key} className="flex items-center gap-2 text-[12px] text-slate-600">
                   <input
                     type="checkbox"
-                    className="h-4 w-4 rounded border-slate-300 accent-[#2783de]"
+                    className="h-4 w-4 rounded border-slate-300 accent-[#1b39f5]"
                   />
                   {label}
                 </label>
@@ -56,7 +56,7 @@ export default function ProductsPage() {
               {["تا ۵۰۰ هزار تومان", "۵۰۰ هزار تا ۱ میلیون", "۱ تا ۳ میلیون", "بیش از ۳ میلیون"].map(
                 (range) => (
                   <label key={range} className="flex items-center gap-2 text-[12px] text-slate-600">
-                    <input type="radio" name="price" className="h-4 w-4 accent-[#2783de]" />
+                    <input type="radio" name="price" className="h-4 w-4 accent-[#1b39f5]" />
                     {range}
                   </label>
                 ),
@@ -67,7 +67,7 @@ export default function ProductsPage() {
 
         {/* لیست */}
         <div>
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/70 bg-white px-4 py-3">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#1b39f5]/10 bg-white px-4 py-3 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
             <span className="text-[12px] text-slate-500">
               <span className="num">{products.length}</span> محصول یافت شد
             </span>
@@ -78,8 +78,8 @@ export default function ProductsPage() {
                   type="button"
                   className={
                     index === 0
-                      ? "rounded-full bg-[#0a152d] px-3.5 py-1.5 text-[11px] font-semibold text-white"
-                      : "rounded-full px-3.5 py-1.5 text-[11px] font-medium text-slate-500 hover:bg-slate-50"
+                      ? "glass-solid rounded-full px-3.5 py-1.5 text-[11px] font-semibold"
+                      : "rounded-full px-3.5 py-1.5 text-[11px] font-medium text-slate-500 transition-all hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]"
                   }
                 >
                   {sort}
@@ -101,8 +101,11 @@ export default function ProductsPage() {
 
 function FilterCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-3xl border border-slate-200/70 bg-white p-5">
-      <h3 className="mb-3 text-[13px] font-bold text-[#0a1b33]">{title}</h3>
+    <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
+      <h3 className="mb-3 flex items-center gap-2 text-[13px] font-bold text-[#0a1b33]">
+        <span className="h-3.5 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+        {title}
+      </h3>
       {children}
     </div>
   )
