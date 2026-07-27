@@ -11,11 +11,13 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
+  type LucideIcon,
 } from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
 import LogoMarquee from "@/components/site/LogoMarquee"
 import Footer from "@/components/site/Footer"
+import GlassIcon from "@/components/site/GlassIcon"
 import ProductCard from "@/components/site/ProductCard"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { faDate } from "@/lib/utils"
@@ -33,9 +35,8 @@ const icons = {
   MessageCircle,
 } as const
 
-function Icon({ name, className }: { name: string; className?: string }) {
-  const Cmp = icons[name as keyof typeof icons] ?? Sparkles
-  return <Cmp className={className} />
+function iconFor(name: string): LucideIcon {
+  return icons[name as keyof typeof icons] ?? Sparkles
 }
 
 export default function HomePage() {
@@ -55,11 +56,9 @@ export default function HomePage() {
             {siteContent.features.map((feature) => (
               <div
                 key={feature.title}
-                className="rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm"
+                className="group rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
               >
-                <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#E5F2FC] text-[#2783de]">
-                  <Icon name={feature.icon} className="h-5 w-5" />
-                </span>
+                <GlassIcon icon={iconFor(feature.icon)} size="md" />
                 <h3 className="mt-4 text-[14px] font-bold text-[#0a1b33]">{feature.title}</h3>
                 <p className="mt-2 text-[12px] leading-6 text-slate-500">{feature.body}</p>
               </div>
@@ -77,15 +76,13 @@ export default function HomePage() {
               <Link
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className="group flex items-start gap-4 rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm transition-all hover:border-slate-300 hover:shadow-[0_18px_40px_-24px_rgba(10,27,51,0.22)]"
+                className="group flex items-start gap-4 rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
               >
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#F0EFED] text-[#0a1b33] transition-colors group-hover:bg-[#0a152d] group-hover:text-white">
-                  <Icon name={category.icon} className="h-5 w-5" />
-                </span>
+                <GlassIcon icon={iconFor(category.icon)} size="lg" />
                 <span className="flex-1">
                   <span className="flex items-center justify-between gap-2">
                     <span className="text-[14px] font-bold text-[#0a1b33]">{category.title}</span>
-                    <span className="num rounded-full bg-slate-50 px-2 py-0.5 text-[10px] text-slate-500">
+                    <span className="num rounded-full bg-[#1b39f5]/8 px-2 py-0.5 text-[10px] text-[#1b39f5]">
                       {category.count}
                     </span>
                   </span>
@@ -135,11 +132,11 @@ export default function HomePage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-sm transition-all hover:border-slate-300"
+                className="group overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-sm transition-all hover:border-[#1b39f5]/25"
               >
                 <div className="h-28" style={{ background: post.cover }} />
                 <div className="p-5">
-                  <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold text-slate-500">
+                  <span className="rounded-full bg-[#1b39f5]/8 px-2.5 py-1 text-[10px] font-semibold text-[#1b39f5]">
                     {post.category}
                   </span>
                   <h3 className="mt-3 text-[13px] font-bold leading-6 text-[#0a1b33]">
@@ -163,11 +160,11 @@ export default function HomePage() {
         {/* دعوت به اقدام */}
         <Section>
           <div className="relative overflow-hidden rounded-[40px] bg-[#0a152d] px-8 py-14 text-center">
-            <div className="absolute -top-24 -left-16 h-64 w-64 rounded-full bg-[#2783de]/25 blur-3xl" />
-            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-[#2783de]/15 blur-3xl" />
+            <div className="absolute -top-24 -left-16 h-64 w-64 rounded-full bg-[#1b39f5]/35 blur-3xl" />
+            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-[#1b39f5]/20 blur-3xl" />
             <div className="relative">
               <h2 className="font-display text-[28px] md:text-[34px] font-medium text-white">
-                هنوز محصول مورد نطرت را پیدا نکردی؟
+                هنوز محصول مورد نظرت را پیدا نکردی؟
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[13px] leading-7 text-white/70">
                 کافی است یک تیکت باز کنید؛ تیم اچ‌شاپ هر اکانت یا لایسنسی را که لازم دارید
@@ -176,7 +173,7 @@ export default function HomePage() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/dashboard/tickets"
-                  className="rounded-full bg-white px-7 py-3 text-[13px] font-semibold text-[#0a1b33]"
+                  className="glass-solid rounded-full px-7 py-3 text-[13px] font-semibold"
                 >
                   ارسال تیکت
                 </Link>
@@ -222,7 +219,7 @@ function Section({
           {href && linkLabel ? (
             <Link
               href={href}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/70 bg-white px-4 py-2 text-[12px] font-semibold text-[#0a1b33] hover:border-slate-300 transition-all"
+              className="glass-plate glass-plate-hover inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-semibold text-[#1b39f5]"
             >
               {linkLabel}
               <ArrowLeft className="h-3.5 w-3.5" />

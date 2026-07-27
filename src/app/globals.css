@@ -17,6 +17,9 @@
   --color-muted: #64748b;
   --color-brand: #2783de;
   --color-brand-soft: #e5f2fc;
+  /* آبی پرقدرت طرح آیکون‌های شیشه‌ای */
+  --color-electric: #1b39f5;
+  --color-electric-soft: #7d92ff;
 
   --radius-hero: 48px;
 }
@@ -56,9 +59,49 @@
   }
 }
 
-/* ───── سیستم شیشه‌ای (Glassmorphism) ─────
-   برای آیکون‌ها، دکمه‌ها و تراشه‌های کوتاه */
+/* ───── سیستم شیشه‌ای آبی (برگرفته از طرح مرجع) ─────
+   دو لایه: یک فرم توپر آبی و یک صفحهٔ شیشه‌ای نیمه‌شفاف روی آن */
 @layer components {
+  .glass-plate {
+    background-color: rgba(27, 57, 245, 0.1);
+    backdrop-filter: blur(14px) saturate(170%);
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
+    border: 1px solid rgba(27, 57, 245, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 12px 26px -16px rgba(27, 57, 245, 0.5);
+    transition:
+      background-color 0.35s ease,
+      box-shadow 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .glass-plate-hover:hover {
+    background-color: rgba(27, 57, 245, 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      0 18px 34px -16px rgba(27, 57, 245, 0.55);
+    transform: translateY(-1px);
+  }
+
+  /* دکمهٔ اصلی توپر */
+  .glass-solid {
+    background-color: var(--color-electric);
+    color: #fff;
+    box-shadow: 0 16px 32px -14px rgba(27, 57, 245, 0.65);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .glass-solid:hover {
+    background-color: #1530d8;
+    box-shadow: 0 20px 38px -14px rgba(27, 57, 245, 0.75);
+    transform: translateY(-1px);
+  }
+
+  /* شیشهٔ سفید خنثی برای سطوح روی تصویر */
   .glass {
     background-image: linear-gradient(
       145deg,
@@ -70,7 +113,6 @@
     border: 1px solid rgba(255, 255, 255, 0.65);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(148, 163, 184, 0.12),
       0 10px 26px -12px rgba(10, 27, 51, 0.22);
     transition:
       box-shadow 0.35s ease,
@@ -82,48 +124,50 @@
     border-color: rgba(255, 255, 255, 0.9);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 1),
-      0 16px 34px -14px rgba(39, 131, 222, 0.35);
+      0 16px 34px -14px rgba(27, 57, 245, 0.35);
     transform: translateY(-1px);
   }
 
-  /* نسخهٔ تیره برای دکمه‌های اصلی */
-  .glass-dark {
-    background-image: linear-gradient(
-      145deg,
-      rgba(19, 35, 73, 0.96),
-      rgba(10, 21, 45, 0.86)
-    );
-    backdrop-filter: blur(16px) saturate(150%);
-    -webkit-backdrop-filter: blur(16px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      0 14px 30px -14px rgba(10, 21, 45, 0.65);
+  /* ── آیکون دولایه‌ای ── */
+  .glass-icon {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    isolation: isolate;
+  }
+
+  .glass-icon-blob {
+    position: absolute;
+    top: -12%;
+    inset-inline-start: -8%;
+    height: 48%;
+    width: 48%;
+    border-radius: 999px;
+    background-color: var(--color-electric);
+    z-index: 0;
     transition:
-      box-shadow 0.35s ease,
-      transform 0.35s ease;
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.3s ease;
   }
 
-  .glass-dark:hover {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      0 18px 36px -14px rgba(10, 21, 45, 0.75);
-    transform: translateY(-1px);
+  .glass-icon-plate {
+    position: absolute;
+    inset: 0;
+    border-radius: 32%;
+    background-color: rgba(27, 57, 245, 0.22);
+    backdrop-filter: blur(7px) saturate(160%);
+    -webkit-backdrop-filter: blur(7px) saturate(160%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    z-index: 1;
+    transition: background-color 0.35s ease;
   }
 
-  /* تاکید آبی شیشه‌ای */
-  .glass-brand {
-    background-image: linear-gradient(
-      145deg,
-      rgba(229, 242, 252, 0.9),
-      rgba(229, 242, 252, 0.45)
-    );
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border: 1px solid rgba(39, 131, 222, 0.28);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      0 12px 28px -14px rgba(39, 131, 222, 0.4);
+  .group:hover .glass-icon-blob {
+    transform: translate3d(6%, -6%, 0) scale(1.08);
+  }
+
+  .group:hover .glass-icon-plate {
+    background-color: rgba(27, 57, 245, 0.3);
   }
 }
 
