@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { Heart, Trash2 } from "lucide-react"
 import { Button, Card } from "@/components/panel/Ui"
-import { products } from "@/lib/data"
-import { lowestPrice, toman } from "@/lib/utils"
+import { lowestPrice, products } from "@/lib/data"
+import { toman } from "@/lib/utils"
 
 export default function FavoritesPage() {
   const favorites = [products[1], products[2], products[5]]
