@@ -1,15 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { brandLogos, type BrandLogo } from "@/lib/brands"
+import { brandLogos, logoSources, type BrandLogo } from "@/lib/brands"
 
-/**
- * اسکرولر بی‌نهایت لوگوی برندها.
- *
- * نکتهٔ مهم: خود نوار حتماً باید LTR باشد. در حالت راست‌چین، ترک از لبهٔ راست
- * می‌چسبید و وقتی به چپ حرکت می‌کرد، سمت راست خالی می‌ماند و نوار «تمام» می‌شد.
- * با dir="ltr" دو گروه یکسان پشت سر قرار می‌گیرند و حلقه همیشه پر است.
- */
 export default function LogoMarquee() {
   return (
     <div className="mt-10 px-4 md:px-6">
@@ -31,7 +24,7 @@ export default function LogoMarquee() {
               className="flex shrink-0 items-center gap-8 pr-8"
             >
               {brandLogos.map((logo) => (
-                <LogoBubble key={`${group}-${logo.name}`} logo={logo} />
+                <LogoBubble key={`${group}-${logo.slug}`} logo={logo} />
               ))}
             </div>
           ))}
@@ -42,7 +35,9 @@ export default function LogoMarquee() {
 }
 
 function LogoBubble({ logo }: { logo: BrandLogo }) {
-  const [failed, setFailed] = useState(false)
+  const sources = logoSources(logo)
+  const [index, setIndex] = useState(0)
+  const exhausted = index >= sources.length
 
   return (
     <div className="group relative h-24 w-40 shrink-0 flex items-center justify-center rounded-full bg-white border border-slate-200/60 shadow-sm transition-colors hover:border-slate-300 overflow-hidden">
@@ -52,17 +47,23 @@ function LogoBubble({ logo }: { logo: BrandLogo }) {
           background: `linear-gradient(135deg, ${logo.gradient.from}, ${logo.gradient.to})`,
         }}
       />
-      {failed ? (
-        <span className="wordmark relative z-10 text-[14px] text-slate-500 transition-colors duration-500 group-hover:text-white">
-          {logo.name}
+      {exhausted ? (
+        <span
+          aria-label={logo.name}
+          className="relative z-10 grid h-11 w-11 place-items-center rounded-2xl text-[17px] font-bold text-white transition-transform duration-500 group-hover:scale-110"
+          style={{
+            background: `linear-gradient(135deg, ${logo.gradient.from}, ${logo.gradient.to})`,
+          }}
+        >
+          {logo.name.charAt(0)}
         </span>
       ) : (
-        /* eslint-disable-next-line @next/next/no-img-element */
+        // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={logo.src}
+          src={sources[index]}
           alt={logo.name}
           loading="lazy"
-          onError={() => setFailed(true)}
+          onError={() => setIndex((value) => value + 1)}
           className="relative z-10 h-8 w-auto max-w-[96px] object-contain transition-all duration-500 group-hover:brightness-0 group-hover:invert"
         />
       )}
