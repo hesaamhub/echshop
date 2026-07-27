@@ -2,8 +2,27 @@
 
 import Link from "next/link"
 import { motion } from "motion/react"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
 import { siteContent } from "@/lib/data"
+
+/**
+ * متن‌های بخش هیرو.
+ * (در مرحلهٔ بعد به دیتابیس و پنل مدیریت متصل می‌شود.)
+ */
+const heroCopy = {
+  badge: "تحویل فوری و خودکار ۲۴ ساعته",
+  headlineTop: "خرید مطمئن اکانت پرمیوم",
+  headlineBottom: "با اچ‌شاپ",
+  subheadline:
+    "مرجع تخصصی خرید انواع اکانت پرمیوم، اشتراک و لایسنس. تحویل فوری، گارانتی بازگشت وجه، پشتیبانی ۲۴ ساعته و درگاه پرداخت امن.",
+}
+
+/** نشانهٔ اعتماد زیر متن هیرو */
+const trustItems = [
+  { icon: ShieldCheck, label: "پرداخت امن", color: "text-[#46A171]" },
+  { icon: Zap, label: "تحویل آنی", color: "text-[#EAC26B]" },
+  { icon: Headphones, label: "پشتیبانی ۲۴/۷", color: "text-[#2783de]" },
+]
 
 /**
  * لینک‌های نوار شناور پایین هیرو.
@@ -16,8 +35,8 @@ const heroNavLinks = [
 
 /**
  * بخش هیروی صفحه اصلی — راست‌چین.
- * ویدیو تمام‌عرض و یک‌تکه است (بدون برش و بدون خط جداکننده)، متن در سمت راست
- * روی قسمت آرام ویدیو می‌نشیند و شیء متحرک آبی در سمت چپ دیده می‌شود.
+ * ویدیو تمام‌عرض و یک‌تکه است، متن در سمت راست روی قسمت آرام ویدیو
+ * می‌نشیند و شیء متحرک آبی در سمت چپ دیده می‌شود.
  */
 export default function Hero() {
   const { hero, brand } = siteContent
@@ -54,20 +73,32 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="w-full md:max-w-[46%]"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/80 backdrop-blur px-4 py-1.5 text-[12px] font-semibold text-[#0a1b33] shadow-sm">
-              <span className="text-brand">{brand.logoMark}</span>
-              {brand.nameFa} — {brand.tagline}
+            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 backdrop-blur px-4 py-1.5 text-[12px] font-semibold text-[#0a1b33] shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#46A171]" />
+              {heroCopy.badge}
             </span>
 
-            <h1 className="mt-6 font-display text-[42px] md:text-[56px] font-medium tracking-tight leading-[1.15] text-[#0a1b33] [text-shadow:0_1px_18px_rgba(255,255,255,0.85)]">
-              {hero.headlineTop}
+            <h1 className="mt-6 font-display text-[42px] md:text-[56px] font-bold tracking-tight leading-[1.2] text-[#0a1b33] [text-shadow:0_1px_18px_rgba(255,255,255,0.85)]">
+              {heroCopy.headlineTop}
               <br />
-              {hero.headlineBottom}
+              <span className="text-brand">{heroCopy.headlineBottom}</span>
             </h1>
 
             <p className="mt-6 font-sans text-[14px] md:text-[15px] leading-8 text-[#64748b] [text-shadow:0_1px_14px_rgba(255,255,255,0.9)]">
-              {hero.subheadline}
+              {heroCopy.subheadline}
             </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+              {trustItems.map((item) => (
+                <span
+                  key={item.label}
+                  className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-600"
+                >
+                  <item.icon className={`w-4 h-4 ${item.color}`} />
+                  {item.label}
+                </span>
+              ))}
+            </div>
           </motion.div>
         </div>
 
