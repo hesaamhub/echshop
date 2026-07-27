@@ -46,4 +46,44 @@ export const brandLogos: BrandLogo[] = [
     src: "https://svgl.app/library/telegram.svg",
     gradient: { from: "#2AABEE", to: "#1a6f9c" },
   },
+  {
+    name: "Apple",
+    src: "https://svgl.app/library/apple.svg",
+    gradient: { from: "#4b5563", to: "#111827" },
+  },
+  {
+    name: "Microsoft",
+    src: "https://svgl.app/library/microsoft.svg",
+    gradient: { from: "#00A4EF", to: "#0b5d8a" },
+  },
+  {
+    name: "Google",
+    src: "https://svgl.app/library/google.svg",
+    gradient: { from: "#4285F4", to: "#1a4fa0" },
+  },
+  {
+    name: "Figma",
+    src: "https://svgl.app/library/figma.svg",
+    gradient: { from: "#F24E1E", to: "#a2260a" },
+  },
+  {
+    name: "Notion",
+    src: "https://svgl.app/library/notion.svg",
+    gradient: { from: "#6b7280", to: "#111827" },
+  },
+  {
+    name: "Slack",
+    src: "https://svgl.app/library/slack.svg",
+    gradient: { from: "#E01E5A", to: "#611f69" },
+  },
+  {
+    name: "LinkedIn",
+    src: "https://svgl.app/library/linkedin.svg",
+    gradient: { from: "#0A66C2", to: "#053f7a" },
+  },
+  {
+    name: "Dropbox",
+    src: "https://svgl.app/library/dropbox.svg",
+    gradient: { from: "#0061FF", to: "#0039a0" },
+  },
 ]

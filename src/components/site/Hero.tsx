@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { motion } from "motion/react"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
 import { ChevronLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
 import { siteContent } from "@/lib/data"
 import Logo from "./Logo"
@@ -12,11 +13,23 @@ import Logo from "./Logo"
  */
 const heroCopy = {
   badge: "تحویل فوری و خودکار",
-  headlineLead: "خرید مطمئن اکانت ",
-  headlineBrand: "با اچ‌شاپ",
+  headlineLead: "خرید مطمئن اکانت",
+  headlineTail: "با اچ‌شاپ",
   subheadline:
     "مرجع تخصصی خرید انواع اکانت پرمیوم، اشتراک و لایسنس. تحویل فوری، گارانتی بازگشت وجه، پشتیبانی ۲۴ ساعته و درگاه پرداخت امن.",
 }
+
+/** نام محصولاتی که در تیتر چرخشی عوض می‌شوند */
+const rotatingProducts = [
+  "اسپاتیفای",
+  "چت‌جی‌پی‌تی",
+  "نتفلیکس",
+  "ادوبی",
+  "کانوا",
+  "یوتیوب",
+  "دیسکورد",
+  "تلگرام",
+]
 
 /** نشانهٔ اعتماد زیر متن هیرو */
 const trustItems = [
@@ -25,9 +38,7 @@ const trustItems = [
   { icon: Headphones, label: "پشتیبانی ۲۴/۷", color: "text-[#2783de]" },
 ]
 
-/**
- * لینک‌های نوار شناور پایین هیرو.
- */
+/** لینک‌های نوار شناور پایین هیرو */
 const heroNavLinks = [
   { label: "محصولات", href: "/products" },
   { label: "پنل کاربری", href: "/dashboard" },
@@ -35,16 +46,24 @@ const heroNavLinks = [
 
 /**
  * بخش هیروی صفحه اصلی — راست‌چین.
- * ویدیو تمام‌عرض و یک‌تکه است، متن در سمت راست روی قسمت آرام ویدیو
- * می‌نشیند و شیء متحرک آبی در سمت چپ دیده می‌شود.
+ * ویدیو تمام‌عرض و یک‌تکه است، متن در سمت راست روی قسمت آرام ویدیو.
  */
 export default function Hero() {
   const { hero, brand } = siteContent
+  const [productIndex, setProductIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProductIndex((current) => (current + 1) % rotatingProducts.length)
+    }, 2200)
+
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <section className="px-4 md:px-6 pt-6">
-      <div className="relative w-full max-w-[1400px] mx-auto rounded-[48px] bg-white border border-slate-200/50 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.03)] overflow-hidden h-[600px] flex flex-col">
-        {/* لایهٔ ویدیو — تمام کادر هیرو، یک‌تکه و بدون ماسک برش‌خورده */}
+    <section className="px-4 md:px-6 pt-4">
+      <div className="relative w-full max-w-[1400px] mx-auto rounded-[48px] bg-white border border-slate-200/50 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.03)] overflow-hidden h-[520px] md:h-[540px] flex flex-col">
+        {/* لایهٔ ویدیو — تمام کادر هیرو، یک‌تکه */}
         <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
           <video
             autoPlay
@@ -55,7 +74,7 @@ export default function Hero() {
             src={hero.videoSrc}
           />
 
-          {/* محافظ خوانایی متن در سمت راست — ملایم، تا ویدیو پنهان نشود */}
+          {/* محافظ خوانایی متن در سمت راست */}
           <div
             className="absolute inset-0"
             style={{
@@ -65,30 +84,44 @@ export default function Hero() {
           />
         </div>
 
-        {/* محتوای متنی — سمت راست، روی قسمت خالی ویدیو */}
-        <div className="relative z-20 flex-1 px-8 md:px-16 pt-12 md:pt-16 flex flex-col items-start">
+        {/* محتوای متنی — سمت راست */}
+        <div className="relative z-20 flex-1 px-8 md:px-16 pt-10 md:pt-12 flex flex-col items-start">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:max-w-[60%]"
+            className="w-full md:max-w-[74%]"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 backdrop-blur px-4 py-1.5 text-[12px] font-semibold text-[#0a1b33] shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#46A171]" />
               {heroCopy.badge}
             </span>
 
-            {/* تیتر اصلی — در دسکتاپ حتماً یک خط */}
-            <h1 className="mt-6 font-display text-[32px] md:text-[48px] font-bold tracking-tight leading-[1.25] text-[#0a1b33] md:whitespace-nowrap [text-shadow:0_1px_18px_rgba(255,255,255,0.9)]">
-              {heroCopy.headlineLead}
-              <span className="text-brand">{heroCopy.headlineBrand}</span>
+            {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود */}
+            <h1 className="mt-5 font-display text-[30px] md:text-[42px] font-bold tracking-tight leading-[1.3] text-[#0a1b33] md:whitespace-nowrap [text-shadow:0_1px_18px_rgba(255,255,255,0.9)]">
+              {heroCopy.headlineLead}{" "}
+              <span className="inline-flex justify-center overflow-hidden align-bottom min-w-[6.5ch]">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={rotatingProducts[productIndex]}
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -18 }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-brand"
+                  >
+                    {rotatingProducts[productIndex]}
+                  </motion.span>
+                </AnimatePresence>
+              </span>{" "}
+              {heroCopy.headlineTail}
             </h1>
 
-            <p className="mt-6 font-sans text-[14px] md:text-[15.5px] font-medium leading-8 text-[#334155] md:max-w-[80%] [text-shadow:0_1px_10px_rgba(255,255,255,1),0_1px_24px_rgba(255,255,255,0.95)]">
+            <p className="mt-5 font-sans text-[14px] md:text-[15.5px] font-medium leading-8 text-[#334155] md:max-w-[64%] [text-shadow:0_1px_10px_rgba(255,255,255,1),0_1px_24px_rgba(255,255,255,0.95)]">
               {heroCopy.subheadline}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
               {trustItems.map((item) => (
                 <span
                   key={item.label}
@@ -103,7 +136,7 @@ export default function Hero() {
         </div>
 
         {/* نوار شناور پایین */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30">
           <motion.nav
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}

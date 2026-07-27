@@ -11,12 +11,11 @@ import {
   UserRound,
   X,
 } from "lucide-react"
-import { categories, siteContent } from "@/lib/data"
+import { categories } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import Logo from "./Logo"
 
 const navItems = [
-  { label: "صفحه اصلی", href: "/" },
   { label: "محصولات", href: "/products" },
   { label: "بلاگ", href: "/blog" },
   { label: "درباره ما", href: "/about" },
@@ -29,18 +28,13 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#f9fafb]/85 backdrop-blur-xl border-b border-slate-200/60">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
-        <div className="flex h-16 items-center gap-4">
-          <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
+        <div className="flex h-14 items-center gap-4">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
               <Logo className="h-5 w-5" />
             </span>
-            <span className="leading-tight">
-              <span className="block text-[15px] font-bold text-[#0a1b33]">
-                {siteContent.brand.nameFa}
-              </span>
-              <span className="block font-latin text-[10px] tracking-[0.18em] text-slate-400">
-                ECHSHOP
-              </span>
+            <span className="font-latin text-[17px] font-semibold tracking-[0.08em] text-[#0a1b33]">
+              echshop
             </span>
           </Link>
 
@@ -49,7 +43,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 rounded-full text-[13px] font-semibold text-slate-500 hover:text-[#0a1b33] hover:bg-white transition-colors"
+                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 hover:text-[#0a1b33] hover:bg-white transition-colors"
               >
                 {item.label}
               </Link>
@@ -58,13 +52,13 @@ export default function Header() {
 
           <form
             action="/products"
-            className="hidden md:flex flex-1 items-center gap-2 rounded-full bg-white border border-slate-200/70 px-4 h-11 shadow-sm focus-within:border-slate-300"
+            className="hidden md:flex flex-1 items-center gap-2 rounded-full bg-white border border-slate-200/70 px-4 h-9 shadow-sm focus-within:border-slate-300"
           >
             <Search className="h-4 w-4 text-slate-400" />
             <input
               name="q"
               placeholder="جستجوی محصول، برند یا دسته‌بندی…"
-              className="h-full w-full bg-transparent text-[13px] outline-none placeholder:text-slate-400"
+              className="h-full w-full bg-transparent text-[12.5px] outline-none placeholder:text-slate-400"
             />
           </form>
 
@@ -80,7 +74,7 @@ export default function Header() {
             </IconLink>
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#0a152d] px-5 py-2.5 text-[12px] font-semibold text-white hover:bg-[#132349] transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#0a152d] px-4 py-2 text-[12px] font-semibold text-white hover:bg-[#132349] transition-colors"
             >
               <UserRound className="h-4 w-4" />
               ورود / ثبت‌نام
@@ -89,7 +83,7 @@ export default function Header() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="منو"
-              className="lg:hidden grid h-10 w-10 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33]"
+              className="lg:hidden grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33]"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -97,12 +91,12 @@ export default function Header() {
         </div>
 
         {/* نوار دسته‌بندی‌ها */}
-        <div className="hidden lg:flex items-center gap-1 pb-3 overflow-x-auto">
+        <div className="hidden lg:flex items-center gap-1 pb-2 overflow-x-auto">
           {categories.map((category) => (
             <Link
               key={category.slug}
               href={`/category/${category.slug}`}
-              className="whitespace-nowrap rounded-full border border-transparent px-3 py-1.5 text-[12px] font-medium text-slate-500 hover:border-slate-200 hover:bg-white hover:text-[#0a1b33] transition-all"
+              className="whitespace-nowrap rounded-full border border-transparent px-3 py-1 text-[11.5px] font-medium text-slate-500 hover:border-slate-200 hover:bg-white hover:text-[#0a1b33] transition-all"
             >
               {category.title}
             </Link>
@@ -164,7 +158,7 @@ function IconLink({
       href={href}
       aria-label={label}
       title={label}
-      className="relative grid h-10 w-10 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33] shadow-sm hover:border-slate-300 transition-all"
+      className="relative grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33] shadow-sm hover:border-slate-300 transition-all"
     >
       {children}
       {badge ? (

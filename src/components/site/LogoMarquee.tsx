@@ -17,7 +17,7 @@ export default function LogoMarquee() {
             "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
         }}
       >
-        <div className="echshop-marquee-track gap-5">
+        <div className="echshop-marquee-track gap-8">
           {logos.map((logo, index) => (
             <div
               key={`${logo.name}-${index}`}
