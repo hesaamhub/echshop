@@ -35,7 +35,7 @@ export default async function CategoryPage({
           ))}
         </div>
       ) : (
-        <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center">
+        <div className="rounded-3xl border border-dashed border-[#1b39f5]/30 bg-[#1b39f5]/4 p-12 text-center">
           <p className="text-[14px] font-semibold text-[#0a1b33]">
             هنوز محصولی در این دسته ثبت نشده است
           </p>

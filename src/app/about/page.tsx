@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { BadgeCheck, Headphones, ShieldCheck, Zap } from "lucide-react"
 import Shell from "@/components/site/Shell"
+import GlassIcon from "@/components/site/GlassIcon"
 import { siteContent } from "@/lib/data"
 
 export const metadata = { title: "دربارهٔ ما" }
@@ -30,33 +31,41 @@ export default function AboutPage() {
         {siteContent.stats.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-3xl border border-slate-200/70 bg-white p-6 text-center"
+            className="relative overflow-hidden rounded-3xl border border-[#1b39f5]/10 bg-white p-6 text-center shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]"
           >
-            <div className="text-[24px] font-bold text-[#0a1b33]">{stat.value}</div>
-            <div className="mt-1.5 text-[12px] text-slate-500">{stat.label}</div>
+            <span
+              className="pointer-events-none absolute -top-8 -left-8 h-20 w-20 rounded-full bg-[#1b39f5]/10 blur-xl"
+              aria-hidden
+            />
+            <div className="relative text-[24px] font-bold text-[#0a1b33]">{stat.value}</div>
+            <div className="relative mt-1.5 text-[12px] text-slate-500">{stat.label}</div>
           </div>
         ))}
       </div>
 
       <section className="mt-10 grid gap-4 sm:grid-cols-2">
         {values.map((value) => (
-          <div key={value.title} className="rounded-3xl border border-slate-200/70 bg-white p-7">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#E5F2FC] text-[#2783de]">
-              <value.icon className="h-5 w-5" />
-            </span>
+          <div
+            key={value.title}
+            className="group rounded-3xl border border-[#1b39f5]/10 bg-white p-7 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] transition-all hover:border-[#1b39f5]/25"
+          >
+            <GlassIcon icon={value.icon} size="md" />
             <h3 className="mt-4 text-[14px] font-bold text-[#0a1b33]">{value.title}</h3>
             <p className="mt-2 text-[12.5px] leading-7 text-slate-500">{value.body}</p>
           </div>
         ))}
       </section>
 
-      <section className="mt-10 rounded-[32px] border border-slate-200/70 bg-white p-8">
-        <h2 className="font-display text-[20px] font-semibold text-[#0a1b33]">مسیر ما</h2>
-        <ol className="mt-6 space-y-6 border-r border-slate-200 pr-6">
+      <section className="mt-10 rounded-[32px] border border-[#1b39f5]/10 bg-white p-8 shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
+        <h2 className="flex items-center gap-3 font-display text-[20px] font-semibold text-[#0a1b33]">
+          <span className="h-5 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+          مسیر ما
+        </h2>
+        <ol className="mt-6 space-y-6 border-r border-[#1b39f5]/15 pr-6">
           {timeline.map((item) => (
             <li key={item.year} className="relative">
-              <span className="absolute -right-[31px] top-1.5 h-2.5 w-2.5 rounded-full bg-[#2783de] ring-4 ring-[#E5F2FC]" />
-              <span className="num text-[11.5px] font-bold text-[#2783de]">{item.year}</span>
+              <span className="absolute -right-[31px] top-1.5 h-2.5 w-2.5 rounded-full bg-[#1b39f5] ring-4 ring-[#1b39f5]/12" />
+              <span className="num text-[11.5px] font-bold text-[#1b39f5]">{item.year}</span>
               <h3 className="mt-1 text-[13.5px] font-bold text-[#0a1b33]">{item.title}</h3>
               <p className="mt-1.5 text-[12.5px] leading-7 text-slate-500">{item.body}</p>
             </li>
@@ -64,14 +73,22 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      <section className="mt-10 rounded-[32px] bg-[#0a152d] p-10 text-center">
-        <h2 className="font-display text-[24px] font-medium text-white">سوالی دارید؟</h2>
-        <p className="mx-auto mt-3 max-w-lg text-[13px] leading-7 text-white/70">
+      <section className="relative mt-10 overflow-hidden rounded-[32px] bg-[#0a152d] p-10 text-center">
+        <span
+          className="pointer-events-none absolute -top-24 right-1/4 h-64 w-64 rounded-full bg-[#1b39f5]/40 blur-3xl"
+          aria-hidden
+        />
+        <span
+          className="pointer-events-none absolute -bottom-24 left-1/4 h-64 w-64 rounded-full bg-[#1b39f5]/25 blur-3xl"
+          aria-hidden
+        />
+        <h2 className="relative font-display text-[24px] font-medium text-white">سوالی دارید؟</h2>
+        <p className="relative mx-auto mt-3 max-w-lg text-[13px] leading-7 text-white/70">
           تیم پشتیبانی اچ‌شاپ آمادهٔ راهنمایی دربارهٔ انتخاب پلن، روش تحویل و شرایط گارانتی است.
         </p>
         <Link
           href="/contact"
-          className="mt-7 inline-block rounded-full bg-white px-7 py-3 text-[13px] font-semibold text-[#0a1b33]"
+          className="relative mt-7 inline-block rounded-full bg-white px-7 py-3 text-[13px] font-semibold text-[#1b39f5] transition-all hover:shadow-[0_14px_30px_-16px_rgba(27,57,245,0.9)]"
         >
           تماس با ما
         </Link>
