@@ -1,0 +1,19 @@
+import PanelShell from "@/components/panel/PanelShell"
+
+const nav = [
+  { href: "/dashboard", label: "پیشخوان" },
+  { href: "/dashboard/orders", label: "سفارش‌ها و تحویل" },
+  { href: "/dashboard/wallet", label: "کیف پول" },
+  { href: "/dashboard/tickets", label: "تیکت‌ها", badge: 1 },
+  { href: "/dashboard/notifications", label: "اطلاع‌رسانی", badge: 2 },
+  { href: "/dashboard/favorites", label: "علاقه‌مندی‌ها" },
+  { href: "/dashboard/profile", label: "پروفایل و امنیت" },
+]
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <PanelShell nav={nav} title="پنل کاربری" role="حساب مشتری اچ‌شاپ">
+      {children}
+    </PanelShell>
+  )
+}
