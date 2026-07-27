@@ -15,9 +15,9 @@ const heroNavLinks = [
 ]
 
 /**
- * بخش هیروی صفحه اصلی.
- * ویدیو تمام‌عرض و یک‌تکه است (بدون برش و بدون خط جداکننده) و متن روی
- * بخش آرام و خالی ویدیو در سمت چپ می‌نشیند؛ شیء متحرک آبی در سمت راست دیده می‌شود.
+ * بخش هیروی صفحه اصلی — راست‌چین.
+ * ویدیو تمام‌عرض و یک‌تکه است (بدون برش و بدون خط جداکننده)، متن در سمت راست
+ * روی قسمت آرام ویدیو می‌نشیند و شیء متحرک آبی در سمت چپ دیده می‌شود.
  */
 export default function Hero() {
   const { hero, brand } = siteContent
@@ -32,22 +32,22 @@ export default function Hero() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover object-right scale-105 transition-transform duration-1000"
+            className="w-full h-full object-cover object-left scale-105 transition-transform duration-1000"
             src={hero.videoSrc}
           />
 
-          {/* محافظ خوانایی متن — محو و پیوسته، بدون لبهٔ مشخص */}
+          {/* محافظ خوانایی متن در سمت راست — محو و پیوسته، بدون لبهٔ مشخص */}
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.86) 26%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.05) 70%, rgba(255,255,255,0) 100%)",
+                "linear-gradient(to left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.86) 26%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.05) 70%, rgba(255,255,255,0) 100%)",
             }}
           />
         </div>
 
-        {/* محتوای متنی — سمت چپ، روی قسمت خالی ویدیو */}
-        <div className="relative z-20 flex-1 px-8 md:px-16 pt-12 md:pt-16 flex flex-col items-end">
+        {/* محتوای متنی — سمت راست، روی قسمت خالی ویدیو */}
+        <div className="relative z-20 flex-1 px-8 md:px-16 pt-12 md:pt-16 flex flex-col items-start">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
