@@ -10,9 +10,9 @@ import { siteContent } from "@/lib/data"
  * (در مرحلهٔ بعد به دیتابیس و پنل مدیریت متصل می‌شود.)
  */
 const heroCopy = {
-  badge: "تحویل فوری و خودکار ۲۴ ساعته",
-  headlineTop: "خرید مطمئن اکانت پرمیوم",
-  headlineBottom: "با اچ‌شاپ",
+  badge: "تحویل فوری و خودکار",
+  headlineLead: "خرید مطمئن اکانت ",
+  headlineBrand: "با اچ‌شاپ",
   subheadline:
     "مرجع تخصصی خرید انواع اکانت پرمیوم، اشتراک و لایسنس. تحویل فوری، گارانتی بازگشت وجه، پشتیبانی ۲۴ ساعته و درگاه پرداخت امن.",
 }
@@ -55,12 +55,12 @@ export default function Hero() {
             src={hero.videoSrc}
           />
 
-          {/* محافظ خوانایی متن در سمت راست — بسیار ملایم، تا ویدیو پنهان نشود */}
+          {/* محافظ خوانایی متن در سمت راست — ملایم، تا ویدیو پنهان نشود */}
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(to left, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.22) 38%, rgba(255,255,255,0.04) 56%, rgba(255,255,255,0) 72%)",
+                "linear-gradient(to left, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.58) 22%, rgba(255,255,255,0.26) 40%, rgba(255,255,255,0.05) 58%, rgba(255,255,255,0) 74%)",
             }}
           />
         </div>
@@ -71,20 +71,20 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:max-w-[46%]"
+            className="w-full md:max-w-[60%]"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 backdrop-blur px-4 py-1.5 text-[12px] font-semibold text-[#0a1b33] shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#46A171]" />
               {heroCopy.badge}
             </span>
 
-            <h1 className="mt-6 font-display text-[42px] md:text-[56px] font-bold tracking-tight leading-[1.2] text-[#0a1b33] [text-shadow:0_1px_18px_rgba(255,255,255,0.85)]">
-              {heroCopy.headlineTop}
-              <br />
-              <span className="text-brand">{heroCopy.headlineBottom}</span>
+            {/* تیتر اصلی — در دسکتاپ حتماً یک خط */}
+            <h1 className="mt-6 font-display text-[32px] md:text-[48px] font-bold tracking-tight leading-[1.25] text-[#0a1b33] md:whitespace-nowrap [text-shadow:0_1px_18px_rgba(255,255,255,0.9)]">
+              {heroCopy.headlineLead}
+              <span className="text-brand">{heroCopy.headlineBrand}</span>
             </h1>
 
-            <p className="mt-6 font-sans text-[14px] md:text-[15px] leading-8 text-[#64748b] [text-shadow:0_1px_14px_rgba(255,255,255,0.9)]">
+            <p className="mt-6 font-sans text-[14px] md:text-[15.5px] font-medium leading-8 text-[#334155] md:max-w-[80%] [text-shadow:0_1px_10px_rgba(255,255,255,1),0_1px_24px_rgba(255,255,255,0.95)]">
               {heroCopy.subheadline}
             </p>
 
@@ -92,7 +92,7 @@ export default function Hero() {
               {trustItems.map((item) => (
                 <span
                   key={item.label}
-                  className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-600"
+                  className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-700"
                 >
                   <item.icon className={`w-4 h-4 ${item.color}`} />
                   {item.label}
