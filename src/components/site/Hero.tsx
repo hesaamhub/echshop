@@ -36,12 +36,12 @@ export default function Hero() {
             src={hero.videoSrc}
           />
 
-          {/* محافظ خوانایی متن در سمت راست — محو و پیوسته، بدون لبهٔ مشخص */}
+          {/* محافظ خوانایی متن در سمت راست — بسیار ملایم، تا ویدیو پنهان نشود */}
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "linear-gradient(to left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.86) 26%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.05) 70%, rgba(255,255,255,0) 100%)",
+                "linear-gradient(to left, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.22) 38%, rgba(255,255,255,0.04) 56%, rgba(255,255,255,0) 72%)",
             }}
           />
         </div>
@@ -59,13 +59,13 @@ export default function Hero() {
               {brand.nameFa} — {brand.tagline}
             </span>
 
-            <h1 className="mt-6 font-display text-[42px] md:text-[56px] font-medium tracking-tight leading-[1.15] text-[#0a1b33]">
+            <h1 className="mt-6 font-display text-[42px] md:text-[56px] font-medium tracking-tight leading-[1.15] text-[#0a1b33] [text-shadow:0_1px_18px_rgba(255,255,255,0.85)]">
               {hero.headlineTop}
               <br />
               {hero.headlineBottom}
             </h1>
 
-            <p className="mt-6 font-sans text-[14px] md:text-[15px] leading-8 text-[#64748b]">
+            <p className="mt-6 font-sans text-[14px] md:text-[15px] leading-8 text-[#64748b] [text-shadow:0_1px_14px_rgba(255,255,255,0.9)]">
               {hero.subheadline}
             </p>
           </motion.div>
