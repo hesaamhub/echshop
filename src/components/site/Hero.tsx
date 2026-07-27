@@ -4,6 +4,7 @@ import Link from "next/link"
 import { motion } from "motion/react"
 import { ChevronLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
 import { siteContent } from "@/lib/data"
+import Logo from "./Logo"
 
 /**
  * متن‌های بخش هیرو.
@@ -26,7 +27,6 @@ const trustItems = [
 
 /**
  * لینک‌های نوار شناور پایین هیرو.
- * سه دکمه: محصولات، پنل کاربری و ارتباط با ما (دکمهٔ آخر از navCta می‌آید).
  */
 const heroNavLinks = [
   { label: "محصولات", href: "/products" },
@@ -113,9 +113,9 @@ export default function Hero() {
             <Link
               href="/"
               aria-label={brand.nameFa}
-              className="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-white border border-slate-100 shadow-sm text-[#0a1b33]"
+              className="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-white border border-slate-100 shadow-sm"
             >
-              {brand.logoMark}
+              <Logo className="h-5 w-5" />
             </Link>
 
             {heroNavLinks.map((link) => (

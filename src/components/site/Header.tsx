@@ -13,6 +13,7 @@ import {
 } from "lucide-react"
 import { categories, siteContent } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import Logo from "./Logo"
 
 const navItems = [
   { label: "صفحه اصلی", href: "/" },
@@ -30,8 +31,8 @@ export default function Header() {
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <div className="flex h-16 items-center gap-4">
           <Link href="/" className="flex items-center gap-2.5 shrink-0">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0a152d] text-white text-sm">
-              {siteContent.brand.logoMark}
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
+              <Logo className="h-5 w-5" />
             </span>
             <span className="leading-tight">
               <span className="block text-[15px] font-bold text-[#0a1b33]">

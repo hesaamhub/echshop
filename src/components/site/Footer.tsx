@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Mail, MapPin, PhoneCall, Send } from "lucide-react"
 import { siteContent } from "@/lib/data"
+import Logo from "./Logo"
 
 export default function Footer() {
   const { brand, footer, contact } = siteContent
@@ -11,8 +12,8 @@ export default function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0a152d] text-white text-sm">
-                {brand.logoMark}
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
+                <Logo className="h-5 w-5" />
               </span>
               <span className="text-[15px] font-bold text-[#0a1b33]">{brand.nameFa}</span>
             </div>
