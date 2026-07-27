@@ -56,6 +56,77 @@
   }
 }
 
+/* ───── سیستم شیشه‌ای (Glassmorphism) ─────
+   برای آیکون‌ها، دکمه‌ها و تراشه‌های کوتاه */
+@layer components {
+  .glass {
+    background-image: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(255, 255, 255, 0.42)
+    );
+    backdrop-filter: blur(18px) saturate(165%);
+    -webkit-backdrop-filter: blur(18px) saturate(165%);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(148, 163, 184, 0.12),
+      0 10px 26px -12px rgba(10, 27, 51, 0.22);
+    transition:
+      box-shadow 0.35s ease,
+      transform 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+  .glass-hover:hover {
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      0 16px 34px -14px rgba(39, 131, 222, 0.35);
+    transform: translateY(-1px);
+  }
+
+  /* نسخهٔ تیره برای دکمه‌های اصلی */
+  .glass-dark {
+    background-image: linear-gradient(
+      145deg,
+      rgba(19, 35, 73, 0.96),
+      rgba(10, 21, 45, 0.86)
+    );
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 14px 30px -14px rgba(10, 21, 45, 0.65);
+    transition:
+      box-shadow 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .glass-dark:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 18px 36px -14px rgba(10, 21, 45, 0.75);
+    transform: translateY(-1px);
+  }
+
+  /* تاکید آبی شیشه‌ای */
+  .glass-brand {
+    background-image: linear-gradient(
+      145deg,
+      rgba(229, 242, 252, 0.9),
+      rgba(229, 242, 252, 0.45)
+    );
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(39, 131, 222, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 12px 28px -14px rgba(39, 131, 222, 0.4);
+  }
+}
+
 /* اسکرولر بی‌نهایت لوگوها — دو گروه یکسان، جابه‌جایی دقیقاً به اندازهٔ یک گروه */
 @keyframes echshop-marquee {
   from {

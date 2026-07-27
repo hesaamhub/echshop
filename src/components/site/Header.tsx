@@ -26,11 +26,11 @@ export default function Header() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-[#f9fafb]/85 backdrop-blur-xl border-b border-slate-200/60">
+    <header className="sticky top-0 z-50 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <div className="flex h-14 items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
+          <Link href="/" className="flex items-center gap-2 shrink-0 group">
+            <span className="glass glass-hover grid h-9 w-9 place-items-center rounded-2xl">
               <Logo className="h-5 w-5" />
             </span>
             <span className="flex flex-col leading-none">
@@ -48,7 +48,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 hover:text-[#0a1b33] hover:bg-white transition-colors"
+                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 hover:text-[#0a1b33] hover:glass transition-colors"
               >
                 {item.label}
               </Link>
@@ -57,7 +57,7 @@ export default function Header() {
 
           <form
             action="/products"
-            className="hidden md:flex flex-1 items-center gap-2 rounded-full bg-white border border-slate-200/70 px-4 h-9 shadow-sm focus-within:border-slate-300"
+            className="glass hidden md:flex flex-1 items-center gap-2 rounded-full px-4 h-9"
           >
             <Search className="h-4 w-4 text-slate-400" />
             <input
@@ -79,7 +79,7 @@ export default function Header() {
             </IconLink>
             <Link
               href="/login"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[#0a152d] px-4 py-2 text-[12px] font-semibold text-white hover:bg-[#132349] transition-colors"
+              className="glass-dark hidden sm:inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-[12px] font-semibold text-white"
             >
               <UserRound className="h-4 w-4" />
               ورود / ثبت‌نام
@@ -88,7 +88,7 @@ export default function Header() {
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="منو"
-              className="lg:hidden grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33]"
+              className="glass glass-hover lg:hidden grid h-9 w-9 place-items-center rounded-2xl text-[#0a1b33]"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -96,12 +96,12 @@ export default function Header() {
         </div>
 
         {/* نوار دسته‌بندی‌ها */}
-        <div className="hidden lg:flex items-center gap-1 pb-2 overflow-x-auto">
+        <div className="hidden lg:flex items-center gap-1.5 pb-2 overflow-x-auto">
           {categories.map((category) => (
             <Link
               key={category.slug}
               href={`/category/${category.slug}`}
-              className="whitespace-nowrap rounded-full border border-transparent px-3 py-1 text-[11.5px] font-medium text-slate-500 hover:border-slate-200 hover:bg-white hover:text-[#0a1b33] transition-all"
+              className="glass glass-hover whitespace-nowrap rounded-full px-3 py-1 text-[11.5px] font-medium text-slate-500 hover:text-[#0a1b33]"
             >
               {category.title}
             </Link>
@@ -112,7 +112,7 @@ export default function Header() {
       {/* منوی موبایل */}
       <div
         className={cn(
-          "lg:hidden overflow-hidden border-t border-slate-200/60 bg-white transition-all",
+          "lg:hidden overflow-hidden border-t border-white/60 bg-white/80 backdrop-blur-xl transition-all",
           open ? "max-h-[520px]" : "max-h-0",
         )}
       >
@@ -135,7 +135,7 @@ export default function Header() {
                 key={category.slug}
                 href={`/category/${category.slug}`}
                 onClick={() => setOpen(false)}
-                className="rounded-2xl border border-slate-200/70 px-3 py-2.5 text-[12px] font-medium text-slate-600"
+                className="glass rounded-2xl px-3 py-2.5 text-[12px] font-medium text-slate-600"
               >
                 {category.title}
               </Link>
@@ -163,11 +163,11 @@ function IconLink({
       href={href}
       aria-label={label}
       title={label}
-      className="relative grid h-9 w-9 place-items-center rounded-full bg-white border border-slate-200/70 text-[#0a1b33] shadow-sm hover:border-slate-300 transition-all"
+      className="glass glass-hover relative grid h-9 w-9 place-items-center rounded-2xl text-[#0a1b33]"
     >
       {children}
       {badge ? (
-        <span className="absolute -top-1 -left-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#E56458] px-1 text-[9px] font-bold text-white">
+        <span className="absolute -top-1 -left-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#E56458] px-1 text-[9px] font-bold text-white shadow-[0_4px_10px_-4px_rgba(229,100,88,0.9)]">
           {badge}
         </span>
       ) : null}
