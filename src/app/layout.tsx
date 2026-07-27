@@ -9,11 +9,17 @@ export const metadata: Metadata = {
   },
   description: siteContent.hero.subheadline,
   keywords: ["خرید اکانت", "لایسنس", "اچ شاپ", "echshop", "اشتراک پرمیوم"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: `${siteContent.brand.nameFa} — ${siteContent.brand.tagline}`,
     description: siteContent.hero.subheadline,
     locale: "fa_IR",
     type: "website",
+    images: [{ url: "/logo.png", width: 640, height: 640, alt: siteContent.brand.nameFa }],
   },
 }
 
