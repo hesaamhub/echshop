@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600&family=Sora:wght@400;600;700&display=swap');
 
 @theme {
   --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Vazirmatn", "Outfit", ui-sans-serif, sans-serif;
   --font-latin: "Outfit", ui-sans-serif, sans-serif;
+  --font-wordmark: "Sora", "Outfit", ui-sans-serif, sans-serif;
 
   --color-ink: #0a1b33;
   --color-ink-deep: #0a152d;
@@ -36,13 +37,22 @@
     unicode-bidi: embed;
   }
 
+  /* لوگوتایپ لاتین برند */
+  .wordmark {
+    font-family: var(--font-wordmark);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    direction: ltr;
+    unicode-bidi: embed;
+  }
+
   ::selection {
     background: var(--color-brand-soft);
     color: var(--color-ink);
   }
 }
 
-/* اسکرولر بی‌نهایت لوگوها — در RTL به سمت مخالف حرکت می‌کند */
+/* اسکرولر بی‌نهایت لوگوها — دو گروه یکسان، جابه‌جایی دقیقاً به اندازهٔ یک گروه */
 @keyframes echshop-marquee {
   from {
     transform: translateX(0);
@@ -55,7 +65,8 @@
 .echshop-marquee-track {
   display: flex;
   width: max-content;
-  animation: echshop-marquee 42s linear infinite;
+  will-change: transform;
+  animation: echshop-marquee 46s linear infinite;
 }
 
 .echshop-marquee:hover .echshop-marquee-track {

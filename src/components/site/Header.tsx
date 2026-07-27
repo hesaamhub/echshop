@@ -33,7 +33,7 @@ export default function Header() {
             <span className="grid h-8 w-8 place-items-center rounded-full bg-white border border-slate-200/70 shadow-sm">
               <Logo className="h-5 w-5" />
             </span>
-            <span className="font-latin text-[17px] font-semibold tracking-[0.08em] text-[#0a1b33]">
+            <span className="wordmark text-[19px] leading-none text-[#0a1b33]">
               echshop
             </span>
           </Link>

@@ -97,18 +97,29 @@ export default function Hero() {
               {heroCopy.badge}
             </span>
 
-            {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود */}
+            {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود.
+                همهٔ نام‌ها به‌صورت نامرئی در همان خانهٔ گرید چیده شده‌اند تا عرض
+                جایگاه همیشه به اندازهٔ بلندترین نام باشد و جمله تکان نخورد. */}
             <h1 className="mt-5 font-display text-[30px] md:text-[42px] font-bold tracking-tight leading-[1.3] text-[#0a1b33] md:whitespace-nowrap [text-shadow:0_1px_18px_rgba(255,255,255,0.9)]">
               {heroCopy.headlineLead}{" "}
-              <span className="inline-flex justify-center overflow-hidden align-bottom min-w-[6.5ch]">
+              <span className="inline-grid text-center">
+                {rotatingProducts.map((name) => (
+                  <span
+                    key={`ghost-${name}`}
+                    aria-hidden
+                    className="col-start-1 row-start-1 invisible whitespace-nowrap"
+                  >
+                    {name}
+                  </span>
+                ))}
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={rotatingProducts[productIndex]}
-                    initial={{ opacity: 0, y: 18 }}
+                    initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -18 }}
+                    exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-brand"
+                    className="col-start-1 row-start-1 whitespace-nowrap text-brand"
                   >
                     {rotatingProducts[productIndex]}
                   </motion.span>
@@ -136,7 +147,7 @@ export default function Hero() {
         </div>
 
         {/* نوار شناور پایین */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30">
+        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-30">
           <motion.nav
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
