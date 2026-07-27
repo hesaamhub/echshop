@@ -6,8 +6,18 @@ import { ChevronLeft } from "lucide-react"
 import { siteContent } from "@/lib/data"
 
 /**
- * بخش هیروی صفحه اصلی — نسخهٔ راست‌چین.
- * متن در سمت راست و ویدیوی پس‌زمینه در سمت چپ قرار می‌گیرد.
+ * لینک‌های نوار شناور پایین هیرو.
+ * سه دکمه: محصولات، پنل کاربری و ارتباط با ما (دکمهٔ آخر از navCta می‌آید).
+ */
+const heroNavLinks = [
+  { label: "محصولات", href: "/products" },
+  { label: "پنل کاربری", href: "/dashboard" },
+]
+
+/**
+ * بخش هیروی صفحه اصلی.
+ * ویدیو تمام‌عرض و یک‌تکه است (بدون برش و بدون خط جداکننده) و متن روی
+ * بخش آرام و خالی ویدیو در سمت چپ می‌نشیند؛ شیء متحرک آبی در سمت راست دیده می‌شود.
  */
 export default function Hero() {
   const { hero, brand } = siteContent
@@ -15,26 +25,29 @@ export default function Hero() {
   return (
     <section className="px-4 md:px-6 pt-6">
       <div className="relative w-full max-w-[1400px] mx-auto rounded-[48px] bg-white border border-slate-200/50 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.03)] overflow-hidden h-[600px] flex flex-col">
-        {/* لایهٔ ویدیو — سمت چپ */}
-        <div className="absolute inset-y-0 left-0 w-full md:w-[56%] pointer-events-none z-0 overflow-hidden select-none">
+        {/* لایهٔ ویدیو — تمام کادر هیرو، یک‌تکه و بدون ماسک برش‌خورده */}
+        <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover scale-105 transition-transform duration-1000"
-            style={{
-              maskImage:
-                "linear-gradient(to left, transparent 0%, black 34%, black 100%)",
-              WebkitMaskImage:
-                "linear-gradient(to left, transparent 0%, black 34%, black 100%)",
-            }}
+            className="w-full h-full object-cover object-right scale-105 transition-transform duration-1000"
             src={hero.videoSrc}
+          />
+
+          {/* محافظ خوانایی متن — محو و پیوسته، بدون لبهٔ مشخص */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.86) 26%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.05) 70%, rgba(255,255,255,0) 100%)",
+            }}
           />
         </div>
 
-        {/* محتوای متنی — سمت راست */}
-        <div className="relative z-20 flex-1 px-8 md:px-16 pt-12 md:pt-16 flex flex-col items-start">
+        {/* محتوای متنی — سمت چپ، روی قسمت خالی ویدیو */}
+        <div className="relative z-20 flex-1 px-8 md:px-16 pt-12 md:pt-16 flex flex-col items-end">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -55,27 +68,6 @@ export default function Hero() {
             <p className="mt-6 font-sans text-[14px] md:text-[15px] leading-8 text-[#64748b]">
               {hero.subheadline}
             </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href={hero.ctaHref}
-                  className="inline-flex items-center gap-2 bg-[#0a152d] text-white px-7 py-3 rounded-full text-[13px] font-semibold shadow-[0_10px_30px_rgba(10,21,45,0.22)]"
-                >
-                  {hero.ctaLabel}
-                  <ChevronLeft className="w-4 h-4" />
-                </Link>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href="/products"
-                  className="inline-flex items-center gap-2 bg-white px-7 py-3 rounded-full text-[13px] font-semibold text-[#0a1b33] border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all"
-                >
-                  مشاهدهٔ محصولات
-                </Link>
-              </motion.div>
-            </div>
           </motion.div>
         </div>
 
@@ -95,7 +87,7 @@ export default function Hero() {
               {brand.logoMark}
             </Link>
 
-            {hero.navLinks.map((link) => (
+            {heroNavLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
