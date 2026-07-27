@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Button, Card, Field } from "@/components/panel/Ui"
-import { brandLogos } from "@/lib/brands"
+import { brandLogos, logoSources } from "@/lib/brands"
 import { products, siteContent } from "@/lib/data"
 
 export default function AdminContentPage() {
@@ -55,7 +55,15 @@ export default function AdminContentPage() {
             <div key={brand.name} className="rounded-2xl border border-slate-200/70 p-4">
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50">
-                  <Image src={brand.src} alt={brand.name} width={22} height={22} />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={logoSources(brand)[0]}
+                    alt={brand.name}
+                    width={22}
+                    height={22}
+                    loading="lazy"
+                    className="h-[22px] w-[22px] object-contain"
+                  />
                 </div>
                 <div className="flex-1">
                   <p className="font-latin text-[12px] font-bold text-[#0a1b33]">{brand.name}</p>
