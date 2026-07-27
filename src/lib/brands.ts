@@ -1,5 +1,5 @@
 /** لوگوی برندهای محصولات برای اسکرولر صفحه اصلی.
- *  منبع لوگوها: cdn.simpleicons.org (رنگ هر برند در خود آدرس تعیین می‌شود)
+ *  منبع لوگوها simpleicons است و رنگ هر برند در خود آدرس تعیین می‌شود.
  *  اگر لوگویی لود نشود، نام برند به‌جایش نمایش داده می‌شود.
  */
 export type BrandLogo = {
@@ -8,8 +8,9 @@ export type BrandLogo = {
   gradient: { from: string; to: string }
 }
 
-const icon = (slug: string, color: string) =>
-  `https://cdn.simpleicons.org/${slug}/${color}`
+const ICON_BASE = "https://cdn.simpleicons.org"
+
+const icon = (slug: string, color: string) => ICON_BASE + "/" + slug + "/" + color
 
 export const brandLogos: BrandLogo[] = [
   { name: "Spotify", src: icon("spotify", "1DB954"), gradient: { from: "#1DB954", to: "#0f7a37" } },
