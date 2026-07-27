@@ -13,7 +13,7 @@ export default function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-sm transition-all hover:border-slate-300 hover:shadow-[0_18px_40px_-24px_rgba(10,27,51,0.25)]"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-[#1b39f5]/10 bg-white shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all hover:-translate-y-0.5 hover:border-[#1b39f5]/25 hover:shadow-[0_24px_50px_-28px_rgba(27,57,245,0.45)]"
     >
       <div className={`relative h-36 bg-gradient-to-br ${product.gradient}`}>
         <div className="absolute inset-0 grid place-items-center">
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: Props) {
           />
         </div>
         {product.badge ? (
-          <span className="absolute top-3 right-3 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold text-[#0a1b33]">
+          <span className="glass absolute top-3 right-3 rounded-full px-3 py-1 text-[10px] font-bold text-[#0a1b33]">
             {product.badge}
           </span>
         ) : null}
@@ -38,7 +38,9 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[14px] font-bold leading-6 text-[#0a1b33]">{product.title}</h3>
+        <h3 className="text-[14px] font-bold leading-6 text-[#0a1b33] transition-colors group-hover:text-[#1b39f5]">
+          {product.title}
+        </h3>
         <p className="mt-2 line-clamp-2 text-[12px] leading-6 text-slate-500">{product.excerpt}</p>
 
         <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-500">
@@ -52,11 +54,11 @@ export default function ProductCard({ product }: Props) {
           </span>
         </div>
 
-        <span className="mt-3 inline-flex w-fit rounded-full bg-[#E5F2FC] px-2.5 py-1 text-[10px] font-semibold text-[#1c5f9e]">
+        <span className="mt-3 inline-flex w-fit rounded-full bg-[#1b39f5]/8 px-2.5 py-1 text-[10px] font-semibold text-[#1b39f5]">
           {deliveryLabels[cheapest.delivery]}
         </span>
 
-        <div className="mt-5 flex items-end justify-between border-t border-slate-100 pt-4">
+        <div className="mt-5 flex items-end justify-between border-t border-[#1b39f5]/10 pt-4">
           <div>
             <span className="block text-[10px] text-slate-400">شروع قیمت از</span>
             <span className="text-[15px] font-bold text-[#0a1b33]">

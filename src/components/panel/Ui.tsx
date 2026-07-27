@@ -8,11 +8,17 @@ export function Card(props: {
 }) {
   return (
     <section
-      className={cn("rounded-[28px] border border-slate-200/70 bg-white p-6", props.className)}
+      className={cn(
+        "rounded-[28px] border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]",
+        props.className,
+      )}
     >
       {props.title ? (
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-[14px] font-bold text-[#0a1b33]">{props.title}</h2>
+          <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
+            <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+            {props.title}
+          </h2>
           {props.action}
         </div>
       ) : null}
@@ -34,17 +40,23 @@ export function StatCard(props: {
         ? "text-[#E56458]"
         : "text-slate-400"
   return (
-    <div className="rounded-[24px] border border-slate-200/70 bg-white p-5">
-      <span className="text-[11.5px] text-slate-400">{props.label}</span>
-      <div className="mt-2 text-[19px] font-bold text-[#0a1b33]">{props.value}</div>
-      {props.hint ? <div className={cn("mt-1.5 text-[11px]", toneClass)}>{props.hint}</div> : null}
+    <div className="group relative overflow-hidden rounded-[24px] border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_38px_-32px_rgba(27,57,245,0.5)] transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_22px_46px_-30px_rgba(27,57,245,0.55)]">
+      <span
+        className="pointer-events-none absolute -top-8 -left-8 h-20 w-20 rounded-full bg-[#1b39f5]/10 blur-xl transition-transform duration-500 group-hover:scale-125"
+        aria-hidden
+      />
+      <span className="relative text-[11.5px] text-slate-400">{props.label}</span>
+      <div className="relative mt-2 text-[19px] font-bold text-[#0a1b33]">{props.value}</div>
+      {props.hint ? (
+        <div className={cn("relative mt-1.5 text-[11px]", toneClass)}>{props.hint}</div>
+      ) : null}
     </div>
   )
 }
 
 const toneMap: Record<string, string> = {
   green: "bg-[#E7F4EC] text-[#2F7A50]",
-  blue: "bg-[#E5F2FC] text-[#1c5f9e]",
+  blue: "bg-[#1b39f5]/10 text-[#1b39f5]",
   amber: "bg-[#FBF1E2] text-[#9A6321]",
   red: "bg-[#FCEAE8] text-[#A8382C]",
   gray: "bg-slate-100 text-slate-600",
@@ -71,7 +83,7 @@ export function Table(props: { head: string[]; children: React.ReactNode }) {
     <div className="overflow-x-auto">
       <table className="w-full min-w-[640px] border-collapse text-right">
         <thead>
-          <tr className="border-b border-slate-200">
+          <tr className="border-b border-[#1b39f5]/12">
             {props.head.map((cell) => (
               <th
                 key={cell}
@@ -106,7 +118,7 @@ export function Field(props: {
   rows?: number
 }) {
   const base =
-    "mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] leading-7 outline-none focus:border-[#2783de]"
+    "mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] leading-7 outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
   return (
     <label className="block">
       <span className="text-[12px] font-semibold text-[#0a1b33]">{props.label}</span>
@@ -142,9 +154,8 @@ export function Button(props: {
       type="button"
       className={cn(
         "rounded-full px-5 py-2.5 text-[12px] font-semibold transition-all",
-        variant === "primary" && "bg-[#0a152d] text-white hover:opacity-90",
-        variant === "ghost" &&
-          "border border-slate-200 bg-white text-[#0a1b33] hover:border-slate-300",
+        variant === "primary" && "glass-solid",
+        variant === "ghost" && "glass-plate glass-plate-hover text-[#1b39f5]",
         variant === "danger" && "bg-[#FCEAE8] text-[#A8382C] hover:bg-[#f8ddda]",
       )}
     >

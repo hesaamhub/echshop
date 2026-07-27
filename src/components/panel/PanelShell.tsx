@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { ChevronLeft } from "lucide-react"
 import { siteContent } from "@/lib/data"
 import { cn } from "@/lib/utils"
+import Logo from "@/components/site/Logo"
 
 export type PanelNavItem = { href: string; label: string; badge?: number }
 
@@ -27,10 +28,10 @@ export default function PanelShell({
       <div className="mx-auto flex max-w-[1500px] gap-6 px-4 py-6 md:px-6">
         {/* سایدبار */}
         <aside className="hidden w-64 shrink-0 lg:block">
-          <div className="sticky top-6 rounded-[28px] border border-slate-200/70 bg-white p-5">
+          <div className="sticky top-6 rounded-[28px] border border-[#1b39f5]/10 bg-white p-5 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0a152d] text-sm text-white">
-                {siteContent.brand.logoMark}
+              <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
+                <Logo className="h-5 w-5" />
               </span>
               <span>
                 <span className="block text-[13.5px] font-bold text-[#0a1b33]">
@@ -52,10 +53,10 @@ export default function PanelShell({
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "flex items-center justify-between rounded-2xl px-4 py-2.5 text-[12.5px] font-medium transition-colors",
+                      "flex items-center justify-between rounded-2xl px-4 py-2.5 text-[12.5px] font-medium transition-all",
                       active
-                        ? "bg-[#0a152d] text-white"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-[#0a1b33]",
+                        ? "glass-solid"
+                        : "text-slate-600 hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]",
                     )}
                   >
                     {item.label}
@@ -63,7 +64,7 @@ export default function PanelShell({
                       <span
                         className={cn(
                           "num rounded-full px-1.5 py-0.5 text-[10px] font-bold",
-                          active ? "bg-white/20 text-white" : "bg-[#E56458] text-white",
+                          active ? "bg-white/25 text-white" : "bg-[#1b39f5] text-white",
                         )}
                       >
                         {item.badge}
@@ -76,7 +77,7 @@ export default function PanelShell({
 
             <Link
               href="/"
-              className="mt-6 flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-2.5 text-[12px] font-semibold text-[#0a1b33] hover:border-slate-300"
+              className="glass-plate glass-plate-hover mt-6 flex items-center justify-between rounded-2xl px-4 py-2.5 text-[12px] font-semibold text-[#1b39f5]"
             >
               بازگشت به فروشگاه
               <ChevronLeft className="h-3.5 w-3.5" />
@@ -86,16 +87,16 @@ export default function PanelShell({
 
         {/* محتوا */}
         <div className="min-w-0 flex-1">
-          <header className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-slate-200/70 bg-white px-6 py-5">
+          <header className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-[#1b39f5]/10 bg-white px-6 py-5 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
             <div>
               <h1 className="font-display text-[19px] font-semibold text-[#0a1b33]">{title}</h1>
               <p className="mt-1 text-[11.5px] text-slate-400">{role}</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="hidden rounded-full bg-slate-50 px-3.5 py-2 text-[11.5px] text-slate-500 sm:block">
+              <span className="glass-plate hidden rounded-full px-3.5 py-2 text-[11.5px] text-[#334155] sm:block">
                 حسام — کاربر طلایی
               </span>
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-[#E5F2FC] text-[12px] font-bold text-[#1c5f9e]">
+              <span className="glass-plate grid h-9 w-9 place-items-center rounded-full text-[12px] font-bold text-[#1b39f5]">
                 ح
               </span>
             </div>
@@ -108,10 +109,10 @@ export default function PanelShell({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "shrink-0 rounded-full border px-4 py-2 text-[11.5px] font-semibold",
+                  "shrink-0 rounded-full px-4 py-2 text-[11.5px] font-semibold transition-all",
                   pathname === item.href
-                    ? "border-transparent bg-[#0a152d] text-white"
-                    : "border-slate-200 bg-white text-slate-600",
+                    ? "glass-solid"
+                    : "glass-plate glass-plate-hover text-[#334155]",
                 )}
               >
                 {item.label}
