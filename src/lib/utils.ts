@@ -1,0 +1,24 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+/** قیمت را با جداکننده هزارگان فارسی نمایش می‌دهد */
+export function toman(value: number) {
+  return new Intl.NumberFormat("fa-IR").format(value)
+}
+
+export function faDate(iso: string) {
+  return new Intl.DateTimeFormat("fa-IR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(iso))
+}
+
+export function discountPercent(price: number, compareAt?: number) {
+  if (!compareAt || compareAt <= price) return 0
+  return Math.round(((compareAt - price) / compareAt) * 100)
+}

@@ -1,0 +1,28 @@
+import type { Metadata } from "next"
+import "./globals.css"
+import { siteContent } from "@/lib/data"
+
+export const metadata: Metadata = {
+  title: {
+    default: `${siteContent.brand.nameFa} | ${siteContent.brand.tagline}`,
+    template: `%s | ${siteContent.brand.nameFa}`,
+  },
+  description: siteContent.hero.subheadline,
+  keywords: ["خرید اکانت", "لایسنس", "اچ شاپ", "echshop", "اشتراک پرمیوم"],
+  openGraph: {
+    title: `${siteContent.brand.nameFa} — ${siteContent.brand.tagline}`,
+    description: siteContent.hero.subheadline,
+    locale: "fa_IR",
+    type: "website",
+  },
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="fa" dir="rtl">
+      <body className="font-sans antialiased">{children}</body>
+    </html>
+  )
+}

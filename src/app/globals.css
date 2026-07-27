@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600&display=swap');
+
+@theme {
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Vazirmatn", "Outfit", ui-sans-serif, sans-serif;
+  --font-latin: "Outfit", ui-sans-serif, sans-serif;
+
+  --color-ink: #0a1b33;
+  --color-ink-deep: #0a152d;
+  --color-muted: #64748b;
+  --color-brand: #2783de;
+  --color-brand-soft: #e5f2fc;
+
+  --radius-hero: 48px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #f9fafb;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* اعداد لاتین در متن فارسی خواناتر دیده شوند */
+  .num {
+    font-family: var(--font-latin);
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    unicode-bidi: embed;
+  }
+
+  ::selection {
+    background: var(--color-brand-soft);
+    color: var(--color-ink);
+  }
+}
+
+/* اسکرولر بی‌نهایت لوگوها — در RTL به سمت مخالف حرکت می‌کند */
+@keyframes echshop-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.echshop-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: echshop-marquee 42s linear infinite;
+}
+
+.echshop-marquee:hover .echshop-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .echshop-marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* نوار اسکرول ملایم */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
