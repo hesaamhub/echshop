@@ -48,7 +48,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 hover:text-[#0a1b33] hover:glass transition-colors"
+                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 transition-all hover:text-[#0a1b33] hover:bg-white/70 hover:shadow-[0_8px_20px_-12px_rgba(10,27,51,0.35)]"
               >
                 {item.label}
               </Link>
