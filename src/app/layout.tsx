@@ -1,4 +1,6 @@
 import type { Metadata } from "next"
+import "@fontsource-variable/vazirmatn"
+import "@fontsource-variable/sora"
 import "./globals.css"
 import PromoBanner from "@/components/site/PromoBanner"
 import { siteContent } from "@/lib/data"

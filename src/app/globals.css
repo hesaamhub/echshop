@@ -1,16 +1,12 @@
 @import "tailwindcss";
 
-/* فونت‌ها از دو منبع لود می‌شوند تا اگر یکی در دسترس نبود، دیگری کار کند */
-@import url('https://cdn.jsdelivr.net/npm/@fontsource-variable/vazirmatn@5/index.css');
-@import url('https://cdn.jsdelivr.net/npm/@fontsource/sora@5/600.css');
-@import url('https://cdn.jsdelivr.net/npm/@fontsource/sora@5/700.css');
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700&display=swap');
+/* فونت‌ها از بسته‌های npm لود می‌شوند — بدون هیچ درخواست شبکه‌ای */
 
 @theme {
-  --font-sans: "Vazirmatn", "Vazirmatn Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Vazirmatn", "Vazirmatn Variable", ui-sans-serif, sans-serif;
-  --font-latin: "Sora", ui-sans-serif, sans-serif;
-  --font-wordmark: "Sora", ui-sans-serif, sans-serif;
+  --font-sans: "Vazirmatn Variable", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Vazirmatn Variable", "Vazirmatn", ui-sans-serif, sans-serif;
+  --font-latin: "Sora Variable", "Sora", ui-sans-serif, sans-serif;
+  --font-wordmark: "Sora Variable", "Sora", ui-sans-serif, sans-serif;
 
   --color-ink: #0a1b33;
   --color-ink-deep: #0a152d;
