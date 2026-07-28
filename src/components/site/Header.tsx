@@ -10,6 +10,7 @@ import {
   Heart,
   LayoutDashboard,
   LifeBuoy,
+  LogOut,
   Menu,
   MessageCircle,
   MonitorSmartphone,
@@ -25,6 +26,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { categories } from "@/lib/data"
+import { session } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import Logo from "./Logo"
 
@@ -45,7 +47,7 @@ const categoryIcons: Record<string, LucideIcon> = {
   MessageCircle,
 }
 
-/** آیتم‌های منوی پنل کاربری */
+/** آیتم‌های منوی پنل کاربری (فقط برای کاربر واردشده) */
 const panelItems: Array<{ label: string; href: string; icon: LucideIcon; hint: string }> = [
   { label: "پیشخوان", href: "/dashboard", icon: LayoutDashboard, hint: "خلاصهٔ حساب و سفارش‌ها" },
   { label: "سفارش‌ها و تحویل", href: "/dashboard/orders", icon: Package, hint: "پیگیری وضعیت تحویل" },
@@ -57,17 +59,18 @@ const panelItems: Array<{ label: string; href: string; icon: LucideIcon; hint: s
 ]
 
 export default function Header() {
+  const isLoggedIn = session.isLoggedIn
   const [open, setOpen] = useState(false)
   const [menu, setMenu] = useState<"products" | "panel" | null>(null)
   const [mobileSection, setMobileSection] = useState<"products" | "panel" | null>(null)
-  const navRef = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLDivElement>(null)
 
   // بستن منوی بازشونده با کلیک بیرون یا کلید Escape
   useEffect(() => {
     if (!menu) return
 
     const handlePointer = (event: MouseEvent | TouchEvent) => {
-      if (!navRef.current?.contains(event.target as Node)) setMenu(null)
+      if (!barRef.current?.contains(event.target as Node)) setMenu(null)
     }
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenu(null)
@@ -87,7 +90,7 @@ export default function Header() {
   return (
     <header className="sticky top-11 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-12">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
-        <div className="flex h-14 items-center gap-4">
+        <div ref={barRef} className="flex h-14 items-center gap-4">
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
               <Logo className="h-5 w-5" />
@@ -102,7 +105,7 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav ref={navRef} className="hidden lg:flex items-center gap-1 mr-2">
+          <nav className="hidden lg:flex items-center gap-1 mr-2">
             {/* محصولات — بازشونده */}
             <div
               className="relative"
@@ -118,7 +121,7 @@ export default function Header() {
 
               <AnimatePresence>
                 {menu === "products" ? (
-                  <DropdownPanel className="w-[440px]">
+                  <DropdownPanel align="right" className="w-[440px]">
                     <div className="grid grid-cols-2 gap-1">
                       {categories.map((category) => {
                         const Icon = categoryIcons[category.icon] ?? Sparkles
@@ -159,54 +162,6 @@ export default function Header() {
               </AnimatePresence>
             </div>
 
-            {/* پنل کاربری — بازشونده */}
-            <div
-              className="relative"
-              onMouseEnter={() => setMenu("panel")}
-              onMouseLeave={() => setMenu(null)}
-            >
-              <MenuTrigger
-                label="پنل کاربری"
-                href="/dashboard"
-                active={menu === "panel"}
-                onToggle={() => setMenu((value) => (value === "panel" ? null : "panel"))}
-              />
-
-              <AnimatePresence>
-                {menu === "panel" ? (
-                  <DropdownPanel className="w-[300px]">
-                    {panelItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setMenu(null)}
-                        className="group flex items-center gap-2.5 rounded-2xl px-3 py-2.5 transition-colors hover:bg-[#1b39f5]/6"
-                      >
-                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5]">
-                          <item.icon className="h-4 w-4" />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
-                            {item.label}
-                          </span>
-                          <span className="block truncate text-[10.5px] text-slate-400">{item.hint}</span>
-                        </span>
-                      </Link>
-                    ))}
-
-                    <Link
-                      href="/login"
-                      onClick={() => setMenu(null)}
-                      className="mt-2 flex items-center justify-between rounded-2xl bg-[#1b39f5]/6 px-3 py-2.5 text-[12px] font-bold text-[#1b39f5] transition-colors hover:bg-[#1b39f5]/12"
-                    >
-                      ورود / ثبت‌نام
-                      <ChevronDown className="h-4 w-4 rotate-90" />
-                    </Link>
-                  </DropdownPanel>
-                ) : null}
-              </AnimatePresence>
-            </div>
-
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -231,22 +186,104 @@ export default function Header() {
           </form>
 
           <div className="flex items-center gap-1.5 shrink-0">
-            <IconLink href="/dashboard/notifications" label="اطلاع‌رسانی‌ها" badge="2">
-              <Bell className="h-4 w-4" />
-            </IconLink>
+            {isLoggedIn ? (
+              <IconLink href="/dashboard/notifications" label="اطلاع‌رسانی‌ها" badge="2">
+                <Bell className="h-4 w-4" />
+              </IconLink>
+            ) : null}
+
             <IconLink href="/cart" label="سبد خرید" badge="3">
               <ShoppingCart className="h-4 w-4" />
             </IconLink>
-            <IconLink href="/dashboard" label="پنل کاربری">
-              <LayoutDashboard className="h-4 w-4" />
-            </IconLink>
-            <Link
-              href="/login"
-              className="glass-solid hidden sm:inline-flex items-center gap-2 rounded-[14px] px-4 py-2 text-[12px] font-semibold"
-            >
-              <UserRound className="h-4 w-4" />
-              ورود / ثبت‌نام
-            </Link>
+
+            {/* پنل کاربری — فقط برای کاربر واردشده؛ با موس یا لمس باز می‌شود */}
+            {isLoggedIn ? (
+              <div
+                className="relative"
+                onMouseEnter={() => setMenu("panel")}
+                onMouseLeave={() => setMenu(null)}
+              >
+                <Link
+                  href="/dashboard"
+                  aria-label="پنل کاربری"
+                  title="پنل کاربری"
+                  aria-expanded={menu === "panel"}
+                  onClick={(event) => {
+                    if (menu !== "panel") {
+                      event.preventDefault()
+                      setMenu("panel")
+                    }
+                  }}
+                  className={cn(
+                    "glass-plate glass-plate-hover relative grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5]",
+                    menu === "panel" && "bg-[#1b39f5]/10",
+                  )}
+                >
+                  <LayoutDashboard className="h-4 w-4" />
+                </Link>
+
+                <AnimatePresence>
+                  {menu === "panel" ? (
+                    <DropdownPanel align="left" className="w-[300px]">
+                      <div className="flex items-center gap-2.5 rounded-2xl bg-[#1b39f5]/6 px-3 py-2.5">
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#1b39f5] text-white">
+                          <UserRound className="h-4 w-4" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block truncate text-[12.5px] font-bold text-[#0a1b33]">
+                            {session.user.name}
+                          </span>
+                          <span dir="ltr" className="block truncate text-right text-[10.5px] text-slate-400">
+                            {session.user.email}
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="mt-1">
+                        {panelItems.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMenu(null)}
+                            className="group flex items-center gap-2.5 rounded-2xl px-3 py-2.5 transition-colors hover:bg-[#1b39f5]/6"
+                          >
+                            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5]">
+                              <item.icon className="h-4 w-4" />
+                            </span>
+                            <span className="min-w-0 flex-1">
+                              <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
+                                {item.label}
+                              </span>
+                              <span className="block truncate text-[10.5px] text-slate-400">
+                                {item.hint}
+                              </span>
+                            </span>
+                          </Link>
+                        ))}
+                      </div>
+
+                      <Link
+                        href="/login"
+                        onClick={() => setMenu(null)}
+                        className="mt-1 flex items-center justify-between rounded-2xl px-3 py-2.5 text-[12px] font-bold text-[#A8382C] transition-colors hover:bg-[#FCEAE8]"
+                      >
+                        خروج از حساب
+                        <LogOut className="h-4 w-4" />
+                      </Link>
+                    </DropdownPanel>
+                  ) : null}
+                </AnimatePresence>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="glass-solid hidden sm:inline-flex items-center gap-2 rounded-[14px] px-4 py-2 text-[12px] font-semibold"
+              >
+                <UserRound className="h-4 w-4" />
+                ورود / ثبت‌نام
+              </Link>
+            )}
+
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
@@ -314,26 +351,28 @@ export default function Header() {
             </Link>
           </MobileSection>
 
-          {/* پنل کاربری — با لمس باز می‌شود */}
-          <MobileSection
-            label="پنل کاربری"
-            open={mobileSection === "panel"}
-            onToggle={() => setMobileSection((value) => (value === "panel" ? null : "panel"))}
-          >
-            {panelItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5 text-[12.5px] font-semibold text-[#334155]"
-              >
-                <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#1b39f5]/8 text-[#1b39f5]">
-                  <item.icon className="h-3.5 w-3.5" />
-                </span>
-                {item.label}
-              </Link>
-            ))}
-          </MobileSection>
+          {/* پنل کاربری — فقط برای کاربر واردشده */}
+          {isLoggedIn ? (
+            <MobileSection
+              label="پنل کاربری"
+              open={mobileSection === "panel"}
+              onToggle={() => setMobileSection((value) => (value === "panel" ? null : "panel"))}
+            >
+              {panelItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5 text-[12.5px] font-semibold text-[#334155]"
+                >
+                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#1b39f5]/8 text-[#1b39f5]">
+                    <item.icon className="h-3.5 w-3.5" />
+                  </span>
+                  {item.label}
+                </Link>
+              ))}
+            </MobileSection>
+          ) : null}
 
           {[...navItems, { label: "سبد خرید", href: "/cart" }].map((item) => (
             <Link
@@ -346,13 +385,15 @@ export default function Header() {
             </Link>
           ))}
 
-          <Link
-            href="/login"
-            onClick={() => setOpen(false)}
-            className="glass-solid mt-2 block rounded-2xl px-4 py-3 text-center text-[13px] font-semibold"
-          >
-            ورود / ثبت‌نام
-          </Link>
+          {isLoggedIn ? null : (
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="glass-solid mt-2 block rounded-2xl px-4 py-3 text-center text-[13px] font-semibold"
+            >
+              ورود / ثبت‌نام
+            </Link>
+          )}
         </div>
       </div>
     </header>
@@ -400,9 +441,11 @@ function MenuTrigger({
 
 /** کارت شیشه‌ای منوی بازشونده */
 function DropdownPanel({
+  align = "right",
   className,
   children,
 }: {
+  align?: "right" | "left"
   className?: string
   children: React.ReactNode
 }) {
@@ -413,7 +456,8 @@ function DropdownPanel({
       exit={{ opacity: 0, y: 6, scale: 0.98 }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "absolute right-0 top-full z-50 mt-2 rounded-3xl border border-[#1b39f5]/10 bg-white/95 p-2 shadow-[0_30px_70px_-32px_rgba(27,57,245,0.6)] backdrop-blur-xl",
+        "absolute top-full z-50 mt-2 rounded-3xl border border-[#1b39f5]/10 bg-white/95 p-2 shadow-[0_30px_70px_-32px_rgba(27,57,245,0.6)] backdrop-blur-xl",
+        align === "right" ? "right-0" : "left-0",
         className,
       )}
     >
@@ -487,4 +531,5 @@ function IconLink({
       ) : null}
     </Link>
   )
+}
 }
