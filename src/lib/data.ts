@@ -106,42 +106,42 @@ export const categories: Category[] = [
     title: "موسیقی و ویدیو",
     description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
     icon: "Music",
-    count: 24,
+    count: 6,
   },
   {
     slug: "ai-tools",
     title: "هوش مصنوعی",
     description: "اکانت ChatGPT Plus، Claude، Midjourney و ابزارهای مولد.",
     icon: "Sparkles",
-    count: 18,
+    count: 5,
   },
   {
     slug: "design",
     title: "طراحی و گرافیک",
     description: "لایسنس Adobe، Canva Pro، Figma و منابع طراحی.",
     icon: "PenTool",
-    count: 15,
+    count: 5,
   },
   {
     slug: "gaming",
     title: "گیمینگ",
     description: "گیفت‌کارت استیم، اکانت گیم‌پس، پلی‌استیشن پلاس.",
     icon: "Gamepad2",
-    count: 21,
+    count: 5,
   },
   {
     slug: "software",
     title: "نرم‌افزار و لایسنس",
-    description: "ویندوز، آفیس، آنتی‌ویروس و ابزارهای کاربردی.",
+    description: "ویندوز، آفیس، وی‌پی‌ان و ابزارهای کاربردی.",
     icon: "MonitorSmartphone",
-    count: 27,
+    count: 6,
   },
   {
     slug: "social",
     title: "شبکه‌های اجتماعی",
     description: "تلگرام پرمیوم، دیسکورد نیترو و خدمات ارتقای اکانت.",
     icon: "MessageCircle",
-    count: 12,
+    count: 4,
   },
 ]
 
@@ -337,134 +337,200 @@ export const products: Product[] = [
     features: ["آپلود فایل تا ۴ گیگابایت", "سرعت دانلود نامحدود", "استیکر و ایموجی ویژه", "تحویل خودکار از API"],
     faq: [{ q: "یوزرنیم لازم است؟", a: "بله، فقط یوزرنیم تلگرام شما برای ارتقا کافی است." }],
   },
-]
 
-/* -------------------------------------------------------------------------- */
-/*  بلاگ                                                                      */
-/* -------------------------------------------------------------------------- */
-
-export const posts: Post[] = [
+  /* ------------------------------ موسیقی و ویدیو ----------------------------- */
   {
-    slug: "how-to-buy-safe-account",
-    title: "راهنمای کامل خرید امن اکانت‌های پرمیوم",
-    excerpt: "چطور بفهمیم یک فروشنده اکانت معتبر است؟ هفت نشانهٔ مهم که قبل از پرداخت باید بررسی کنید.",
-    body: "بازار فروش اکانت‌های دیجیتال در ایران بزرگ شده و همین موضوع باعث شده فروشندگان غیرمعتبر هم وارد شوند. در این مقاله هفت معیار کلیدی را بررسی می‌کنیم: وجود درگاه پرداخت رسمی، گارانتی مکتوب، پنل کاربری برای پیگیری سفارش، سابقهٔ فعالیت، شفافیت در نوع تحویل، کیفیت پشتیبانی، و سیاست بازگشت وجه.",
-    category: "راهنمای خرید",
-    author: "تیم اچ‌شاپ",
-    readMinutes: 7,
-    publishedAt: "2026-06-14",
-    cover: "linear-gradient(135deg,#2783de,#0a1b33)",
-  },
-  {
-    slug: "chatgpt-plus-vs-free",
-    title: "ChatGPT Plus در برابر نسخهٔ رایگان: آیا ارزش خرید دارد؟",
-    excerpt: "مقایسهٔ دقیق سرعت، مدل‌ها و امکانات دو نسخه برای اینکه بدانید کدام مناسب کار شماست.",
-    body: "نسخهٔ رایگان برای پرسش‌های روزمره کافی است، اما اگر با فایل کار می‌کنید، به تحلیل داده نیاز دارید یا حجم استفادهٔ روزانه‌تان بالاست، تفاوت محسوس می‌شود. در این مقاله بر اساس سنجه‌های واقعی مقایسه می‌کنیم.",
-    category: "هوش مصنوعی",
-    author: "تیم اچ‌شاپ",
-    readMinutes: 5,
-    publishedAt: "2026-06-28",
-    cover: "linear-gradient(135deg,#10A37F,#0a1b33)",
-  },
-  {
-    slug: "spotify-upgrade-guide",
-    title: "ارتقای اکانت اسپاتیفای بدون دادن رمز — چطور کار می‌کند؟",
-    excerpt: "روش ارتقای اکانت شخصی را قدم‌به‌قدم توضیح می‌دهیم و می‌گوییم چرا امن‌ترین گزینه است.",
-    body: "در روش ارتقا، اشتراک روی همان اکانتی که خودتان ساخته‌اید فعال می‌شود؛ پلی‌لیست‌ها، تاریخچه و توصیه‌های شخصی‌سازی‌شده حفظ می‌شوند و نیازی به اشتراک‌گذاری رمز نیست.",
-    category: "آموزش",
-    author: "تیم اچ‌شاپ",
-    readMinutes: 4,
-    publishedAt: "2026-07-05",
-    cover: "linear-gradient(135deg,#1DB954,#0a1b33)",
-  },
-  {
-    slug: "design-license-comparison",
-    title: "ادوبی، کانوا یا فیگما؟ انتخاب لایسنس مناسب طراحان",
-    excerpt: "سه اکوسیستم محبوب طراحی را از نظر هزینه، کاربرد و منحنی یادگیری مقایسه می‌کنیم.",
-    body: "اگر کار شما ادیت عکس و ویدیوی حرفه‌ای است، ادوبی جایگزین ندارد. برای محتوای سریع شبکه‌های اجتماعی کانوا سرعت بی‌نظیری دارد و برای طراحی محصول و رابط کاربری، فیگما استاندارد صنعت است.",
-    category: "طراحی",
-    author: "تیم اچ‌شاپ",
-    readMinutes: 6,
-    publishedAt: "2026-07-19",
-    cover: "linear-gradient(135deg,#7D2AE8,#0a1b33)",
-  },
-]
-
-/* -------------------------------------------------------------------------- */
-/*  سفارش‌ها و تیکت‌ها (نمونه)                                                */
-/* -------------------------------------------------------------------------- */
-
-export const orders: Order[] = [
-  { id: "ECH-10482", customer: "حسام رضایی", product: "اکانت ChatGPT Plus", plan: "۱ ماهه — اکانت اختصاصی", amount: 1180000, status: "delivered", delivery: "stock", createdAt: "2026-07-26" },
-  { id: "ECH-10481", customer: "مریم احمدی", product: "اشتراک اسپاتیفای پرمیوم", plan: "۳ ماهه", amount: 760000, status: "paid", delivery: "upgrade", createdAt: "2026-07-26" },
-  { id: "ECH-10480", customer: "سینا کریمی", product: "تلگرام پرمیوم", plan: "۱۲ ماهه", amount: 2900000, status: "delivered", delivery: "api", createdAt: "2026-07-25" },
-  { id: "ECH-10479", customer: "نگار مرادی", product: "لایسنس ادوبی کریتیو کلاد", plan: "۱۲ ماهه", amount: 8900000, status: "pending", delivery: "manual", createdAt: "2026-07-25" },
-  { id: "ECH-10478", customer: "امیر توکلی", product: "اشتراک نتفلیکس پرمیوم", plan: "۱ ماهه", amount: 420000, status: "failed", delivery: "stock", createdAt: "2026-07-24" },
-  { id: "ECH-10477", customer: "زهرا نیک‌پور", product: "دیسکورد نیترو", plan: "۱ ماهه", amount: 380000, status: "refunded", delivery: "gift_code", createdAt: "2026-07-23" },
-]
-
-export const tickets: Ticket[] = [
-  {
-    id: "TK-2091",
-    subject: "اکانت نتفلیکس پروفایل را نمی‌پذیرد",
-    department: "پشتیبانی فنی",
-    status: "answered",
-    priority: "زیاد",
-    updatedAt: "2026-07-26",
-    messages: [
-      { from: "user", body: "سلام، پین پروفایل کار نمی‌کند.", at: "2026-07-26" },
-      { from: "support", body: "سلام، پین بازنشانی شد. لطفاً مجدد امتحان کنید و نتیجه را اعلام بفرمایید.", at: "2026-07-26" },
+    id: "p-9",
+    slug: "apple-music",
+    title: "اشتراک اپل موزیک",
+    brand: "Apple Music",
+    logo: "https://cdn.simpleicons.org/applemusic/FA243C",
+    categorySlug: "music-video",
+    excerpt: "بیش از ۱۰۰ میلیون قطعه با کیفیت Lossless و صدای فضایی.",
+    description:
+      "اشتراک Apple Music روی اپل‌آیدی شخصی شما فعال می‌شود؛ بدون تغییر رمز و با حفظ کتابخانه و پلی‌لیست‌های فعلی.",
+    rating: 4.7,
+    sold: 2310,
+    gradient: "from-[#FA243C] to-[#8b0a20]",
+    plans: [
+      { id: "pl-19", title: "۳ ماهه — ارتقای اپل‌آیدی", price: 590000, compareAt: 720000, delivery: "upgrade", stock: 400 },
+      { id: "pl-20", title: "۱۲ ماهه — ارتقای اپل‌آیدی", price: 1980000, compareAt: 2500000, delivery: "upgrade", stock: 110 },
     ],
+    features: ["کیفیت Lossless و Spatial Audio", "بدون تبلیغ", "دانلود آفلاین", "حفظ پلی‌لیست‌های فعلی"],
+    faq: [{ q: "روی اندروید هم کار می‌کند؟", a: "بله، اپلیکیشن Apple Music روی اندروید هم در دسترس است." }],
   },
   {
-    id: "TK-2088",
-    subject: "پرداخت انجام شد اما سفارش ثبت نشد",
-    department: "مالی و پرداخت",
-    status: "open",
-    priority: "زیاد",
-    updatedAt: "2026-07-25",
-    messages: [{ from: "user", body: "مبلغ از حساب کسر شد ولی سفارشی ندارم.", at: "2026-07-25" }],
-  },
-  {
-    id: "TK-2080",
-    subject: "امکان تمدید اشتراک اسپاتیفای",
-    department: "پیش از خرید",
-    status: "closed",
-    priority: "کم",
-    updatedAt: "2026-07-21",
-    messages: [
-      { from: "user", body: "تمدید روی همان اکانت ممکن است؟", at: "2026-07-20" },
-      { from: "support", body: "بله، از پنل کاربری گزینهٔ تمدید فعال است.", at: "2026-07-21" },
+    id: "p-10",
+    slug: "soundcloud-go-plus",
+    title: "ساندکلاد گو پلاس",
+    brand: "SoundCloud",
+    logo: "https://cdn.simpleicons.org/soundcloud/FF5500",
+    categorySlug: "music-video",
+    excerpt: "دسترسی کامل به کتابخانهٔ موسیقی مستقل بدون تبلیغ.",
+    description:
+      "اشتراک SoundCloud Go+ برای گوش دادن بدون تبلیغ، دانلود آفلاین و دسترسی به کاتالوگ کامل آهنگ‌ها.",
+    rating: 4.4,
+    sold: 780,
+    gradient: "from-[#FF5500] to-[#a33600]",
+    plans: [
+      { id: "pl-21", title: "۱ ماهه — ارتقای اکانت", price: 240000, delivery: "upgrade", stock: 300 },
+      { id: "pl-22", title: "۶ ماهه — ارتقای اکانت", price: 1250000, compareAt: 1440000, delivery: "upgrade", stock: 80 },
     ],
+    features: ["بدون تبلیغ", "دانلود آفلاین", "کیفیت بالای پخش", "پشتیبانی از هنرمندان مستقل"],
+    faq: [{ q: "اکانت خودم باقی می‌ماند؟", a: "بله، اشتراک روی اکانت خودتان فعال می‌شود." }],
   },
-]
+  {
+    id: "p-11",
+    slug: "crunchyroll-premium",
+    title: "اشتراک کرانچی‌رول پرمیوم",
+    brand: "Crunchyroll",
+    logo: "https://cdn.simpleicons.org/crunchyroll/F47521",
+    categorySlug: "music-video",
+    excerpt: "بزرگ‌ترین کتابخانهٔ انیمه با زیرنویس و دوبلهٔ رسمی.",
+    description:
+      "اشتراک Crunchyroll Mega Fan با تماشای بدون تبلیغ، دسترسی همزمان با پخش ژاپن و تماشای آفلاین.",
+    rating: 4.6,
+    sold: 1120,
+    gradient: "from-[#F47521] to-[#a34a0c]",
+    plans: [
+      { id: "pl-23", title: "۱ ماهه — اکانت اختصاصی", price: 350000, delivery: "stock", stock: 45 },
+      { id: "pl-24", title: "۳ ماهه — اکانت اختصاصی", price: 950000, compareAt: 1150000, delivery: "stock", stock: 22 },
+    ],
+    features: ["بدون تبلیغ", "پخش همزمان با ژاپن", "تماشای آفلاین", "پشتیبانی از چند دستگاه"],
+    faq: [{ q: "کیفیت پخش چقدر است؟", a: "تا کیفیت Full HD بسته به اینترنت شما." }],
+  },
 
-export const notifications = [
-  { id: "n-1", title: "سفارش ECH-10482 تحویل شد", body: "اطلاعات ورود اکانت در بخش سفارش‌ها قابل مشاهده است.", at: "2026-07-26", unread: true },
-  { id: "n-2", title: "۲۵٪ تخفیف روی محصولات هوش مصنوعی", body: "تا پایان هفته با کد AI25 خرید کنید.", at: "2026-07-24", unread: true },
-  { id: "n-3", title: "کیف پول شما شارژ شد", body: "مبلغ ۵۰۰٬۰۰۰ تومان به کیف پول شما اضافه شد.", at: "2026-07-20", unread: false },
-]
+  /* -------------------------------- هوش مصنوعی -------------------------------- */
+  {
+    id: "p-12",
+    slug: "claude-pro",
+    title: "اکانت Claude Pro",
+    brand: "Anthropic",
+    logo: "https://cdn.simpleicons.org/anthropic/D97757",
+    categorySlug: "ai-tools",
+    excerpt: "دستیار هوشمند با پنجرهٔ متنی بلند برای تحلیل اسناد طولانی.",
+    description:
+      "اکانت Claude Pro با محدودیت استفادهٔ بسیار بالاتر، دسترسی به جدیدترین مدل‌ها و پروژه‌های اختصاصی برای کار حرفه‌ای.",
+    badge: "جدید",
+    rating: 4.8,
+    sold: 1980,
+    gradient: "from-[#D97757] to-[#8c4127]",
+    plans: [
+      { id: "pl-25", title: "۱ ماهه — اکانت اختصاصی", price: 1250000, compareAt: 1490000, delivery: "stock", stock: 30 },
+      { id: "pl-26", title: "۱ ماهه — ارتقای اکانت خودتان", price: 1390000, delivery: "upgrade", stock: 999 },
+    ],
+    features: ["پنجرهٔ متنی بسیار بلند", "آپلود و تحلیل اسناد", "پروژه‌های اختصاصی", "اولویت دسترسی در ساعات شلوغ"],
+    faq: [{ q: "محدودیت پیام دارد؟", a: "سقف استفاده چندین برابر نسخهٔ رایگان است." }],
+  },
+  {
+    id: "p-13",
+    slug: "midjourney",
+    title: "اشتراک میدجرنی",
+    brand: "Midjourney",
+    logo: "https://cdn.simpleicons.org/midjourney/000000",
+    categorySlug: "ai-tools",
+    excerpt: "ساخت تصاویر حرفه‌ای با هوش مصنوعی در بالاترین کیفیت.",
+    description:
+      "اشتراک Midjourney روی اکانت دیسکورد شما فعال می‌شود؛ شامل ساعات پردازش سریع و حق استفادهٔ تجاری از خروجی‌ها.",
+    rating: 4.7,
+    sold: 1460,
+    gradient: "from-[#1f1f2e] to-[#000000]",
+    plans: [
+      { id: "pl-27", title: "۱ ماهه — Basic Plan", price: 1150000, delivery: "upgrade", stock: 120 },
+      { id: "pl-28", title: "۱ ماهه — Standard Plan", price: 2250000, compareAt: 2600000, delivery: "upgrade", stock: 60 },
+    ],
+    features: ["خروجی با کیفیت بالا", "حق استفادهٔ تجاری", "ساعات پردازش سریع", "فعال‌سازی روی اکانت خودتان"],
+    faq: [{ q: "به دیسکورد نیاز دارم؟", a: "بله، یک اکانت دیسکورد رایگان کافی است." }],
+  },
+  {
+    id: "p-14",
+    slug: "perplexity-pro",
+    title: "اشتراک Perplexity Pro",
+    brand: "Perplexity",
+    logo: "https://cdn.simpleicons.org/perplexity/20808D",
+    categorySlug: "ai-tools",
+    excerpt: "جستجوی هوشمند با منابع دقیق و دسترسی به مدل‌های پیشرفته.",
+    description:
+      "اشتراک Perplexity Pro با جستجوی نامحدود، انتخاب مدل و آپلود فایل؛ مناسب پژوهش، تحقیق بازار و کارهای دانشجویی.",
+    rating: 4.6,
+    sold: 1240,
+    gradient: "from-[#20808D] to-[#0d4b53]",
+    plans: [
+      { id: "pl-29", title: "۱ ماهه — اکانت اختصاصی", price: 890000, delivery: "stock", stock: 38 },
+      { id: "pl-30", title: "۱۲ ماهه — اکانت اختصاصی", price: 6900000, compareAt: 8500000, delivery: "stock", stock: 14 },
+    ],
+    features: ["جستجوی نامحدود Pro", "انتخاب مدل دلخواه", "آپلود و تحلیل فایل", "ذکر منابع در پاسخ‌ها"],
+    faq: [{ q: "برای تحقیق دانشگاهی مناسب است؟", a: "بله، پاسخ‌ها همراه منبع ارائه می‌شوند." }],
+  },
+  {
+    id: "p-15",
+    slug: "github-copilot",
+    title: "اشتراک GitHub Copilot",
+    brand: "GitHub",
+    logo: "https://cdn.simpleicons.org/github/181717",
+    categorySlug: "ai-tools",
+    excerpt: "دستیار کدنویسی هوشمند در ویژوال استودیو کد و جت‌برینز.",
+    description:
+      "اشتراک GitHub Copilot روی اکانت گیت‌هاب شخصی شما فعال می‌شود و روی تمام ادیتورهای پشتیبانی‌شده قابل استفاده است.",
+    rating: 4.8,
+    sold: 1610,
+    gradient: "from-[#24292e] to-[#000000]",
+    plans: [
+      { id: "pl-31", title: "۱ ماهه — ارتقای اکانت گیت‌هاب", price: 490000, delivery: "upgrade", stock: 250 },
+      { id: "pl-32", title: "۱۲ ماهه — ارتقای اکانت گیت‌هاب", price: 4200000, compareAt: 5100000, delivery: "upgrade", stock: 70 },
+    ],
+    features: ["تکمیل خودکار کد", "چت درون ادیتور", "پشتیبانی از زبان‌های متنوع", "فعال‌سازی روی اکانت خودتان"],
+    faq: [{ q: "روی چند دستگاه کار می‌کند؟", a: "روی تمام دستگاه‌هایی که با اکانت خودتان وارد شوید." }],
+  },
 
-/* -------------------------------------------------------------------------- */
-/*  توابع کمکی                                                                */
-/* -------------------------------------------------------------------------- */
-
-export function getProduct(slug: string) {
-  return products.find((p) => p.slug === slug)
-}
-
-export function getCategory(slug: string) {
-  return categories.find((c) => c.slug === slug)
-}
-
-export function getPost(slug: string) {
-  return posts.find((p) => p.slug === slug)
-}
-
-export function productsByCategory(slug: string) {
-  return products.filter((p) => p.categorySlug === slug)
-}
-
-export function lowestPrice(p: Product) {
-  return Math.min(...p.plans.map((pl) => pl.price))
-}
+  /* ------------------------------- طراحی و گرافیک ------------------------------ */
+  {
+    id: "p-16",
+    slug: "figma-professional",
+    title: "اشتراک فیگما پروفشنال",
+    brand: "Figma",
+    logo: "https://cdn.simpleicons.org/figma/F24E1E",
+    categorySlug: "design",
+    excerpt: "طراحی محصول و رابط کاربری با امکانات تیمی نامحدود.",
+    description:
+      "پلن Figma Professional روی ایمیل شما فعال می‌شود؛ شامل فایل‌های نامحدود، تاریخچهٔ کامل نسخه‌ها و کتابخانهٔ کامپوننت تیمی.",
+    rating: 4.8,
+    sold: 1730,
+    gradient: "from-[#F24E1E] to-[#A259FF]",
+    plans: [
+      { id: "pl-33", title: "۱ ماهه — ارتقای اکانت", price: 690000, delivery: "upgrade", stock: 150 },
+      { id: "pl-34", title: "۱۲ ماهه — ارتقای اکانت", price: 5900000, compareAt: 7200000, delivery: "upgrade", stock: 45 },
+    ],
+    features: ["فایل و پروژهٔ نامحدود", "تاریخچهٔ کامل نسخه‌ها", "کتابخانهٔ کامپوننت تیمی", "اشتراک‌گذاری پیشرفته"],
+    faq: [{ q: "فایل‌های فعلیم حفظ می‌شوند؟", a: "بله، ارتقا روی همان اکانت انجام می‌شود." }],
+  },
+  {
+    id: "p-17",
+    slug: "envato-elements",
+    title: "اشتراک انواتو المنتس",
+    brand: "Envato",
+    logo: "https://cdn.simpleicons.org/envato/81B441",
+    categorySlug: "design",
+    excerpt: "دانلود نامحدود قالب، فونت، موسیقی و ویدیوی استوک.",
+    description:
+      "اشتراک Envato Elements با دانلود نامحدود از میلیون‌ها منبع گرافیکی و لایسنس تجاری برای تمام دانلودها.",
+    rating: 4.5,
+    sold: 960,
+    gradient: "from-[#81B441] to-[#4a6b25]",
+    plans: [
+      { id: "pl-35", title: "۱ ماهه — اکانت اختصاصی", price: 780000, delivery: "stock", stock: 26 },
+      { id: "pl-36", title: "دانلود تکی — سفارش دستی", price: 120000, delivery: "manual", stock: 999 },
+    ],
+    features: ["دانلود نامحدود", "لایسنس تجاری", "قالب وردپرس و پاورپوینت", "موسیقی و ویدیوی استوک"],
+    faq: [{ q: "دانلود تکی چگونه است؟", a: "لینک فایل مورد نظر را ثبت کنید؛ پشتیبانی دانلود را برای شما ارسال می‌کند." }],
+  },
+  {
+    id: "p-18",
+    slug: "freepik-premium",
+    title: "اشتراک فری‌پیک پریمیوم",
+    brand: "Freepik",
+    logo: "https://cdn.simpleicons.org/freepik/1273EB",
+    categorySlug: "design",
+    excerpt: "میلیون‌ها وکتور، عکس و قالب آماده بدون محدودیت.",
+    description:
+      "اشتر
