@@ -8,7 +8,7 @@ export const productsC: Product[] = [
     slug: "xbox-game-pass",
     title: "اکانت ایکس‌باکس گیم‌پس آلتیمیت",
     brand: "Xbox",
-    logo: "https://cdn.simpleicons.org/xbox/107C10",
+    logo: "xbox",
     categorySlug: "gaming",
     excerpt: "دسترسی به صدها بازی روی کنسول، کامپیوتر و کلود گیمینگ.",
     description:
@@ -29,7 +29,7 @@ export const productsC: Product[] = [
     slug: "playstation-plus",
     title: "اشتراک پلی‌استیشن پلاس",
     brand: "PlayStation",
-    logo: "https://cdn.simpleicons.org/playstation/003791",
+    logo: "playstation",
     categorySlug: "gaming",
     excerpt: "بازی آنلاین، بازی‌های ماهانهٔ رایگان و تخفیف‌های ویژه.",
     description:
@@ -49,7 +49,7 @@ export const productsC: Product[] = [
     slug: "nintendo-eshop",
     title: "گیفت‌کارت نینتندو ای‌شاپ",
     brand: "Nintendo",
-    logo: "https://cdn.simpleicons.org/nintendo/E60012",
+    logo: "nintendo",
     categorySlug: "gaming",
     excerpt: "شارژ اعتبار نینتندو سوییچ برای خرید بازی از ای‌شاپ.",
     description:
@@ -69,7 +69,7 @@ export const productsC: Product[] = [
     slug: "epic-games-gift",
     title: "گیفت‌کارت اپیک گیمز",
     brand: "Epic Games",
-    logo: "https://cdn.simpleicons.org/epicgames/313131",
+    logo: "epicgames",
     categorySlug: "gaming",
     excerpt: "خرید بازی و آیتم فورتنایت با اعتبار اپیک گیمز.",
     description:
@@ -89,7 +89,7 @@ export const productsC: Product[] = [
     slug: "microsoft-365",
     title: "اشتراک مایکروسافت ۳۶۵",
     brand: "Microsoft",
-    logo: "https://cdn.simpleicons.org/microsoft/5E5E5E",
+    logo: "microsoft",
     categorySlug: "software",
     excerpt: "ورد، اکسل، پاورپوینت و یک ترابایت فضای وان‌درایو.",
     description:
@@ -110,7 +110,7 @@ export const productsC: Product[] = [
     slug: "windows-11-pro",
     title: "لایسنس ویندوز ۱۱ پرو",
     brand: "Windows",
-    logo: "https://cdn.simpleicons.org/windows/0078D4",
+    logo: "windows",
     categorySlug: "software",
     excerpt: "لایسنس اورجینال و مادام‌العمر برای فعال‌سازی ویندوز.",
     description:
@@ -130,7 +130,7 @@ export const productsC: Product[] = [
     slug: "nordvpn",
     title: "اشتراک NordVPN",
     brand: "NordVPN",
-    logo: "https://cdn.simpleicons.org/nordvpn/4687FF",
+    logo: "nordvpn",
     categorySlug: "software",
     excerpt: "اینترنت امن و پرسرعت با سرورهای اختصاصی در ۶۰ کشور.",
     description:
@@ -150,7 +150,7 @@ export const productsC: Product[] = [
     slug: "jetbrains-all-products",
     title: "لایسنس جت‌برینز All Products",
     brand: "JetBrains",
-    logo: "https://cdn.simpleicons.org/jetbrains/000000",
+    logo: "jetbrains",
     categorySlug: "software",
     excerpt: "دسترسی به تمام IDEهای جت‌برینز شامل PyCharm و WebStorm.",
     description:
@@ -170,7 +170,7 @@ export const productsC: Product[] = [
     slug: "notion-plus",
     title: "اشتراک نوشن پلاس",
     brand: "Notion",
-    logo: "https://cdn.simpleicons.org/notion/000000",
+    logo: "notion",
     categorySlug: "software",
     excerpt: "فضای کاری نامحدود با هوش مصنوعی نوشن برای تیم و شخص.",
     description:
@@ -190,7 +190,7 @@ export const productsC: Product[] = [
     slug: "zoom-pro",
     title: "اشتراک زوم پرو",
     brand: "Zoom",
-    logo: "https://cdn.simpleicons.org/zoom/0B5CFF",
+    logo: "zoom",
     categorySlug: "software",
     excerpt: "جلسات بدون محدودیت زمانی با ضبط ابری و تا ۱۰۰ شرکت‌کننده.",
     description:
@@ -210,7 +210,7 @@ export const productsC: Product[] = [
     slug: "linkedin-premium",
     title: "اشتراک لینکدین پریمیوم",
     brand: "LinkedIn",
-    logo: "https://cdn.simpleicons.org/linkedin/0A66C2",
+    logo: "linkedin",
     categorySlug: "social",
     excerpt: "دیده‌شدن بیشتر، InMail و دسترسی به دوره‌های لینکدین لرنینگ.",
     description:
@@ -230,7 +230,7 @@ export const productsC: Product[] = [
     slug: "twitch-turbo",
     title: "اشتراک توییچ توربو",
     brand: "Twitch",
-    logo: "https://cdn.simpleicons.org/twitch/9146FF",
+    logo: "twitch",
     categorySlug: "social",
     excerpt: "تماشای استریم بدون تبلیغ با نشان و ایموجی اختصاصی.",
     description:

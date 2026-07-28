@@ -5,18 +5,6 @@ export type BrandLogo = {
   gradient: { from: string; to: string }
 }
 
-/**
- * منابع لوگو به ترتیب امتحان می‌شوند تا در صورت در دسترس نبودن یک CDN،
- * لوگو از منبع بعدی بارگذاری شود.
- */
-export function logoSources(logo: BrandLogo): string[] {
-  return [
-    "https://cdn.simpleicons.org/" + logo.slug + "/" + logo.color,
-    "https://cdn.jsdelivr.net/npm/simple-icons@13/icons/" + logo.slug + ".svg",
-    "https://unpkg.com/simple-icons@13/icons/" + logo.slug + ".svg",
-  ]
-}
-
 export const brandLogos: BrandLogo[] = [
   { name: "Spotify", slug: "spotify", color: "1DB954", gradient: { from: "#1DB954", to: "#0f7a37" } },
   { name: "Netflix", slug: "netflix", color: "E50914", gradient: { from: "#E50914", to: "#8b0209" } },

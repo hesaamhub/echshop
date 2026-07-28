@@ -8,7 +8,7 @@ export const productsB: Product[] = [
     slug: "apple-music",
     title: "اشتراک اپل موزیک",
     brand: "Apple Music",
-    logo: "https://cdn.simpleicons.org/applemusic/FA243C",
+    logo: "applemusic",
     categorySlug: "music-video",
     excerpt: "بیش از ۱۰۰ میلیون قطعه با کیفیت Lossless و صدای فضایی.",
     description:
@@ -28,7 +28,7 @@ export const productsB: Product[] = [
     slug: "soundcloud-go-plus",
     title: "ساندکلاد گو پلاس",
     brand: "SoundCloud",
-    logo: "https://cdn.simpleicons.org/soundcloud/FF5500",
+    logo: "soundcloud",
     categorySlug: "music-video",
     excerpt: "دسترسی کامل به کتابخانهٔ موسیقی مستقل بدون تبلیغ.",
     description:
@@ -48,7 +48,7 @@ export const productsB: Product[] = [
     slug: "crunchyroll-premium",
     title: "اشتراک کرانچی‌رول پرمیوم",
     brand: "Crunchyroll",
-    logo: "https://cdn.simpleicons.org/crunchyroll/F47521",
+    logo: "crunchyroll",
     categorySlug: "music-video",
     excerpt: "بزرگ‌ترین کتابخانهٔ انیمه با زیرنویس و دوبلهٔ رسمی.",
     description:
@@ -68,7 +68,7 @@ export const productsB: Product[] = [
     slug: "claude-pro",
     title: "اکانت Claude Pro",
     brand: "Anthropic",
-    logo: "https://cdn.simpleicons.org/anthropic/D97757",
+    logo: "anthropic",
     categorySlug: "ai-tools",
     excerpt: "دستیار هوشمند با پنجرهٔ متنی بلند برای تحلیل اسناد طولانی.",
     description:
@@ -89,7 +89,7 @@ export const productsB: Product[] = [
     slug: "midjourney",
     title: "اشتراک میدجرنی",
     brand: "Midjourney",
-    logo: "https://cdn.simpleicons.org/midjourney/000000",
+    logo: "midjourney",
     categorySlug: "ai-tools",
     excerpt: "ساخت تصاویر حرفه‌ای با هوش مصنوعی در بالاترین کیفیت.",
     description:
@@ -109,7 +109,7 @@ export const productsB: Product[] = [
     slug: "perplexity-pro",
     title: "اشتراک Perplexity Pro",
     brand: "Perplexity",
-    logo: "https://cdn.simpleicons.org/perplexity/20808D",
+    logo: "perplexity",
     categorySlug: "ai-tools",
     excerpt: "جستجوی هوشمند با منابع دقیق و دسترسی به مدل‌های پیشرفته.",
     description:
@@ -129,7 +129,7 @@ export const productsB: Product[] = [
     slug: "github-copilot",
     title: "اشتراک GitHub Copilot",
     brand: "GitHub",
-    logo: "https://cdn.simpleicons.org/github/181717",
+    logo: "github",
     categorySlug: "ai-tools",
     excerpt: "دستیار کدنویسی هوشمند در ویژوال استودیو کد و جت‌برینز.",
     description:
@@ -147,9 +147,9 @@ export const productsB: Product[] = [
   {
     id: "p-16",
     slug: "figma-professional",
-    title: "اشتراک فیگما پروفشنال",
+    title: "اشتراک فیگما پروفشنل",
     brand: "Figma",
-    logo: "https://cdn.simpleicons.org/figma/F24E1E",
+    logo: "figma",
     categorySlug: "design",
     excerpt: "طراحی محصول و رابط کاربری با امکانات تیمی نامحدود.",
     description:
@@ -169,7 +169,7 @@ export const productsB: Product[] = [
     slug: "envato-elements",
     title: "اشتراک انواتو المنتس",
     brand: "Envato",
-    logo: "https://cdn.simpleicons.org/envato/81B441",
+    logo: "envato",
     categorySlug: "design",
     excerpt: "دانلود نامحدود قالب، فونت، موسیقی و ویدیوی استوک.",
     description:
@@ -189,7 +189,7 @@ export const productsB: Product[] = [
     slug: "freepik-premium",
     title: "اشتراک فری‌پیک پریمیوم",
     brand: "Freepik",
-    logo: "https://cdn.simpleicons.org/freepik/1273EB",
+    logo: "freepik",
     categorySlug: "design",
     excerpt: "میلیون‌ها وکتور، عکس و قالب آماده بدون محدودیت دانلود.",
     description:
@@ -209,7 +209,7 @@ export const productsB: Product[] = [
     slug: "steam-wallet",
     title: "گیفت‌کارت استیم",
     brand: "Steam",
-    logo: "https://cdn.simpleicons.org/steam/000000",
+    logo: "steam",
     categorySlug: "gaming",
     excerpt: "شارژ کیف پول استیم برای خرید بازی و آیتم درون‌بازی.",
     description:
