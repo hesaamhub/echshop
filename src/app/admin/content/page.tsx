@@ -1,7 +1,7 @@
-import Image from "next/image"
 import { Button, Card, Field } from "@/components/panel/Ui"
-import { brandLogos, logoSources } from "@/lib/brands"
+import { brandLogos } from "@/lib/brands"
 import { products, siteContent } from "@/lib/data"
+import BrandIcon from "@/components/site/BrandIcon"
 
 export default function AdminContentPage() {
   return (
@@ -55,15 +55,7 @@ export default function AdminContentPage() {
             <div key={brand.name} className="rounded-2xl border border-slate-200/70 p-4">
               <div className="flex items-center gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={logoSources(brand)[0]}
-                    alt={brand.name}
-                    width={22}
-                    height={22}
-                    loading="lazy"
-                    className="h-[22px] w-[22px] object-contain"
-                  />
+                  <BrandIcon slug={brand.slug} size={22} color={`#${brand.color}`} />
                 </div>
                 <div className="flex-1">
                   <p className="font-latin text-[12px] font-bold text-[#0a1b33]">{brand.name}</p>
@@ -87,7 +79,7 @@ export default function AdminContentPage() {
               className="flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200/70 p-4"
             >
               <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-slate-50">
-                <Image src={product.logo} alt={product.title} width={26} height={26} />
+                <BrandIcon slug={product.logo} size={26} color="#0a1b33" />
               </div>
               <div className="min-w-[180px] flex-1">
                 <p className="text-[12px] font-bold text-[#0a1b33]">{product.title}</p>

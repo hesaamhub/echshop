@@ -4,6 +4,7 @@ import { BadgeCheck, Clock, ShieldCheck, Star } from "lucide-react"
 import Shell from "@/components/site/Shell"
 import ProductCard from "@/components/site/ProductCard"
 import PlanPicker from "@/components/site/PlanPicker"
+import BrandIcon from "@/components/site/BrandIcon"
 import { getCategory, getProduct, products } from "@/lib/data"
 import { toman } from "@/lib/utils"
 
@@ -40,11 +41,11 @@ export default async function ProductPage({
           <div className="overflow-hidden rounded-[32px] border border-[#1b39f5]/10 bg-white shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
             <div className={`relative h-56 bg-gradient-to-br ${product.gradient}`}>
               <div className="absolute inset-0 grid place-items-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={product.logo}
-                  alt={product.brand}
-                  className="h-14 w-auto max-w-[180px] object-contain brightness-0 invert"
+                <BrandIcon
+                  slug={product.logo}
+                  size={56}
+                  color="#ffffff"
+                  className="opacity-95"
                 />
               </div>
               {product.badge ? (

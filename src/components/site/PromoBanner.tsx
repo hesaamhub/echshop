@@ -4,7 +4,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import { ChevronLeft, Percent, Wallet, Zap, type LucideIcon } from "lucide-react"
-import { brandLogos, logoSources } from "@/lib/brands"
+import { brandLogos } from "@/lib/brands"
+import BrandIcon from "./BrandIcon"
 
 /**
  * یک طرح بنر تبلیغاتی بالای سایت.
@@ -40,12 +41,9 @@ export type PromoSlide = {
 
 /**
  * تنظیمات نوار تبلیغاتی بالای سایت.
- * در مرحلهٔ بعد به پنل مدیریت و دیتابیس وصل می‌شود؛
- * فعلاً برای خاموش کردن کافی است enabled را false کنید.
  */
 export const promoBanner = {
   enabled: true,
-  /** فاصلهٔ چرخش طرح‌ها (میلی‌ثانیه) */
   intervalMs: 5200,
   slides: [
     {
@@ -227,7 +225,6 @@ export const promoBanner = {
 
 /**
  * نوار تبلیغاتی بالاترین قسمت سایت (بالای هدر).
- * هنگام اسکرول همراه منوبار بالا می‌ماند و قابل بستن نیست.
  */
 export default function PromoBanner() {
   const slides = promoBanner.slides
@@ -307,7 +304,6 @@ export default function PromoBanner() {
         </AnimatePresence>
       </div>
 
-      {/* نوار پیشرفت تا طرح بعدی */}
       <motion.span
         key={`progress-${slide.id}`}
         aria-hidden
@@ -327,46 +323,19 @@ function SlideMark({ slide }: { slide: PromoSlide }) {
   const brand = slide.logoSlug
     ? brandLogos.find((item) => item.slug === slide.logoSlug)
     : undefined
-  const sources = brand ? logoSources(brand) : []
-  const [sourceIndex, setSourceIndex] = useState(0)
 
   const Icon = slide.icon
   if (!brand && !Icon) return null
 
   const tile = `grid h-6 w-6 shrink-0 place-items-center rounded-[8px] md:h-7 md:w-7 md:rounded-[9px] ${slide.markClass ?? "bg-white"}`
 
-  if (brand && sourceIndex < sources.length) {
-    return (
-      <span className={tile} aria-hidden>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={sources[sourceIndex]}
-          alt={brand.name}
-          loading="lazy"
-          onError={() => setSourceIndex((value) => value + 1)}
-          className="h-3.5 w-3.5 object-contain md:h-4 md:w-4"
-        />
-      </span>
-    )
-  }
-
-  if (brand) {
-    return (
-      <span
-        className="grid h-6 w-6 shrink-0 place-items-center rounded-[8px] text-[11px] font-bold text-white md:h-7 md:w-7 md:rounded-[9px]"
-        style={{
-          background: `linear-gradient(135deg, ${brand.gradient.from}, ${brand.gradient.to})`,
-        }}
-        aria-hidden
-      >
-        {brand.name.charAt(0)}
-      </span>
-    )
-  }
-
   return (
     <span className={tile} aria-hidden>
-      {Icon ? <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" /> : null}
+      {brand ? (
+        <BrandIcon slug={brand.slug} size={14} color={`#${brand.color}`} />
+      ) : Icon ? (
+        <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+      ) : null}
     </span>
   )
 }
