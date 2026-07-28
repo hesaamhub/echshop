@@ -1,23 +1,13 @@
 import Link from "next/link"
 import { Minus, Plus, Trash2 } from "lucide-react"
 import Shell from "@/components/site/Shell"
-import { products } from "@/lib/data"
+import { cartDiscount, cartLines, cartSubtotal, cartTotal } from "@/lib/cart"
 import { deliveryLabels } from "@/lib/types"
-import { toman } from "@/lib/utils"
+import { num, toman } from "@/lib/utils"
 
 export const metadata = { title: "سبد خرید" }
 
 export default function CartPage() {
-  const lines = [products[0], products[1], products[4]].map((product, index) => ({
-    product,
-    plan: product.plans[Math.min(index, product.plans.length - 1)],
-    quantity: index === 2 ? 2 : 1,
-  }))
-
-  const subtotal = lines.reduce((sum, line) => sum + line.plan.price * line.quantity, 0)
-  const discount = 180000
-  const total = subtotal - discount
-
   return (
     <Shell
       title="سبد خرید"
@@ -25,9 +15,9 @@ export default function CartPage() {
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="space-y-3">
-          {lines.map((line) => (
+          {cartLines.map((line) => (
             <div
-              key={line.product.id}
+              key={`${line.product.id}-${line.plan.id}`}
               className="flex flex-wrap items-center gap-4 rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]"
             >
               <div
@@ -62,7 +52,7 @@ export default function CartPage() {
                   <Plus className="h-3.5 w-3.5 text-[#1b39f5]" />
                 </button>
                 <span className="num w-8 text-center text-[12px] font-bold text-[#0a1b33]">
-                  {line.quantity}
+                  {num(line.quantity)}
                 </span>
                 <button
                   type="button"
@@ -109,14 +99,14 @@ export default function CartPage() {
             خلاصهٔ سفارش
           </h2>
           <dl className="mt-4 space-y-3 text-[12.5px]">
-            <Row label="جمع محصولات" value={`${toman(subtotal)} تومان`} />
-            <Row label="تخفیف" value={`${toman(discount)} تومان`} accent />
-            <Row label="کارمزد" value="۰ تومان" />
+            <Row label="جمع محصولات" value={`${toman(cartSubtotal)} تومان`} />
+            <Row label="تخفیف" value={`${toman(cartDiscount)} تومان`} accent />
+            <Row label="کارمزد" value={`${num(0)} تومان`} />
           </dl>
           <div className="mt-5 flex items-center justify-between border-t border-[#1b39f5]/10 pt-4">
             <span className="text-[12.5px] font-bold text-[#0a1b33]">مبلغ نهایی</span>
             <span className="text-[17px] font-bold text-[#0a1b33]">
-              <span className="num">{toman(total)}</span>
+              <span className="num">{toman(cartTotal)}</span>
               <span className="mr-1 text-[11px] font-medium text-slate-500">تومان</span>
             </span>
           </div>
