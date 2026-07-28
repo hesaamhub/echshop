@@ -13,6 +13,7 @@ import {
   MonitorSmartphone,
   Music,
   PenTool,
+  Percent,
   Search,
   ShoppingCart,
   Sparkles,
@@ -20,11 +21,13 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react"
+import { newArrivals, topDiscounts } from "@/lib/collections"
 import { categories, categoryCount } from "@/lib/data"
 import { session } from "@/lib/session"
 import { cn, num } from "@/lib/utils"
 import BestSellersMenu from "./BestSellersMenu"
 import PanelMenu from "./PanelMenu"
+import ProductMiniList from "./ProductMiniList"
 import Logo from "./Logo"
 
 /** لینک‌های سادهٔ منو */
@@ -43,6 +46,10 @@ const categoryIcons: Record<string, LucideIcon> = {
   MonitorSmartphone,
   MessageCircle,
 }
+
+/** فهرست‌های ویژهٔ منوی محصولات */
+const freshAccounts = newArrivals(3)
+const discountedProducts = topDiscounts(3)
 
 export default function Header() {
   const isLoggedIn = session.isLoggedIn
@@ -107,7 +114,7 @@ export default function Header() {
 
               <AnimatePresence>
                 {menu === "products" ? (
-                  <DropdownPanel align="right" className="w-[700px]">
+                  <DropdownPanel align="right" className="w-[740px]">
                     <div className="flex gap-2">
                       {/* دسته‌بندی‌ها */}
                       <div className="min-w-0 flex-1">
@@ -152,14 +159,16 @@ export default function Header() {
                         </Link>
                       </div>
 
-                      {/* پرفروش‌ترین‌ها */}
-                      <div className="w-[268px] shrink-0 border-r border-[#1b39f5]/10 pr-2">
-                        <p className="flex items-center gap-1.5 px-2.5 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400">
-                          <Flame className="h-3.5 w-3.5 text-[#E56458]" />
-                          پرفروش‌ترین‌ها
-                        </p>
+                      {/* فهرست‌های ویژه */}
+                      <div className="w-[300px] shrink-0 space-y-1 border-r border-[#1b39f5]/10 pr-2">
+                        <MenuListTitle icon={Flame} color="#E56458" label="پرفروش‌ترین‌ها" href="/products" onNavigate={() => setMenu(null)} />
+                        <BestSellersMenu limit={3} onNavigate={() => setMenu(null)} />
 
-                        <BestSellersMenu limit={5} onNavigate={() => setMenu(null)} />
+                        <MenuListTitle icon={Sparkles} color="#1b39f5" label="اکانت‌های جدید" href="/products" onNavigate={() => setMenu(null)} />
+                        <ProductMiniList items={freshAccounts} meta="new" onNavigate={() => setMenu(null)} />
+
+                        <MenuListTitle icon={Percent} color="#137a4b" label="بیشترین تخفیف" href="/products" onNavigate={() => setMenu(null)} />
+                        <ProductMiniList items={discountedProducts} meta="discount" onNavigate={() => setMenu(null)} />
                       </div>
                     </div>
                   </DropdownPanel>
@@ -276,7 +285,7 @@ export default function Header() {
       <div
         className={cn(
           "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
-          open ? "max-h-[1100px]" : "max-h-0",
+          open ? "max-h-[1400px]" : "max-h-0",
         )}
       >
         <div className="px-4 py-4 space-y-1">
@@ -309,12 +318,14 @@ export default function Header() {
               )
             })}
 
-            <p className="flex items-center gap-1.5 px-3 pt-2 pb-1 text-[10.5px] font-bold text-slate-400">
-              <Flame className="h-3.5 w-3.5 text-[#E56458]" />
-              پرفروش‌ترین‌ها
-            </p>
+            <MenuListTitle icon={Flame} color="#E56458" label="پرفروش‌ترین‌ها" href="/products" onNavigate={() => setOpen(false)} />
+            <BestSellersMenu limit={3} onNavigate={() => setOpen(false)} />
 
-            <BestSellersMenu limit={5} onNavigate={() => setOpen(false)} />
+            <MenuListTitle icon={Sparkles} color="#1b39f5" label="اکانت‌های جدید" href="/products" onNavigate={() => setOpen(false)} />
+            <ProductMiniList items={freshAccounts} meta="new" onNavigate={() => setOpen(false)} />
+
+            <MenuListTitle icon={Percent} color="#137a4b" label="بیشترین تخفیف" href="/products" onNavigate={() => setOpen(false)} />
+            <ProductMiniList items={discountedProducts} meta="discount" onNavigate={() => setOpen(false)} />
 
             <Link
               href="/products"
@@ -359,6 +370,34 @@ export default function Header() {
         </div>
       </div>
     </header>
+  )
+}
+
+/** عنوان کوچک فهرست‌های منو */
+function MenuListTitle({
+  icon: Icon,
+  color,
+  label,
+  href,
+  onNavigate,
+}: {
+  icon: LucideIcon
+  color: string
+  label: string
+  href: string
+  onNavigate?: () => void
+}) {
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      className="flex items-center justify-between px-2.5 pb-1 pt-2 text-[10.5px] font-bold text-slate-400 transition-colors hover:text-[#1b39f5]"
+    >
+      <span className="flex items-center gap-1.5">
+        <Icon className="h-3.5 w-3.5" style={{ color }} />
+        {label}
+      </span>
+    </Link>
   )
 }
 
@@ -458,7 +497,7 @@ function MobileSection({
       <div
         className={cn(
           "overflow-hidden transition-all",
-          open ? "mt-1 max-h-[760px]" : "max-h-0",
+          open ? "mt-1 max-h-[1100px]" : "max-h-0",
         )}
       >
         <div className="space-y-0.5 pr-1">{children}</div>
