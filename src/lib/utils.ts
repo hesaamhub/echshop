@@ -5,13 +5,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-/** قیمت را با جداکننده هزارگان فارسی نمایش می‌دهد */
-export function toman(value: number) {
-  return new Intl.NumberFormat("fa-IR").format(value)
+/** همهٔ عددهای دادهای (قیمت، تعداد، درصد) با رقم لاتین نمایش داده می‌شوند */
+export function num(value: number) {
+  return new Intl.NumberFormat("en-US").format(value)
 }
 
+/** قیمت با جداکنندهٔ هزارگان و رقم لاتین */
+export function toman(value: number) {
+  return num(value)
+}
+
+/** تاریخ شمسی با نام ماه فارسی و رقم لاتین */
 export function faDate(iso: string) {
-  return new Intl.DateTimeFormat("fa-IR", {
+  return new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
     year: "numeric",
     month: "long",
     day: "numeric",
