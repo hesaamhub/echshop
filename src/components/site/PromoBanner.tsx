@@ -3,11 +3,13 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Percent, Wallet, type LucideIcon } from "lucide-react"
+import { brandLogos, logoSources } from "@/lib/brands"
+import Logo from "./Logo"
 
 /**
  * یک طرح بنر تبلیغاتی بالای سایت.
- * هر طرح رنگ‌بندی و چیدمان مختص خود را دارد.
+ * هر طرح رنگ‌بندی، نشان (لوگوی برند یا آیکون) و چیدمان مختص خود را دارد.
  */
 export type PromoSlide = {
   id: string
@@ -16,6 +18,13 @@ export type PromoSlide = {
   bar: string
   /** کلاس متن اصلی */
   text: string
+  /** اسلاگ برند در brands.ts — لوگوی محصول ابتدای نوار */
+  logoSlug?: string
+  /** اگر برندی وجود ندارد: آیکون یا لوگوی خود اچ‌شاپ */
+  icon?: LucideIcon
+  useBrandMark?: boolean
+  /** کلاس کاشیٔ نشان */
+  markClass?: string
   /** برچسب کوچک ابتدای نوار */
   chip?: string
   chipClass?: string
@@ -24,7 +33,7 @@ export type PromoSlide = {
   highlight?: string
   highlightClass?: string
   tail?: string
-  /** پیل تأکیدی سمت چپ (تخفیف، کد، مهلت و …) */
+  /** پیل تأکیدی (تخفیف، کد، مهلت و …) */
   note?: string
   noteClass?: string
   cta: string
@@ -46,6 +55,8 @@ export const promoBanner = {
       href: "/products/spotify-premium",
       bar: "bg-[#0a152d]",
       text: "text-white",
+      logoSlug: "spotify",
+      markClass: "bg-white",
       chip: "تخفیف ویژه",
       chipClass: "bg-[#1b39f5] text-white",
       lead: "اشتراک سه‌ماههٔ",
@@ -62,6 +73,8 @@ export const promoBanner = {
       href: "/products/chatgpt-plus",
       bar: "bg-[#0f2f22]",
       text: "text-white",
+      logoSlug: "openai",
+      markClass: "bg-white",
       chip: "موجود شد",
       chipClass: "bg-[#46A171] text-white",
       lead: "اکانت",
@@ -78,6 +91,8 @@ export const promoBanner = {
       href: "/products",
       bar: "bg-[#1b39f5]",
       text: "text-white",
+      icon: Percent,
+      markClass: "bg-white text-[#1b39f5]",
       chip: "خرید اول",
       chipClass: "bg-white/18 text-white",
       lead: "با کد",
@@ -94,6 +109,8 @@ export const promoBanner = {
       href: "/products/netflix-premium",
       bar: "bg-[#FCEAE8]",
       text: "text-[#0a1b33]",
+      logoSlug: "netflix",
+      markClass: "bg-white shadow-[0_6px_16px_-10px_rgba(10,21,45,0.6)]",
       chip: "پرفروش‌ترین",
       chipClass: "bg-[#A8382C] text-white",
       lead: "اشتراک",
@@ -110,6 +127,8 @@ export const promoBanner = {
       href: "/products/adobe-creative-cloud",
       bar: "bg-[#FBF1E2]",
       text: "text-[#0a1b33]",
+      logoSlug: "adobe",
+      markClass: "bg-white shadow-[0_6px_16px_-10px_rgba(10,21,45,0.6)]",
       chip: "لایسنس رسمی",
       chipClass: "bg-[#9A6321] text-white",
       lead: "لایسنس یک‌سالهٔ",
@@ -126,6 +145,8 @@ export const promoBanner = {
       href: "/products/canva-pro",
       bar: "bg-[#E5F2FC]",
       text: "text-[#0a1b33]",
+      logoSlug: "canva",
+      markClass: "bg-white shadow-[0_6px_16px_-10px_rgba(27,57,245,0.6)]",
       chip: "تحویل خودکار",
       chipClass: "bg-[#1b39f5] text-white",
       lead: "اشتراک تیمیٔ",
@@ -142,6 +163,8 @@ export const promoBanner = {
       href: "/products/youtube-premium",
       bar: "bg-[#2b1758]",
       text: "text-white",
+      logoSlug: "youtube",
+      markClass: "bg-white",
       chip: "پیشنهاد ماه",
       chipClass: "bg-white/18 text-white",
       lead: "سه ماه",
@@ -158,6 +181,8 @@ export const promoBanner = {
       href: "/category/gaming",
       bar: "bg-[#E7F4EC]",
       text: "text-[#0a1b33]",
+      logoSlug: "xbox",
+      markClass: "bg-white shadow-[0_6px_16px_-10px_rgba(47,122,80,0.7)]",
       chip: "موجودی محدود",
       chipClass: "bg-[#2F7A50] text-white",
       lead: "گیفت‌کارت",
@@ -174,6 +199,8 @@ export const promoBanner = {
       href: "/dashboard/wallet",
       bar: "bg-[#0a1b33]",
       text: "text-white",
+      icon: Wallet,
+      markClass: "bg-white text-[#1b39f5]",
       chip: "کیف پول",
       chipClass: "bg-[#1b39f5] text-white",
       lead: "شارژ کیف پول با ۵٪ اعتبار هدیه",
@@ -187,6 +214,8 @@ export const promoBanner = {
       href: "/about",
       bar: "bg-white",
       text: "text-[#0a1b33]",
+      useBrandMark: true,
+      markClass: "bg-[#1b39f5]/8",
       chip: "اچ‌شاپ",
       chipClass: "bg-[#1b39f5]/10 text-[#1b39f5]",
       lead: "تحویل خودکار سفارش در کمتر از دو دقیقه، ۲۴ ساعت شبانه‌روز",
@@ -200,7 +229,7 @@ export const promoBanner = {
 
 /**
  * نوار تبلیغاتی بالاترین قسمت سایت (بالای هدر).
- * طرح‌ها خودکار عوض می‌شوند و قابل بستن نیست.
+ * هنگام اسکرول همراه منوبار بالا می‌ماند و قابل بستن نیست.
  */
 export default function PromoBanner() {
   const slides = promoBanner.slides
@@ -222,7 +251,7 @@ export default function PromoBanner() {
 
   return (
     <div
-      className={`relative w-full overflow-hidden transition-colors duration-700 ${slide.bar}`}
+      className={`sticky top-0 z-50 w-full overflow-hidden transition-colors duration-700 ${slide.bar}`}
     >
       <div className="relative mx-auto h-11 w-full max-w-[1400px] md:h-12">
         <AnimatePresence mode="wait" initial={false}>
@@ -238,6 +267,8 @@ export default function PromoBanner() {
               href={slide.href}
               className="flex items-center justify-center gap-2 text-center md:gap-3"
             >
+              <SlideMark slide={slide} />
+
               {slide.chip ? (
                 <span
                   className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10.5px] font-bold sm:inline-block ${slide.chipClass ?? ""}`}
@@ -288,5 +319,65 @@ export default function PromoBanner() {
         className="absolute bottom-0 right-0 h-[2px] w-full origin-right bg-[#1b39f5]/40"
       />
     </div>
+  )
+}
+
+/**
+ * کاشیٔ نشان ابتدای هر طرح: لوگوی برند، آیکون یا لوگوی اچ‌شاپ.
+ */
+function SlideMark({ slide }: { slide: PromoSlide }) {
+  const brand = slide.logoSlug
+    ? brandLogos.find((item) => item.slug === slide.logoSlug)
+    : undefined
+  const sources = brand ? logoSources(brand) : []
+  const [sourceIndex, setSourceIndex] = useState(0)
+
+  const Icon = slide.icon
+  const hasMark = Boolean(brand) || Boolean(Icon) || slide.useBrandMark === true
+  if (!hasMark) return null
+
+  const tile = `grid h-6 w-6 shrink-0 place-items-center rounded-[8px] md:h-7 md:w-7 md:rounded-[9px] ${slide.markClass ?? "bg-white"}`
+
+  if (brand && sourceIndex < sources.length) {
+    return (
+      <span className={tile} aria-hidden>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={sources[sourceIndex]}
+          alt={brand.name}
+          loading="lazy"
+          onError={() => setSourceIndex((value) => value + 1)}
+          className="h-3.5 w-3.5 object-contain md:h-4 md:w-4"
+        />
+      </span>
+    )
+  }
+
+  if (brand) {
+    return (
+      <span
+        className={`grid h-6 w-6 shrink-0 place-items-center rounded-[8px] text-[11px] font-bold text-white md:h-7 md:w-7 md:rounded-[9px]`}
+        style={{
+          background: `linear-gradient(135deg, ${brand.gradient.from}, ${brand.gradient.to})`,
+        }}
+        aria-hidden
+      >
+        {brand.name.charAt(0)}
+      </span>
+    )
+  }
+
+  if (Icon) {
+    return (
+      <span className={tile} aria-hidden>
+        <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+      </span>
+    )
+  }
+
+  return (
+    <span className={tile} aria-hidden>
+      <Logo className="h-3.5 w-3.5 md:h-4 md:w-4" />
+    </span>
   )
 }
