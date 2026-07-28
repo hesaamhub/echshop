@@ -3,6 +3,7 @@ import { Star } from "lucide-react"
 import type { Product } from "@/lib/types"
 import { deliveryLabels } from "@/lib/types"
 import { discountPercent, toman } from "@/lib/utils"
+import BrandIcon from "@/components/site/BrandIcon"
 
 type Props = { product: Product }
 
@@ -17,12 +18,11 @@ export default function ProductCard({ product }: Props) {
     >
       <div className={`relative h-36 bg-gradient-to-br ${product.gradient}`}>
         <div className="absolute inset-0 grid place-items-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={product.logo}
-            alt={product.brand}
-            loading="lazy"
-            className="h-10 w-auto max-w-[120px] object-contain brightness-0 invert opacity-95 transition-transform duration-500 group-hover:scale-110"
+          <BrandIcon
+            slug={product.logo}
+            size={40}
+            color="#ffffff"
+            className="opacity-95 transition-transform duration-500 group-hover:scale-110"
           />
         </div>
         {product.badge ? (

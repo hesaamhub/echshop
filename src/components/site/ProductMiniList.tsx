@@ -3,6 +3,7 @@ import type { Product } from "@/lib/types"
 import { bestDiscount } from "@/lib/collections"
 import { lowestPrice } from "@/lib/data"
 import { cn, num, toman } from "@/lib/utils"
+import BrandIcon from "@/components/site/BrandIcon"
 
 /**
  * فهرست کوتاه محصولات برای منوی بازشونده.
@@ -35,12 +36,7 @@ export default function ProductMiniList({
                 product.gradient,
               )}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={product.logo}
-                alt={product.title}
-                className="h-4 w-4 object-contain brightness-0 invert"
-              />
+              <BrandIcon slug={product.logo} size={16} color="#ffffff" />
             </span>
 
             <span className="min-w-0 flex-1">

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { bestSellers, lowestPrice } from "@/lib/data"
 import { toman } from "@/lib/utils"
+import BrandIcon from "@/components/site/BrandIcon"
 
 /** فهرست پرفروش‌ترین محصول‌ها برای منوی محصولات */
 export default function BestSellersMenu({
@@ -22,12 +23,7 @@ export default function BestSellersMenu({
           <span
             className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${product.gradient}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={product.logo}
-              alt={product.brand}
-              className="h-4 w-4 object-contain brightness-0 invert"
-            />
+            <BrandIcon slug={product.logo} size={16} color="#ffffff" />
           </span>
 
           <span className="min-w-0 flex-1">

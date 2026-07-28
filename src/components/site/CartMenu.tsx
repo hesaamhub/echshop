@@ -3,6 +3,7 @@ import { ChevronLeft, ShoppingBag, Trash2 } from "lucide-react"
 import { cartCount, cartDiscount, cartLines, cartTotal } from "@/lib/cart"
 import { deliveryLabels } from "@/lib/types"
 import { num, toman } from "@/lib/utils"
+import BrandIcon from "@/components/site/BrandIcon"
 
 export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
   if (cartLines.length === 0) {
@@ -58,12 +59,7 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
             <span
               className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br ${line.product.gradient}`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={line.product.logo}
-                alt={line.product.brand}
-                className="h-4 w-4 object-contain brightness-0 invert"
-              />
+              <BrandIcon slug={line.product.logo} size={16} color="#ffffff" />
             </span>
 
             <Link
