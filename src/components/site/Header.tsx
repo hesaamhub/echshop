@@ -8,28 +8,23 @@ import {
   ChevronDown,
   Flame,
   Gamepad2,
-  Heart,
-  LayoutDashboard,
-  LifeBuoy,
-  LogOut,
   Menu,
   MessageCircle,
   MonitorSmartphone,
   Music,
-  Package,
   PenTool,
   Search,
   ShoppingCart,
   Sparkles,
   UserRound,
-  Wallet,
   X,
   type LucideIcon,
 } from "lucide-react"
 import { categories, categoryCount } from "@/lib/data"
 import { session } from "@/lib/session"
-import { cn } from "@/lib/utils"
+import { cn, num } from "@/lib/utils"
 import BestSellersMenu from "./BestSellersMenu"
+import PanelMenu from "./PanelMenu"
 import Logo from "./Logo"
 
 /** لینک‌های سادهٔ منو */
@@ -48,17 +43,6 @@ const categoryIcons: Record<string, LucideIcon> = {
   MonitorSmartphone,
   MessageCircle,
 }
-
-/** آیتم‌های منوی پنل کاربری (فقط برای کاربر واردشده) */
-const panelItems: Array<{ label: string; href: string; icon: LucideIcon; hint: string }> = [
-  { label: "پیشخوان", href: "/dashboard", icon: LayoutDashboard, hint: "خلاصهٔ حساب و سفارش‌ها" },
-  { label: "سفارش‌ها و تحویل", href: "/dashboard/orders", icon: Package, hint: "پیگیری وضعیت تحویل" },
-  { label: "کیف پول", href: "/dashboard/wallet", icon: Wallet, hint: "شارژ و تراکنش‌ها" },
-  { label: "تیکت‌های پشتیبانی", href: "/dashboard/tickets", icon: LifeBuoy, hint: "گفتگو با تیم پشتیبانی" },
-  { label: "اطلاع‌رسانی‌ها", href: "/dashboard/notifications", icon: Bell, hint: "پیام‌ها و هشدارها" },
-  { label: "علاقه‌مندی‌ها", href: "/dashboard/favorites", icon: Heart, hint: "محصولات ذخیره‌شده" },
-  { label: "پروفایل و امنیت", href: "/dashboard/profile", icon: UserRound, hint: "اطلاعات حساب شما" },
-]
 
 export default function Header() {
   const isLoggedIn = session.isLoggedIn
@@ -149,8 +133,8 @@ export default function Header() {
                                   <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
                                     {category.title}
                                   </span>
-                                  <span className="num block text-[10.5px] text-slate-400">
-                                    {categoryCount(category.slug)} محصول
+                                  <span className="block text-[10.5px] text-slate-400">
+                                    <span className="num">{num(categoryCount(category.slug))}</span> محصول
                                   </span>
                                 </span>
                               </Link>
@@ -236,61 +220,19 @@ export default function Header() {
                     }
                   }}
                   className={cn(
-                    "glass-plate glass-plate-hover relative grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5]",
-                    menu === "panel" && "bg-[#1b39f5]/10",
+                    "relative grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-[13px] font-bold text-white transition-all",
+                    menu === "panel"
+                      ? "shadow-[0_14px_28px_-14px_rgba(27,57,245,0.95)] ring-2 ring-[#1b39f5]/20"
+                      : "shadow-[0_10px_22px_-14px_rgba(27,57,245,0.9)] hover:-translate-y-[1px]",
                   )}
                 >
-                  <LayoutDashboard className="h-4 w-4" />
+                  {session.user.name.trim().charAt(0)}
                 </Link>
 
                 <AnimatePresence>
                   {menu === "panel" ? (
-                    <DropdownPanel align="left" className="w-[300px]">
-                      <div className="flex items-center gap-2.5 rounded-2xl bg-[#1b39f5]/6 px-3 py-2.5">
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#1b39f5] text-white">
-                          <UserRound className="h-4 w-4" />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[12.5px] font-bold text-[#0a1b33]">
-                            {session.user.name}
-                          </span>
-                          <span dir="ltr" className="block truncate text-right text-[10.5px] text-slate-400">
-                            {session.user.email}
-                          </span>
-                        </span>
-                      </div>
-
-                      <div className="mt-1">
-                        {panelItems.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setMenu(null)}
-                            className="group flex items-center gap-2.5 rounded-2xl px-3 py-2.5 transition-colors hover:bg-[#1b39f5]/6"
-                          >
-                            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5]">
-                              <item.icon className="h-4 w-4" />
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
-                                {item.label}
-                              </span>
-                              <span className="block truncate text-[10.5px] text-slate-400">
-                                {item.hint}
-                              </span>
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-
-                      <Link
-                        href="/login"
-                        onClick={() => setMenu(null)}
-                        className="mt-1 flex items-center justify-between rounded-2xl px-3 py-2.5 text-[12px] font-bold text-[#A8382C] transition-colors hover:bg-[#FCEAE8]"
-                      >
-                        خروج از حساب
-                        <LogOut className="h-4 w-4" />
-                      </Link>
+                    <DropdownPanel align="left" className="w-[312px]">
+                      <PanelMenu onNavigate={() => setMenu(null)} />
                     </DropdownPanel>
                   ) : null}
                 </AnimatePresence>
@@ -334,7 +276,7 @@ export default function Header() {
       <div
         className={cn(
           "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
-          open ? "max-h-[980px]" : "max-h-0",
+          open ? "max-h-[1100px]" : "max-h-0",
         )}
       >
         <div className="px-4 py-4 space-y-1">
@@ -361,7 +303,7 @@ export default function Header() {
                   </span>
                   <span className="flex-1">{category.title}</span>
                   <span className="num text-[10.5px] text-slate-400">
-                    {categoryCount(category.slug)}
+                    {num(categoryCount(category.slug))}
                   </span>
                 </Link>
               )
@@ -390,19 +332,7 @@ export default function Header() {
               open={mobileSection === "panel"}
               onToggle={() => setMobileSection((value) => (value === "panel" ? null : "panel"))}
             >
-              {panelItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 rounded-2xl px-3 py-2.5 text-[12.5px] font-semibold text-[#334155]"
-                >
-                  <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#1b39f5]/8 text-[#1b39f5]">
-                    <item.icon className="h-3.5 w-3.5" />
-                  </span>
-                  {item.label}
-                </Link>
-              ))}
+              <PanelMenu variant="mobile" onNavigate={() => setOpen(false)} />
             </MobileSection>
           ) : null}
 
