@@ -532,4 +532,3 @@ function IconLink({
     </Link>
   )
 }
-}
