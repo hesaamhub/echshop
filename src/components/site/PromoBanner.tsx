@@ -3,9 +3,8 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import { ChevronLeft, Percent, Wallet, type LucideIcon } from "lucide-react"
+import { ChevronLeft, Percent, Wallet, Zap, type LucideIcon } from "lucide-react"
 import { brandLogos, logoSources } from "@/lib/brands"
-import Logo from "./Logo"
 
 /**
  * یک طرح بنر تبلیغاتی بالای سایت.
@@ -20,9 +19,8 @@ export type PromoSlide = {
   text: string
   /** اسلاگ برند در brands.ts — لوگوی محصول ابتدای نوار */
   logoSlug?: string
-  /** اگر برندی وجود ندارد: آیکون یا لوگوی خود اچ‌شاپ */
+  /** اگر برندی وجود ندارد: یک آیکون */
   icon?: LucideIcon
-  useBrandMark?: boolean
   /** کلاس کاشیٔ نشان */
   markClass?: string
   /** برچسب کوچک ابتدای نوار */
@@ -214,14 +212,14 @@ export const promoBanner = {
       href: "/about",
       bar: "bg-white",
       text: "text-[#0a1b33]",
-      useBrandMark: true,
-      markClass: "bg-[#1b39f5]/8",
-      chip: "اچ‌شاپ",
+      icon: Zap,
+      markClass: "bg-[#1b39f5]/8 text-[#1b39f5]",
+      chip: "تحویل خودکار",
       chipClass: "bg-[#1b39f5]/10 text-[#1b39f5]",
       lead: "تحویل خودکار سفارش در کمتر از دو دقیقه، ۲۴ ساعت شبانه‌روز",
       note: "ضمانت بازگشت وجه",
       noteClass: "bg-[#1b39f5] text-white",
-      cta: "دربارهٔ ما",
+      cta: "بیشتر بدانید",
       ctaClass: "text-[#1b39f5]",
     },
   ] satisfies PromoSlide[],
@@ -323,7 +321,7 @@ export default function PromoBanner() {
 }
 
 /**
- * کاشیٔ نشان ابتدای هر طرح: لوگوی برند، آیکون یا لوگوی اچ‌شاپ.
+ * کاشیٔ نشان ابتدای هر طرح: لوگوی برند یا آیکون.
  */
 function SlideMark({ slide }: { slide: PromoSlide }) {
   const brand = slide.logoSlug
@@ -333,8 +331,7 @@ function SlideMark({ slide }: { slide: PromoSlide }) {
   const [sourceIndex, setSourceIndex] = useState(0)
 
   const Icon = slide.icon
-  const hasMark = Boolean(brand) || Boolean(Icon) || slide.useBrandMark === true
-  if (!hasMark) return null
+  if (!brand && !Icon) return null
 
   const tile = `grid h-6 w-6 shrink-0 place-items-center rounded-[8px] md:h-7 md:w-7 md:rounded-[9px] ${slide.markClass ?? "bg-white"}`
 
@@ -356,7 +353,7 @@ function SlideMark({ slide }: { slide: PromoSlide }) {
   if (brand) {
     return (
       <span
-        className={`grid h-6 w-6 shrink-0 place-items-center rounded-[8px] text-[11px] font-bold text-white md:h-7 md:w-7 md:rounded-[9px]`}
+        className="grid h-6 w-6 shrink-0 place-items-center rounded-[8px] text-[11px] font-bold text-white md:h-7 md:w-7 md:rounded-[9px]"
         style={{
           background: `linear-gradient(135deg, ${brand.gradient.from}, ${brand.gradient.to})`,
         }}
@@ -367,17 +364,9 @@ function SlideMark({ slide }: { slide: PromoSlide }) {
     )
   }
 
-  if (Icon) {
-    return (
-      <span className={tile} aria-hidden>
-        <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
-      </span>
-    )
-  }
-
   return (
     <span className={tile} aria-hidden>
-      <Logo className="h-3.5 w-3.5 md:h-4 md:w-4" />
+      {Icon ? <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" /> : null}
     </span>
   )
 }
