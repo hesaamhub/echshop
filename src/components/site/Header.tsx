@@ -48,8 +48,8 @@ const categoryIcons: Record<string, LucideIcon> = {
 }
 
 /** فهرست‌های ویژهٔ منوی محصولات */
-const freshAccounts = newArrivals(3)
-const discountedProducts = topDiscounts(3)
+const freshAccounts = newArrivals(4)
+const discountedProducts = topDiscounts(4)
 
 export default function Header() {
   const isLoggedIn = session.isLoggedIn
@@ -114,10 +114,13 @@ export default function Header() {
 
               <AnimatePresence>
                 {menu === "products" ? (
-                  <DropdownPanel align="right" className="w-[740px]">
-                    <div className="flex gap-2">
+                  <DropdownPanel
+                    align="right"
+                    className="w-[1080px] max-w-[calc(100vw-3rem)]"
+                  >
+                    <div className="flex items-stretch gap-1">
                       {/* دسته‌بندی‌ها */}
-                      <div className="min-w-0 flex-1">
+                      <div className="min-w-[300px] flex-1">
                         <p className="px-3 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400">
                           دسته‌بندی محصولات
                         </p>
@@ -159,16 +162,46 @@ export default function Header() {
                         </Link>
                       </div>
 
-                      {/* فهرست‌های ویژه */}
-                      <div className="w-[300px] shrink-0 space-y-1 border-r border-[#1b39f5]/10 pr-2">
-                        <MenuListTitle icon={Flame} color="#E56458" label="پرفروش‌ترین‌ها" href="/products" onNavigate={() => setMenu(null)} />
-                        <BestSellersMenu limit={3} onNavigate={() => setMenu(null)} />
+                      {/* سه فهرست ویژه — کنار هم */}
+                      <div className="w-[228px] shrink-0 border-r border-[#1b39f5]/10 pr-1.5">
+                        <MenuListTitle
+                          icon={Flame}
+                          color="#E56458"
+                          label="پرفروش‌ترین‌ها"
+                          href="/products"
+                          onNavigate={() => setMenu(null)}
+                        />
+                        <BestSellersMenu limit={4} onNavigate={() => setMenu(null)} />
+                      </div>
 
-                        <MenuListTitle icon={Sparkles} color="#1b39f5" label="اکانت‌های جدید" href="/products" onNavigate={() => setMenu(null)} />
-                        <ProductMiniList items={freshAccounts} meta="new" onNavigate={() => setMenu(null)} />
+                      <div className="w-[228px] shrink-0 border-r border-[#1b39f5]/10 pr-1.5">
+                        <MenuListTitle
+                          icon={Sparkles}
+                          color="#1b39f5"
+                          label="اکانت‌های جدید"
+                          href="/products"
+                          onNavigate={() => setMenu(null)}
+                        />
+                        <ProductMiniList
+                          items={freshAccounts}
+                          meta="new"
+                          onNavigate={() => setMenu(null)}
+                        />
+                      </div>
 
-                        <MenuListTitle icon={Percent} color="#137a4b" label="بیشترین تخفیف" href="/products" onNavigate={() => setMenu(null)} />
-                        <ProductMiniList items={discountedProducts} meta="discount" onNavigate={() => setMenu(null)} />
+                      <div className="w-[228px] shrink-0 border-r border-[#1b39f5]/10 pr-1.5">
+                        <MenuListTitle
+                          icon={Percent}
+                          color="#137a4b"
+                          label="بیشترین تخفیف"
+                          href="/products"
+                          onNavigate={() => setMenu(null)}
+                        />
+                        <ProductMiniList
+                          items={discountedProducts}
+                          meta="discount"
+                          onNavigate={() => setMenu(null)}
+                        />
                       </div>
                     </div>
                   </DropdownPanel>
@@ -318,14 +351,40 @@ export default function Header() {
               )
             })}
 
-            <MenuListTitle icon={Flame} color="#E56458" label="پرفروش‌ترین‌ها" href="/products" onNavigate={() => setOpen(false)} />
+            <MenuListTitle
+              icon={Flame}
+              color="#E56458"
+              label="پرفروش‌ترین‌ها"
+              href="/products"
+              onNavigate={() => setOpen(false)}
+            />
             <BestSellersMenu limit={3} onNavigate={() => setOpen(false)} />
 
-            <MenuListTitle icon={Sparkles} color="#1b39f5" label="اکانت‌های جدید" href="/products" onNavigate={() => setOpen(false)} />
-            <ProductMiniList items={freshAccounts} meta="new" onNavigate={() => setOpen(false)} />
+            <MenuListTitle
+              icon={Sparkles}
+              color="#1b39f5"
+              label="اکانت‌های جدید"
+              href="/products"
+              onNavigate={() => setOpen(false)}
+            />
+            <ProductMiniList
+              items={freshAccounts.slice(0, 3)}
+              meta="new"
+              onNavigate={() => setOpen(false)}
+            />
 
-            <MenuListTitle icon={Percent} color="#137a4b" label="بیشترین تخفیف" href="/products" onNavigate={() => setOpen(false)} />
-            <ProductMiniList items={discountedProducts} meta="discount" onNavigate={() => setOpen(false)} />
+            <MenuListTitle
+              icon={Percent}
+              color="#137a4b"
+              label="بیشترین تخفیف"
+              href="/products"
+              onNavigate={() => setOpen(false)}
+            />
+            <ProductMiniList
+              items={discountedProducts.slice(0, 3)}
+              meta="discount"
+              onNavigate={() => setOpen(false)}
+            />
 
             <Link
               href="/products"
@@ -391,12 +450,10 @@ function MenuListTitle({
     <Link
       href={href}
       onClick={onNavigate}
-      className="flex items-center justify-between px-2.5 pb-1 pt-2 text-[10.5px] font-bold text-slate-400 transition-colors hover:text-[#1b39f5]"
+      className="flex items-center gap-1.5 px-2.5 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400 transition-colors hover:text-[#1b39f5]"
     >
-      <span className="flex items-center gap-1.5">
-        <Icon className="h-3.5 w-3.5" style={{ color }} />
-        {label}
-      </span>
+      <Icon className="h-3.5 w-3.5" style={{ color }} />
+      {label}
     </Link>
   )
 }
