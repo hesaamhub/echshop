@@ -21,11 +21,14 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react"
+import { cartCount } from "@/lib/cart"
 import { newArrivals, topDiscounts } from "@/lib/collections"
 import { categories, categoryCount } from "@/lib/data"
 import { session } from "@/lib/session"
 import { cn, num } from "@/lib/utils"
 import BestSellersMenu from "./BestSellersMenu"
+import CartMenu from "./CartMenu"
+import NotificationsMenu, { unreadCount } from "./NotificationsMenu"
 import PanelMenu from "./PanelMenu"
 import ProductMiniList from "./ProductMiniList"
 import Logo from "./Logo"
@@ -51,10 +54,12 @@ const categoryIcons: Record<string, LucideIcon> = {
 const freshAccounts = newArrivals(4)
 const discountedProducts = topDiscounts(4)
 
+type MenuKey = "products" | "panel" | "cart" | "bell"
+
 export default function Header() {
   const isLoggedIn = session.isLoggedIn
   const [open, setOpen] = useState(false)
-  const [menu, setMenu] = useState<"products" | "panel" | null>(null)
+  const [menu, setMenu] = useState<MenuKey | null>(null)
   const [mobileSection, setMobileSection] = useState<"products" | "panel" | null>(null)
   const barRef = useRef<HTMLDivElement>(null)
 
@@ -233,15 +238,57 @@ export default function Header() {
           </form>
 
           <div className="flex items-center gap-1.5 shrink-0">
+            {/* اطلاع‌رسانی‌ها — با موس یا لمس باز می‌شود */}
             {isLoggedIn ? (
-              <IconLink href="/dashboard/notifications" label="اطلاع‌رسانی‌ها" badge="2">
-                <Bell className="h-4 w-4" />
-              </IconLink>
+              <div
+                className="relative"
+                onMouseEnter={() => setMenu("bell")}
+                onMouseLeave={() => setMenu(null)}
+              >
+                <IconTrigger
+                  href="/dashboard/notifications"
+                  label="اطلاع‌رسانی‌ها"
+                  badge={num(unreadCount)}
+                  active={menu === "bell"}
+                  onOpen={() => setMenu("bell")}
+                >
+                  <Bell className="h-4 w-4" />
+                </IconTrigger>
+
+                <AnimatePresence>
+                  {menu === "bell" ? (
+                    <DropdownPanel align="left" className="w-[336px]">
+                      <NotificationsMenu onNavigate={() => setMenu(null)} />
+                    </DropdownPanel>
+                  ) : null}
+                </AnimatePresence>
+              </div>
             ) : null}
 
-            <IconLink href="/cart" label="سبد خرید" badge="3">
-              <ShoppingCart className="h-4 w-4" />
-            </IconLink>
+            {/* سبد خرید — با موس یا لمس باز می‌شود */}
+            <div
+              className="relative"
+              onMouseEnter={() => setMenu("cart")}
+              onMouseLeave={() => setMenu(null)}
+            >
+              <IconTrigger
+                href="/cart"
+                label="سبد خرید"
+                badge={num(cartCount)}
+                active={menu === "cart"}
+                onOpen={() => setMenu("cart")}
+              >
+                <ShoppingCart className="h-4 w-4" />
+              </IconTrigger>
+
+              <AnimatePresence>
+                {menu === "cart" ? (
+                  <DropdownPanel align="left" className="w-[372px]">
+                    <CartMenu onNavigate={() => setMenu(null)} />
+                  </DropdownPanel>
+                ) : null}
+              </AnimatePresence>
+            </div>
 
             {/* پنل کاربری — فقط برای کاربر واردشده؛ با موس یا لمس باز می‌شود */}
             {isLoggedIn ? (
@@ -318,7 +365,7 @@ export default function Header() {
       <div
         className={cn(
           "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
-          open ? "max-h-[1400px]" : "max-h-0",
+          open ? "max-h-[1600px]" : "max-h-0",
         )}
       >
         <div className="px-4 py-4 space-y-1">
@@ -406,7 +453,7 @@ export default function Header() {
             </MobileSection>
           ) : null}
 
-          {[...navItems, { label: "سبد خرید", href: "/cart" }].map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -416,6 +463,17 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
+
+          <Link
+            href="/cart"
+            onClick={() => setOpen(false)}
+            className="flex items-center justify-between rounded-2xl px-4 py-3 text-[14px] font-semibold text-[#0a1b33] hover:bg-[#1b39f5]/8"
+          >
+            سبد خرید
+            <span className="num rounded-full bg-[#1b39f5]/8 px-2 py-0.5 text-[10.5px] font-bold text-[#1b39f5]">
+              {num(cartCount)}
+            </span>
+          </Link>
 
           {isLoggedIn ? null : (
             <Link
@@ -563,15 +621,20 @@ function MobileSection({
   )
 }
 
-function IconLink({
+/** دکمهٔ آیکونی با منوی بازشونده (اطلاع‌رسانی و سبد خرید) */
+function IconTrigger({
   href,
   label,
   badge,
+  active,
+  onOpen,
   children,
 }: {
   href: string
   label: string
   badge?: string
+  active: boolean
+  onOpen: () => void
   children: React.ReactNode
 }) {
   return (
@@ -579,7 +642,17 @@ function IconLink({
       href={href}
       aria-label={label}
       title={label}
-      className="glass-plate glass-plate-hover relative grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5]"
+      aria-expanded={active}
+      onClick={(event) => {
+        if (!active) {
+          event.preventDefault()
+          onOpen()
+        }
+      }}
+      className={cn(
+        "glass-plate glass-plate-hover relative grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5] transition-all",
+        active && "bg-white/90 ring-2 ring-[#1b39f5]/15 shadow-[0_14px_28px_-16px_rgba(27,57,245,0.85)]",
+      )}
     >
       {children}
       {badge ? (
