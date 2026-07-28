@@ -80,8 +80,8 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="px-4 md:px-6 pt-4">
-      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-white pt-14 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-20">
+    <section className="px-4 md:px-6 pt-3">
+      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-white pt-8 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-10">
         {/* هاله‌های آبی پس‌زمینه */}
         <span
           className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[720px] -translate-x-1/2 rounded-full bg-[#1b39f5]/8 blur-3xl"
@@ -179,7 +179,7 @@ export default function Hero() {
 
         {/* منظومهٔ لوگوی برندها با لوگوی اچ‌شاپ در مرکز */}
         <div
-          className="relative z-10 mt-12 px-2 pb-8 md:mt-16 md:px-6"
+          className="relative z-10 mt-12 px-2 pb-8 md:mt-14 md:px-6"
           style={{
             maskImage:
               "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",

@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
-import PromoBanner from "@/components/site/PromoBanner"
 import Footer from "@/components/site/Footer"
 import GlassIcon from "@/components/site/GlassIcon"
 import ProductCard from "@/components/site/ProductCard"
@@ -47,7 +46,6 @@ export default function HomePage() {
     <>
       <Header />
       <main>
-        <PromoBanner />
         <Hero />
 
         {/* مزایا */}

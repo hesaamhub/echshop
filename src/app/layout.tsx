@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
+import PromoBanner from "@/components/site/PromoBanner"
 import { siteContent } from "@/lib/data"
 
 export const metadata: Metadata = {
@@ -28,7 +29,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <PromoBanner />
+        {children}
+      </body>
     </html>
   )
 }

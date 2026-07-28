@@ -1,99 +1,292 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
-import { motion } from "motion/react"
-import { ChevronLeft, Sparkles, X } from "lucide-react"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
+import { ChevronLeft } from "lucide-react"
 
 /**
- * تنظیمات بنر کمپین بالای صفحه.
- * فعلاً اینجا تعریف شده؛ در مرحلهٔ بعد به پنل مدیریت و دیتابیس وصل می‌شود.
- * برای خاموش کردن بنر کافی است enabled را false کنید.
+ * یک طرح بنر تبلیغاتی بالای سایت.
+ * هر طرح رنگ‌بندی و چیدمان مختص خود را دارد.
  */
-export const promoBanner = {
-  enabled: true,
-  href: "/products",
-  deadline: "تا ۱۰ مرداد",
-  lead: "هرچی بخری،",
-  highlight: "iPhone 17 Pro Max",
-  tail: "می‌بری!",
-  note: "هر ۵۰۰٬۰۰۰ تومان یک شانس",
-  ctaLabel: "شرکت در قرعه‌کشی",
+export type PromoSlide = {
+  id: string
+  href: string
+  /** کلاس پس‌زمینهٔ نوار */
+  bar: string
+  /** کلاس متن اصلی */
+  text: string
+  /** برچسب کوچک ابتدای نوار */
+  chip?: string
+  chipClass?: string
+  lead: string
+  /** نام لاتین محصول (با قاب مخصوص) */
+  highlight?: string
+  highlightClass?: string
+  tail?: string
+  /** پیل تأکیدی سمت چپ (تخفیف، کد، مهلت و …) */
+  note?: string
+  noteClass?: string
+  cta: string
+  ctaClass: string
 }
 
 /**
- * بنر تبلیغاتی بالای هیرو (زیر نوار دسته‌بندی‌ها).
- * قابل بستن است و ارتفاع کمی می‌گیرد تا هیرو عقب نرود.
+ * تنظیمات نوار تبلیغاتی بالای سایت.
+ * در مرحلهٔ بعد به پنل مدیریت و دیتابیس وصل می‌شود؛
+ * فعلاً برای خاموش کردن کافی است enabled را false کنید.
+ */
+export const promoBanner = {
+  enabled: true,
+  /** فاصلهٔ چرخش طرح‌ها (میلی‌ثانیه) */
+  intervalMs: 5200,
+  slides: [
+    {
+      id: "spotify-off",
+      href: "/products/spotify-premium",
+      bar: "bg-[#0a152d]",
+      text: "text-white",
+      chip: "تخفیف ویژه",
+      chipClass: "bg-[#1b39f5] text-white",
+      lead: "اشتراک سه‌ماههٔ",
+      highlight: "Spotify Premium",
+      highlightClass: "bg-white/12 text-white",
+      tail: "با ۳۵٪ تخفیف",
+      note: "تا پایان هفته",
+      noteClass: "bg-[#D5803B] text-white",
+      cta: "خرید",
+      ctaClass: "text-white/85",
+    },
+    {
+      id: "chatgpt-restock",
+      href: "/products/chatgpt-plus",
+      bar: "bg-[#0f2f22]",
+      text: "text-white",
+      chip: "موجود شد",
+      chipClass: "bg-[#46A171] text-white",
+      lead: "اکانت",
+      highlight: "ChatGPT Plus",
+      highlightClass: "bg-white/12 text-white",
+      tail: "دوباره شارژ شد",
+      note: "تحویل آنی",
+      noteClass: "bg-white text-[#0f2f22]",
+      cta: "ثبت سفارش",
+      ctaClass: "text-white/85",
+    },
+    {
+      id: "first-order-code",
+      href: "/products",
+      bar: "bg-[#1b39f5]",
+      text: "text-white",
+      chip: "خرید اول",
+      chipClass: "bg-white/18 text-white",
+      lead: "با کد",
+      highlight: "ECH20",
+      highlightClass: "bg-white text-[#1b39f5]",
+      tail: "۲۰٪ تخفیف اولین خریدت را بگیر",
+      note: "بدون سقف مبلغ",
+      noteClass: "bg-[#0a152d] text-white",
+      cta: "شروع خرید",
+      ctaClass: "text-white/85",
+    },
+    {
+      id: "netflix-4k",
+      href: "/products/netflix-premium",
+      bar: "bg-[#FCEAE8]",
+      text: "text-[#0a1b33]",
+      chip: "پرفروش‌ترین",
+      chipClass: "bg-[#A8382C] text-white",
+      lead: "اشتراک",
+      highlight: "Netflix 4K",
+      highlightClass: "bg-[#0a152d] text-white",
+      tail: "از ۲۹۰ هزار تومان",
+      note: "گارانتی ۳۰ روزه",
+      noteClass: "bg-[#E56458] text-white",
+      cta: "مشاهده",
+      ctaClass: "text-[#A8382C]",
+    },
+    {
+      id: "adobe-year",
+      href: "/products/adobe-creative-cloud",
+      bar: "bg-[#FBF1E2]",
+      text: "text-[#0a1b33]",
+      chip: "لایسنس رسمی",
+      chipClass: "bg-[#9A6321] text-white",
+      lead: "لایسنس یک‌سالهٔ",
+      highlight: "Adobe Creative Cloud",
+      highlightClass: "bg-[#0a152d] text-white",
+      tail: "روی اکانت شخصی شما",
+      note: "۱۵٪ تخفیف دانشجویی",
+      noteClass: "bg-[#D5803B] text-white",
+      cta: "جزئیات",
+      ctaClass: "text-[#9A6321]",
+    },
+    {
+      id: "canva-pro",
+      href: "/products/canva-pro",
+      bar: "bg-[#E5F2FC]",
+      text: "text-[#0a1b33]",
+      chip: "تحویل خودکار",
+      chipClass: "bg-[#1b39f5] text-white",
+      lead: "اشتراک تیمیٔ",
+      highlight: "Canva Pro",
+      highlightClass: "bg-[#0a152d] text-white",
+      tail: "موجود شد",
+      note: "تحویل در کمتر از ۲ دقیقه",
+      noteClass: "bg-[#1b39f5]/10 text-[#1b39f5]",
+      cta: "خرید",
+      ctaClass: "text-[#1b39f5]",
+    },
+    {
+      id: "youtube-premium",
+      href: "/products/youtube-premium",
+      bar: "bg-[#2b1758]",
+      text: "text-white",
+      chip: "پیشنهاد ماه",
+      chipClass: "bg-white/18 text-white",
+      lead: "سه ماه",
+      highlight: "YouTube Premium",
+      highlightClass: "bg-white/12 text-white",
+      tail: "بدون تبلیغ، روی اکانت خودتان",
+      note: "۲۵٪ تخفیف",
+      noteClass: "bg-white text-[#2b1758]",
+      cta: "مشاهده",
+      ctaClass: "text-white/85",
+    },
+    {
+      id: "gamepass",
+      href: "/category/gaming",
+      bar: "bg-[#E7F4EC]",
+      text: "text-[#0a1b33]",
+      chip: "موجودی محدود",
+      chipClass: "bg-[#2F7A50] text-white",
+      lead: "گیفت‌کارت",
+      highlight: "Xbox Game Pass",
+      highlightClass: "bg-[#0a152d] text-white",
+      tail: "با تحویل فوری از انبار",
+      note: "فقط ۳۰ عدد",
+      noteClass: "bg-[#46A171] text-white",
+      cta: "خرید",
+      ctaClass: "text-[#2F7A50]",
+    },
+    {
+      id: "wallet-bonus",
+      href: "/dashboard/wallet",
+      bar: "bg-[#0a1b33]",
+      text: "text-white",
+      chip: "کیف پول",
+      chipClass: "bg-[#1b39f5] text-white",
+      lead: "شارژ کیف پول با ۵٪ اعتبار هدیه",
+      note: "فقط تا پایان ماه",
+      noteClass: "bg-[#1b39f5]/25 text-white",
+      cta: "شارژ حساب",
+      ctaClass: "text-white/85",
+    },
+    {
+      id: "auto-delivery",
+      href: "/about",
+      bar: "bg-white",
+      text: "text-[#0a1b33]",
+      chip: "اچ‌شاپ",
+      chipClass: "bg-[#1b39f5]/10 text-[#1b39f5]",
+      lead: "تحویل خودکار سفارش در کمتر از دو دقیقه، ۲۴ ساعت شبانه‌روز",
+      note: "ضمانت بازگشت وجه",
+      noteClass: "bg-[#1b39f5] text-white",
+      cta: "دربارهٔ ما",
+      ctaClass: "text-[#1b39f5]",
+    },
+  ] satisfies PromoSlide[],
+}
+
+/**
+ * نوار تبلیغاتی بالاترین قسمت سایت (بالای هدر).
+ * طرح‌ها خودکار عوض می‌شوند و قابل بستن نیست.
  */
 export default function PromoBanner() {
-  const [closed, setClosed] = useState(false)
+  const slides = promoBanner.slides
+  const [index, setIndex] = useState(0)
 
-  if (!promoBanner.enabled || closed) return null
+  useEffect(() => {
+    if (!promoBanner.enabled || slides.length < 2) return
+
+    const timer = setInterval(() => {
+      setIndex((current) => (current + 1) % slides.length)
+    }, promoBanner.intervalMs)
+
+    return () => clearInterval(timer)
+  }, [slides.length])
+
+  if (!promoBanner.enabled || slides.length === 0) return null
+
+  const slide = slides[index]
 
   return (
-    <div className="px-4 md:px-6 pt-3">
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative mx-auto flex w-full max-w-[1400px] items-center gap-3 overflow-hidden rounded-2xl border border-[#1b39f5]/12 bg-white px-3 py-2 shadow-[0_14px_34px_-28px_rgba(27,57,245,0.6)] md:px-5"
-      >
-        {/* درخشش متحرک روی بنر */}
-        <motion.span
-          aria-hidden
-          initial={{ x: "-120%" }}
-          animate={{ x: "320%" }}
-          transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 2.4, ease: "easeInOut" }}
-          className="pointer-events-none absolute inset-y-0 w-1/5 skew-x-[-20deg] bg-gradient-to-r from-transparent via-[#1b39f5]/8 to-transparent"
-        />
-
-        <Link
-          href={promoBanner.href}
-          className="relative flex flex-1 flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-center"
-        >
-          {/* مهلت کمپین */}
-          <span className="num inline-flex shrink-0 items-center rounded-lg bg-[#1b39f5]/8 px-2.5 py-1 text-[11px] font-bold text-[#1b39f5]">
-            {promoBanner.deadline}
-          </span>
-
-          <Sparkles className="hidden h-4 w-4 shrink-0 text-[#D5803B] sm:block" />
-
-          {/* متن اصلی */}
-          <span className="inline-flex flex-wrap items-center justify-center gap-2 text-[12.5px] font-extrabold text-[#0a1b33] md:text-[15px]">
-            {promoBanner.lead}
-            <span
-              dir="ltr"
-              className="wordmark rounded-lg bg-[#0a152d] px-2.5 py-1 text-[11.5px] text-white md:text-[13px]"
+    <div
+      className={`relative w-full overflow-hidden transition-colors duration-700 ${slide.bar}`}
+    >
+      <div className="relative mx-auto h-11 w-full max-w-[1400px] md:h-12">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={slide.id}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -14 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 flex items-center justify-center px-4 md:px-6"
+          >
+            <Link
+              href={slide.href}
+              className="flex items-center justify-center gap-2 text-center md:gap-3"
             >
-              {promoBanner.highlight}
-            </span>
-            {promoBanner.tail}
-          </span>
+              {slide.chip ? (
+                <span
+                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10.5px] font-bold sm:inline-block ${slide.chipClass ?? ""}`}
+                >
+                  {slide.chip}
+                </span>
+              ) : null}
 
-          {/* شرط قرعه‌کشی */}
-          <span className="inline-flex shrink-0 items-center rounded-lg bg-[#D5803B] px-2.5 py-1 text-[11px] font-bold text-white">
-            {promoBanner.note}
-          </span>
+              <span className={`text-[12px] font-bold md:text-[13.5px] ${slide.text}`}>
+                {slide.lead}
+                {slide.highlight ? (
+                  <span
+                    dir="ltr"
+                    className={`wordmark mx-1.5 inline-block rounded-md px-1.5 py-0.5 text-[11px] md:text-[12.5px] ${slide.highlightClass ?? ""}`}
+                  >
+                    {slide.highlight}
+                  </span>
+                ) : null}
+                {slide.tail}
+              </span>
 
-          <Sparkles className="hidden h-4 w-4 shrink-0 text-[#D5803B] sm:block" />
+              {slide.note ? (
+                <span
+                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10.5px] font-bold md:inline-block ${slide.noteClass ?? ""}`}
+                >
+                  {slide.note}
+                </span>
+              ) : null}
 
-          {/* دکمهٔ اقدام */}
-          <span className="hidden shrink-0 items-center gap-1 text-[12px] font-bold text-[#1b39f5] lg:inline-flex">
-            {promoBanner.ctaLabel}
-            <ChevronLeft className="h-3.5 w-3.5" />
-          </span>
-        </Link>
+              <span
+                className={`hidden shrink-0 items-center gap-1 text-[11.5px] font-bold lg:inline-flex ${slide.ctaClass}`}
+              >
+                {slide.cta}
+                <ChevronLeft className="h-3.5 w-3.5" />
+              </span>
+            </Link>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-        {/* بستن بنر */}
-        <button
-          type="button"
-          onClick={() => setClosed(true)}
-          aria-label="بستن بنر"
-          className="relative grid h-7 w-7 shrink-0 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]"
-        >
-          <X className="h-4 w-4" />
-        </button>
-      </motion.div>
+      {/* نوار پیشرفت تا طرح بعدی */}
+      <motion.span
+        key={`progress-${slide.id}`}
+        aria-hidden
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: promoBanner.intervalMs / 1000, ease: "linear" }}
+        className="absolute bottom-0 right-0 h-[2px] w-full origin-right bg-[#1b39f5]/40"
+      />
     </div>
   )
 }
