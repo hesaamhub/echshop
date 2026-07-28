@@ -16,7 +16,7 @@ const heroCopy = {
   headlineLead: "خرید مطمئن اکانت",
   headlineTail: "با اچ‌شاپ",
   subheadline:
-    "مرجع تخصصی خرید انواع اکانت پرمیوم، اشتراک و لایسنس. تحویل فوری، گارانتی بازگشت وجه، پشتیبانی ۲۴ ساعته و درگاه پرداخت امن.",
+    "اکانت اورجینال و لایسنس رسمی بیش از ۴۰ برند معتبر جهانی — تحویل خودکار در کمتر از دو دقیقه، ضمانت بازگشت وجه و پشتیبانی شبانه‌روزی فارسی.",
 }
 
 /**
@@ -99,10 +99,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto max-w-3xl px-6 text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#46A171]/25 bg-[#46A171]/10 px-4 py-1.5 text-[12px] font-semibold text-[#2F7A50]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#46A171]" />
-            {heroCopy.badge}
-          </span>
+          <DeliveryBadge label={heroCopy.badge} />
 
           {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود؛
               نام‌های نامرئی در همان خانهٔ گرید عرض جایگاه را ثابت نگه می‌دارند. */}
@@ -200,17 +197,17 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="relative mx-1 grid h-16 w-16 shrink-0 place-items-center rounded-[22px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] shadow-[0_22px_50px_-14px_rgba(27,57,245,0.75)] md:h-[78px] md:w-[78px] md:rounded-[26px]"
+                className="relative mx-1.5 grid h-[74px] w-[74px] shrink-0 place-items-center rounded-[26px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] shadow-[0_24px_54px_-14px_rgba(27,57,245,0.75)] md:h-[94px] md:w-[94px] md:rounded-[30px]"
               >
                 <span
                   className="pointer-events-none absolute -inset-8 rounded-full bg-[#1b39f5]/25 blur-2xl"
                   aria-hidden
                 />
                 <span
-                  className="pointer-events-none absolute inset-0 rounded-[22px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[26px]"
+                  className="pointer-events-none absolute inset-0 rounded-[26px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[30px]"
                   aria-hidden
                 />
-                <Logo className="relative z-10 h-9 w-9 brightness-0 invert md:h-11 md:w-11" />
+                <Logo className="relative z-10 h-10 w-10 brightness-0 invert md:h-14 md:w-14" />
               </motion.span>
 
               <LogoRow
@@ -232,6 +229,48 @@ export default function Hero() {
         </div>
       </div>
     </section>
+  )
+}
+
+/**
+ * چیپ سبز «تحویل فوری و خودکار» با درخشش متحرک:
+ * یک نوار نور از روی چیپ رد می‌شود و همزمان نقطهٔ سبز نبض می‌زند.
+ */
+function DeliveryBadge({ label }: { label: string }) {
+  return (
+    <motion.span
+      animate={{
+        boxShadow: [
+          "0 0 0 0 rgba(70,161,113,0)",
+          "0 0 22px 2px rgba(70,161,113,0.28)",
+          "0 0 0 0 rgba(70,161,113,0)",
+        ],
+      }}
+      transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[#46A171]/30 bg-[#46A171]/10 px-4 py-1.5 text-[12px] font-semibold text-[#2F7A50]"
+    >
+      {/* نوار درخشش */}
+      <motion.span
+        aria-hidden
+        initial={{ x: "-160%" }}
+        animate={{ x: "260%" }}
+        transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+        className="pointer-events-none absolute inset-y-0 w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/75 to-transparent"
+      />
+
+      {/* نقطهٔ نبض‌دار */}
+      <span className="relative flex h-2 w-2 items-center justify-center">
+        <motion.span
+          aria-hidden
+          animate={{ scale: [1, 2.2, 1], opacity: [0.55, 0, 0.55] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+          className="absolute h-2 w-2 rounded-full bg-[#46A171]"
+        />
+        <span className="relative h-1.5 w-1.5 rounded-full bg-[#46A171]" />
+      </span>
+
+      <span className="relative">{label}</span>
+    </motion.span>
   )
 }
 
@@ -289,13 +328,13 @@ function BrandTile({
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 + order * 0.02, ease: [0.16, 1, 0.3, 1] }}
-      className={`${visibility} group h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[#1b39f5]/10 bg-white shadow-[0_10px_24px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_16px_30px_-14px_rgba(27,57,245,0.5)] md:h-14 md:w-14 md:rounded-[18px]`}
+      className={`${visibility} group h-16 w-16 shrink-0 items-center justify-center rounded-[20px] border border-[#1b39f5]/10 bg-white shadow-[0_12px_28px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_18px_34px_-14px_rgba(27,57,245,0.5)] md:h-[72px] md:w-[72px] md:rounded-[22px]`}
       title={logo.name}
     >
       {exhausted ? (
         <span
           aria-label={logo.name}
-          className="grid h-7 w-7 place-items-center rounded-xl text-[13px] font-bold text-white"
+          className="grid h-9 w-9 place-items-center rounded-xl text-[15px] font-bold text-white"
           style={{
             background: `linear-gradient(135deg, ${logo.gradient.from}, ${logo.gradient.to})`,
           }}
@@ -309,7 +348,7 @@ function BrandTile({
           alt={logo.name}
           loading="lazy"
           onError={() => setIndex((value) => value + 1)}
-          className="h-6 w-6 object-contain transition-transform duration-500 group-hover:scale-110 md:h-7 md:w-7"
+          className="h-8 w-8 object-contain transition-transform duration-500 group-hover:scale-110 md:h-9 md:w-9"
         />
       )}
     </motion.span>
