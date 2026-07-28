@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react"
 import {
   Bell,
   ChevronDown,
+  Flame,
   Gamepad2,
   Heart,
   LayoutDashboard,
@@ -25,9 +26,10 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react"
-import { categories } from "@/lib/data"
+import { categories, categoryCount } from "@/lib/data"
 import { session } from "@/lib/session"
 import { cn } from "@/lib/utils"
+import BestSellersMenu from "./BestSellersMenu"
 import Logo from "./Logo"
 
 /** لینک‌های سادهٔ منو */
@@ -121,42 +123,61 @@ export default function Header() {
 
               <AnimatePresence>
                 {menu === "products" ? (
-                  <DropdownPanel align="right" className="w-[440px]">
-                    <div className="grid grid-cols-2 gap-1">
-                      {categories.map((category) => {
-                        const Icon = categoryIcons[category.icon] ?? Sparkles
+                  <DropdownPanel align="right" className="w-[700px]">
+                    <div className="flex gap-2">
+                      {/* دسته‌بندی‌ها */}
+                      <div className="min-w-0 flex-1">
+                        <p className="px-3 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400">
+                          دسته‌بندی محصولات
+                        </p>
 
-                        return (
-                          <Link
-                            key={category.slug}
-                            href={`/category/${category.slug}`}
-                            onClick={() => setMenu(null)}
-                            className="group flex items-center gap-2.5 rounded-2xl px-3 py-2.5 transition-colors hover:bg-[#1b39f5]/6"
-                          >
-                            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5]">
-                              <Icon className="h-4 w-4" />
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
-                                {category.title}
-                              </span>
-                              <span className="num block text-[10.5px] text-slate-400">
-                                {category.count} محصول
-                              </span>
-                            </span>
-                          </Link>
-                        )
-                      })}
+                        <div className="grid grid-cols-2 gap-1">
+                          {categories.map((category) => {
+                            const Icon = categoryIcons[category.icon] ?? Sparkles
+
+                            return (
+                              <Link
+                                key={category.slug}
+                                href={`/category/${category.slug}`}
+                                onClick={() => setMenu(null)}
+                                className="group flex items-center gap-2.5 rounded-2xl px-3 py-2.5 transition-colors hover:bg-[#1b39f5]/6"
+                              >
+                                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5]">
+                                  <Icon className="h-4 w-4" />
+                                </span>
+                                <span className="min-w-0 flex-1">
+                                  <span className="block truncate text-[12.5px] font-semibold text-[#0a1b33] group-hover:text-[#1b39f5]">
+                                    {category.title}
+                                  </span>
+                                  <span className="num block text-[10.5px] text-slate-400">
+                                    {categoryCount(category.slug)} محصول
+                                  </span>
+                                </span>
+                              </Link>
+                            )
+                          })}
+                        </div>
+
+                        <Link
+                          href="/products"
+                          onClick={() => setMenu(null)}
+                          className="mt-2 flex items-center justify-between rounded-2xl bg-[#1b39f5]/6 px-3 py-2.5 text-[12px] font-bold text-[#1b39f5] transition-colors hover:bg-[#1b39f5]/12"
+                        >
+                          مشاهدهٔ همهٔ محصولات
+                          <ChevronDown className="h-4 w-4 rotate-90" />
+                        </Link>
+                      </div>
+
+                      {/* پرفروش‌ترین‌ها */}
+                      <div className="w-[268px] shrink-0 border-r border-[#1b39f5]/10 pr-2">
+                        <p className="flex items-center gap-1.5 px-2.5 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400">
+                          <Flame className="h-3.5 w-3.5 text-[#E56458]" />
+                          پرفروش‌ترین‌ها
+                        </p>
+
+                        <BestSellersMenu limit={5} onNavigate={() => setMenu(null)} />
+                      </div>
                     </div>
-
-                    <Link
-                      href="/products"
-                      onClick={() => setMenu(null)}
-                      className="mt-2 flex items-center justify-between rounded-2xl bg-[#1b39f5]/6 px-3 py-2.5 text-[12px] font-bold text-[#1b39f5] transition-colors hover:bg-[#1b39f5]/12"
-                    >
-                      مشاهدهٔ همهٔ محصولات
-                      <ChevronDown className="h-4 w-4 rotate-90" />
-                    </Link>
                   </DropdownPanel>
                 ) : null}
               </AnimatePresence>
@@ -313,7 +334,7 @@ export default function Header() {
       <div
         className={cn(
           "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
-          open ? "max-h-[820px]" : "max-h-0",
+          open ? "max-h-[980px]" : "max-h-0",
         )}
       >
         <div className="px-4 py-4 space-y-1">
@@ -338,10 +359,21 @@ export default function Header() {
                   <span className="grid h-7 w-7 place-items-center rounded-lg bg-[#1b39f5]/8 text-[#1b39f5]">
                     <Icon className="h-3.5 w-3.5" />
                   </span>
-                  {category.title}
+                  <span className="flex-1">{category.title}</span>
+                  <span className="num text-[10.5px] text-slate-400">
+                    {categoryCount(category.slug)}
+                  </span>
                 </Link>
               )
             })}
+
+            <p className="flex items-center gap-1.5 px-3 pt-2 pb-1 text-[10.5px] font-bold text-slate-400">
+              <Flame className="h-3.5 w-3.5 text-[#E56458]" />
+              پرفروش‌ترین‌ها
+            </p>
+
+            <BestSellersMenu limit={5} onNavigate={() => setOpen(false)} />
+
             <Link
               href="/products"
               onClick={() => setOpen(false)}
@@ -496,7 +528,7 @@ function MobileSection({
       <div
         className={cn(
           "overflow-hidden transition-all",
-          open ? "mt-1 max-h-[520px]" : "max-h-0",
+          open ? "mt-1 max-h-[760px]" : "max-h-0",
         )}
       >
         <div className="space-y-0.5 pr-1">{children}</div>
