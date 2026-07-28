@@ -3,8 +3,8 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import { ChevronLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
-import { siteContent } from "@/lib/data"
+import { ArrowLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
+import { brandLogos, logoSources, type BrandLogo } from "@/lib/brands"
 import Logo from "./Logo"
 
 /**
@@ -31,25 +31,30 @@ const rotatingProducts = [
   "تلگرام",
 ]
 
-/** نشانهٔ اعتماد زیر متن هیرو */
+/** نشانهٔ اعتماد زیر دکمه‌ها */
 const trustItems = [
-  { icon: ShieldCheck, label: "پرداخت امن", color: "text-[#46A171]" },
-  { icon: Zap, label: "تحویل آنی", color: "text-[#EAC26B]" },
-  { icon: Headphones, label: "پشتیبانی ۲۴/۷", color: "text-[#2783de]" },
+  { icon: ShieldCheck, label: "پرداخت امن" },
+  { icon: Zap, label: "تحویل آنی" },
+  { icon: Headphones, label: "پشتیبانی ۲۴/۷" },
 ]
 
-/** لینک‌های نوار شناور پایین هیرو */
-const heroNavLinks = [
-  { label: "محصولات", href: "/products" },
-  { label: "پنل کاربری", href: "/dashboard" },
+/** سه دکمهٔ زیر متن */
+const heroActions = [
+  { label: "مشاهدهٔ محصولات", href: "/products", primary: true },
+  { label: "پنل کاربری", href: "/dashboard", primary: false },
+  { label: "ارتباط با ما", href: "/contact", primary: false },
 ]
+
+/** چیدمان سه ردیفی لوگوی برندها دور لوگوی اچ‌شاپ */
+const topRow = brandLogos.slice(0, 8)
+const middleLeft = brandLogos.slice(8, 11)
+const middleRight = brandLogos.slice(11, 14)
+const bottomRow = brandLogos.slice(14, 22)
 
 /**
- * بخش هیروی صفحه اصلی — راست‌چین.
- * ویدیو تمام‌عرض و یک‌تکه است، متن در سمت راست روی قسمت آرام ویدیو.
+ * بخش هیروی صفحه اصلی — متن وست‌چین و منظومهٔ لوگوی برندها در پایین.
  */
 export default function Hero() {
-  const { hero, brand } = siteContent
   const [productIndex, setProductIndex] = useState(0)
 
   useEffect(() => {
@@ -62,126 +67,211 @@ export default function Hero() {
 
   return (
     <section className="px-4 md:px-6 pt-4">
-      <div className="relative w-full max-w-[1400px] mx-auto rounded-[48px] bg-white border border-slate-200/50 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.03)] overflow-hidden h-[520px] md:h-[540px] flex flex-col">
-        {/* لایهٔ ویدیو — تمام کادر هیرو، یک‌تکه */}
-        <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover object-left scale-105 transition-transform duration-1000"
-            src={hero.videoSrc}
-          />
+      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-white pt-14 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-20">
+        {/* هاله‌های آبی پس‌زمینه */}
+        <span
+          className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[720px] -translate-x-1/2 rounded-full bg-[#1b39f5]/8 blur-3xl"
+          aria-hidden
+        />
+        <span
+          className="pointer-events-none absolute bottom-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
+          aria-hidden
+        />
 
-          {/* محافظ خوانایی متن در سمت راست */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "linear-gradient(to left, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.58) 22%, rgba(255,255,255,0.26) 40%, rgba(255,255,255,0.05) 58%, rgba(255,255,255,0) 74%)",
-            }}
-          />
-        </div>
+        {/* متن وست‌چین */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 mx-auto max-w-3xl px-6 text-center"
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#1b39f5]/15 bg-[#1b39f5]/6 px-4 py-1.5 text-[12px] font-semibold text-[#1b39f5]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1b39f5]" />
+            {heroCopy.badge}
+          </span>
 
-        {/* محتوای متنی — سمت راست */}
-        <div className="relative z-20 flex-1 px-8 md:px-16 pt-10 md:pt-12 flex flex-col items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full md:max-w-[74%]"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 backdrop-blur px-4 py-1.5 text-[12px] font-semibold text-[#0a1b33] shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#46A171]" />
-              {heroCopy.badge}
-            </span>
-
-            {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود.
-                همهٔ نام‌ها به‌صورت نامرئی در همان خانهٔ گرید چیده شده‌اند تا عرض
-                جایگاه همیشه به اندازهٔ بلندترین نام باشد و جمله تکان نخورد. */}
-            <h1 className="mt-5 font-display text-[30px] md:text-[42px] font-bold tracking-tight leading-[1.3] text-[#0a1b33] md:whitespace-nowrap [text-shadow:0_1px_18px_rgba(255,255,255,0.9)]">
-              {heroCopy.headlineLead}{" "}
-              <span className="inline-grid text-center">
-                {rotatingProducts.map((name) => (
-                  <span
-                    key={`ghost-${name}`}
-                    aria-hidden
-                    className="col-start-1 row-start-1 invisible whitespace-nowrap"
-                  >
-                    {name}
-                  </span>
-                ))}
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={rotatingProducts[productIndex]}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    className="col-start-1 row-start-1 whitespace-nowrap text-brand"
-                  >
-                    {rotatingProducts[productIndex]}
-                  </motion.span>
-                </AnimatePresence>
-              </span>{" "}
-              {heroCopy.headlineTail}
-            </h1>
-
-            <p className="mt-5 font-sans text-[14px] md:text-[15.5px] font-medium leading-8 text-[#334155] md:max-w-[64%] [text-shadow:0_1px_10px_rgba(255,255,255,1),0_1px_24px_rgba(255,255,255,0.95)]">
-              {heroCopy.subheadline}
-            </p>
-
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-              {trustItems.map((item) => (
+          {/* تیتر اصلی — نام محصول وسط جمله مدام عوض می‌شود؛
+              نام‌های نامرئی در همان خانهٔ گرید عرض جایگاه را ثابت نگه می‌دارند. */}
+          <h1 className="mt-6 font-display text-[32px] md:text-[52px] font-bold leading-[1.35] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
+            {heroCopy.headlineLead}{" "}
+            <span className="inline-grid text-center">
+              {rotatingProducts.map((name) => (
                 <span
-                  key={item.label}
-                  className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-slate-700"
+                  key={`ghost-${name}`}
+                  aria-hidden
+                  className="col-start-1 row-start-1 invisible whitespace-nowrap"
                 >
-                  <item.icon className={`w-4 h-4 ${item.color}`} />
-                  {item.label}
+                  {name}
                 </span>
               ))}
-            </div>
-          </motion.div>
-        </div>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={rotatingProducts[productIndex]}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="col-start-1 row-start-1 whitespace-nowrap text-[#1b39f5]"
+                >
+                  {rotatingProducts[productIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>{" "}
+            {heroCopy.headlineTail}
+          </h1>
 
-        {/* نوار شناور پایین */}
-        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-30">
-          <motion.nav
-            initial={{ opacity: 0, y: 18 }}
+          <p className="mx-auto mt-5 max-w-2xl text-[13.5px] md:text-[15px] font-medium leading-8 text-[#475569]">
+            {heroCopy.subheadline}
+          </p>
+
+          {/* سه دکمه */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-1 bg-white/90 backdrop-blur-2xl px-1.5 py-1.5 rounded-full shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-slate-200/40"
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
           >
-            <Link
-              href="/"
-              aria-label={brand.nameFa}
-              className="w-9 h-9 shrink-0 flex items-center justify-center rounded-full bg-white border border-slate-100 shadow-sm"
-            >
-              <Logo className="h-5 w-5" />
-            </Link>
+            {heroActions.map((action) =>
+              action.primary ? (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="glass-solid inline-flex items-center gap-2 rounded-full px-7 py-3 text-[13px] font-semibold"
+                >
+                  {action.label}
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+              ) : (
+                <Link
+                  key={action.href}
+                  href={action.href}
+                  className="glass-plate glass-plate-hover rounded-full px-7 py-3 text-[13px] font-semibold text-[#1b39f5]"
+                >
+                  {action.label}
+                </Link>
+              ),
+            )}
+          </motion.div>
 
-            {heroNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-[12px] font-semibold text-slate-500 hover:text-[#0a1b33] transition-colors"
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+            {trustItems.map((item) => (
+              <span
+                key={item.label}
+                className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-slate-500"
               >
-                {link.label}
-              </Link>
+                <item.icon className="h-4 w-4 text-[#1b39f5]" />
+                {item.label}
+              </span>
             ))}
+          </div>
+        </motion.div>
 
-            <Link
-              href={hero.navCta.href}
-              className="inline-flex items-center gap-1 bg-white px-5 py-2 rounded-full text-[12px] font-semibold text-[#0a1b33] border border-slate-200/60 shadow-sm hover:border-slate-300 transition-all"
-            >
-              {hero.navCta.label}
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </Link>
-          </motion.nav>
+        {/* منظومهٔ لوگوی برندها با لوگوی اچ‌شاپ در مرکز */}
+        <div
+          className="relative z-10 mt-12 px-4 pb-6 md:mt-16"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent 0%, black 14%, black 86%, transparent 100%)",
+          }}
+        >
+          <div className="flex flex-col items-center gap-3 md:gap-4">
+            <LogoRow logos={topRow} startIndex={0} />
+
+            <div className="flex items-center justify-center gap-3 md:gap-4">
+              <LogoRow logos={middleLeft} startIndex={topRow.length} inline />
+
+              <motion.span
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="relative mx-1 grid h-16 w-16 shrink-0 place-items-center rounded-[22px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] shadow-[0_22px_50px_-14px_rgba(27,57,245,0.75)] md:h-[76px] md:w-[76px] md:rounded-[26px]"
+              >
+                <span
+                  className="pointer-events-none absolute -inset-7 rounded-full bg-[#1b39f5]/25 blur-2xl"
+                  aria-hidden
+                />
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-[22px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[26px]"
+                  aria-hidden
+                />
+                <Logo className="relative z-10 h-9 w-9 brightness-0 invert md:h-11 md:w-11" />
+              </motion.span>
+
+              <LogoRow
+                logos={middleRight}
+                startIndex={topRow.length + middleLeft.length}
+                inline
+              />
+            </div>
+
+            <LogoRow
+              logos={bottomRow}
+              startIndex={topRow.length + middleLeft.length + middleRight.length}
+            />
+          </div>
+
+          <p className="mt-8 text-center text-[11.5px] font-medium text-slate-400">
+            اکانت و لایسنس رسمی برندهای معتبر جهانی
+          </p>
         </div>
       </div>
     </section>
+  )
+}
+
+function LogoRow({
+  logos,
+  startIndex,
+  inline,
+}: {
+  logos: BrandLogo[]
+  startIndex: number
+  inline?: boolean
+}) {
+  return (
+    <div className={`flex items-center justify-center gap-3 md:gap-4 ${inline ? "" : "flex-wrap"}`}>
+      {logos.map((logo, index) => (
+        <BrandTile key={logo.slug} logo={logo} order={startIndex + index} />
+      ))}
+    </div>
+  )
+}
+
+function BrandTile({ logo, order }: { logo: BrandLogo; order: number }) {
+  const sources = logoSources(logo)
+  const [index, setIndex] = useState(0)
+  const exhausted = index >= sources.length
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.25 + order * 0.03, ease: [0.16, 1, 0.3, 1] }}
+      className="group grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-[#1b39f5]/10 bg-white shadow-[0_10px_24px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_16px_30px_-14px_rgba(27,57,245,0.5)] md:h-14 md:w-14 md:rounded-[18px]"
+      title={logo.name}
+    >
+      {exhausted ? (
+        <span
+          aria-label={logo.name}
+          className="grid h-7 w-7 place-items-center rounded-xl text-[13px] font-bold text-white"
+          style={{
+            background: `linear-gradient(135deg, ${logo.gradient.from}, ${logo.gradient.to})`,
+          }}
+        >
+          {logo.name.charAt(0)}
+        </span>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={sources[index]}
+          alt={logo.name}
+          loading="lazy"
+          onError={() => setIndex((value) => value + 1)}
+          className="h-6 w-6 object-contain transition-transform duration-500 group-hover:scale-110 md:h-7 md:w-7"
+        />
+      )}
+    </motion.span>
   )
 }

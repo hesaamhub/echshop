@@ -15,7 +15,6 @@ import {
 } from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
-import LogoMarquee from "@/components/site/LogoMarquee"
 import Footer from "@/components/site/Footer"
 import GlassIcon from "@/components/site/GlassIcon"
 import ProductCard from "@/components/site/ProductCard"
@@ -48,7 +47,6 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
-        <LogoMarquee />
 
         {/* مزایا */}
         <Section>
@@ -56,7 +54,7 @@ export default function HomePage() {
             {siteContent.features.map((feature) => (
               <div
                 key={feature.title}
-                className="group rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
+                className="group rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
               >
                 <GlassIcon icon={iconFor(feature.icon)} size="md" />
                 <h3 className="mt-4 text-[14px] font-bold text-[#0a1b33]">{feature.title}</h3>
@@ -76,7 +74,7 @@ export default function HomePage() {
               <Link
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className="group flex items-start gap-4 rounded-3xl border border-slate-200/70 bg-white p-6 shadow-sm transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
+                className="group flex items-start gap-4 rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
               >
                 <GlassIcon icon={iconFor(category.icon)} size="lg" />
                 <span className="flex-1">
@@ -106,7 +104,7 @@ export default function HomePage() {
 
         {/* آمار */}
         <Section>
-          <div className="grid gap-4 rounded-[40px] border border-slate-200/70 bg-white p-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 rounded-[40px] border border-[#1b39f5]/10 bg-white p-8 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] sm:grid-cols-2 lg:grid-cols-4">
             {siteContent.stats.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-[26px] font-bold text-[#0a1b33]">{stat.value}</div>
@@ -132,14 +130,14 @@ export default function HomePage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group overflow-hidden rounded-3xl border border-slate-200/70 bg-white shadow-sm transition-all hover:border-[#1b39f5]/25"
+                className="group overflow-hidden rounded-3xl border border-[#1b39f5]/10 bg-white shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all hover:-translate-y-0.5 hover:border-[#1b39f5]/25"
               >
                 <div className="h-28" style={{ background: post.cover }} />
                 <div className="p-5">
                   <span className="rounded-full bg-[#1b39f5]/8 px-2.5 py-1 text-[10px] font-semibold text-[#1b39f5]">
                     {post.category}
                   </span>
-                  <h3 className="mt-3 text-[13px] font-bold leading-6 text-[#0a1b33]">
+                  <h3 className="mt-3 text-[13px] font-bold leading-6 text-[#0a1b33] transition-colors group-hover:text-[#1b39f5]">
                     {post.title}
                   </h3>
                   <p className="mt-2 line-clamp-2 text-[12px] leading-6 text-slate-500">
@@ -179,7 +177,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/contact"
-                  className="rounded-full border border-white/25 px-7 py-3 text-[13px] font-semibold text-white hover:bg-white/10 transition-colors"
+                  className="rounded-full border border-white/25 px-7 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   تماس با ما
                 </Link>
@@ -211,7 +209,8 @@ function Section({
       {title ? (
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 className="font-display text-[22px] md:text-[26px] font-semibold text-[#0a1b33]">
+            <h2 className="flex items-center gap-3 font-display text-[22px] md:text-[26px] font-semibold text-[#0a1b33]">
+              <span className="h-6 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
               {title}
             </h2>
             {subtitle ? <p className="mt-2 text-[13px] text-slate-500">{subtitle}</p> : null}
