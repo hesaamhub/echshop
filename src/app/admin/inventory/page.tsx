@@ -8,7 +8,7 @@ const capacity = [
   { id: "INV-5601", product: "چت‌جی‌پی‌تی پلاس", plan: "۱ ماهه", type: "upgrade", value: "ارتقای ایمیل مشتری", status: "آماده فعال‌سازی", tone: "green" },
   { id: "INV-5702", product: "لایسنس ادوبی کریتیو کلاد", plan: "۱۲ ماهه", type: "api", value: "فعال‌سازی خودکار پس از پرداخت", status: "نامحدود", tone: "blue" },
   { id: "INV-5810", product: "گیفت کارت دیسکورد نیترو", plan: "۱ ماهه", type: "gift_code", value: "NITRO-XXXX-1129", status: "آماده فعال‌سازی", tone: "green" },
-  { id: "INV-5811", product: "تلگرام پریمیوم", plan: "۳ ماهه", type: "manual", value: "در انتطار اقدام کارشناس", status: "رزرو", tone: "amber" },
+  { id: "INV-5811", product: "تلگرام پریمیوم", plan: "۳ ماهه", type: "manual", value: "در انتزار اقدام کارشناس", status: "رزرو", tone: "amber" },
 ] as const
 
 export default function AdminInventoryPage() {
@@ -31,7 +31,7 @@ export default function AdminInventoryPage() {
         }
       >
         <Table head={["شناسه", "محصول", "پلن", "روش فعال‌سازی", "مقدار / اطلاعات", "وضعیت", "عملیات"]}>
-        {capacity.map((item) => (
+          {capacity.map((item) => (
             <tr key={item.id}>
               <Td className="num font-semibold text-[#0a1b33]">{item.id}</Td>
               <Td>{item.product}</Td>
@@ -74,7 +74,7 @@ export default function AdminInventoryPage() {
           </div>
         </Card>
 
-        <Card title="تنطیمات فعال‌سازی خودکار">
+        <Card title="تنظیمات فعال‌سازی خودکار">
           <div className="space-y-4">
             <Field label="نام سرویس" placeholder="مثلاً اسپاتیفای پریمیوم" />
             <Field label="مدت اشتراک" placeholder="۳ ماهه" />
@@ -93,7 +93,7 @@ export default function AdminInventoryPage() {
               <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#2783de]" />
             </div>
             <div className="flex gap-2">
-              <Button>ذخیرهٔ تنطیمات</Button>
+              <Button>ذخیرهٔ تنظیمات</Button>
               <Button variant="ghost">تست فعال‌سازی</Button>
             </div>
           </div>
