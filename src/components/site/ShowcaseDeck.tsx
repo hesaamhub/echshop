@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useCallback, useEffect, useState, type ReactNode } from "react"
 import { AnimatePresence, motion } from "motion/react"
-import { ArrowUpRight, ChevronLeft, ChevronRight, Flame, Star, Zap } from "lucide-react"
+import { ArrowLeft, ChevronLeft, ChevronRight, Flame, ShoppingBag, Star, Zap } from "lucide-react"
 import BrandIcon from "./BrandIcon"
 import { brandLogos } from "@/lib/brands"
 import { products } from "@/lib/data"
@@ -22,8 +22,11 @@ function cheapestPlan(product: Product): Plan {
   return product.plans.reduce((best, plan) => (plan.price < best.price ? plan : best), product.plans[0])
 }
 
-function pad(value: number) {
-  return String(value).padStart(2, "0")
+/** متن موجودی برای ایجاد فوریت خرید */
+function stockLabel(stock: number) {
+  if (stock <= 0) return "فعلاً ناموجود"
+  if (stock <= 15) return `${num(stock)} عدد مونده`
+  return "موجود در انبار"
 }
 
 /** قالب گرافیکی یکتا برای هر کارت */
@@ -118,8 +121,7 @@ const VARIANTS: Variant[] = [
         />
         <span
           className="absolute -bottom-16 -left-14 h-56 w-56 rotate-[18deg] rounded-[52px]"
-          style={{ background: `#${color}`, opacity: 0.12 }
-          }
+          style={{ background: `#${color}`, opacity: 0.12 }}
           aria-hidden
         />
       </>
@@ -283,6 +285,7 @@ export default function ShowcaseDeck() {
             const color = brandColor(product.logo)
             const variant = VARIANTS[position % VARIANTS.length]
             const plan = cheapestPlan(product)
+            const low = plan.stock > 0 && plan.stock <= 15
 
             return (
               <motion.article
@@ -295,7 +298,7 @@ export default function ShowcaseDeck() {
                 className="group relative min-w-0 flex-1"
               >
                 <div
-                  className="relative flex h-[540px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[620px] md:p-7"
+                  className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[640px] md:p-7"
                   style={{ background: variant.background(color) }}
                 >
                   {variant.art(color)}
@@ -321,8 +324,8 @@ export default function ShowcaseDeck() {
                         {product.badge}
                       </span>
                     ) : (
-                      <span className="num shrink-0 rounded-full bg-white/70 px-2.5 py-1 text-[10.5px] font-bold text-[#0a1b33]">
-                        {num(product.sold)}
+                      <span className="shrink-0 rounded-full bg-white/70 px-2.5 py-1 text-[10.5px] font-bold text-[#0a1b33]">
+                        <span className="num">{num(product.sold)}</span> فروش
                       </span>
                     )}
                   </div>
@@ -335,8 +338,7 @@ export default function ShowcaseDeck() {
                     <motion.span
                       animate={{ y: [0, -12, 0] }}
                       transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                      className={`grid place-items-center shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${variant.holder}`}
-                      style={{ background: product.gradient }}
+                      className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
                     >
                       <span className={`grid place-items-center ${variant.holderInner}`}>
                         <BrandIcon slug={product.logo} size={52} color="#ffffff" />
@@ -359,27 +361,34 @@ export default function ShowcaseDeck() {
                     ))}
                   </div>
 
-                  <div className="relative mt-4 text-[11px] text-slate-500">شروع قیمت از</div>
-                  <div className="relative mt-0.5 text-[18px] font-bold text-[#0a1b33]">
-                    <span className="num">{toman(plan.price)}</span>
-                    <span className="mr-1.5 text-[11.5px] font-medium text-slate-500">تومان</span>
-                  </div>
-
-                  <div className="relative mt-5 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-[12px] font-semibold">
-                      <span className="num text-[#0a1b33]">{pad(position + 1)}</span>
-                      <span className="h-px w-10 bg-[#0a1b33]/25" aria-hidden />
-                      <span className="num text-slate-400">{pad(deck.length)}</span>
+                  <div className="relative mt-4 flex items-end justify-between gap-3">
+                    <div>
+                      <div className="text-[11px] text-slate-500">شروع قیمت از</div>
+                      <div className="mt-0.5 text-[18px] font-bold text-[#0a1b33]">
+                        <span className="num">{toman(plan.price)}</span>
+                        <span className="mr-1.5 text-[11.5px] font-medium text-slate-500">تومان</span>
+                      </div>
                     </div>
 
-                    <Link
-                      href={`/products/${product.slug}`}
-                      aria-label={`خرید ${product.title}`}
-                      className="grid h-12 w-12 place-items-center rounded-full bg-[#0a152d] text-white transition-transform duration-300 hover:scale-105"
+                    <span
+                      className={`shrink-0 rounded-full px-2.5 py-1 text-[10.5px] font-bold ${
+                        low
+                          ? "bg-[#E56458]/12 text-[#E56458]"
+                          : "bg-[#137a4b]/12 text-[#137a4b]"
+                      }`}
                     >
-                      <ArrowUpRight className="h-5 w-5" />
-                    </Link>
+                      {stockLabel(plan.stock)}
+                    </span>
                   </div>
+
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3.5 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
+                  >
+                    <ShoppingBag className="h-4 w-4" />
+                    خرید و تحویل فوری
+                    <ArrowLeft className="h-4 w-4" />
+                  </Link>
                 </div>
               </motion.article>
             )
