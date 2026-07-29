@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion } from "motion/react"
-import { Check, ShoppingCart } from "lucide-react"
+import { Check, ShoppingCart, Zap } from "lucide-react"
 import type { Plan } from "@/lib/types"
 import { deliveryLabels } from "@/lib/types"
 import { cn, discountPercent, toman } from "@/lib/utils"
@@ -51,16 +51,9 @@ export default function PlanPicker({ plans }: { plans: Plan[] }) {
                   {toman(plan.price)}
                 </span>
               </span>
-              <span className="mt-2 flex items-center justify-between gap-2 pr-6">
-                <span className="text-[10.5px] text-slate-500">{deliveryLabels[plan.delivery]}</span>
-                <span
-                  className={cn(
-                    "text-[10.5px]",
-                    plan.stock > 10 ? "text-[#46A171]" : "text-[#D5803B]",
-                  )}
-                >
-                  {plan.stock > 100 ? "موجود" : `تنها ${toman(plan.stock)} عدد موجود`}
-                </span>
+              <span className="mt-2 flex items-center gap-1.5 pr-6 text-[10.5px] text-slate-500">
+                <Zap className="h-3 w-3 text-[#1b39f5]" />
+                {deliveryLabels[plan.delivery]}
               </span>
             </button>
           )
