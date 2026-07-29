@@ -22,11 +22,11 @@ function cheapestPlan(product: Product): Plan {
   return product.plans.reduce((best, plan) => (plan.price < best.price ? plan : best), product.plans[0])
 }
 
-/** متن موجودی برای ایجاد فوریت خرید */
+/** متن ظرفیت فعال‌سازی برای ایجاد فوریت خرید */
 function stockLabel(stock: number) {
-  if (stock <= 0) return "فعلاً ناموجود"
-  if (stock <= 15) return `${num(stock)} عدد مونده`
-  return "موجود در انبار"
+  if (stock <= 0) return "فعلاً ظرفیت نداریم"
+  if (stock <= 15) return `${num(stock)} اشتراک مونده`
+  return "فعال‌سازی فوری"
 }
 
 /** قالب گرافیکی یکتا برای هر کارت */
