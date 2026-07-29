@@ -18,6 +18,7 @@ import Hero from "@/components/site/Hero"
 import Footer from "@/components/site/Footer"
 import GlassIcon from "@/components/site/GlassIcon"
 import ProductCard from "@/components/site/ProductCard"
+import ShowcaseDeck from "@/components/site/ShowcaseDeck"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { faDate } from "@/lib/utils"
 
@@ -48,21 +49,8 @@ export default function HomePage() {
       <main>
         <Hero />
 
-        {/* مزایا */}
-        <Section>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {siteContent.features.map((feature) => (
-              <div
-                key={feature.title}
-                className="group rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all hover:border-[#1b39f5]/25 hover:shadow-[0_20px_44px_-28px_rgba(27,57,245,0.45)]"
-              >
-                <GlassIcon icon={iconFor(feature.icon)} size="md" />
-                <h3 className="mt-4 text-[14px] font-bold text-[#0a1b33]">{feature.title}</h3>
-                <p className="mt-2 text-[12px] leading-6 text-slate-500">{feature.body}</p>
-              </div>
-            ))}
-          </div>
-        </Section>
+        {/* دک معرفی محصولات */}
+        <ShowcaseDeck />
 
         {/* دسته‌بندی‌ها */}
         <Section
@@ -162,7 +150,7 @@ export default function HomePage() {
             <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-[#1b39f5]/20 blur-3xl" />
             <div className="relative">
               <h2 className="font-display text-[28px] md:text-[34px] font-medium text-white">
-                هنوز محصول مورد نظرت را پیدا نکردی؟
+                هنوز محصول مورد نطرت را پیدا نکردی؟
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-[13px] leading-7 text-white/70">
                 کافی است یک تیکت باز کنید؛ تیم اچ‌شاپ هر اکانت یا لایسنسی را که لازم دارید
