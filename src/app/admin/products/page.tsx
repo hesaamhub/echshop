@@ -15,10 +15,10 @@ export default function AdminProductsPage() {
           </div>
         }
       >
-        <Table head={["محصول", "دسته", "پلن‌ها", "کمترین قیمت", "موجودی", "فروش", "وضعیت", "عملیات"]}>
+        <Table head={["محصول", "دسته", "پلن‌ها", "کمترین قیمت", "ظرفیت فعال‌سازی", "فروش", "وضعیت", "عملیات"]}>
           {products.map((product) => {
             const cheapest = product.plans.reduce((a, b) => (a.price <= b.price ? a : b))
-            const stock = product.plans.reduce((sum, plan) => sum + plan.stock, 0)
+            const capacity = product.plans.reduce((sum, plan) => sum + plan.stock, 0)
             return (
               <tr key={product.id}>
                 <Td className="font-semibold text-[#0a1b33]">{product.title}</Td>
@@ -26,8 +26,8 @@ export default function AdminProductsPage() {
                 <Td className="num">{product.plans.length}</Td>
                 <Td className="num">{toman(cheapest.price)}</Td>
                 <Td>
-                  <Badge tone={stock > 50 ? "green" : stock > 10 ? "amber" : "red"}>
-                    {toman(stock)}
+                  <Badge tone={capacity > 50 ? "green" : capacity > 10 ? "amber" : "red"}>
+                    {toman(capacity)}
                   </Badge>
                 </Td>
                 <Td className="num">{toman(product.sold)}</Td>
@@ -51,7 +51,7 @@ export default function AdminProductsPage() {
           <Field label="عنوان محصول" placeholder="مانند: اشتراک پریمیوم اسپاتیفای" />
           <Field label="نشانی یکتا (slug)" placeholder="spotify-premium" latin />
           <Field label="نام برند" placeholder="Spotify" latin />
-          <Field label="نشانی تصویر / لوگو" placeholder="https://svgl.app/library/spotify.svg" latin hint="می‌توانید تصویر را از بخش مدیریت محتوا هم بارگذاری کنید." />
+          <Field label="شناسهٔ لوگوی داخلی" placeholder="spotify" latin hint="لوگوها از پک داخلی سایت خوانده می‌شوند؛ فقط شناسه را بنویسید." />
           <label className="block">
             <span className="text-[12px] font-semibold text-[#0a1b33]">دسته‌بندی</span>
             <select className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#2783de]">
@@ -69,10 +69,9 @@ export default function AdminProductsPage() {
           </div>
         </div>
 
-        <h3 className="mt-7 text-[13px] font-bold text-[#0a1b33]">پلن‌ها و روش تحویل هر پلن</h3>
+        <h3 className="mt-7 text-[13px] font-bold text-[#0a1b33]">پلن‌ها و روش فعال‌سازی هر پلن</h3>
         <p className="mt-1.5 text-[11px] leading-6 text-slate-400">
-          برای هر پلن می‌توانید روش تحویل جداگانه تعیین کنید: انبار خودکار، API تامین‌کننده، ارتقای
-          اکانت شخصی، کد هدیه یا تحویل دستی توسط کارشناس.
+          برای هر پلن می‌توانید روش فعال‌سازی جداگانه تعیین کنید: فعال‌سازی خودکار، تحویل فوری، ارتقای اکانت شخصی، کد فعال‌سازی یا فعال‌سازی توسط پشتیبانی.
         </p>
         <div className="mt-4 space-y-3">
           {[1, 2].map((row) => (
@@ -84,14 +83,14 @@ export default function AdminProductsPage() {
               <Field label="قیمت" placeholder="۸۹۰٬۰۰۰" />
               <Field label="قیمت پیش از تخفیف" placeholder="۱٬۱۰۰٬۰۰۰" />
               <label className="block">
-                <span className="text-[12px] font-semibold text-[#0a1b33]">روش تحویل</span>
+                <span className="text-[12px] font-semibold text-[#0a1b33]">روش فعال‌سازی</span>
                 <select className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#2783de]">
                   {Object.entries(deliveryLabels).map(([key, label]) => (
                     <option key={key}>{label}</option>
                   ))}
                 </select>
               </label>
-              <Field label="موجودی" placeholder="۲۵" />
+              <Field label="ظرفیت" placeholder="۲۵" />
             </div>
           ))}
         </div>
