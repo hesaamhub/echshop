@@ -146,10 +146,10 @@ export default async function ProductPage({
               در صورت قطع شدن سرویس، جایگزین یا مبلغ بازگردانده می‌شود.
             </Assurance>
             <Assurance icon={<Clock className="h-4 w-4 text-[#1b39f5]" />} title="میانگین تحویل ۲ دقیقه">
-              تحویل خودکار از انبار یا API تامین‌کننده انجام می‌شود.
+              اشتراک شما بلافاصله بعد از پرداخت به‌صورت خودکار فعال می‌شود.
             </Assurance>
-            <Assurance icon={<BadgeCheck className="h-4 w-4 text-[#1b39f5]" />} title="محصول اورجینال">
-              تمام اکانت‌ها از تامین‌کنندگان رسمی تهیه می‌شوند.
+            <Assurance icon={<BadgeCheck className="h-4 w-4 text-[#1b39f5]" />} title="اشتراک اورجینال">
+              تمام اکانت‌ها روی سرویس رسمی خود برند فعال می‌شوند.
             </Assurance>
           </div>
 
