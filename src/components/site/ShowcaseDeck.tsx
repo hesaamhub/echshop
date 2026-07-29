@@ -15,6 +15,7 @@ import {
   Zap,
 } from "lucide-react"
 import BrandIcon from "./BrandIcon"
+import { brandLogos } from "@/lib/brands"
 import { products } from "@/lib/data"
 import { num, toman } from "@/lib/utils"
 
@@ -26,6 +27,11 @@ const perks = [
   { icon: ShieldCheck, label: "ضمانت بازگشت وجه" },
   { icon: Sparkles, label: "اکانت کاملاً اورجینال" },
 ]
+
+/** رنگ برند برای هالهٔ نور پشت کارت */
+function brandColor(slug: string) {
+  return brandLogos.find((brand) => brand.slug === slug)?.color ?? "1b39f5"
+}
 
 function lowestPrice(index: number) {
   const plans = deck[index].plans
@@ -102,8 +108,8 @@ export default function ShowcaseDeck() {
             >
               <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#0a152d] p-6 shadow-[0_40px_90px_-45px_rgba(10,21,45,0.9)] md:p-9">
                 <span
-                  className="pointer-events-none absolute -top-24 -right-16 h-64 w-64 rounded-full blur-3xl"
-                  style={{ background: `#${product.logo === product.logo ? "1b39f5" : "1b39f5"}45` }}
+                  className="pointer-events-none absolute -top-24 -right-16 h-64 w-64 rounded-full opacity-40 blur-3xl"
+                  style={{ background: `#${brandColor(product.logo)}` }}
                   aria-hidden
                 />
                 <span
