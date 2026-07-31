@@ -1,11 +1,11 @@
 import Link from "next/link"
 import {
   ArrowLeft,
+  BadgeCheck,
   Globe,
+  Headphones,
   Paperclip,
   Send,
-  ShieldCheck,
-  Sparkles,
   Users,
   Zap,
 } from "lucide-react"
@@ -28,7 +28,24 @@ const deckIds = new Set(
 )
 
 /** آیکون هر کاشی آمار */
-const statIcons = [ShieldCheck, Zap, Users, Sparkles]
+const statIcons = [BadgeCheck, Zap, Users, Headphones]
+
+/** تبدیل ارقام فارسی و عربی به لاتین */
+function latinDigits(value: string | number) {
+  const fa = "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9"
+  const ar = "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669"
+
+  return String(value)
+    .split("")
+    .map((char) => {
+      const faIndex = fa.indexOf(char)
+      if (faIndex > -1) return String(faIndex)
+      const arIndex = ar.indexOf(char)
+      if (arIndex > -1) return String(arIndex)
+      return char
+    })
+    .join("")
+}
 
 export default function HomePage() {
   // اکانت‌های پرکاربرد، بدون تکرار محصولات دک
@@ -112,7 +129,7 @@ export default function HomePage() {
                   <div className="mt-4 flex items-center justify-between text-[11px] text-slate-400">
                     <span>{faDate(post.publishedAt)}</span>
                     <span>
-                      <span className="num">{post.readMinutes}</span> دقیقه مطالعه
+                      <span className="font-latin">{latinDigits(post.readMinutes)}</span> دقیقه مطالعه
                     </span>
                   </div>
                 </div>
@@ -157,31 +174,23 @@ export default function HomePage() {
   )
 }
 
-/** پنل شیشه‌ای آمار: کاشی‌های سفید شناور روی شیشهٔ مات */
+/** پنل شیشه‌ای آمار */
 function StatsPanel() {
   return (
-    <div className="relative overflow-hidden rounded-[40px] p-4 md:p-7">
-      {/* پس‌زمینهٔ گرادیانی نرم */}
+    <div className="relative overflow-hidden rounded-[36px] border border-white/70 bg-[#f2f4fb] p-3 shadow-[0_30px_70px_-50px_rgba(10,21,45,0.8)] md:p-5">
+      {/* پس‌زمینهٔ مش رنگی نرم */}
       <div
-        className="absolute inset-0"
+        className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "linear-gradient(135deg, #efe7e1 0%, #d8cfd4 35%, #b9aeb8 68%, #8f8794 100%)",
+            "radial-gradient(120% 90% at 12% 0%, rgba(27,57,245,0.16) 0%, rgba(27,57,245,0) 55%), radial-gradient(100% 80% at 95% 10%, rgba(129,88,245,0.16) 0%, rgba(129,88,245,0) 60%), radial-gradient(90% 90% at 70% 110%, rgba(10,21,45,0.10) 0%, rgba(10,21,45,0) 60%)",
         }}
-        aria-hidden
-      />
-      <div
-        className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#1b39f5]/25 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-[#0a152d]/25 blur-3xl"
         aria-hidden
       />
 
       {/* پنل بالا: کاشی‌های آمار */}
-      <div className="relative rounded-[30px] border border-white/40 bg-white/20 p-3 shadow-[0_30px_60px_-40px_rgba(10,21,45,0.7)] backdrop-blur-2xl md:p-4">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+      <div className="relative rounded-[28px] border border-white/80 bg-white/55 p-3 backdrop-blur-xl md:p-4">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {siteContent.stats.map((stat, index) => {
             const Icon = statIcons[index % statIcons.length]
             const featured = index === 1
@@ -189,91 +198,82 @@ function StatsPanel() {
             return (
               <div
                 key={stat.label}
-                className={`group relative flex flex-col items-center gap-2 rounded-[22px] px-3 py-5 text-center transition-all duration-500 hover:-translate-y-1 ${
+                className={`group relative overflow-hidden rounded-[22px] px-4 py-6 text-center transition-all duration-500 hover:-translate-y-1 ${
                   featured
-                    ? "bg-white shadow-[0_22px_44px_-26px_rgba(27,57,245,0.75)] ring-2 ring-[#1b39f5]"
-                    : "bg-white/85 shadow-[0_18px_38px_-30px_rgba(10,21,45,0.8)] ring-1 ring-white/70 hover:bg-white"
+                    ? "bg-gradient-to-b from-[#2a49ff] to-[#1226c4] shadow-[0_26px_46px_-26px_rgba(27,57,245,0.9)]"
+                    : "border border-white bg-white shadow-[0_18px_40px_-32px_rgba(10,21,45,0.9)]"
                 }`}
               >
+                {featured ? (
+                  <span
+                    className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/25 to-transparent"
+                    aria-hidden
+                  />
+                ) : null}
+
                 <span
-                  className={`grid h-11 w-11 place-items-center rounded-[14px] transition-colors duration-500 ${
-                    featured ? "bg-[#1b39f5] text-white" : "bg-[#0a152d] text-white group-hover:bg-[#1b39f5]"
+                  className={`relative mx-auto grid h-11 w-11 place-items-center rounded-2xl transition-all duration-500 ${
+                    featured
+                      ? "bg-white/20 text-white ring-1 ring-white/40"
+                      : "bg-[#1b39f5]/8 text-[#1b39f5] group-hover:bg-[#1b39f5] group-hover:text-white"
                   }`}
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-[18px] w-[18px]" strokeWidth={2.1} />
                 </span>
-                <span
-                  className={`num text-[22px] font-bold leading-7 md:text-[26px] ${
-                    featured ? "text-[#1b39f5]" : "text-[#0a1b33]"
+
+                <div
+                  className={`font-latin relative mt-3 font-display text-[28px] font-semibold leading-9 tracking-tight md:text-[32px] ${
+                    featured ? "text-white" : "text-[#0a1b33]"
+                  }`}
+                  dir="ltr"
+                >
+                  {latinDigits(stat.value)}
+                </div>
+
+                <div
+                  className={`relative mt-1 text-[11.5px] font-semibold leading-5 ${
+                    featured ? "text-white/80" : "text-slate-500"
                   }`}
                 >
-                  {stat.value}
-                </span>
-                <span className="text-[11.5px] font-semibold leading-5 text-slate-500">
                   {stat.label}
-                </span>
+                </div>
               </div>
             )
           })}
         </div>
       </div>
 
-      {/* نشانگر شیشه‌ای شناور بین دو پنل */}
-      <span
-        className="pointer-events-none absolute left-[16%] top-[46%] z-20 hidden -rotate-12 md:block"
-        aria-hidden
-      >
-        <span className="absolute inset-0 rounded-full bg-[#1b39f5]/50 blur-xl" />
-        <svg width="58" height="58" viewBox="0 0 58 58" fill="none">
-          <defs>
-            <linearGradient id="cursorGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#b7c1ff" />
-              <stop offset="55%" stopColor="#5b6dfa" />
-              <stop offset="100%" stopColor="#1b39f5" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M10 8.5 47.5 26.5c2.6 1.3 2.4 5.1-.3 6L31 37.7c-.9.3-1.6 1-1.9 1.9l-5.2 16.2c-.9 2.7-4.7 2.9-6 .3L10 8.5Z"
-            fill="url(#cursorGrad)"
-            stroke="rgba(255,255,255,0.75)"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M14 13 40 26c1.3.7 1.2 2.6-.2 3l-9 2.6c-.4.1-.8.5-.9 1L27 42c-.4 1.4-2.4 1.5-3 .2L14 13Z"
-            fill="rgba(255,255,255,0.45)"
-          />
-        </svg>
-      </span>
-
       {/* پنل پایین: پیام و اقدام‌ها */}
-      <div className="relative mt-3 rounded-[30px] border border-white/40 bg-white/20 px-5 py-6 shadow-[0_30px_60px_-40px_rgba(10,21,45,0.7)] backdrop-blur-2xl md:mt-4 md:px-7 md:py-7">
-        <p className="max-w-xl text-[16px] font-semibold leading-8 text-[#0a1b33] md:text-[19px]">
-          هر اکانت و لایسنسی که لازم داری، اورجینال و با فعال‌سازی فوری تحویل بگیر.
-        </p>
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] ring-1 ring-white/70 transition-all hover:-translate-y-0.5 hover:bg-white"
-          >
-            <Paperclip className="h-4 w-4" />
-            همهٔ محصولات
-          </Link>
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] ring-1 ring-white/70 transition-all hover:-translate-y-0.5 hover:bg-white"
-          >
-            <Globe className="h-4 w-4" />
-            راهنمای خرید
-          </Link>
-          <Link
-            href="/contact"
-            aria-label="تماس با پشتیبانی"
-            className="mr-auto grid h-11 w-11 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 hover:scale-105 hover:bg-[#1b39f5]"
-          >
-            <Send className="h-4 w-4 -scale-x-100" />
-          </Link>
+      <div className="relative mt-3 flex flex-col gap-5 rounded-[28px] border border-white/80 bg-white/55 px-5 py-6 backdrop-blur-xl md:flex-row md:items-center md:justify-between md:px-7">
+        <div>
+          <p className="text-[16px] font-bold leading-8 text-[#0a1b33] md:text-[19px]">
+            هر اکانت و لایسنسی که لازم داری، اورجینال و با فعال‌سازی فوری.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-2.5">
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 rounded-full border border-white bg-white/80 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] shadow-[0_10px_24px_-20px_rgba(10,21,45,0.9)] transition-all hover:-translate-y-0.5 hover:bg-white"
+            >
+              <Paperclip className="h-4 w-4 text-[#1b39f5]" />
+              همهٔ محصولات
+            </Link>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 rounded-full border border-white bg-white/80 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] shadow-[0_10px_24px_-20px_rgba(10,21,45,0.9)] transition-all hover:-translate-y-0.5 hover:bg-white"
+            >
+              <Globe className="h-4 w-4 text-[#1b39f5]" />
+              راهنمای خرید
+            </Link>
+          </div>
         </div>
+
+        <Link
+          href="/contact"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#0a152d] px-6 py-3.5 text-[13px] font-semibold text-white shadow-[0_20px_40px_-24px_rgba(10,21,45,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#1b39f5]"
+        >
+          <Send className="h-4 w-4 -scale-x-100" />
+          گفت‌وگو با پشتیبانی
+        </Link>
       </div>
     </div>
   )
