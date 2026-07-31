@@ -2,243 +2,225 @@ import Link from "next/link"
 import { ArrowLeft, Sparkles } from "lucide-react"
 import type { NewArrival, NewArrivalArt } from "@/lib/newArrivals"
 
-/** قیمت با ارقام لاتین */
-function latinPrice(value: number) {
-  return new Intl.NumberFormat("en-US").format(value)
-}
-
-/** شش‌ضلعی برای گرافیک هگزافیلد */
+/** مختصات شش‌ضلعی برای گرافیک هگزافیلد */
 function hexPoints(cx: number, cy: number, r: number) {
-  return [0, 1, 2, 3, 4, 5]
-    .map((index) => {
-      const angle = ((60 * index - 30) * Math.PI) / 180
-      return `${(cx + r * Math.cos(angle)).toFixed(1)},${(cy + r * Math.sin(angle)).toFixed(1)}`
-    })
-    .join(" ")
+  return Array.from({ length: 6 }, (_, index) => {
+    const angle = (Math.PI / 180) * (60 * index - 30)
+    return `${(cx + r * Math.cos(angle)).toFixed(1)},${(cy + r * Math.sin(angle)).toFixed(1)}`
+  }).join(" ")
 }
 
-/** گرافیک اختصاصی هر بنر */
+/** گرافیک اختصاصی هر پوستر */
 function BannerArt({ art }: { art: NewArrivalArt }) {
   if (art === "film") {
     return (
-      <svg
-        viewBox="0 0 400 200"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full"
-        aria-hidden
-      >
-        <circle cx="205" cy="100" r="76" fill="rgba(255,255,255,0.06)" />
-        <circle cx="205" cy="100" r="56" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" fill="none" />
-        <rect x="22" y="58" width="356" height="84" rx="16" fill="rgba(255,255,255,0.12)" />
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((index) => (
-          <rect
-            key={`top-${index}`}
-            x={40 + index * 42}
-            y="66"
-            width="16"
-            height="9"
-            rx="3"
-            fill="rgba(255,255,255,0.32)"
-          />
-        ))}
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((index) => (
-          <rect
-            key={`bottom-${index}`}
-            x={40 + index * 42}
-            y="125"
-            width="16"
-            height="9"
-            rx="3"
-            fill="rgba(255,255,255,0.32)"
-          />
-        ))}
-        <circle cx="205" cy="100" r="30" fill="rgba(255,255,255,0.9)" />
-        <path d="M196 89 L221 100 L196 111 Z" fill="#2a1266" />
-        <path
-          d="M262 74 C286 84 286 116 262 126"
-          stroke="rgba(255,255,255,0.55)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <path
-          d="M280 62 C316 78 316 122 280 138"
-          stroke="rgba(255,255,255,0.3)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
+      <svg viewBox="0 0 400 300" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
+        <g opacity="0.35">
+          <circle cx="320" cy="70" r="110" fill="#ffffff" opacity="0.14" />
+          <circle cx="70" cy="250" r="90" fill="#ff7ad9" opacity="0.18" />
+        </g>
+        {/* نوار فیلم */}
+        <g transform="rotate(-12 200 150)">
+          <rect x="20" y="104" width="360" height="92" rx="14" fill="#ffffff" opacity="0.1" />
+          <rect x="20" y="104" width="360" height="14" rx="7" fill="#ffffff" opacity="0.22" />
+          <rect x="20" y="182" width="360" height="14" rx="7" fill="#ffffff" opacity="0.22" />
+          {[38, 96, 154, 212, 270, 328].map((x) => (
+            <g key={x}>
+              <rect x={x} y="107" width="16" height="8" rx="2" fill="#0b0a2a" opacity="0.55" />
+              <rect x={x} y="185" width="16" height="8" rx="2" fill="#0b0a2a" opacity="0.55" />
+              <rect x={x} y="124" width="46" height="52" rx="6" fill="#ffffff" opacity="0.16" />
+            </g>
+          ))}
+        </g>
+        {/* دکمهٔ پلی */}
+        <circle cx="200" cy="150" r="44" fill="#ffffff" opacity="0.92" />
+        <circle cx="200" cy="150" r="56" fill="none" stroke="#ffffff" strokeWidth="2" opacity="0.45" />
+        <polygon points="188,132 188,168 218,150" fill="#3a1d8f" />
+        {/* موج حرکت */}
+        <g fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.5">
+          <path d="M282 118c16 20 16 44 0 64" />
+          <path d="M304 104c26 30 26 62 0 92" opacity="0.6" />
+        </g>
       </svg>
     )
   }
 
   if (art === "notebook") {
     return (
-      <svg
-        viewBox="0 0 400 200"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full"
-        aria-hidden
-      >
-        <rect x="36" y="34" width="150" height="132" rx="18" fill="rgba(255,255,255,0.14)" />
-        <rect x="36" y="34" width="14" height="132" rx="7" fill="rgba(255,255,255,0.24)" />
-        {[0, 1, 2, 3, 4].map((index) => (
-          <rect
-            key={`line-${index}`}
-            x="62"
-            y={56 + index * 22}
-            width={index % 2 === 0 ? 104 : 78}
-            height="7"
-            rx="3.5"
-            fill="rgba(255,255,255,0.4)"
-          />
+      <svg viewBox="0 0 400 300" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
+        <circle cx="330" cy="60" r="110" fill="#8ea8ff" opacity="0.2" />
+        <circle cx="60" cy="260" r="90" fill="#ffffff" opacity="0.1" />
+        {/* برگهٔ دفتر */}
+        <g transform="rotate(-7 150 150)">
+          <rect x="52" y="66" width="180" height="180" rx="18" fill="#ffffff" opacity="0.94" />
+          <rect x="52" y="66" width="180" height="34" rx="18" fill="#1b39f5" opacity="0.14" />
+          {[118, 140, 162, 184, 206].map((y, index) => (
+            <rect
+              key={y}
+              x="74"
+              y={y}
+              width={index % 2 === 0 ? 136 : 100}
+              height="8"
+              rx="4"
+              fill="#0a152d"
+              opacity={index === 0 ? 0.35 : 0.16}
+            />
+          ))}
+        </g>
+        {/* گراف گره‌ای */}
+        <g stroke="#ffffff" strokeWidth="2" opacity="0.65" fill="none">
+          <path d="M268 108l46 32M268 108l30 78M314 140l-16 46M314 140l50-16" />
+        </g>
+        {[
+          [268, 108, 9],
+          [314, 140, 13],
+          [298, 186, 8],
+          [364, 124, 7],
+        ].map(([cx, cy, r]) => (
+          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={r} fill="#ffffff" opacity="0.9" />
         ))}
         <path
-          d="M212 100 C244 100 244 62 276 62 M212 100 C244 100 244 138 276 138 M276 62 C308 62 308 100 340 100 M276 138 C308 138 308 100 340 100"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="2"
-          fill="none"
-        />
-        <circle cx="212" cy="100" r="9" fill="rgba(255,255,255,0.85)" />
-        <circle cx="276" cy="62" r="7" fill="rgba(255,255,255,0.65)" />
-        <circle cx="276" cy="138" r="7" fill="rgba(255,255,255,0.65)" />
-        <circle cx="340" cy="100" r="12" fill="rgba(255,255,255,0.9)" />
-        <path
-          d="M340 90 L343 97 L350 100 L343 103 L340 110 L337 103 L330 100 L337 97 Z"
-          fill="#1b39f5"
+          d="M300 214l5 13 13 5-13 5-5 13-5-13-13-5 13-5z"
+          fill="#ffffff"
+          opacity="0.9"
         />
       </svg>
     )
   }
 
   if (art === "hex") {
-    return (
-      <svg
-        viewBox="0 0 400 200"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full"
-        aria-hidden
-      >
-        {[0, 1, 2, 3].map((row) =>
-          [0, 1, 2, 3, 4, 5, 6].map((col) => {
-            const cx = 40 + col * 56 + (row % 2 === 1 ? 28 : 0)
-            const cy = 26 + row * 50
-            const strong = (row === 1 && col === 2) || (row === 2 && col === 4)
+    const grid = [
+      [120, 92],
+      [200, 92],
+      [280, 92],
+      [80, 158],
+      [160, 158],
+      [240, 158],
+      [320, 158],
+      [120, 224],
+      [200, 224],
+      [280, 224],
+    ]
 
-            return (
-              <polygon
-                key={`hex-${row}-${col}`}
-                points={hexPoints(cx, cy, 26)}
-                fill={strong ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.05)"}
-                stroke={strong ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.22)"}
-                strokeWidth="1.6"
-              />
-            )
-          }),
-        )}
-        <polygon points={hexPoints(200, 100, 44)} fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.8)" strokeWidth="2" />
-        <polygon points={hexPoints(200, 100, 24)} fill="rgba(255,255,255,0.85)" />
+    return (
+      <svg viewBox="0 0 400 300" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
+        <circle cx="330" cy="250" r="110" fill="#3ff0c4" opacity="0.16" />
+        <circle cx="60" cy="60" r="90" fill="#ffffff" opacity="0.1" />
+        {grid.map(([cx, cy], index) => (
+          <polygon
+            key={`${cx}-${cy}`}
+            points={hexPoints(cx, cy, 40)}
+            fill="#ffffff"
+            opacity={index === 4 || index === 6 ? 0.22 : 0.08}
+            stroke="#ffffff"
+            strokeOpacity="0.35"
+            strokeWidth="1.5"
+          />
+        ))}
+        <polygon points={hexPoints(200, 158, 52)} fill="#ffffff" opacity="0.95" />
+        <polygon points={hexPoints(200, 158, 30)} fill="#0b6b5b" opacity="0.9" />
+        <polygon points={hexPoints(200, 158, 16)} fill="#ffffff" opacity="0.9" />
       </svg>
     )
   }
 
   return (
-    <svg
-      viewBox="0 0 400 200"
-      preserveAspectRatio="none"
-      className="absolute inset-0 h-full w-full"
-      aria-hidden
-    >
-      {[46, 74, 102, 130].map((radius, index) => (
-        <ellipse
-          key={`orbit-${radius}`}
-          cx="200"
-          cy="100"
-          rx={radius}
-          ry={radius * 0.52}
-          stroke={`rgba(255,255,255,${0.4 - index * 0.08})`}
-          strokeWidth="1.6"
-          fill="none"
-        />
-      ))}
-      <circle cx="200" cy="100" r="38" fill="rgba(255,255,255,0.16)" />
-      <circle cx="200" cy="100" r="38" stroke="rgba(255,255,255,0.6)" strokeWidth="1.6" fill="none" />
-      <circle cx="330" cy="100" r="7" fill="rgba(255,255,255,0.9)" />
-      <circle cx="98" cy="78" r="5" fill="rgba(255,255,255,0.7)" />
-      <circle cx="124" cy="128" r="4" fill="rgba(255,255,255,0.5)" />
+    <svg viewBox="0 0 400 300" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
+      <circle cx="70" cy="70" r="100" fill="#c9a0ff" opacity="0.22" />
+      <circle cx="330" cy="250" r="100" fill="#ffffff" opacity="0.1" />
+      <g fill="none" stroke="#ffffff" opacity="0.55">
+        <ellipse cx="200" cy="150" rx="150" ry="58" strokeWidth="1.6" />
+        <ellipse cx="200" cy="150" rx="150" ry="58" strokeWidth="1.6" transform="rotate(60 200 150)" />
+        <ellipse cx="200" cy="150" rx="150" ry="58" strokeWidth="1.6" transform="rotate(120 200 150)" />
+      </g>
+      <circle cx="200" cy="150" r="58" fill="#ffffff" opacity="0.95" />
       <text
         x="200"
-        y="112"
+        y="166"
         textAnchor="middle"
-        fill="#ffffff"
-        fontSize="30"
+        fontSize="40"
         fontWeight="700"
-        letterSpacing="1"
+        fill="#7b2ff7"
+        fontFamily="Sora, sans-serif"
       >
         K3
       </text>
+      {[
+        [350, 150],
+        [125, 92],
+        [275, 208],
+      ].map(([cx, cy]) => (
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="8" fill="#ffffff" opacity="0.9" />
+      ))}
     </svg>
   )
 }
 
+/** پوستر تبلیغاتی تمام‌کارت محصول تازه‌رسیده (بدون قیمت) */
 export default function NewArrivalBanner({ item }: { item: NewArrival }) {
   return (
     <Link
       href={`/new/${item.slug}`}
-      className="group flex flex-col overflow-hidden rounded-[26px] border border-[#1b39f5]/10 bg-white shadow-[0_20px_44px_-36px_rgba(10,21,45,0.9)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_30px_58px_-34px_rgba(27,57,245,0.5)]"
+      className="group relative flex h-[440px] flex-col overflow-hidden rounded-[30px] text-white shadow-[0_34px_70px_-40px_rgba(10,21,45,0.85)] transition-all duration-500 hover:-translate-y-1.5"
+      style={{ background: `linear-gradient(150deg, ${item.from} 0%, ${item.to} 100%)` }}
     >
-      {/* بنر تصویری */}
-      <div
-        className="relative h-[168px] overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${item.from} 0%, ${item.to} 100%)` }}
-      >
+      {/* گرافیک پوستر */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[300px] opacity-90 transition-transform duration-700 group-hover:scale-[1.06]">
         <BannerArt art={item.art} />
+      </div>
 
-        {/* هالهٔ نور و لایهٔ تیرگی پایین */}
-        <span
-          className="pointer-events-none absolute -right-10 -top-14 h-40 w-40 rounded-full bg-white/20 blur-2xl transition-transform duration-700 group-hover:scale-125"
-          aria-hidden
-        />
-        <span
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24"
-          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0))" }}
-          aria-hidden
-        />
+      {/* بافت و نورپردازی چاپی */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 70% at 15% 0%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 55%), linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0) 68%)",
+        }}
+        aria-hidden
+      />
+      <span
+        className="pointer-events-none absolute -left-24 top-0 h-[520px] w-24 rotate-[18deg] bg-white/10 blur-[2px] transition-all duration-700 group-hover:left-[120%]"
+        aria-hidden
+      />
+      <span
+        className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/20"
+        aria-hidden
+      />
 
-        {/* برچسب و دسته */}
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10.5px] font-bold text-[#0a1b33] shadow-sm">
-          <Sparkles className="h-3 w-3 text-[#1b39f5]" />
-          {item.badge}
-        </span>
-        <span className="font-latin absolute left-3 top-3 rounded-full border border-white/40 bg-white/10 px-2.5 py-1 text-[9.5px] font-bold tracking-[0.18em] text-white backdrop-blur-sm">
+      {/* سربرگ پوستر */}
+      <div className="relative flex items-start justify-between p-5">
+        <span className="font-latin rounded-full border border-white/30 bg-black/25 px-3 py-1 text-[10px] font-semibold tracking-[0.18em] backdrop-blur-sm">
           {item.kicker}
         </span>
-
-        {/* لوگوتایپ لاتین */}
-        <span className="font-latin absolute bottom-3 left-4 text-[22px] font-bold tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
-          {item.latinName}
+        <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-[10.5px] font-bold text-[#0a1b33] shadow-[0_10px_24px_-16px_rgba(0,0,0,0.9)]">
+          <Sparkles className="h-3 w-3" />
+          {item.badge}
         </span>
       </div>
 
-      {/* متن کارت */}
-      <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-[14px] font-extrabold leading-6 text-[#0a1b33] transition-colors group-hover:text-[#1b39f5]">
-          {item.name}
-        </h3>
-        <p className="mt-1.5 line-clamp-2 text-[11.5px] leading-6 text-slate-500">{item.tagline}</p>
-
-        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
-          <div>
-            <div className="text-[10px] text-slate-400">شروع قیمت از</div>
-            <div className="font-latin text-[15px] font-bold text-[#0a1b33]" dir="ltr">
-              {latinPrice(item.priceFrom)}
-              <span className="mr-1 font-sans text-[10px] font-semibold text-slate-400">تومان</span>
-            </div>
-          </div>
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 group-hover:bg-[#1b39f5]">
-            <ArrowLeft className="h-4 w-4" />
-          </span>
+      {/* متن تبلیغاتی پایین پوستر */}
+      <div className="relative mt-auto p-5">
+        <div className="font-latin wordmark text-[13px] font-semibold uppercase tracking-[0.22em] text-white/70">
+          {item.latinName}
         </div>
+        <h3 className="mt-1.5 font-display text-[22px] font-semibold leading-8">{item.name}</h3>
+        <p className="mt-2 text-[12.5px] font-medium leading-6 text-white/85">{item.pitch}</p>
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {item.uses.map((use) => (
+            <span
+              key={use}
+              className="rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-[10.5px] font-semibold text-white/90 backdrop-blur-sm"
+            >
+              {use}
+            </span>
+          ))}
+        </div>
+
+        <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[12px] font-bold text-[#0a1b33] transition-all duration-500 group-hover:gap-3">
+          بیشتر بدانید
+          <ArrowLeft className="h-3.5 w-3.5" />
+        </span>
       </div>
     </Link>
   )
