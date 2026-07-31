@@ -1,5 +1,14 @@
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import {
+  ArrowLeft,
+  Globe,
+  Paperclip,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Zap,
+} from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
 import Footer from "@/components/site/Footer"
@@ -17,6 +26,9 @@ const deckIds = new Set(
     .slice(0, 6)
     .map((product) => product.id),
 )
+
+/** آیکون هر کاشی آمار */
+const statIcons = [ShieldCheck, Zap, Users, Sparkles]
 
 export default function HomePage() {
   // اکانت‌های پرکاربرد، بدون تکرار محصولات دک
@@ -65,14 +77,7 @@ export default function HomePage() {
 
         {/* آمار */}
         <Section>
-          <div className="grid gap-4 rounded-[40px] border border-[#1b39f5]/10 bg-white p-8 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] sm:grid-cols-2 lg:grid-cols-4">
-            {siteContent.stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-[26px] font-bold text-[#0a1b33]">{stat.value}</div>
-                <div className="mt-1 text-[12px] text-slate-500">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <StatsPanel />
         </Section>
 
         {/* محصولات جدید */}
@@ -149,6 +154,128 @@ export default function HomePage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+/** پنل شیشه‌ای آمار: کاشی‌های سفید شناور روی شیشهٔ مات */
+function StatsPanel() {
+  return (
+    <div className="relative overflow-hidden rounded-[40px] p-4 md:p-7">
+      {/* پس‌زمینهٔ گرادیانی نرم */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, #efe7e1 0%, #d8cfd4 35%, #b9aeb8 68%, #8f8794 100%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#1b39f5]/25 blur-3xl"
+        aria-hidden
+      />
+      <div
+        className="absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-[#0a152d]/25 blur-3xl"
+        aria-hidden
+      />
+
+      {/* پنل بالا: کاشی‌های آمار */}
+      <div className="relative rounded-[30px] border border-white/40 bg-white/20 p-3 shadow-[0_30px_60px_-40px_rgba(10,21,45,0.7)] backdrop-blur-2xl md:p-4">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+          {siteContent.stats.map((stat, index) => {
+            const Icon = statIcons[index % statIcons.length]
+            const featured = index === 1
+
+            return (
+              <div
+                key={stat.label}
+                className={`group relative flex flex-col items-center gap-2 rounded-[22px] px-3 py-5 text-center transition-all duration-500 hover:-translate-y-1 ${
+                  featured
+                    ? "bg-white shadow-[0_22px_44px_-26px_rgba(27,57,245,0.75)] ring-2 ring-[#1b39f5]"
+                    : "bg-white/85 shadow-[0_18px_38px_-30px_rgba(10,21,45,0.8)] ring-1 ring-white/70 hover:bg-white"
+                }`}
+              >
+                <span
+                  className={`grid h-11 w-11 place-items-center rounded-[14px] transition-colors duration-500 ${
+                    featured ? "bg-[#1b39f5] text-white" : "bg-[#0a152d] text-white group-hover:bg-[#1b39f5]"
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span
+                  className={`num text-[22px] font-bold leading-7 md:text-[26px] ${
+                    featured ? "text-[#1b39f5]" : "text-[#0a1b33]"
+                  }`}
+                >
+                  {stat.value}
+                </span>
+                <span className="text-[11.5px] font-semibold leading-5 text-slate-500">
+                  {stat.label}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* نشانگر شیشه‌ای شناور بین دو پنل */}
+      <span
+        className="pointer-events-none absolute left-[16%] top-[46%] z-20 hidden -rotate-12 md:block"
+        aria-hidden
+      >
+        <span className="absolute inset-0 rounded-full bg-[#1b39f5]/50 blur-xl" />
+        <svg width="58" height="58" viewBox="0 0 58 58" fill="none">
+          <defs>
+            <linearGradient id="cursorGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#b7c1ff" />
+              <stop offset="55%" stopColor="#5b6dfa" />
+              <stop offset="100%" stopColor="#1b39f5" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M10 8.5 47.5 26.5c2.6 1.3 2.4 5.1-.3 6L31 37.7c-.9.3-1.6 1-1.9 1.9l-5.2 16.2c-.9 2.7-4.7 2.9-6 .3L10 8.5Z"
+            fill="url(#cursorGrad)"
+            stroke="rgba(255,255,255,0.75)"
+            strokeWidth="2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M14 13 40 26c1.3.7 1.2 2.6-.2 3l-9 2.6c-.4.1-.8.5-.9 1L27 42c-.4 1.4-2.4 1.5-3 .2L14 13Z"
+            fill="rgba(255,255,255,0.45)"
+          />
+        </svg>
+      </span>
+
+      {/* پنل پایین: پیام و اقدام‌ها */}
+      <div className="relative mt-3 rounded-[30px] border border-white/40 bg-white/20 px-5 py-6 shadow-[0_30px_60px_-40px_rgba(10,21,45,0.7)] backdrop-blur-2xl md:mt-4 md:px-7 md:py-7">
+        <p className="max-w-xl text-[16px] font-semibold leading-8 text-[#0a1b33] md:text-[19px]">
+          هر اکانت و لایسنسی که لازم داری، اورجینال و با فعال‌سازی فوری تحویل بگیر.
+        </p>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] ring-1 ring-white/70 transition-all hover:-translate-y-0.5 hover:bg-white"
+          >
+            <Paperclip className="h-4 w-4" />
+            همهٔ محصولات
+          </Link>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] ring-1 ring-white/70 transition-all hover:-translate-y-0.5 hover:bg-white"
+          >
+            <Globe className="h-4 w-4" />
+            راهنمای خرید
+          </Link>
+          <Link
+            href="/contact"
+            aria-label="تماس با پشتیبانی"
+            className="mr-auto grid h-11 w-11 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 hover:scale-105 hover:bg-[#1b39f5]"
+          >
+            <Send className="h-4 w-4 -scale-x-100" />
+          </Link>
+        </div>
+      </div>
+    </div>
   )
 }
 
