@@ -16,6 +16,7 @@ import BrandIcon from "@/components/site/BrandIcon"
 import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
 import NewArrivalBanner from "@/components/site/NewArrivalBanner"
+import PosterGrid from "@/components/site/PosterGrid"
 import QuickOrder from "@/components/site/QuickOrder"
 import CurrencyPay from "@/components/site/CurrencyPay"
 import { brandLogos } from "@/lib/brands"
@@ -77,6 +78,11 @@ export default function HomePage() {
               <CategoryFolder key={category.slug} category={category} />
             ))}
           </div>
+        </Section>
+
+        {/* پوسترهای پیشنهادی */}
+        <Section>
+          <PosterGrid />
         </Section>
 
         {/* اکانت‌های پرکاربرد */}
