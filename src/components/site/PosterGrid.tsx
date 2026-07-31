@@ -16,8 +16,9 @@ type Poster = {
   photo: string
 }
 
-const photo = (id: number) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`
+function photo(id: number) {
+  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`
+}
 
 const POSTERS: Poster[] = [
   {
@@ -115,7 +116,7 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
       {/* کاراکتر تصویری سمت چپ بنر */}
       <span
         className={`pointer-events-none absolute inset-y-0 left-0 transition-transform duration-700 group-hover:scale-[1.06] ${
-          tall ? "w-[58%]" : "w-[42%]"
+          tall ? "w-[58%]" : "w-[44%]"
         }`}
         style={{
           backgroundImage: `url(${poster.photo})`,
@@ -128,12 +129,7 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
       />
       {/* رنگ‌آمیزی برند روی کاراکتر */}
       <span
-        className="pointer-events-none absolute inset-y-0 left-0 w-[58%] mix-blend-color opacity-70"
-        style={{ background: poster.accent }}
-        aria-hidden
-      />
-      <span
-        className="pointer-events-none absolute -left-6 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full opacity-40 blur-[42px] transition-opacity duration-500 group-hover:opacity-65"
+        className="pointer-events-none absolute -left-6 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full opacity-45 blur-[44px] transition-opacity duration-500 group-hover:opacity-70"
         style={{ background: poster.accent }}
         aria-hidden
       />
@@ -164,9 +160,7 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
       </div>
 
       {/* دکمهٔ مختص همان سرویس و لوگوی برند */}
-      <div
-        className={`relative flex items-center gap-2.5 ${tall ? "justify-between" : ""}`}
-      >
+      <div className={`relative flex items-center gap-2.5 ${tall ? "justify-between" : ""}`}>
         <span
           className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_10px_22px_-14px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
           style={{ background: poster.accent }}
