@@ -46,7 +46,7 @@ export default function HomePage() {
           title="دسته‌بندی محصولات"
           subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
         >
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
             {categories.map((category) => (
               <CategoryFolder key={category.slug} category={category} />
             ))}
@@ -151,55 +151,55 @@ export default function HomePage() {
   )
 }
 
-/** کارت فولدری دسته‌بندی: چند لوگوی برند بادبزنی پشت یک شیشهٔ مات */
+/** پوشهٔ دسته‌بندی: سه لوگوی بادبزنی پشت شیشهٔ مات با نام دسته روی پوشه */
 function CategoryFolder({ category }: { category: (typeof categories)[number] }) {
   const picks = products.filter((product) => product.categorySlug === category.slug).slice(0, 3)
 
   const tilePosition = [
-    "right-1 top-9 -rotate-[14deg]",
-    "left-1/2 top-1 -translate-x-1/2 rotate-0",
-    "left-1 top-9 rotate-[14deg]",
+    "right-2 top-8 -rotate-[13deg]",
+    "left-1/2 top-3 -translate-x-1/2",
+    "left-2 top-8 rotate-[13deg]",
   ]
 
   return (
     <Link
       href={`/category/${category.slug}`}
-      className="group relative flex flex-col items-center overflow-hidden rounded-[36px] border border-white/70 bg-[#f4f5f7] px-6 pb-8 pt-10 shadow-[0_24px_60px_-42px_rgba(10,27,51,0.55)] transition-all duration-500 hover:-translate-y-1 hover:bg-[#f7f8fa] hover:shadow-[0_34px_70px_-38px_rgba(27,57,245,0.45)]"
+      className="group flex flex-col items-center rounded-[24px] bg-[#f4f5f7] px-3 pb-4 pt-4 transition-all duration-500 hover:-translate-y-1 hover:bg-[#f8f9fb] hover:shadow-[0_24px_50px_-34px_rgba(10,27,51,0.55)]"
     >
-      <div className="relative h-[214px] w-full max-w-[288px]">
-        {/* بدنهٔ فولدر */}
+      <div className="relative h-[152px] w-full max-w-[190px]">
+        {/* زبانهٔ پوشه */}
         <span
-          className="absolute left-1/2 top-7 h-[150px] w-[204px] -translate-x-1/2 rounded-[28px] bg-[#e5e7eb]"
+          className="absolute right-4 top-0 h-6 w-[72px] rounded-t-[12px] bg-[#e3e5e9]"
+          aria-hidden
+        />
+        {/* بدنهٔ پوشه */}
+        <span
+          className="absolute inset-x-0 bottom-3 top-4 rounded-[20px] bg-[#e3e5e9]"
           aria-hidden
         />
 
-        {/* لوگوهای برند */}
+        {/* لوگوی برندهای داخل پوشه */}
         {picks.map((product, position) => (
           <span
             key={product.id}
-            className={`absolute grid h-[136px] w-[104px] place-items-center rounded-[24px] border-[5px] border-white bg-gradient-to-br shadow-[0_18px_36px_-22px_rgba(10,27,51,0.6)] transition-transform duration-500 group-hover:-translate-y-1.5 ${product.gradient} ${tilePosition[position]}`}
+            className={`absolute grid h-[92px] w-[68px] place-items-center rounded-[16px] border-4 border-white bg-gradient-to-br shadow-[0_14px_28px_-18px_rgba(10,27,51,0.6)] transition-transform duration-500 group-hover:-translate-y-1 ${product.gradient} ${tilePosition[position]}`}
           >
-            <BrandIcon slug={product.logo} size={36} color="#ffffff" />
+            <BrandIcon slug={product.logo} size={26} color="#ffffff" />
           </span>
         ))}
 
-        {/* شیشهٔ مات جلویی */}
-        <span className="absolute bottom-0 left-1/2 h-[112px] w-[246px] -translate-x-1/2 rounded-[26px] border border-white/70 bg-white/55 shadow-[0_18px_40px_-26px_rgba(10,27,51,0.5)] backdrop-blur-md" />
-
-        <span className="absolute bottom-4 left-4 grid h-12 w-12 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 group-hover:scale-110 group-hover:bg-[#1b39f5]">
-          <ArrowUpLeft className="h-5 w-5" />
+        {/* دربٔ شیشه‌ای پوشه با نام دسته */}
+        <span className="absolute inset-x-1 bottom-0 z-10 flex h-[74px] items-end justify-between gap-2 rounded-[18px] border border-white/70 bg-white/60 px-3 pb-3 shadow-[0_16px_34px_-24px_rgba(10,27,51,0.55)] backdrop-blur-md">
+          <span className="line-clamp-2 text-right text-[12.5px] font-extrabold leading-5 text-[#0a1b33]">
+            {category.title}
+          </span>
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 group-hover:scale-110 group-hover:bg-[#1b39f5]">
+            <ArrowUpLeft className="h-4 w-4" />
+          </span>
         </span>
       </div>
 
-      <h3 className="mt-6 text-center font-display text-[24px] font-extrabold leading-tight text-[#0a1b33] md:text-[27px]">
-        {category.title}
-      </h3>
-
-      <p className="mt-2 max-w-[260px] text-center text-[12px] leading-6 text-slate-500">
-        {category.description}
-      </p>
-
-      <span className="mt-4 rounded-full bg-[#0a1b33]/6 px-4 py-1.5 text-[11px] font-semibold text-slate-500">
+      <span className="mt-3 rounded-full bg-[#0a1b33]/6 px-3 py-1 text-[10.5px] font-semibold text-slate-500">
         <span className="num">{num(category.count)}</span> محصول
       </span>
     </Link>
