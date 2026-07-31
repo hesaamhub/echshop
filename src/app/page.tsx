@@ -1,13 +1,14 @@
 import Link from "next/link"
-import { ArrowLeft, ArrowUpLeft } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
 import Footer from "@/components/site/Footer"
 import BrandIcon from "@/components/site/BrandIcon"
 import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
+import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
-import { faDate, num } from "@/lib/utils"
+import { faDate } from "@/lib/utils"
 
 /** همان ۶ محصولی که در دک بالای صفحه نمایش داده می‌شوند */
 const deckIds = new Set(
@@ -151,20 +152,34 @@ export default function HomePage() {
   )
 }
 
+/** رنگ برند برای سایهٔ رنگی لوگو */
+function brandColor(slug: string) {
+  return brandLogos.find((brand) => brand.slug === slug)?.color ?? "1b39f5"
+}
+
 /** پوشهٔ دسته‌بندی: سه لوگوی بادبزنی پشت شیشهٔ مات با نام دسته روی پوشه */
 function CategoryFolder({ category }: { category: (typeof categories)[number] }) {
   const picks = products.filter((product) => product.categorySlug === category.slug).slice(0, 3)
 
-  const tilePosition = [
-    "right-2 top-8 -rotate-[13deg]",
-    "left-1/2 top-3 -translate-x-1/2",
-    "left-2 top-8 rotate-[13deg]",
+  const tileStyle = [
+    {
+      position: "right-0 top-10 -rotate-[16deg] group-hover:-rotate-[21deg] group-hover:-translate-y-2",
+      size: "h-[86px] w-[64px] rounded-[18px]",
+    },
+    {
+      position: "left-1/2 top-1 -translate-x-1/2 group-hover:-translate-y-2.5",
+      size: "h-[100px] w-[74px] rounded-[20px]",
+    },
+    {
+      position: "left-0 top-10 rotate-[16deg] group-hover:rotate-[21deg] group-hover:-translate-y-2",
+      size: "h-[86px] w-[64px] rounded-[18px]",
+    },
   ]
 
   return (
     <Link
       href={`/category/${category.slug}`}
-      className="group flex flex-col items-center rounded-[24px] bg-[#f4f5f7] px-3 pb-4 pt-4 transition-all duration-500 hover:-translate-y-1 hover:bg-[#f8f9fb] hover:shadow-[0_24px_50px_-34px_rgba(10,27,51,0.55)]"
+      className="group flex flex-col items-center rounded-[24px] bg-[#f4f5f7] px-3 pb-3 pt-4 transition-all duration-500 hover:-translate-y-1 hover:bg-[#f8f9fb] hover:shadow-[0_24px_50px_-34px_rgba(10,27,51,0.55)]"
     >
       <div className="relative h-[152px] w-full max-w-[190px]">
         {/* زبانهٔ پوشه */}
@@ -179,29 +194,43 @@ function CategoryFolder({ category }: { category: (typeof categories)[number] })
         />
 
         {/* لوگوی برندهای داخل پوشه */}
-        {picks.map((product, position) => (
-          <span
-            key={product.id}
-            className={`absolute grid h-[92px] w-[68px] place-items-center rounded-[16px] border-4 border-white bg-gradient-to-br shadow-[0_14px_28px_-18px_rgba(10,27,51,0.6)] transition-transform duration-500 group-hover:-translate-y-1 ${product.gradient} ${tilePosition[position]}`}
-          >
-            <BrandIcon slug={product.logo} size={26} color="#ffffff" />
-          </span>
-        ))}
+        {picks.map((product, position) => {
+          const color = brandColor(product.logo)
+          const style = tileStyle[position]
 
-        {/* دربٔ شیشه‌ای پوشه با نام دسته */}
-        <span className="absolute inset-x-1 bottom-0 z-10 flex h-[74px] items-end justify-between gap-2 rounded-[18px] border border-white/70 bg-white/60 px-3 pb-3 shadow-[0_16px_34px_-24px_rgba(10,27,51,0.55)] backdrop-blur-md">
-          <span className="line-clamp-2 text-right text-[12.5px] font-extrabold leading-5 text-[#0a1b33]">
+          return (
+            <span
+              key={product.id}
+              style={{ boxShadow: `0 16px 30px -14px #${color}9e` }}
+              className={`absolute grid place-items-center overflow-hidden border-[3px] border-white bg-gradient-to-br ring-1 ring-black/5 transition-transform duration-500 ease-out ${product.gradient} ${style.size} ${style.position}`}
+            >
+              {/* برق شیشه‌ای روی کاشی */}
+              <span
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(140deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.08) 42%, rgba(0,0,0,0.12) 100%)",
+                }}
+                aria-hidden
+              />
+              <span
+                className="pointer-events-none absolute -right-5 -top-6 h-16 w-16 rounded-full bg-white/30 blur-lg"
+                aria-hidden
+              />
+              <span className="relative drop-shadow-[0_3px_6px_rgba(10,27,51,0.35)]">
+                <BrandIcon slug={product.logo} size={position === 1 ? 30 : 26} color="#ffffff" />
+              </span>
+            </span>
+          )
+        })}
+
+        {/* درِ شیشه‌ای پوشه با نام دسته */}
+        <span className="absolute inset-x-1 bottom-0 z-10 flex h-[74px] items-end rounded-[18px] border border-white/70 bg-white/60 px-3 pb-3 shadow-[0_16px_34px_-24px_rgba(10,27,51,0.55)] backdrop-blur-md">
+          <span className="line-clamp-2 text-right text-[13px] font-extrabold leading-5 text-[#0a1b33] transition-colors duration-500 group-hover:text-[#1b39f5]">
             {category.title}
-          </span>
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#0a152d] text-white transition-all duration-500 group-hover:scale-110 group-hover:bg-[#1b39f5]">
-            <ArrowUpLeft className="h-4 w-4" />
           </span>
         </span>
       </div>
-
-      <span className="mt-3 rounded-full bg-[#0a1b33]/6 px-3 py-1 text-[10.5px] font-semibold text-slate-500">
-        <span className="num">{num(category.count)}</span> محصول
-      </span>
     </Link>
   )
 }
