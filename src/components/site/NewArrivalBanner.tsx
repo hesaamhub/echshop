@@ -2,7 +2,15 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import type { NewArrival, NewArrivalArt } from "@/lib/newArrivals"
 
-/** نشانهٔ اختصاصی هر محصول روی کاشی سه‌بعدی */
+/** تصویر پس‌زمینهٔ هر بنر (استوک آزاد) */
+export const ART_IMAGES: Record<NewArrivalArt, string> = {
+  film: "https://images.pexels.com/photos/32634582/pexels-photo-32634582.jpeg?auto=compress&cs=tinysrgb&w=1400",
+  notebook: "https://images.pexels.com/photos/29652326/pexels-photo-29652326.jpeg?auto=compress&cs=tinysrgb&w=1400",
+  hex: "https://images.pexels.com/photos/28844045/pexels-photo-28844045.jpeg?auto=compress&cs=tinysrgb&w=1400",
+  orbit: "https://images.pexels.com/photos/25630341/pexels-photo-25630341.jpeg?auto=compress&cs=tinysrgb&w=1400",
+}
+
+/** نشانهٔ اپلیکیشن روی کاشی سه‌بعدی گوشهٔ بنر */
 function ArtGlyph({ art, className }: { art: NewArrivalArt; className?: string }) {
   if (art === "film") {
     return (
@@ -54,15 +62,7 @@ function ArtGlyph({ art, className }: { art: NewArrivalArt; className?: string }
   )
 }
 
-/** کاشی‌های کوچک شناور دور ایکون اصلی */
-const SATELLITES = [
-  { className: "-left-7 -top-4 h-11 w-11 rounded-[14px] -rotate-12", dot: "h-3.5 w-3.5 rounded-[4px]" },
-  { className: "-right-8 -top-1 h-10 w-10 rounded-[13px] rotate-12", dot: "h-3 w-3 rounded-full" },
-  { className: "-left-9 bottom-2 h-9 w-9 rounded-[12px] rotate-6", dot: "h-2.5 w-2.5 rounded-full" },
-  { className: "-right-6 -bottom-5 h-12 w-12 rounded-[15px] -rotate-6", dot: "h-3.5 w-3.5 rounded-[5px]" },
-]
-
-/** بنر تبلیغاتی پوستری محصولات تازه‌رسیده */
+/** بنر تبلیغاتی تصویری محصولات تازه‌رسیده */
 export default function NewArrivalBanner({ item }: { item: NewArrival }) {
   const words = item.name.split(" ")
   const lastWord = words.length > 1 ? words[words.length - 1] : ""
@@ -71,30 +71,28 @@ export default function NewArrivalBanner({ item }: { item: NewArrival }) {
   return (
     <Link
       href={`/new/${item.slug}`}
-      className="group relative flex h-[380px] flex-col overflow-hidden rounded-[26px] p-5 text-white shadow-[0_30px_60px_-34px_rgba(10,16,32,0.65)] transition-transform duration-500 hover:-translate-y-1.5"
+      className="group relative flex h-[380px] flex-col justify-between overflow-hidden rounded-[26px] p-5 text-white shadow-[0_30px_60px_-34px_rgba(10,16,32,0.7)] transition-transform duration-500 hover:-translate-y-1.5"
     >
-      {/* زمینهٔ رنگی پوستر */}
+      {/* تصویر بنر */}
+      <span
+        className="absolute inset-0 scale-105 bg-cover bg-center transition-transform duration-[900ms] group-hover:scale-110"
+        style={{ backgroundImage: `url(${ART_IMAGES[item.art]})` }}
+        aria-hidden
+      />
+      {/* لایهٔ رنگ برند برای خوانایی متن */}
       <span
         className="absolute inset-0"
-        style={{ background: `linear-gradient(150deg, ${item.from} 0%, ${item.to} 100%)` }}
+        style={{ background: `linear-gradient(150deg, ${item.from}cc 0%, ${item.to}f2 100%)` }}
         aria-hidden
       />
       <span
-        className="absolute -right-14 -top-20 h-64 w-64 rounded-full blur-[60px]"
-        style={{ background: item.accent, opacity: 0.65 }}
+        className="absolute inset-x-0 bottom-0 h-2/3"
+        style={{ background: `linear-gradient(to top, ${item.to} 6%, rgba(0,0,0,0) 100%)` }}
         aria-hidden
       />
       <span
-        className="absolute -left-20 top-24 h-56 w-56 rounded-full blur-[70px]"
-        style={{ background: item.from, opacity: 0.85 }}
-        aria-hidden
-      />
-      <span
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(85% 60% at 50% 26%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 62%)",
-        }}
+        className="absolute -right-16 -top-20 h-56 w-56 rounded-full blur-[70px]"
+        style={{ background: item.accent, opacity: 0.5 }}
         aria-hidden
       />
       {/* درخشش متحرک */}
@@ -103,61 +101,41 @@ export default function NewArrivalBanner({ item }: { item: NewArrival }) {
         aria-hidden
       />
 
-      {/* ردیف بالا */}
-      <div className="relative flex items-center justify-between">
+      {/* کاشی سه‌بعدی و برچسب */}
+      <div className="relative flex items-start justify-between">
+        <span
+          className="relative grid h-[68px] w-[68px] place-items-center overflow-hidden rounded-[20px] transition-transform duration-500 group-hover:-translate-y-1"
+          style={{
+            background: `linear-gradient(160deg, ${item.accent} 0%, ${item.from} 100%)`,
+            boxShadow: `0 20px 38px -14px ${item.accent}, inset 0 1px 0 rgba(255,255,255,0.45)`,
+          }}
+        >
+          <span
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(155deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 45%, rgba(0,0,0,0.2) 100%)",
+            }}
+            aria-hidden
+          />
+          <ArtGlyph art={item.art} className="relative h-9 w-9 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]" />
+        </span>
+
         <span
           className="font-latin rounded-md px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.22em] text-[#0b1020]"
           style={{ background: item.accent }}
         >
           {item.badge}
         </span>
+      </div>
+
+      {/* پیام کوتاه، وردمارک و دکمه */}
+      <div className="relative">
         <span className="font-latin text-[9px] font-bold uppercase tracking-[0.24em] text-white/60">
           {item.kicker}
         </span>
-      </div>
-
-      {/* صحنهٔ ایکون سه‌بعدی */}
-      <div className="relative flex flex-1 items-center justify-center">
-        <div className="relative">
-          <span
-            className="absolute inset-0 -z-10 rounded-[46px] blur-2xl"
-            style={{ background: item.accent, opacity: 0.55 }}
-            aria-hidden
-          />
-
-          {SATELLITES.map((satellite) => (
-            <span
-              key={satellite.className}
-              className={`absolute grid place-items-center border border-white/50 bg-white/85 shadow-[0_12px_24px_-12px_rgba(0,0,0,0.55)] backdrop-blur-sm transition-transform duration-700 group-hover:scale-105 ${satellite.className}`}
-              aria-hidden
-            >
-              <span className={satellite.dot} style={{ background: item.accent }} />
-            </span>
-          ))}
-
-          <span
-            className="relative grid h-[112px] w-[112px] place-items-center overflow-hidden rounded-[30px] transition-transform duration-500 group-hover:-translate-y-1.5"
-            style={{
-              background: "linear-gradient(160deg, #23252e 0%, #0c0d13 100%)",
-              boxShadow: `0 26px 48px -18px ${item.accent}, inset 0 1px 0 rgba(255,255,255,0.35)`,
-            }}
-          >
-            <span
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(155deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.04) 42%, rgba(0,0,0,0.25) 100%)",
-              }}
-              aria-hidden
-            />
-            <ArtGlyph art={item.art} className="relative h-14 w-14" />
-          </span>
-        </div>
-      </div>
-
-      {/* وردمارک و دکمه */}
-      <div className="relative">
-        <h3 className="font-latin font-display text-center text-[27px] font-semibold leading-tight" dir="ltr">
+        <p className="mt-1.5 text-[13.5px] font-bold leading-7 text-white">{item.pitch}</p>
+        <h3 className="font-latin font-display mt-1 text-[28px] font-semibold leading-tight" dir="ltr">
           {firstWords}
           {lastWord ? (
             <>
@@ -168,9 +146,11 @@ export default function NewArrivalBanner({ item }: { item: NewArrival }) {
             </>
           ) : null}
         </h3>
-        <p className="mt-2 text-center text-[12.5px] font-bold leading-6 text-white/80">{item.pitch}</p>
 
-        <span className="mt-4 flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-[12.5px] font-extrabold text-[#0b1020] transition-all duration-500 group-hover:gap-3.5">
+        <span
+          className="mt-4 inline-flex items-center gap-2 rounded-lg px-7 py-2.5 text-[12.5px] font-extrabold text-[#0b1020] transition-all duration-500 group-hover:gap-3.5"
+          style={{ background: item.accent, boxShadow: `0 16px 30px -16px ${item.accent}` }}
+        >
           خرید
           <ArrowLeft className="h-3.5 w-3.5" />
         </span>
