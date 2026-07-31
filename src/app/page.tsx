@@ -17,6 +17,7 @@ import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
 import NewArrivalBanner from "@/components/site/NewArrivalBanner"
 import QuickOrder from "@/components/site/QuickOrder"
+import CurrencyPay from "@/components/site/CurrencyPay"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { newArrivals } from "@/lib/newArrivals"
@@ -112,6 +113,11 @@ export default function HomePage() {
           subtitle="نوع اکانت را انتخاب کن، تعداد را مشخص کن و بدون رفتن به صفحهٔ محصول سفارش بده"
         >
           <QuickOrder />
+        </Section>
+
+        {/* پرداخت ارزی */}
+        <Section>
+          <CurrencyPay />
         </Section>
 
         {/* بلاگ */}
