@@ -41,7 +41,7 @@ export default async function NewArrivalPage({
               محصولات
             </Link>
             <span>/</span>
-            <span className="font-semibold text-[#0a1b33]">{item.name}</span>
+            <span className="font-latin font-semibold text-[#0a1b33]">{item.name}</span>
           </div>
 
           {/* بنر اصلی */}
@@ -50,25 +50,26 @@ export default async function NewArrivalPage({
             style={{ background: `linear-gradient(135deg, ${item.from} 0%, ${item.to} 100%)` }}
           >
             <span
-              className="pointer-events-none absolute -left-16 -top-24 h-72 w-72 rounded-full bg-white/15 blur-3xl"
+              className="pointer-events-none absolute -left-16 -top-24 h-72 w-72 rounded-full blur-3xl"
+              style={{ background: item.accent, opacity: 0.4 }}
               aria-hidden
             />
             <div className="relative max-w-[640px] text-white">
               <span className="font-latin inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-[10px] font-bold tracking-[0.2em] backdrop-blur-sm">
                 {item.kicker}
               </span>
-              <h1 className="font-display mt-4 text-[26px] font-extrabold leading-10 md:text-[36px]">
+              <h1 className="font-latin font-display mt-4 text-[30px] font-extrabold leading-tight md:text-[42px]">
                 {item.name}
               </h1>
-              <div className="font-latin mt-1 text-[15px] font-semibold text-white/70">{item.latinName}</div>
-              <p className="mt-4 text-[13px] leading-7 text-white/85 md:text-[14px]">{item.tagline}</p>
+              <p className="mt-3 text-[14px] font-bold leading-8 text-white/90 md:text-[16px]">{item.pitch}</p>
+              <p className="mt-1 text-[12.5px] leading-7 text-white/65">{item.tagline}</p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[12.5px] font-bold text-[#0a1b33] transition-transform hover:-translate-y-0.5"
                 >
-                  سفارش و فعال‌سازی فوری
+                  خرید و فعال‌سازی فوری
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <div className="rounded-full border border-white/30 bg-white/10 px-5 py-3 text-[12px] font-semibold backdrop-blur-sm">
