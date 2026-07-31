@@ -15,8 +15,10 @@ import Footer from "@/components/site/Footer"
 import BrandIcon from "@/components/site/BrandIcon"
 import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
+import NewArrivalBanner from "@/components/site/NewArrivalBanner"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
+import { newArrivals } from "@/lib/newArrivals"
 import { faDate } from "@/lib/utils"
 
 /** همان ۶ محصولی که در دک بالای صفحه نمایش داده می‌شوند */
@@ -54,14 +56,6 @@ export default function HomePage() {
     .sort((a, b) => b.sold - a.sold)
     .slice(0, 4)
 
-  const essentialIds = new Set(essentials.map((product) => product.id))
-
-  // جدیدترین‌ها، بدون تکرار دو بخش قبلی
-  const newest = [...products]
-    .reverse()
-    .filter((product) => !deckIds.has(product.id) && !essentialIds.has(product.id))
-    .slice(0, 4)
-
   return (
     <>
       <Header />
@@ -97,11 +91,16 @@ export default function HomePage() {
           <StatsPanel />
         </Section>
 
-        {/* محصولات جدید */}
-        <Section title="جدیدترین محصولات" href="/products" linkLabel="مشاهدهٔ همه">
+        {/* محصولات جدید با بنر تصویری */}
+        <Section
+          title="جدیدترین محصولات"
+          subtitle="تازه‌ترین سرویس‌هایی که به اچ‌شاپ اضافه شده‌اند، هر کدام با بنر اختصاصی خودش"
+          href="/products"
+          linkLabel="مشاهدهٔ همه"
+        >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {newest.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {newArrivals.map((item) => (
+              <NewArrivalBanner key={item.slug} item={item} />
             ))}
           </div>
         </Section>
