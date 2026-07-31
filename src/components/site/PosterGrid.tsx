@@ -16,8 +16,11 @@ type Poster = {
   photo: string
 }
 
+const PHOTO_BASE = "https://images.pexels.com/photos"
+const PHOTO_QUERY = "?auto=compress&cs=tinysrgb&w=800"
+
 function photo(id: number) {
-  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`
+  return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${PHOTO_QUERY}`
 }
 
 const POSTERS: Poster[] = [
@@ -127,7 +130,7 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
         }}
         aria-hidden
       />
-      {/* رنگ‌آمیزی برند روی کاراکتر */}
+      {/* هالهٔ رنگی برند روی کاراکتر */}
       <span
         className="pointer-events-none absolute -left-6 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full opacity-45 blur-[44px] transition-opacity duration-500 group-hover:opacity-70"
         style={{ background: poster.accent }}
