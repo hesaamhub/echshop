@@ -59,14 +59,14 @@ export default function CurrencyPay() {
   const total = subtotal + fee
 
   return (
-    <div className="relative overflow-hidden rounded-[40px] border border-white/10 bg-[#0a152d] px-4 py-8 md:px-9 md:py-12">
+    <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#0a152d] px-4 py-6 md:px-8 md:py-7">
       {/* مش رنگی و شبکه */}
       <span
-        className="pointer-events-none absolute -right-28 -top-36 h-[440px] w-[440px] rounded-full bg-[#1b39f5] opacity-45 blur-[120px]"
+        className="pointer-events-none absolute -right-28 -top-36 h-[380px] w-[380px] rounded-full bg-[#1b39f5] opacity-45 blur-[110px]"
         aria-hidden
       />
       <span
-        className="pointer-events-none absolute -bottom-44 -left-24 h-[440px] w-[440px] rounded-full bg-[#8158f5] opacity-30 blur-[120px]"
+        className="pointer-events-none absolute -bottom-40 -left-24 h-[380px] w-[380px] rounded-full bg-[#8158f5] opacity-30 blur-[110px]"
         aria-hidden
       />
       <span
@@ -81,53 +81,53 @@ export default function CurrencyPay() {
         aria-hidden
       />
 
-      <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_430px]">
+      <div className="relative grid items-center gap-6 lg:grid-cols-[1fr_400px]">
         {/* متن و مزیت‌ها */}
         <div className="text-right">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-[11.5px] font-semibold text-[#9fb2ff] backdrop-blur-xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1 text-[11px] font-semibold text-[#9fb2ff] backdrop-blur-xl">
             <Globe className="h-3.5 w-3.5" />
             سرویس پرداخت جهانی
           </span>
 
-          <h2 className="font-display mt-4 text-[28px] font-extrabold leading-tight text-white md:text-[40px]">
+          <h2 className="font-display mt-3 text-[24px] font-extrabold leading-tight text-white md:text-[32px]">
             پرداخت ارزی آنلاین
           </h2>
-          <p className="mt-2 bg-gradient-to-l from-[#9fb2ff] to-[#c9b9ff] bg-clip-text text-[14px] font-bold text-transparent md:text-[16px]">
+          <p className="mt-1.5 bg-gradient-to-l from-[#9fb2ff] to-[#c9b9ff] bg-clip-text text-[13px] font-bold text-transparent md:text-[15px]">
             سریع، امن و بدون واسطه
           </p>
-          <p className="mt-4 max-w-[520px] text-[13px] leading-8 text-white/65">
+          <p className="mt-2.5 max-w-[520px] text-[12.5px] leading-6 text-white/65">
             بدون نیاز به کارت بین‌المللی، هزینهٔ هر سرویس خارجی را به تومان بپردازید؛
             مبلغ و ارز را انتخاب کنید و بقیهٔ کار را به اچ‌شاپ بسپارید.
           </p>
 
-          <div className="mt-7 grid gap-2.5 sm:max-w-[520px]">
+          <div className="mt-4 grid gap-2 sm:max-w-[520px]">
             {BENEFITS.map((benefit) => (
               <div
                 key={benefit.title}
-                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.08]"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] px-3.5 py-2 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.08]"
               >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-b from-[#2a49ff] to-[#1226c4] text-white shadow-[0_16px_30px_-18px_rgba(42,73,255,0.95)]">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-b from-[#2a49ff] to-[#1226c4] text-white shadow-[0_14px_26px_-18px_rgba(42,73,255,0.95)]">
                   <benefit.icon className="h-4 w-4" />
                 </span>
                 <span>
-                  <span className="block text-[12.5px] font-bold text-white">{benefit.title}</span>
-                  <span className="mt-0.5 block text-[11.5px] leading-6 text-white/50">{benefit.text}</span>
+                  <span className="block text-[12px] font-bold text-white">{benefit.title}</span>
+                  <span className="block text-[11px] leading-5 text-white/50">{benefit.text}</span>
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-7 py-3.5 text-[13px] font-extrabold text-white shadow-[0_24px_46px_-24px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-6 py-3 text-[12.5px] font-extrabold text-white shadow-[0_22px_40px_-24px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
             >
               شروع پرداخت ارزی
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <Link
               href="/blog"
-              className="rounded-full border border-white/25 bg-white/[0.06] px-7 py-3.5 text-[13px] font-bold text-white backdrop-blur-xl transition-colors hover:bg-white/15"
+              className="rounded-full border border-white/25 bg-white/[0.06] px-6 py-3 text-[12.5px] font-bold text-white backdrop-blur-xl transition-colors hover:bg-white/15"
             >
               راهنمای پرداخت
             </Link>
@@ -135,30 +135,30 @@ export default function CurrencyPay() {
         </div>
 
         {/* کارت مبدل نرخ */}
-        <div className="relative rounded-[34px] border border-white/12 bg-white/[0.07] p-5 shadow-[0_40px_80px_-50px_rgba(0,0,0,0.9)] backdrop-blur-2xl md:p-6">
+        <div className="relative rounded-[28px] border border-white/12 bg-white/[0.07] p-4 shadow-[0_36px_70px_-50px_rgba(0,0,0,0.9)] backdrop-blur-2xl md:p-5">
           <span
-            className="pointer-events-none absolute -left-14 -top-16 h-44 w-44 rounded-full bg-[#8158f5] opacity-35 blur-[60px]"
+            className="pointer-events-none absolute -left-14 -top-16 h-40 w-40 rounded-full bg-[#8158f5] opacity-35 blur-[60px]"
             aria-hidden
           />
 
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="font-latin grid h-8 w-12 place-items-center rounded-lg bg-white text-[11px] font-extrabold tracking-tight text-[#0a152d]">
+              <span className="font-latin grid h-7 w-11 place-items-center rounded-lg bg-white text-[10.5px] font-extrabold tracking-tight text-[#0a152d]">
                 VISA
               </span>
-              <span className="relative grid h-8 w-12 place-items-center rounded-lg border border-white/10 bg-white/10">
-                <span className="absolute left-[15px] h-4 w-4 rounded-full bg-[#ff5f00]/90" aria-hidden />
-                <span className="absolute right-[15px] h-4 w-4 rounded-full bg-[#f79e1b]/90" aria-hidden />
+              <span className="relative grid h-7 w-11 place-items-center rounded-lg border border-white/10 bg-white/10">
+                <span className="absolute left-[14px] h-3.5 w-3.5 rounded-full bg-[#ff5f00]/90" aria-hidden />
+                <span className="absolute right-[14px] h-3.5 w-3.5 rounded-full bg-[#f79e1b]/90" aria-hidden />
               </span>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#2a49ff]/40 bg-[#2a49ff]/15 px-3 py-2 text-[11px] font-bold text-[#9fb2ff]">
+            <span className="inline-flex items-center gap-1.5 rounded-xl border border-[#2a49ff]/40 bg-[#2a49ff]/15 px-2.5 py-1.5 text-[10.5px] font-bold text-[#9fb2ff]">
               <CreditCard className="h-3.5 w-3.5" />
               پرداخت امن
             </span>
           </div>
 
           {/* انتخاب ارز */}
-          <div className="relative mt-6 grid grid-cols-3 gap-1.5 rounded-2xl border border-white/10 bg-white/[0.05] p-1.5">
+          <div className="relative mt-4 grid grid-cols-3 gap-1.5 rounded-2xl border border-white/10 bg-white/[0.05] p-1.5">
             {CURRENCIES.map((entry) => {
               const active = entry.code === currency.code
 
@@ -167,21 +167,21 @@ export default function CurrencyPay() {
                   key={entry.code}
                   type="button"
                   onClick={() => setCode(entry.code)}
-                  className={`rounded-xl px-2 py-2.5 text-center transition-all duration-300 ${
+                  className={`rounded-xl px-2 py-1.5 text-center transition-all duration-300 ${
                     active
                       ? "bg-gradient-to-b from-[#2a49ff] to-[#1226c4] shadow-[0_16px_30px_-20px_rgba(42,73,255,0.95)]"
                       : "hover:bg-white/[0.06]"
                   }`}
                 >
                   <span
-                    className={`font-latin block text-[12px] font-extrabold ${
+                    className={`font-latin block text-[11.5px] font-extrabold ${
                       active ? "text-white" : "text-white/60"
                     }`}
                   >
                     {entry.code}
                   </span>
                   <span
-                    className={`mt-0.5 block text-[10px] font-semibold ${
+                    className={`block text-[9.5px] font-semibold ${
                       active ? "text-white/75" : "text-white/35"
                     }`}
                   >
@@ -193,37 +193,37 @@ export default function CurrencyPay() {
           </div>
 
           {/* مبدل */}
-          <div className="relative mt-3 rounded-[26px] border border-white/10 bg-[#0a152d]/70 p-4">
+          <div className="relative mt-2.5 rounded-[22px] border border-white/10 bg-[#0a152d]/70 p-3.5">
             <div className="flex items-center justify-between gap-3">
               <span className="text-[11px] font-semibold text-white/45">مبلغ مورد نظر</span>
-              <span className="font-latin text-[10.5px] font-semibold tracking-[0.14em] text-white/35" dir="ltr">
+              <span className="font-latin text-[10px] font-semibold tracking-[0.14em] text-white/35" dir="ltr">
                 1 {currency.code} = {latinNumber(currency.rate)}
               </span>
             </div>
 
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-2 flex items-center gap-2">
               <input
                 type="number"
                 min={1}
                 max={10000}
                 value={amount}
                 onChange={(event) => setAmount(Math.max(0, Number(event.target.value)))}
-                className="font-latin w-full rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-left text-[20px] font-extrabold text-white outline-none transition-colors focus:border-[#2a49ff]"
+                className="font-latin w-full rounded-xl border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-left text-[17px] font-extrabold text-white outline-none transition-colors focus:border-[#2a49ff]"
                 dir="ltr"
                 aria-label="مبلغ ارز"
               />
-              <span className="font-latin grid shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-[13px] font-extrabold text-white/70">
+              <span className="font-latin grid shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06] px-3.5 py-2.5 text-[12.5px] font-extrabold text-white/70">
                 {currency.code}
               </span>
             </div>
 
-            <div className="mt-3 flex flex-wrap gap-1.5">
+            <div className="mt-2 flex flex-wrap gap-1.5">
               {PRESETS.map((preset) => (
                 <button
                   key={preset}
                   type="button"
                   onClick={() => setAmount(preset)}
-                  className={`font-latin rounded-full border px-3 py-1.5 text-[11px] font-bold transition-all duration-300 ${
+                  className={`font-latin rounded-full border px-3 py-1 text-[10.5px] font-bold transition-all duration-300 ${
                     safeAmount === preset
                       ? "border-[#2a49ff]/60 bg-[#2a49ff]/20 text-white"
                       : "border-white/10 bg-white/[0.04] text-white/50 hover:text-white"
@@ -234,15 +234,15 @@ export default function CurrencyPay() {
               ))}
             </div>
 
-            <div className="my-4 flex items-center gap-3">
+            <div className="my-2.5 flex items-center gap-3">
               <span className="h-px flex-1 bg-white/10" aria-hidden />
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-[#9fb2ff]">
+              <span className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-[#9fb2ff]">
                 <ArrowLeftRight className="h-3.5 w-3.5" />
               </span>
               <span className="h-px flex-1 bg-white/10" aria-hidden />
             </div>
 
-            <div className="space-y-2 text-[11.5px] font-semibold text-white/50">
+            <div className="space-y-1.5 text-[11px] font-semibold text-white/50">
               <div className="flex items-center justify-between">
                 <span>معادل تومانی</span>
                 <span className="font-latin text-white/80" dir="ltr">
@@ -257,18 +257,18 @@ export default function CurrencyPay() {
               </div>
             </div>
 
-            <div className="mt-4 flex items-end justify-between rounded-2xl bg-white/[0.05] px-4 py-3">
-              <span className="text-[11.5px] font-semibold text-white/55">مبلغ قابل پرداخت</span>
-              <span className="font-display text-[24px] font-extrabold text-white md:text-[27px]">
+            <div className="mt-2.5 flex items-end justify-between rounded-xl bg-white/[0.05] px-3.5 py-2.5">
+              <span className="text-[11px] font-semibold text-white/55">مبلغ قابل پرداخت</span>
+              <span className="font-display text-[20px] font-extrabold text-white md:text-[23px]">
                 <span className="font-latin" dir="ltr">
                   {latinNumber(total)}
                 </span>
-                <span className="mr-1.5 text-[11px] font-semibold text-white/55">تومان</span>
+                <span className="mr-1.5 text-[10.5px] font-semibold text-white/55">تومان</span>
               </span>
             </div>
           </div>
 
-          <div className="relative mt-4 flex items-center gap-2 text-[11px] font-semibold text-white/45">
+          <div className="relative mt-2.5 flex items-center gap-2 text-[10.5px] font-semibold text-white/45">
             <span className="relative grid h-2.5 w-2.5 place-items-center" aria-hidden>
               <span className="absolute inset-0 animate-ping rounded-full bg-[#3ff0a5]/60" />
               <span className="relative h-2 w-2 rounded-full bg-[#3ff0a5]" />
