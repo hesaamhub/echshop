@@ -7,12 +7,17 @@ type Poster = {
   kicker: string
   name: string
   accentWord: string
-  note?: string
+  note: string
+  action: string
   brand: string
   href: string
   accent: string
   deep: string
+  photo: string
 }
+
+const photo = (id: number) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`
 
 const POSTERS: Poster[] = [
   {
@@ -20,22 +25,26 @@ const POSTERS: Poster[] = [
     kicker: "خرید اکانت هوش مصنوعی",
     name: "Claude",
     accentWord: "Code",
-    note: "برای برنامه‌نویسی",
+    note: "دستیار برنامه‌نویسی",
+    action: "نوشتن کد",
     brand: "anthropic",
     href: "/products",
     accent: "#f2724a",
     deep: "#3a1409",
+    photo: photo(16645676),
   },
   {
     id: "telegram-premium",
     kicker: "خرید اشتراک تلگرام",
     name: "Telegram",
     accentWord: "Premium",
-    note: "بدون تبلیغ، با امکانات ویژه",
+    note: "بدون تبلیغ و بی‌محدودیت",
+    action: "ارتقای اکانت",
     brand: "telegram",
     href: "/products",
     accent: "#2f9df4",
     deep: "#06203f",
+    photo: photo(26736061),
   },
   {
     id: "gemini",
@@ -43,10 +52,12 @@ const POSTERS: Poster[] = [
     name: "Google AI",
     accentWord: "Ultra",
     note: "Gemini · 18 ماهه",
+    action: "ساخت تصویر و ویدیو",
     brand: "google",
     href: "/products",
     accent: "#7b5cf5",
     deep: "#1a0f45",
+    photo: photo(16249328),
   },
   {
     id: "telegram-stars",
@@ -54,10 +65,12 @@ const POSTERS: Poster[] = [
     name: "Telegram",
     accentWord: "Stars",
     note: "هدیه و خرید درون‌برنامه‌ای",
+    action: "شارژ استارز",
     brand: "telegram",
     href: "/products",
     accent: "#f5a524",
     deep: "#3d2504",
+    photo: photo(4983368),
   },
   {
     id: "chatgpt",
@@ -65,21 +78,23 @@ const POSTERS: Poster[] = [
     name: "ChatGPT",
     accentWord: "Plus",
     note: "دستیار هرروزه",
+    action: "شروع گفت‌وگو",
     brand: "openai",
     href: "/products",
     accent: "#12b886",
     deep: "#042c22",
+    photo: photo(13697160),
   },
 ]
 
 /** کاشی لوگوی برند گوشهٔ بنر */
-function LogoTile({ brand, size = 34 }: { brand: string; size?: number }) {
+function LogoTile({ brand, size = 32 }: { brand: string; size?: number }) {
   return (
     <span
-      className="grid place-items-center rounded-[10px] border border-white/15 bg-white/10 backdrop-blur-md"
+      className="grid shrink-0 place-items-center rounded-[10px] border border-white/15 bg-white/10 backdrop-blur-md"
       style={{ height: size, width: size }}
     >
-      <BrandIcon slug={brand} size={size * 0.55} color="#ffffff" />
+      <BrandIcon slug={brand} size={Math.round(size * 0.55)} color="#ffffff" />
     </span>
   )
 }
@@ -88,22 +103,43 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
   return (
     <Link
       href={poster.href}
-      className={`group relative flex overflow-hidden rounded-[18px] border border-white/10 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/20 ${
-        tall ? "h-[172px] flex-col justify-between p-4 lg:h-full" : "h-[80px] items-center justify-between px-4"
+      className={`group relative flex overflow-hidden rounded-[20px] border border-white/10 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/25 ${
+        tall
+          ? "h-[224px] flex-col justify-between p-5 lg:h-full"
+          : "h-[104px] items-center justify-between px-5"
       }`}
       style={{
-        background: `linear-gradient(255deg, ${poster.deep} 0%, #0b0d1c 62%)`,
+        background: `linear-gradient(255deg, ${poster.deep} 0%, #0b0d1c 60%)`,
       }}
     >
-      {/* درخشش رنگی سمت چپ بنر */}
+      {/* کاراکتر تصویری سمت چپ بنر */}
       <span
-        className="pointer-events-none absolute -left-8 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full opacity-45 blur-[38px] transition-opacity duration-500 group-hover:opacity-70"
+        className={`pointer-events-none absolute inset-y-0 left-0 transition-transform duration-700 group-hover:scale-[1.06] ${
+          tall ? "w-[58%]" : "w-[42%]"
+        }`}
+        style={{
+          backgroundImage: `url(${poster.photo})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          maskImage: "linear-gradient(to left, transparent 0%, #000 55%)",
+          WebkitMaskImage: "linear-gradient(to left, transparent 0%, #000 55%)",
+        }}
+        aria-hidden
+      />
+      {/* رنگ‌آمیزی برند روی کاراکتر */}
+      <span
+        className="pointer-events-none absolute inset-y-0 left-0 w-[58%] mix-blend-color opacity-70"
+        style={{ background: poster.accent }}
+        aria-hidden
+      />
+      <span
+        className="pointer-events-none absolute -left-6 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full opacity-40 blur-[42px] transition-opacity duration-500 group-hover:opacity-65"
         style={{ background: poster.accent }}
         aria-hidden
       />
       {/* بافت نقطه‌ای محو */}
       <span
-        className="pointer-events-none absolute inset-0 opacity-[0.16]"
+        className="pointer-events-none absolute inset-0 opacity-[0.14]"
         style={{
           backgroundImage: "radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)",
           backgroundSize: "14px 14px",
@@ -115,44 +151,31 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
 
       {/* متن بنر */}
       <div className="relative">
-        <p className="text-[10px] font-semibold leading-4 text-white/55">{poster.kicker}</p>
+        <p className="text-[10.5px] font-semibold leading-4 text-white/60">{poster.kicker}</p>
         <p
-          className={`font-display font-latin mt-0.5 font-bold leading-tight text-white ${
-            tall ? "text-[22px]" : "text-[16px]"
+          className={`font-display font-latin mt-1 font-bold leading-tight text-white ${
+            tall ? "text-[26px]" : "text-[19px]"
           }`}
           dir="ltr"
         >
           {poster.name} <span style={{ color: poster.accent }}>{poster.accentWord}</span>
         </p>
-        {poster.note ? (
-          <p className="mt-0.5 text-[10px] leading-4 text-white/45">{poster.note}</p>
-        ) : null}
+        <p className="mt-1 text-[10.5px] leading-4 text-white/50">{poster.note}</p>
       </div>
 
-      {/* کنش و لوگو */}
-      {tall ? (
-        <div className="relative flex items-end justify-between">
-          <span
-            className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[11px] font-bold text-white transition-transform duration-500 group-hover:-translate-x-0.5"
-            style={{ background: poster.accent }}
-          >
-            خرید
-            <ArrowLeft className="h-3 w-3" />
-          </span>
-          <LogoTile brand={poster.brand} size={40} />
-        </div>
-      ) : (
-        <div className="relative flex items-center gap-2.5">
-          <span
-            className="inline-flex items-center gap-1 rounded-lg px-3 py-1 text-[10.5px] font-bold text-white transition-transform duration-500 group-hover:-translate-x-0.5"
-            style={{ background: poster.accent }}
-          >
-            خرید
-            <ArrowLeft className="h-3 w-3" />
-          </span>
-          <LogoTile brand={poster.brand} />
-        </div>
-      )}
+      {/* دکمهٔ مختص همان سرویس و لوگوی برند */}
+      <div
+        className={`relative flex items-center gap-2.5 ${tall ? "justify-between" : ""}`}
+      >
+        <span
+          className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_10px_22px_-14px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
+          style={{ background: poster.accent }}
+        >
+          {poster.action}
+          <ArrowLeft className="h-3 w-3" />
+        </span>
+        <LogoTile brand={poster.brand} size={tall ? 38 : 32} />
+      </div>
     </Link>
   )
 }
