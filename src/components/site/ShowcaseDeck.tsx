@@ -45,7 +45,7 @@ const VARIANTS: Variant[] = [
   // ۱) دایره‌های هم‌مرکز
   {
     background: (color) => `radial-gradient(120% 90% at 50% 8%, #${color}30 0%, #ffffff 62%)`,
-    holder: "h-[112px] w-[112px] rounded-full",
+    holder: "h-[104px] w-[104px] rounded-full",
     holderInner: "",
     art: (color) => (
       <svg
@@ -73,7 +73,7 @@ const VARIANTS: Variant[] = [
   // ۲) موج‌های نرم
   {
     background: (color) => `linear-gradient(180deg, #ffffff 0%, #${color}26 100%)`,
-    holder: "h-[116px] w-[116px] rounded-[38px]",
+    holder: "h-[108px] w-[108px] rounded-[36px]",
     holderInner: "",
     art: (color) => (
       <svg
@@ -104,7 +104,7 @@ const VARIANTS: Variant[] = [
   // ۳) شبکهٔ نقطه‌ای + مربع چرخیده
   {
     background: (color) => `linear-gradient(145deg, #${color}24 0%, #ffffff 58%)`,
-    holder: "h-[112px] w-[112px] rotate-12 rounded-[30px]",
+    holder: "h-[104px] w-[104px] rotate-12 rounded-[28px]",
     holderInner: "-rotate-12",
     art: (color) => (
       <>
@@ -130,7 +130,7 @@ const VARIANTS: Variant[] = [
   // ۴) خطوط مورب
   {
     background: (color) => `linear-gradient(200deg, #ffffff 0%, #${color}2b 100%)`,
-    holder: "h-[124px] w-[104px] rounded-[999px]",
+    holder: "h-[116px] w-[98px] rounded-[999px]",
     holderInner: "",
     art: (color) => (
       <>
@@ -155,7 +155,7 @@ const VARIANTS: Variant[] = [
   // ۵) هالهٔ چندرنگ (مشبک)
   {
     background: () => `linear-gradient(180deg, #f8fafc 0%, #ffffff 70%)`,
-    holder: "h-[118px] w-[118px] rounded-[46px_18px_46px_18px]",
+    holder: "h-[110px] w-[110px] rounded-[44px_16px_44px_16px]",
     holderInner: "",
     art: (color) => (
       <>
@@ -179,7 +179,7 @@ const VARIANTS: Variant[] = [
   // ۶) کمان‌های باز
   {
     background: (color) => `radial-gradient(110% 80% at 20% 100%, #${color}2e 0%, #ffffff 60%)`,
-    holder: "h-[112px] w-[112px] rotate-45 rounded-[26px]",
+    holder: "h-[104px] w-[104px] rotate-45 rounded-[24px]",
     holderInner: "-rotate-45",
     art: (color) => (
       <svg
@@ -298,14 +298,14 @@ export default function ShowcaseDeck() {
                 className="group relative min-w-0 flex-1"
               >
                 <div
-                  className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[640px] md:p-7"
+                  className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[540px] md:p-6"
                   style={{ background: variant.background(color) }}
                 >
                   {variant.art(color)}
 
                   <div className="relative flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="font-display text-[20px] font-bold leading-[1.4] text-[#0a1b33] md:text-[22px]">
+                      <h3 className="font-display text-[20px] font-bold leading-[1.4] text-[#0a1b33] md:text-[21px]">
                         {product.brand}
                       </h3>
                       <span className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
@@ -330,18 +330,18 @@ export default function ShowcaseDeck() {
                     )}
                   </div>
 
-                  <p className="relative mt-3 text-[11.5px] leading-6 text-slate-500">
+                  <p className="relative mt-3 line-clamp-2 text-[11.5px] leading-6 text-slate-500">
                     {product.excerpt}
                   </p>
 
-                  <div className="relative flex flex-1 items-center justify-center py-4">
+                  <div className="relative flex flex-1 items-center justify-center py-2">
                     <motion.span
-                      animate={{ y: [0, -12, 0] }}
+                      animate={{ y: [0, -10, 0] }}
                       transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
                       className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
                     >
                       <span className={`grid place-items-center ${variant.holderInner}`}>
-                        <BrandIcon slug={product.logo} size={52} color="#ffffff" />
+                        <BrandIcon slug={product.logo} size={48} color="#ffffff" />
                       </span>
                     </motion.span>
                   </div>
@@ -361,7 +361,7 @@ export default function ShowcaseDeck() {
                     ))}
                   </div>
 
-                  <div className="relative mt-4 flex items-end justify-between gap-3">
+                  <div className="relative mt-3 flex items-end justify-between gap-3">
                     <div>
                       <div className="text-[11px] text-slate-500">شروع قیمت از</div>
                       <div className="mt-0.5 text-[18px] font-bold text-[#0a1b33]">
@@ -383,7 +383,7 @@ export default function ShowcaseDeck() {
 
                   <Link
                     href={`/products/${product.slug}`}
-                    className="relative mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3.5 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
+                    className="relative mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
                   >
                     <ShoppingBag className="h-4 w-4" />
                     خرید و تحویل فوری
