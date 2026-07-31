@@ -93,6 +93,11 @@ export default function HomePage() {
           <StatsPanel />
         </Section>
 
+        {/* پرداخت ارزی */}
+        <Section>
+          <CurrencyPay />
+        </Section>
+
         {/* محصولات جدید با بنر تصویری */}
         <Section
           title="جدیدترین محصولات"
@@ -108,16 +113,8 @@ export default function HomePage() {
         </Section>
 
         {/* سفارش سریع */}
-        <Section
-          title="سفارش سریع اپل آیدی"
-          subtitle="نوع اکانت را انتخاب کن، تعداد را مشخص کن و بدون رفتن به صفحهٔ محصول سفارش بده"
-        >
-          <QuickOrder />
-        </Section>
-
-        {/* پرداخت ارزی */}
         <Section>
-          <CurrencyPay />
+          <QuickOrder />
         </Section>
 
         {/* بلاگ */}
