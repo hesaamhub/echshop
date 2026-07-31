@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, BadgeCheck, Check, Headphones, Zap } from "lucide-react"
 import Header from "@/components/site/Header"
 import Footer from "@/components/site/Footer"
-import NewArrivalBanner from "@/components/site/NewArrivalBanner"
+import NewArrivalBanner, { ART_IMAGES } from "@/components/site/NewArrivalBanner"
 import { getNewArrival, newArrivals } from "@/lib/newArrivals"
 
 function latinPrice(value: number) {
@@ -44,35 +44,50 @@ export default async function NewArrivalPage({
             <span className="font-latin font-semibold text-[#0a1b33]">{item.name}</span>
           </div>
 
-          {/* بنر اصلی */}
-          <div
-            className="relative mt-4 overflow-hidden rounded-[32px] px-6 py-10 md:px-12 md:py-14"
-            style={{ background: `linear-gradient(135deg, ${item.from} 0%, ${item.to} 100%)` }}
-          >
+          {/* بنر تصویری اصلی */}
+          <div className="relative mt-4 overflow-hidden rounded-[32px] px-6 py-12 md:px-12 md:py-16">
             <span
-              className="pointer-events-none absolute -left-16 -top-24 h-72 w-72 rounded-full blur-3xl"
-              style={{ background: item.accent, opacity: 0.4 }}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${ART_IMAGES[item.art]})` }}
               aria-hidden
             />
-            <div className="relative max-w-[640px] text-white">
-              <span className="font-latin inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-[10px] font-bold tracking-[0.2em] backdrop-blur-sm">
-                {item.kicker}
+            <span
+              className="absolute inset-0"
+              style={{ background: `linear-gradient(100deg, ${item.to}f2 0%, ${item.from}b3 62%, rgba(0,0,0,0.1) 100%)` }}
+              aria-hidden
+            />
+            <span
+              className="pointer-events-none absolute -left-16 -top-24 h-72 w-72 rounded-full blur-[80px]"
+              style={{ background: item.accent, opacity: 0.45 }}
+              aria-hidden
+            />
+
+            <div className="relative max-w-[620px] text-white">
+              <span
+                className="font-latin inline-block rounded-md px-2.5 py-1 text-[9.5px] font-extrabold uppercase tracking-[0.22em] text-[#0b1020]"
+                style={{ background: item.accent }}
+              >
+                {item.badge}
               </span>
-              <h1 className="font-latin font-display mt-4 text-[30px] font-extrabold leading-tight md:text-[42px]">
+              <div className="font-latin mt-3 text-[10px] font-bold uppercase tracking-[0.24em] text-white/60">
+                {item.kicker}
+              </div>
+              <h1 className="font-latin font-display mt-2 text-[32px] font-extrabold leading-tight md:text-[46px]">
                 {item.name}
               </h1>
-              <p className="mt-3 text-[14px] font-bold leading-8 text-white/90 md:text-[16px]">{item.pitch}</p>
-              <p className="mt-1 text-[12.5px] leading-7 text-white/65">{item.tagline}</p>
+              <p className="mt-3 text-[15px] font-bold leading-8 text-white md:text-[17px]">{item.pitch}</p>
+              <p className="mt-1 text-[12.5px] leading-7 text-white/70">{item.tagline}</p>
 
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[12.5px] font-bold text-[#0a1b33] transition-transform hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-lg px-7 py-3 text-[12.5px] font-extrabold text-[#0b1020] transition-transform hover:-translate-y-0.5"
+                  style={{ background: item.accent }}
                 >
                   خرید و فعال‌سازی فوری
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
-                <div className="rounded-full border border-white/30 bg-white/10 px-5 py-3 text-[12px] font-semibold backdrop-blur-sm">
+                <div className="rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-[12px] font-semibold backdrop-blur-sm">
                   شروع از{" "}
                   <span className="font-latin" dir="ltr">
                     {latinPrice(item.priceFrom)}
