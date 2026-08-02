@@ -7,8 +7,6 @@ import ProductPoster, { brandTone } from "@/components/site/ProductPoster"
 
 type Props = { product: Product }
 
-const CARD_BG = "#0f1017"
-
 /** اعداد همیشه لاتین نمایش داده می‌شوند */
 function latin(value: number) {
   return value.toLocaleString("en-US")
@@ -23,7 +21,7 @@ export default function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-[26px] border border-white/8 bg-[#0f1017] p-2.5 shadow-[0_22px_50px_-34px_rgba(10,27,51,0.7)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_64px_-32px_rgba(10,27,51,0.65)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0f1017] p-2.5 shadow-[0_22px_50px_-34px_rgba(10,27,51,0.7)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_64px_-32px_rgba(10,27,51,0.65)]"
     >
       {/* قاب پوستر محصول */}
       <div className="relative h-[190px] overflow-hidden rounded-[19px]">
@@ -55,31 +53,19 @@ export default function ProductCard({ product }: Props) {
           </div>
         ) : null}
 
-        {/* قیمت — مثل قبل در گوشهٔ پایین قاب */}
-        <div className="absolute right-0 bottom-0 z-10">
-          <div className="relative rounded-tl-[18px] pt-1.5 pl-1.5" style={{ background: CARD_BG }}>
-            <span
-              className="absolute bottom-full left-0 h-3.5 w-3.5 rounded-bl-[14px]"
-              style={{ boxShadow: `-6px 6px 0 0 ${CARD_BG}` }}
-              aria-hidden
-            />
-            <span
-              className="absolute top-full right-0 h-3.5 w-3.5 rounded-tr-[14px]"
-              style={{ boxShadow: `6px -6px 0 0 ${CARD_BG}` }}
-              aria-hidden
-            />
-            <span className="block rounded-[13px] bg-white/[0.08] px-3 py-1.5 text-[13px] font-bold text-white">
-              <span className="font-latin">{latin(cheapest.price)}</span>
-              <span className="mr-1 text-[9.5px] font-medium text-white/50">تومان</span>
-            </span>
-          </div>
+        {/* قیمت — گوشهٔ پایین قاب، بدون ارتفاق اضافی */}
+        <div className="absolute right-0 bottom-0 z-10 rounded-tl-[16px] bg-[#0f1017] pt-1.5 pl-1.5">
+          <span className="block rounded-[12px] bg-white/[0.08] px-3 py-1.5 text-[13px] font-bold text-white">
+            <span className="font-latin">{latin(cheapest.price)}</span>
+            <span className="mr-1 text-[9.5px] font-medium text-white/50">تومان</span>
+          </span>
         </div>
       </div>
 
       {/* متن کارت */}
       <div className="flex flex-1 flex-col px-2.5 pt-3.5 pb-1.5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-[14.5px] leading-6 font-bold text-white">{product.title}</h3>
+          <h3 className="line-clamp-1 text-[14.5px] leading-6 font-bold text-white">{product.title}</h3>
           <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-white/[0.07] px-2 py-1 text-[10.5px] font-bold text-white/80">
             <Star className="h-3 w-3 fill-[#EAC26B] text-[#EAC26B]" />
             <span className="font-latin">{product.rating}</span>
@@ -102,7 +88,7 @@ export default function ProductCard({ product }: Props) {
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between gap-2 border-t border-white/8 pt-3">
+        <div className="mt-auto flex items-center justify-between gap-2 border-t border-white/8 pt-3">
           {cheapest.compareAt ? (
             <span className="flex items-baseline gap-1.5">
               <span className="text-[9.5px] font-medium text-white/35">قیمت پیشین</span>
