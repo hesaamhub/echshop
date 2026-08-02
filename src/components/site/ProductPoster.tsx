@@ -141,10 +141,12 @@ type Props = {
   slug: string
   /** نام برند برای حالت پشتیبان */
   brand: string
+  /** فضای خالی پایین برای ناچ قیمت */
+  reserveBottom?: boolean
 }
 
 /** پوستر اختصاصی هر محصول — رنگ، طرح و وردمارک مخصوص همان برند */
-export default function ProductPoster({ slug, brand }: Props) {
+export default function ProductPoster({ slug, brand, reserveBottom }: Props) {
   const key = slug.toLowerCase()
   const config = POSTERS[key] ?? { kicker: "DIGITAL ACCOUNT", motif: "grid" as Motif }
   const gradient = brandGradient(key)
@@ -161,14 +163,14 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* وردمارک توخالی تکرارشونده */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-4 flex flex-col items-center gap-0.5 select-none"
+        className="pointer-events-none absolute inset-x-0 top-3 flex flex-col items-center gap-0.5 select-none"
         dir="ltr"
         aria-hidden
       >
         {[0.32, 0.2, 0.1].map((opacity, index) => (
           <span
             key={index}
-            className="font-display font-latin text-[34px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
+            className="font-display font-latin text-[32px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
             style={{
               color: "transparent",
               WebkitTextStroke: `1.4px rgba(255,255,255,${opacity})`,
@@ -181,16 +183,16 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* درخشش پشت نشان */}
       <span
-        className="pointer-events-none absolute top-[26%] left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-white/30 blur-[52px]"
+        className="pointer-events-none absolute top-[24%] left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-white/30 blur-[52px]"
         aria-hidden
       />
 
       {/* نشان اصلی برند */}
       <span
-        className="absolute top-[30%] left-1/2 -translate-x-1/2 drop-shadow-[0_16px_30px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-110"
+        className="absolute top-[27%] left-1/2 -translate-x-1/2 drop-shadow-[0_16px_30px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-110"
         aria-hidden
       >
-        <BrandIcon slug={slug} size={62} color="#ffffff" />
+        <BrandIcon slug={slug} size={58} color="#ffffff" />
       </span>
 
       {/* عنوان دسته */}
@@ -210,7 +212,9 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* نوار نام برند */}
       <div
-        className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-[16px] border border-white/10 bg-[#0a0b11]/92 p-1.5 shadow-[0_14px_30px_-16px_rgba(0,0,0,0.9)] backdrop-blur-md"
+        className={`absolute inset-x-3 flex items-center gap-2 rounded-[16px] border border-white/10 bg-[#0a0b11]/92 p-1.5 shadow-[0_14px_30px_-16px_rgba(0,0,0,0.9)] backdrop-blur-md ${
+          reserveBottom ? "bottom-12" : "bottom-3"
+        }`}
         dir="ltr"
       >
         <span
