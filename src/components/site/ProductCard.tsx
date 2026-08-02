@@ -1,11 +1,13 @@
 import Link from "next/link"
-import { ArrowLeft, Star } from "lucide-react"
+import { ArrowLeft, Star, Zap } from "lucide-react"
 import type { Product } from "@/lib/types"
 import { deliveryLabels } from "@/lib/types"
 import { discountPercent } from "@/lib/utils"
 import ProductPoster, { brandTone } from "@/components/site/ProductPoster"
 
 type Props = { product: Product }
+
+const CARD_BG = "#0f1017"
 
 /** اعداد همیشه لاتین نمایش داده می‌شوند */
 function latin(value: number) {
@@ -15,6 +17,7 @@ function latin(value: number) {
 export default function ProductCard({ product }: Props) {
   const cheapest = product.plans.reduce((a, b) => (a.price <= b.price ? a : b))
   const off = discountPercent(cheapest.price, cheapest.compareAt)
+  const saving = cheapest.compareAt ? cheapest.compareAt - cheapest.price : 0
   const tone = brandTone(product.logo)
 
   return (
@@ -23,41 +26,56 @@ export default function ProductCard({ product }: Props) {
       className="group relative flex flex-col overflow-hidden rounded-[26px] border border-white/8 bg-[#0f1017] p-2.5 shadow-[0_22px_50px_-34px_rgba(10,27,51,0.7)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_64px_-32px_rgba(10,27,51,0.65)]"
     >
       {/* قاب پوستر محصول */}
-      <div className="relative h-[188px] overflow-hidden rounded-[19px]">
+      <div className="relative h-[190px] overflow-hidden rounded-[19px]">
         <ProductPoster slug={product.logo} brand={product.brand} />
 
-        {/* برچسب بالای پوستر */}
+        {/* ناچ برچسب — متصل به لبهٔ کارت */}
         {product.badge ? (
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-[15px] bg-[#0f1017] px-1.5 pb-1.5">
-            <span
-              className="block rounded-full px-3.5 py-1 text-[10px] font-bold text-white"
-              style={{ background: tone }}
-            >
-              {product.badge}
-            </span>
+          <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2">
+            <div className="relative rounded-b-[18px] px-2.5 pb-1.5" style={{ background: CARD_BG }}>
+              {/* گوشهٔ مقعر چپ */}
+              <span
+                className="absolute top-0 right-full h-3.5 w-3.5 rounded-tr-[14px]"
+                style={{ boxShadow: `6px -6px 0 0 ${CARD_BG}` }}
+                aria-hidden
+              />
+              {/* گوشهٔ مقعر راست */}
+              <span
+                className="absolute top-0 left-full h-3.5 w-3.5 rounded-tl-[14px]"
+                style={{ boxShadow: `-6px -6px 0 0 ${CARD_BG}` }}
+                aria-hidden
+              />
+              <span
+                className="block rounded-full px-3.5 py-[5px] text-[10px] font-bold text-white shadow-[0_8px_18px_-10px_rgba(0,0,0,0.9)]"
+                style={{ background: tone }}
+              >
+                {product.badge}
+              </span>
+            </div>
           </div>
         ) : null}
 
-        {/* درصد تخفیف */}
+        {/* نشان تخفیف — مزیت و فوریت */}
         {off > 0 ? (
-          <span className="font-latin absolute top-3 right-3 rounded-lg bg-black/55 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-md">
-            {latin(off)}%
-          </span>
+          <div className="absolute top-2.5 right-2.5 z-10 flex flex-col items-end gap-1">
+            <span className="flex items-center gap-1 rounded-xl bg-gradient-to-b from-[#ff5f43] to-[#e5232a] px-2.5 py-1.5 text-[11px] font-extrabold text-white shadow-[0_10px_22px_-10px_rgba(229,35,42,0.95)]">
+              <Zap className="h-3 w-3 fill-white" />
+              <span className="font-latin">{latin(off)}%</span>
+              <span className="text-[9.5px] font-bold">تخفیف</span>
+            </span>
+            {saving > 0 ? (
+              <span className="rounded-lg bg-black/55 px-2 py-[3px] text-[9px] font-bold text-white/90 backdrop-blur-md">
+                <span className="font-latin">{latin(saving)}</span> تومان ارزان‌تر
+              </span>
+            ) : null}
+          </div>
         ) : null}
-
-        {/* قیمت */}
-        <div className="absolute bottom-0 right-0 rounded-tl-[15px] bg-[#0f1017] pt-1.5 pl-1.5">
-          <span className="block rounded-xl bg-white/[0.07] px-3 py-1.5 text-[13px] font-bold text-white">
-            <span className="font-latin">{latin(cheapest.price)}</span>
-            <span className="mr-1 text-[9.5px] font-medium text-white/50">تومان</span>
-          </span>
-        </div>
       </div>
 
       {/* متن کارت */}
       <div className="flex flex-1 flex-col px-2.5 pt-3.5 pb-1.5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-[14.5px] font-bold leading-6 text-white">{product.title}</h3>
+          <h3 className="text-[14.5px] leading-6 font-bold text-white">{product.title}</h3>
           <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-white/[0.07] px-2 py-1 text-[10.5px] font-bold text-white/80">
             <Star className="h-3 w-3 fill-[#EAC26B] text-[#EAC26B]" />
             <span className="font-latin">{product.rating}</span>
@@ -70,8 +88,8 @@ export default function ProductCard({ product }: Props) {
 
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           <span
-            className="rounded-lg px-2.5 py-1 text-[10px] font-semibold"
-            style={{ background: `${tone}26`, color: "#ffffff" }}
+            className="rounded-lg px-2.5 py-1 text-[10px] font-semibold text-white"
+            style={{ background: `${tone}26` }}
           >
             {deliveryLabels[cheapest.delivery]}
           </span>
@@ -80,18 +98,23 @@ export default function ProductCard({ product }: Props) {
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-white/8 pt-3">
-          <div className="flex items-baseline gap-2">
-            {cheapest.compareAt ? (
-              <span className="font-latin text-[11px] text-white/30 line-through">
-                {latin(cheapest.compareAt)}
+        <div className="mt-4 flex items-end justify-between gap-2 border-t border-white/8 pt-3">
+          <div className="flex flex-col gap-0.5">
+            <span className="text-[9.5px] font-medium text-white/35">شروع قیمت از</span>
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-latin text-[16px] leading-none font-extrabold text-white">
+                {latin(cheapest.price)}
               </span>
-            ) : (
-              <span className="text-[10.5px] text-white/35">شروع قیمت</span>
-            )}
+              <span className="text-[9.5px] font-medium text-white/45">تومان</span>
+              {cheapest.compareAt ? (
+                <span className="font-latin text-[10.5px] text-white/25 line-through">
+                  {latin(cheapest.compareAt)}
+                </span>
+              ) : null}
+            </span>
           </div>
           <span
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold text-white transition-transform duration-500 group-hover:-translate-x-0.5"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-2 text-[11px] font-bold text-white transition-transform duration-500 group-hover:-translate-x-0.5"
             style={{ background: tone }}
           >
             خرید و فعال‌سازی
