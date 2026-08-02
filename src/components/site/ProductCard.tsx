@@ -7,8 +7,6 @@ import ProductPoster, { brandTone } from "@/components/site/ProductPoster"
 
 type Props = { product: Product }
 
-const CARD_BG = "#0f1017"
-
 /** اعداد همیشه لاتین نمایش داده می‌شوند */
 function latin(value: number) {
   return value.toLocaleString("en-US")
@@ -27,33 +25,19 @@ export default function ProductCard({ product }: Props) {
     >
       {/* قاب پوستر محصول */}
       <div className="relative h-[190px] overflow-hidden rounded-[19px]">
-        <ProductPoster slug={product.logo} brand={product.brand} reserveBottom />
+        <ProductPoster slug={product.logo} brand={product.brand} />
 
-        {/* ناچ برچسب — متصل به لبهٔ کارت */}
+        {/* برچسب محصول */}
         {product.badge ? (
-          <div className="absolute top-0 left-1/2 z-10 -translate-x-1/2">
-            <div className="relative rounded-b-[18px] px-2.5 pb-1.5" style={{ background: CARD_BG }}>
-              <span
-                className="absolute top-0 right-full h-3.5 w-3.5 rounded-tr-[14px]"
-                style={{ boxShadow: `6px -6px 0 0 ${CARD_BG}` }}
-                aria-hidden
-              />
-              <span
-                className="absolute top-0 left-full h-3.5 w-3.5 rounded-tl-[14px]"
-                style={{ boxShadow: `-6px -6px 0 0 ${CARD_BG}` }}
-                aria-hidden
-              />
-              <span
-                className="block rounded-full px-3.5 py-[5px] text-[10px] font-bold text-white shadow-[0_8px_18px_-10px_rgba(0,0,0,0.9)]"
-                style={{ background: tone }}
-              >
-                {product.badge}
-              </span>
-            </div>
-          </div>
+          <span
+            className="absolute top-2.5 left-2.5 z-10 rounded-full px-3 py-1 text-[10px] font-bold text-white shadow-[0_10px_20px_-12px_rgba(0,0,0,0.95)]"
+            style={{ background: tone }}
+          >
+            {product.badge}
+          </span>
         ) : null}
 
-        {/* نشان تخفیف — دور از لوگو و محرک خرید */}
+        {/* نشان تخفیف — محرک خرید */}
         {off > 0 ? (
           <div className="absolute top-2.5 right-2.5 z-10 flex flex-col items-end gap-1">
             <span className="flex items-center gap-1 rounded-xl bg-gradient-to-b from-[#ff5f43] to-[#e5232a] px-2.5 py-1.5 text-[11px] font-extrabold text-white shadow-[0_10px_22px_-10px_rgba(229,35,42,0.95)]">
@@ -69,25 +53,11 @@ export default function ProductCard({ product }: Props) {
           </div>
         ) : null}
 
-        {/* ناچ قیمت در گوشهٔ پایین */}
-        <div className="absolute right-0 bottom-0 z-10">
-          <div className="relative rounded-tl-[18px] pt-1.5 pl-1.5" style={{ background: CARD_BG }}>
-            <span
-              className="absolute bottom-full left-0 h-3.5 w-3.5 rounded-bl-[14px]"
-              style={{ boxShadow: `-6px 6px 0 0 ${CARD_BG}` }}
-              aria-hidden
-            />
-            <span
-              className="absolute top-full right-0 h-3.5 w-3.5 rounded-tr-[14px]"
-              style={{ boxShadow: `6px -6px 0 0 ${CARD_BG}` }}
-              aria-hidden
-            />
-            <span className="block rounded-[13px] bg-white/[0.08] px-3 py-1.5 text-[13px] font-bold text-white">
-              <span className="font-latin">{latin(cheapest.price)}</span>
-              <span className="mr-1 text-[9.5px] font-medium text-white/50">تومان</span>
-            </span>
-          </div>
-        </div>
+        {/* قیمت */}
+        <span className="absolute right-3 bottom-3 z-10 rounded-xl border border-white/15 bg-black/55 px-3 py-1.5 text-[13px] font-bold text-white backdrop-blur-md">
+          <span className="font-latin">{latin(cheapest.price)}</span>
+          <span className="mr-1 text-[9.5px] font-medium text-white/60">تومان</span>
+        </span>
       </div>
 
       {/* متن کارت */}
@@ -125,9 +95,7 @@ export default function ProductCard({ product }: Props) {
               </span>
             </span>
           ) : (
-            <span className="text-[10px] font-medium text-white/35">
-              کمترین قیمت پلان‌ها
-            </span>
+            <span className="text-[10px] font-medium text-white/35">کمترین قیمت پلان‌ها</span>
           )}
           <span
             className="inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3 py-1.5 text-[11px] font-bold text-white transition-transform duration-500 group-hover:-translate-x-0.5"
