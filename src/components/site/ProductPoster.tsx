@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import BrandIcon from "@/components/site/BrandIcon"
 import { brandLogos } from "@/lib/brands"
 
@@ -66,7 +67,7 @@ const POSTERS: Record<string, PosterConfig> = {
 }
 
 /** ساخت لایهٔ طرح بر اساس موتیف */
-function motifStyle(motif: Motif): React.CSSProperties {
+function motifStyle(motif: Motif): CSSProperties {
   const light = "rgba(255,255,255,0.9)"
   const soft = "rgba(255,255,255,0.5)"
 
