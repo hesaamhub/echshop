@@ -4,9 +4,22 @@ import type { NewArrival, NewArrivalArt } from "@/lib/newArrivals"
 
 const PHOTO_BASE = "https://images.pexels.com/photos"
 const PHOTO_QUERY = "?auto=compress&cs=tinysrgb&w=800"
+const WIDE_QUERY = "?auto=compress&cs=tinysrgb&w=1400"
 
 function photo(id: number) {
   return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${PHOTO_QUERY}`
+}
+
+function widePhoto(id: number) {
+  return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${WIDE_QUERY}`
+}
+
+/** تصویر عریض برای هدر صفحهٔ محصول */
+export const ART_IMAGES: Record<NewArrivalArt, string> = {
+  film: widePhoto(32634582),
+  notebook: widePhoto(29652326),
+  hex: widePhoto(28844045),
+  orbit: widePhoto(25630341),
 }
 
 /** کاراکتر تصویری هر بنر */
