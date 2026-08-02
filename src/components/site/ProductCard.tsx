@@ -7,6 +7,8 @@ import ProductPoster, { brandTone } from "@/components/site/ProductPoster"
 
 type Props = { product: Product }
 
+const CARD_BG = "#0f1017"
+
 /** اعداد همیشه لاتین نمایش داده می‌شوند */
 function latin(value: number) {
   return value.toLocaleString("en-US")
@@ -53,11 +55,25 @@ export default function ProductCard({ product }: Props) {
           </div>
         ) : null}
 
-        {/* قیمت */}
-        <span className="absolute right-3 bottom-3 z-10 rounded-xl border border-white/15 bg-black/55 px-3 py-1.5 text-[13px] font-bold text-white backdrop-blur-md">
-          <span className="font-latin">{latin(cheapest.price)}</span>
-          <span className="mr-1 text-[9.5px] font-medium text-white/60">تومان</span>
-        </span>
+        {/* قیمت — مثل قبل در گوشهٔ پایین قاب */}
+        <div className="absolute right-0 bottom-0 z-10">
+          <div className="relative rounded-tl-[18px] pt-1.5 pl-1.5" style={{ background: CARD_BG }}>
+            <span
+              className="absolute bottom-full left-0 h-3.5 w-3.5 rounded-bl-[14px]"
+              style={{ boxShadow: `-6px 6px 0 0 ${CARD_BG}` }}
+              aria-hidden
+            />
+            <span
+              className="absolute top-full right-0 h-3.5 w-3.5 rounded-tr-[14px]"
+              style={{ boxShadow: `6px -6px 0 0 ${CARD_BG}` }}
+              aria-hidden
+            />
+            <span className="block rounded-[13px] bg-white/[0.08] px-3 py-1.5 text-[13px] font-bold text-white">
+              <span className="font-latin">{latin(cheapest.price)}</span>
+              <span className="mr-1 text-[9.5px] font-medium text-white/50">تومان</span>
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* متن کارت */}
