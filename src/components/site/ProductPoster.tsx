@@ -143,7 +143,7 @@ type Props = {
   brand: string
 }
 
-/** پوستر اختصاصی هر محصول — رنگ، طرح و عنوان مخصوص همان برند */
+/** پوستر اختصاصی هر محصول — رنگ، طرح و وردمارک مخصوص همان برند */
 export default function ProductPoster({ slug, brand }: Props) {
   const key = slug.toLowerCase()
   const config = POSTERS[key] ?? { kicker: "DIGITAL ACCOUNT", motif: "grid" as Motif }
@@ -153,50 +153,75 @@ export default function ProductPoster({ slug, brand }: Props) {
 
   return (
     <div
-      className="absolute inset-0"
-      style={{ background: `linear-gradient(145deg, ${gradient.from} 0%, ${gradient.to} 100%)` }}
+      className="absolute inset-0 overflow-hidden"
+      style={{ background: `linear-gradient(150deg, ${gradient.from} 0%, ${gradient.to} 100%)` }}
     >
       {/* طرح گرافیکی مختص برند */}
-      <span className="absolute inset-0 opacity-[0.16]" style={motifStyle(config.motif)} aria-hidden />
+      <span className="absolute inset-0 opacity-[0.13]" style={motifStyle(config.motif)} aria-hidden />
 
-      {/* نشان بزرگ برند در پس‌زمینه */}
-      <span
-        className="pointer-events-none absolute -right-6 -bottom-8 opacity-[0.18] transition-transform duration-700 group-hover:scale-110 group-hover:opacity-25"
+      {/* وردمارک توخالی تکرارشونده */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-4 flex flex-col items-center gap-0.5 select-none"
+        dir="ltr"
         aria-hidden
       >
-        <BrandIcon slug={slug} size={150} color="#ffffff" />
-      </span>
-
-      {/* درخشش نور */}
-      <span
-        className="pointer-events-none absolute -top-10 -left-10 h-44 w-44 rounded-full bg-white/25 blur-[60px]"
-        aria-hidden
-      />
-      {/* سایهٔ پایین برای خوانایی */}
-      <span
-        className="absolute inset-x-0 bottom-0 h-3/5"
-        style={{ background: "linear-gradient(to top, rgba(6,8,16,0.75) 0%, transparent 100%)" }}
-        aria-hidden
-      />
-
-      {/* محتوای پوستر */}
-      <div className="relative flex h-full flex-col justify-between p-4">
-        <span className="grid h-11 w-11 place-items-center rounded-2xl border border-white/25 bg-white/15 shadow-[0_10px_24px_-14px_rgba(0,0,0,0.8)] backdrop-blur-md">
-          <BrandIcon slug={slug} size={22} color="#ffffff" />
-        </span>
-
-        <div>
-          <span className="font-latin block text-[8.5px] font-bold uppercase tracking-[0.24em] text-white/70">
-            {config.kicker}
-          </span>
+        {[0.32, 0.2, 0.1].map((opacity, index) => (
           <span
-            className="font-display font-latin mt-1 block text-[27px] font-extrabold leading-none text-white drop-shadow-[0_10px_22px_rgba(0,0,0,0.5)]"
-            dir="ltr"
+            key={index}
+            className="font-display font-latin text-[34px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
+            style={{
+              color: "transparent",
+              WebkitTextStroke: `1.4px rgba(255,255,255,${opacity})`,
+            }}
           >
             {name}
           </span>
-          <span className="mt-2 block h-[3px] w-9 rounded-full" style={{ background: tone }} />
-        </div>
+        ))}
+      </div>
+
+      {/* درخشش پشت نشان */}
+      <span
+        className="pointer-events-none absolute top-[26%] left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-white/30 blur-[52px]"
+        aria-hidden
+      />
+
+      {/* نشان اصلی برند */}
+      <span
+        className="absolute top-[30%] left-1/2 -translate-x-1/2 drop-shadow-[0_16px_30px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-110"
+        aria-hidden
+      >
+        <BrandIcon slug={slug} size={62} color="#ffffff" />
+      </span>
+
+      {/* عنوان دسته */}
+      <span
+        className="font-latin absolute top-3 left-3 rounded-lg border border-white/20 bg-black/25 px-2 py-1 text-[8px] font-bold tracking-[0.18em] text-white/80 uppercase backdrop-blur-md"
+        dir="ltr"
+      >
+        {config.kicker}
+      </span>
+
+      {/* سایهٔ پایین */}
+      <span
+        className="absolute inset-x-0 bottom-0 h-1/2"
+        style={{ background: "linear-gradient(to top, rgba(5,7,14,0.85) 0%, transparent 100%)" }}
+        aria-hidden
+      />
+
+      {/* نوار نام برند */}
+      <div
+        className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-[16px] border border-white/10 bg-[#0a0b11]/92 p-1.5 shadow-[0_14px_30px_-16px_rgba(0,0,0,0.9)] backdrop-blur-md"
+        dir="ltr"
+      >
+        <span
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-[11px]"
+          style={{ background: `linear-gradient(140deg, ${tone} 0%, rgba(0,0,0,0.45) 130%)` }}
+        >
+          <BrandIcon slug={slug} size={16} color="#ffffff" />
+        </span>
+        <span className="font-display font-latin truncate text-[17px] leading-none font-extrabold text-white">
+          {name}
+        </span>
       </div>
     </div>
   )
