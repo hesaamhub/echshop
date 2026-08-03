@@ -107,7 +107,6 @@ export default function HomePage() {
         {/* محصولات جدید با بنر تصویری */}
         <Section
           title="جدیدترین محصولات"
-          subtitle="تازه‌ترین سرویس‌هایی که به اچ‌شاپ اضافه شده‌اند، هر کدام با بنر اختصاصی خودش"
           href="/products"
           linkLabel="مشاهدهٔ همه"
         >
