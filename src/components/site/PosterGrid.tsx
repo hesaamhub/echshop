@@ -1,177 +1,198 @@
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Sparkles } from "lucide-react"
 import BrandIcon from "@/components/site/BrandIcon"
 
-type Poster = {
+type BannerBrand = {
+  slug: string
+  label: string
+  color: string
+}
+
+type Banner = {
   id: string
-  kicker: string
-  name: string
-  accentWord: string
+  title: string
+  subtitle: string
   note: string
-  action: string
-  brand: string
-  href: string
+  watermark: string
   accent: string
-  deep: string
-  photo: string
+  glow: string
+  href: string
+  brands: BannerBrand[]
 }
 
-const PHOTO_BASE = "https://images.pexels.com/photos"
-const PHOTO_QUERY = "?auto=compress&cs=tinysrgb&w=800"
-
-function photo(id: number) {
-  return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${PHOTO_QUERY}`
-}
-
-const POSTERS: Poster[] = [
+const BANNERS: Banner[] = [
   {
-    id: "claude",
-    kicker: "خرید اکانت هوش مصنوعی",
-    name: "Claude",
-    accentWord: "Code",
-    note: "دستیار برنامه‌نویسی",
-    action: "نوشتن کد",
-    brand: "anthropic",
+    id: "ai",
+    title: "محصولات هوش مصنوعی",
+    subtitle: "دسترسی به محبوب‌ترین ابزارهای هوش مصنوعی",
+    note: "چت‌بات، تولید محتوا، طراحی و ویدیو",
+    watermark: "AI",
+    accent: "#1b39f5",
+    glow: "#9db4ff",
     href: "/products",
-    accent: "#f2724a",
-    deep: "#3a1409",
-    photo: photo(16645676),
+    brands: [
+      { slug: "openai", label: "ChatGPT", color: "#10A37F" },
+      { slug: "anthropic", label: "Claude", color: "#D97757" },
+      { slug: "google", label: "Gemini", color: "#4285F4" },
+      { slug: "midjourney", label: "Midjourney", color: "#111827" },
+      { slug: "perplexity", label: "Perplexity", color: "#1FB8CD" },
+      { slug: "canva", label: "Canva AI", color: "#00C4CC" },
+    ],
   },
   {
-    id: "telegram-premium",
-    kicker: "خرید اشتراک تلگرام",
-    name: "Telegram",
-    accentWord: "Premium",
-    note: "بدون تبلیغ و بی‌محدودیت",
-    action: "ارتقای اکانت",
-    brand: "telegram",
+    id: "stream",
+    title: "فیلم، سریال و موسیقی",
+    subtitle: "اشتراک سرویس‌های محبوب استریم",
+    note: "کیفیت بالا و بدون تبلیغ",
+    watermark: "PLAY",
+    accent: "#E50914",
+    glow: "#ffc0c4",
     href: "/products",
-    accent: "#2f9df4",
-    deep: "#06203f",
-    photo: photo(26736061),
+    brands: [
+      { slug: "netflix", label: "Netflix", color: "#E50914" },
+      { slug: "spotify", label: "Spotify", color: "#1DB954" },
+      { slug: "youtube", label: "YouTube", color: "#FF0033" },
+      { slug: "applemusic", label: "Apple Music", color: "#111827" },
+    ],
   },
   {
-    id: "gemini",
-    kicker: "خرید اکانت هوش مصنوعی",
-    name: "Google AI",
-    accentWord: "Ultra",
-    note: "Gemini · 18 ماهه",
-    action: "ساخت تصویر و ویدیو",
-    brand: "google",
+    id: "gaming",
+    title: "گیمینگ و کنسول",
+    subtitle: "گیفت کارت و اشتراک بازی‌ها",
+    note: "تحویل فوری کد فعال‌سازی",
+    watermark: "GAME",
+    accent: "#0d63d6",
+    glow: "#b7cdff",
     href: "/products",
-    accent: "#7b5cf5",
-    deep: "#1a0f45",
-    photo: photo(16249328),
+    brands: [
+      { slug: "steam", label: "Steam", color: "#171a21" },
+      { slug: "playstation", label: "PlayStation", color: "#0d63d6" },
+      { slug: "xbox", label: "Xbox", color: "#107C10" },
+      { slug: "nintendo", label: "Nintendo", color: "#E60012" },
+    ],
   },
   {
-    id: "telegram-stars",
-    kicker: "شارژ آنی و مطمئن",
-    name: "Telegram",
-    accentWord: "Stars",
-    note: "هدیه و خرید درون‌برنامه‌ای",
-    action: "شارژ استارز",
-    brand: "telegram",
+    id: "design",
+    title: "طراحی و خلاقیت",
+    subtitle: "ابزارهای حرفه‌ای طراحان و تولیدکننده‌ها",
+    note: "اشتراک قانونی و فعال روی اکانت خودتان",
+    watermark: "DESIGN",
+    accent: "#F24E1E",
+    glow: "#ffd0bd",
     href: "/products",
-    accent: "#f5a524",
-    deep: "#3d2504",
-    photo: photo(4983368),
+    brands: [
+      { slug: "adobe", label: "Adobe", color: "#FF0000" },
+      { slug: "figma", label: "Figma", color: "#F24E1E" },
+      { slug: "canva", label: "Canva", color: "#00C4CC" },
+      { slug: "envato", label: "Envato", color: "#81B441" },
+    ],
   },
   {
-    id: "chatgpt",
-    kicker: "خرید اکانت هوش مصنوعی",
-    name: "ChatGPT",
-    accentWord: "Plus",
-    note: "دستیار هرروزه",
-    action: "شروع گفت‌وگو",
-    brand: "openai",
+    id: "work",
+    title: "کار، آموزش و بهره‌وری",
+    subtitle: "سرویس‌های روزمرهٔ کار و یادگیری",
+    note: "پلان ماهانه تا سالانه",
+    watermark: "WORK",
+    accent: "#0A66C2",
+    glow: "#b9d6f7",
     href: "/products",
-    accent: "#12b886",
-    deep: "#042c22",
-    photo: photo(13697160),
+    brands: [
+      { slug: "notion", label: "Notion", color: "#111827" },
+      { slug: "duolingo", label: "Duolingo", color: "#58CC02" },
+      { slug: "udemy", label: "Udemy", color: "#A435F0" },
+      { slug: "linkedin", label: "LinkedIn", color: "#0A66C2" },
+    ],
   },
 ]
 
-/** کاشی لوگوی برند گوشهٔ بنر */
-function LogoTile({ brand, size = 32 }: { brand: string; size?: number }) {
+/** کاشی شناور لوگوی برند */
+function LogoTile({
+  brand,
+  size,
+  lift,
+}: {
+  brand: BannerBrand
+  size: number
+  lift: string
+}) {
   return (
     <span
-      className="grid shrink-0 place-items-center rounded-[10px] border border-white/15 bg-white/10 backdrop-blur-md"
-      style={{ height: size, width: size }}
+      className={`flex shrink-0 flex-col items-center gap-1 rounded-[16px] border border-black/5 bg-white px-2 py-2 shadow-[0_16px_30px_-18px_rgba(10,21,45,0.45)] transition-transform duration-500 group-hover:-translate-y-0.5 ${lift}`}
+      style={{ width: size }}
     >
-      <BrandIcon slug={brand} size={Math.round(size * 0.55)} color="#ffffff" />
+      <BrandIcon slug={brand.slug} size={Math.round(size * 0.42)} color={brand.color} />
+      <span className="font-latin text-[7.5px] font-bold text-[#0a152d]/70" dir="ltr">
+        {brand.label}
+      </span>
     </span>
   )
 }
 
-function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }) {
+function BannerCard({ banner, wide = false }: { banner: Banner; wide?: boolean }) {
+  const tiles = wide ? banner.brands : banner.brands.slice(0, 4)
+  const tileSize = wide ? 62 : 54
+  const lifts = ["translate-y-3", "-translate-y-4", "translate-y-1", "-translate-y-3", "translate-y-2", "-translate-y-1"]
+
   return (
     <Link
-      href={poster.href}
-      className={`group relative flex overflow-hidden rounded-[20px] border border-white/10 transition-all duration-500 hover:-translate-y-0.5 hover:border-white/25 ${
-        tall
-          ? "h-[224px] flex-col justify-between p-5 lg:h-full"
-          : "h-[104px] items-center justify-between px-5"
+      href={banner.href}
+      className={`group relative flex items-center justify-between overflow-hidden rounded-[24px] border border-black/5 bg-gradient-to-l from-white via-[#f6f8fd] to-[#e9edf8] px-5 shadow-[0_24px_50px_-36px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-34px_rgba(10,21,45,0.5)] ${
+        wide ? "h-[188px] px-8" : "h-[172px]"
       }`}
-      style={{
-        background: `linear-gradient(255deg, ${poster.deep} 0%, #0b0d1c 60%)`,
-      }}
     >
-      {/* کاراکتر تصویری سمت چپ بنر */}
+      {/* هالهٔ رنگی سمت کاشی‌ها */}
       <span
-        className={`pointer-events-none absolute inset-y-0 left-0 transition-transform duration-700 group-hover:scale-[1.06] ${
-          tall ? "w-[58%]" : "w-[44%]"
-        }`}
-        style={{
-          backgroundImage: `url(${poster.photo})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          maskImage: "linear-gradient(to left, transparent 0%, #000 55%)",
-          WebkitMaskImage: "linear-gradient(to left, transparent 0%, #000 55%)",
-        }}
+        className="pointer-events-none absolute top-1/2 -left-10 h-56 w-56 -translate-y-1/2 rounded-full opacity-60 blur-[60px]"
+        style={{ background: banner.glow }}
         aria-hidden
       />
-      {/* هالهٔ رنگی برند روی کاراکتر */}
+      {/* وردمارک محو پشت کاشی‌ها */}
       <span
-        className="pointer-events-none absolute -left-6 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full opacity-45 blur-[44px] transition-opacity duration-500 group-hover:opacity-70"
-        style={{ background: poster.accent }}
+        className="font-display font-latin pointer-events-none absolute top-1/2 left-[16%] -translate-x-1/2 -translate-y-1/2 text-[74px] leading-none font-extrabold tracking-tight text-[#0a152d]/[0.06] uppercase select-none"
+        dir="ltr"
         aria-hidden
-      />
-      {/* بافت نقطه‌ای محو */}
-      <span
-        className="pointer-events-none absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.55) 1px, transparent 1px)",
-          backgroundSize: "14px 14px",
-          maskImage: "radial-gradient(80% 100% at 0% 50%, #000 0%, transparent 75%)",
-          WebkitMaskImage: "radial-gradient(80% 100% at 0% 50%, #000 0%, transparent 75%)",
-        }}
-        aria-hidden
-      />
+      >
+        {banner.watermark}
+      </span>
 
-      {/* متن بنر */}
-      <div className="relative">
-        <p className="text-[10.5px] font-semibold leading-4 text-white/60">{poster.kicker}</p>
-        <p
-          className={`font-display font-latin mt-1 font-bold leading-tight text-white ${
-            tall ? "text-[26px]" : "text-[19px]"
-          }`}
-          dir="ltr"
-        >
-          {poster.name} <span style={{ color: poster.accent }}>{poster.accentWord}</span>
-        </p>
-        <p className="mt-1 text-[10.5px] leading-4 text-white/50">{poster.note}</p>
+      {/* کاشی لوگوها */}
+      <div className="relative hidden items-center gap-2 sm:flex">
+        {tiles.map((brand, index) => (
+          <LogoTile
+            key={`${banner.id}-${brand.slug}-${index}`}
+            brand={brand}
+            size={tileSize}
+            lift={lifts[index % lifts.length]}
+          />
+        ))}
       </div>
 
-      {/* دکمهٔ مختص همان سرویس و لوگوی برند */}
-      <div className={`relative flex items-center gap-2.5 ${tall ? "justify-between" : ""}`}>
-        <span
-          className="inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_10px_22px_-14px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
-          style={{ background: poster.accent }}
+      {/* متن بنر */}
+      <div className="relative flex flex-col items-end text-right">
+        <h3
+          className={`font-bold text-[#0a152d] ${wide ? "text-[30px] leading-[1.35]" : "text-[22px] leading-[1.4]"}`}
         >
-          {poster.action}
+          {banner.title}
+        </h3>
+
+        {/* خط تزئینی طلایی */}
+        <span className="mt-2 flex items-center gap-2" aria-hidden>
+          <span className="h-px w-24 bg-gradient-to-l from-transparent to-[#EAC26B]" />
+          <Sparkles className="h-3.5 w-3.5 text-[#EAC26B]" />
+        </span>
+
+        <p className={`mt-2 font-semibold text-[#0a152d]/75 ${wide ? "text-[14px]" : "text-[12px]"}`}>
+          {banner.subtitle}
+        </p>
+        <p className="mt-1 text-[11.5px] text-[#0a152d]/45">{banner.note}</p>
+
+        <span
+          className="mt-3 inline-flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_14px_26px_-16px_rgba(10,21,45,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
+          style={{ background: banner.accent }}
+        >
+          مشاهده محصولات
           <ArrowLeft className="h-3 w-3" />
         </span>
-        <LogoTile brand={poster.brand} size={tall ? 38 : 32} />
       </div>
     </Link>
   )
@@ -179,21 +200,14 @@ function PosterCard({ poster, tall = false }: { poster: Poster; tall?: boolean }
 
 export default function PosterGrid() {
   return (
-    <div className="grid gap-2.5 lg:grid-cols-3">
-      {/* دو بنر سمت راست */}
-      <div className="grid gap-2.5">
-        <PosterCard poster={POSTERS[0]} />
-        <PosterCard poster={POSTERS[1]} />
+    <div className="grid gap-3 lg:grid-cols-2">
+      <div className="lg:col-span-2">
+        <BannerCard banner={BANNERS[0]} wide />
       </div>
-
-      {/* بنر میانی */}
-      <PosterCard poster={POSTERS[2]} tall />
-
-      {/* دو بنر سمت چپ */}
-      <div className="grid gap-2.5">
-        <PosterCard poster={POSTERS[3]} />
-        <PosterCard poster={POSTERS[4]} />
-      </div>
+      <BannerCard banner={BANNERS[1]} />
+      <BannerCard banner={BANNERS[2]} />
+      <BannerCard banner={BANNERS[3]} />
+      <BannerCard banner={BANNERS[4]} />
     </div>
   )
 }
