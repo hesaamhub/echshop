@@ -1,28 +1,33 @@
 import Link from "next/link"
-import { ArrowLeft, Sparkles } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import type { NewArrival, NewArrivalArt } from "@/lib/newArrivals"
 
 const PHOTO_BASE = "https://images.pexels.com/photos"
+const PHOTO_QUERY = "?auto=compress&cs=tinysrgb&w=800"
 const WIDE_QUERY = "?auto=compress&cs=tinysrgb&w=1400"
+
+function photo(id: number) {
+  return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${PHOTO_QUERY}`
+}
 
 function widePhoto(id: number) {
   return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${WIDE_QUERY}`
 }
 
-/** تصویر عریض برای هدر صفحهٔ محصول */
+/** تصویر عریض هدر صفحهٔ محصول، متناسب با کاربرد همان سرویس */
 export const ART_IMAGES: Record<NewArrivalArt, string> = {
-  film: widePhoto(32634582),
-  notebook: widePhoto(29652326),
-  hex: widePhoto(28844045),
-  orbit: widePhoto(25630341),
+  film: widePhoto(29043652),
+  notebook: widePhoto(5185074),
+  hex: widePhoto(29652326),
+  orbit: widePhoto(16978372),
 }
 
-/** وردمارک محو پشت کاشی‌های هر طرح */
-const WATERMARKS: Record<NewArrivalArt, string> = {
-  film: "VIDEO",
-  notebook: "NOTES",
-  hex: "3D",
-  orbit: "AI",
+/** تصویر بنر: ویدیو، پژوهش و یادداشت، رندر سه‌بعدی، اسناد */
+const ART_PHOTOS: Record<NewArrivalArt, string> = {
+  film: photo(29043652),
+  notebook: photo(5185074),
+  hex: photo(29450016),
+  orbit: photo(16978372),
 }
 
 /** دکمهٔ مختص کاربرد هر سرویس */
@@ -33,71 +38,50 @@ const ACTIONS: Record<string, string> = {
   "kimi-k3": "تحلیل اسناد",
 }
 
-/** حروف اول نام محصول برای کاشی اصلی */
-function initials(name: string) {
-  const parts = name.trim().split(/\s+/).slice(0, 2)
-  return parts.map((part) => part.charAt(0)).join("").toUpperCase()
-}
-
 export default function NewArrivalBanner({ item }: { item: NewArrival }) {
   const action = ACTIONS[item.slug] ?? "مشاهدهٔ محصول"
-  const watermark = WATERMARKS[item.art]
 
   return (
     <Link
       href={`/new/${item.slug}`}
-      className="group relative flex h-[196px] items-center justify-between overflow-hidden rounded-[24px] border border-black/5 bg-gradient-to-l from-white via-[#f6f8fd] to-[#e9edf8] px-5 shadow-[0_24px_50px_-36px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-34px_rgba(10,21,45,0.5)]"
+      className="group relative flex h-[196px] flex-col justify-between overflow-hidden rounded-[20px] border border-white/10 p-5 shadow-[0_26px_54px_-34px_rgba(5,7,20,0.9)] transition-all duration-500 hover:-translate-y-0.5 hover:border-white/20"
+      style={{ background: `linear-gradient(255deg, ${item.from} 0%, #0b0d1c 62%)` }}
     >
-      {/* هالهٔ رنگی سمت کاشی‌ها */}
+      {/* تصویر مرتبط با کاربرد سرویس */}
       <span
-        className="pointer-events-none absolute top-1/2 -left-10 h-52 w-52 -translate-y-1/2 rounded-full opacity-30 blur-[60px]"
+        className="pointer-events-none absolute inset-y-0 left-0 w-[62%] bg-cover bg-center opacity-70 transition-transform duration-700 group-hover:scale-105"
+        style={{
+          backgroundImage: `url(${ART_PHOTOS[item.art]})`,
+          WebkitMaskImage:
+            "linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0) 100%)",
+          maskImage:
+            "linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0) 100%)",
+        }}
+        aria-hidden
+      />
+      {/* تیرگی روی تصویر برای خوانایی متن */}
+      <span
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `linear-gradient(255deg, ${item.from} 6%, rgba(11,13,28,0.72) 52%, rgba(11,13,28,0.25) 100%)`,
+        }}
+        aria-hidden
+      />
+      {/* هالهٔ نئون رنگ محصول */}
+      <span
+        className="pointer-events-none absolute -top-16 -right-10 h-44 w-44 rounded-full opacity-40 blur-[52px]"
         style={{ background: item.accent }}
         aria-hidden
       />
-      {/* وردمارک محو */}
+      {/* بافت نقطه‌ای */}
       <span
-        className="font-display font-latin pointer-events-none absolute top-1/2 left-[18%] -translate-x-1/2 -translate-y-1/2 text-[64px] leading-none font-extrabold tracking-tight text-[#0a152d]/[0.06] uppercase select-none"
-        dir="ltr"
+        className="pointer-events-none absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "14px 14px",
+        }}
         aria-hidden
-      >
-        {watermark}
-      </span>
-
-      {/* کاشی‌های شناور محصول */}
-      <div className="relative hidden items-center gap-2 sm:flex">
-        <span className="flex translate-y-3 shrink-0 flex-col items-center gap-1 rounded-[16px] border border-black/5 bg-white px-2.5 py-2 shadow-[0_16px_30px_-18px_rgba(10,21,45,0.45)] transition-transform duration-500 group-hover:-translate-y-0.5">
-          <Sparkles className="h-4 w-4" style={{ color: item.accent }} />
-          <span className="font-latin text-[7.5px] font-bold text-[#0a152d]/70" dir="ltr">
-            NEW
-          </span>
-        </span>
-
-        <span className="flex -translate-y-4 shrink-0 flex-col items-center gap-1 rounded-[18px] border border-black/5 bg-white px-3 py-2.5 shadow-[0_20px_36px_-18px_rgba(10,21,45,0.5)] transition-transform duration-500 group-hover:-translate-y-1">
-          <span
-            className="font-display font-latin grid h-9 w-9 place-items-center rounded-[12px] text-[14px] font-extrabold text-white"
-            style={{ background: `linear-gradient(140deg, ${item.accent} 0%, ${item.from} 100%)` }}
-            dir="ltr"
-          >
-            {initials(item.name)}
-          </span>
-          <span className="font-latin text-[8px] font-bold text-[#0a152d]/75" dir="ltr">
-            {item.name}
-          </span>
-        </span>
-
-        <span className="flex translate-y-2 shrink-0 flex-col items-center gap-1 rounded-[16px] border border-black/5 bg-white px-2.5 py-2 shadow-[0_16px_30px_-18px_rgba(10,21,45,0.45)] transition-transform duration-500 group-hover:-translate-y-0.5">
-            <span
-              className="font-latin text-[11px] font-extrabold"
-              style={{ color: item.accent }}
-              dir="ltr"
-            >
-              {watermark}
-            </span>
-            <span className="font-latin text-[7.5px] font-bold text-[#0a152d]/60" dir="ltr">
-              TOOL
-            </span>
-        </span>
-      </div>
+      />
 
       {/* متن بنر */}
       <div className="relative flex flex-col items-end text-right">
@@ -108,37 +92,35 @@ export default function NewArrivalBanner({ item }: { item: NewArrival }) {
           >
             {item.badge}
           </span>
-          <span className="font-latin text-[9.5px] font-semibold tracking-[0.14em] text-[#0a152d]/45">
+          <span className="font-latin text-[9.5px] font-semibold tracking-[0.14em] text-white/50">
             {item.kicker}
           </span>
         </div>
 
-        <p className="font-display font-latin mt-1.5 text-[24px] leading-tight font-bold text-[#0a152d]" dir="ltr">
+        <p
+          className="font-display font-latin mt-2 text-[21px] leading-tight font-bold text-white"
+          dir="ltr"
+        >
           {item.name}
         </p>
 
-        {/* خط تزئینی طلایی */}
-        <span className="mt-2 flex items-center gap-2" aria-hidden>
-          <span className="h-px w-20 bg-gradient-to-l from-transparent to-[#EAC26B]" />
-          <Sparkles className="h-3.5 w-3.5 text-[#EAC26B]" />
-        </span>
-
-        <p className="mt-2 line-clamp-2 max-w-[230px] text-[11px] leading-5 text-[#0a152d]/55">
+        <p className="mt-1.5 line-clamp-2 max-w-[210px] text-[11px] leading-5 text-white/65">
           {item.pitch}
         </p>
+      </div>
 
-        <div className="mt-3 flex items-center gap-2">
-          <span className="rounded-lg border border-black/5 bg-white px-2.5 py-1 text-[10px] font-semibold text-[#0a152d]/60 shadow-[0_10px_20px_-16px_rgba(10,21,45,0.6)]">
-            تحویل فوری
-          </span>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_14px_26px_-16px_rgba(10,21,45,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
-            style={{ background: item.accent }}
-          >
-            {action}
-            <ArrowLeft className="h-3 w-3" />
-          </span>
-        </div>
+      {/* اقدام */}
+      <div className="relative flex items-center justify-end gap-2">
+        <span className="rounded-lg border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/75 backdrop-blur-sm">
+          تحویل فوری
+        </span>
+        <span
+          className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-[11px] font-bold text-white shadow-[0_14px_26px_-16px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:-translate-x-0.5"
+          style={{ background: item.accent }}
+        >
+          {action}
+          <ArrowLeft className="h-3 w-3" />
+        </span>
       </div>
     </Link>
   )
