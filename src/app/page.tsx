@@ -19,6 +19,8 @@ import NewArrivalBanner from "@/components/site/NewArrivalBanner"
 import PosterGrid from "@/components/site/PosterGrid"
 import QuickOrder from "@/components/site/QuickOrder"
 import CurrencyPay from "@/components/site/CurrencyPay"
+import NewsletterCTA from "@/components/site/NewsletterCTA"
+import ProductRequestForm from "@/components/site/ProductRequestForm"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { newArrivals } from "@/lib/newArrivals"
@@ -105,11 +107,7 @@ export default function HomePage() {
         </Section>
 
         {/* محصولات جدید با بنر تصویری */}
-        <Section
-          title="جدیدترین محصولات"
-          href="/products"
-          linkLabel="مشاهدهٔ همه"
-        >
+        <Section title="جدیدترین محصولات" href="/products" linkLabel="مشاهدهٔ همه">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {newArrivals.map((item) => (
               <NewArrivalBanner key={item.slug} item={item} />
@@ -154,34 +152,11 @@ export default function HomePage() {
           </div>
         </Section>
 
-        {/* دعوت به اقدام */}
+        {/* خبرنامه و درخواست محصول */}
         <Section>
-          <div className="relative overflow-hidden rounded-[40px] bg-[#0a152d] px-8 py-14 text-center">
-            <div className="absolute -top-24 -left-16 h-64 w-64 rounded-full bg-[#1b39f5]/35 blur-3xl" />
-            <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-[#1b39f5]/20 blur-3xl" />
-            <div className="relative">
-              <h2 className="font-display text-[28px] md:text-[34px] font-medium text-white">
-                هنوز محصول مورد نظرت را پیدا نکردی؟
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-[13px] leading-7 text-white/70">
-                کافی است یک تیکت باز کنید؛ تیم اچ‌شاپ هر اکانت یا لایسنسی را که لازم دارید
-                برایتان تهیه می‌کند.
-              </p>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/dashboard/tickets"
-                  className="glass-solid rounded-full px-7 py-3 text-[13px] font-semibold"
-                >
-                  ارسال تیکت
-                </Link>
-                <Link
-                  href="/contact"
-                  className="rounded-full border border-white/25 px-7 py-3 text-[13px] font-semibold text-white transition-colors hover:bg-white/10"
-                >
-                  تماس با ما
-                </Link>
-              </div>
-            </div>
+          <div className="grid items-stretch gap-4 lg:grid-cols-2">
+            <NewsletterCTA />
+            <ProductRequestForm />
           </div>
         </Section>
       </main>
