@@ -27,21 +27,26 @@ export default function AdminContentPage() {
 
       <Card title="بخش هیرو صفحهٔ اصلی">
         <div className="grid gap-4 lg:grid-cols-2">
-          <Field label="تیتر اصلی — خط اول" defaultValue={siteContent.hero.headlineTop} />
-          <Field label="تیتر اصلی — خط دوم" defaultValue={siteContent.hero.headlineBottom} />
+          <Field label="متن نشان بالای تیتر" defaultValue={siteContent.hero.badge} />
+          <Field label="تیتر — بخش نخست" defaultValue={siteContent.hero.headlineLead} />
+          <Field
+            label="تیتر — بخش پایانی"
+            defaultValue={siteContent.hero.headlineTail}
+            hint="نام برندها به‌صورت چرخشی میان دو بخش تیتر نمایش داده می‌شود."
+          />
           <div className="lg:col-span-2">
             <Field label="زیرتیتر" textarea rows={3} defaultValue={siteContent.hero.subheadline} />
           </div>
-          <Field label="متن دکمهٔ اصلی" defaultValue={siteContent.hero.ctaLabel} />
-          <Field label="متن دکمهٔ نوار شناور" defaultValue={siteContent.hero.navCta.label} />
-          <div className="lg:col-span-2">
-            <Field
-              label="نشانی ویدیوی هیرو"
-              defaultValue={siteContent.hero.videoSrc}
-              latin
-              hint="قالب mp4 با پخش خودکار و بی‌صدا. در چیدمان راست‌چین، ویدیو سمت چپ و متن سمت راست قرار می‌گیرد."
-            />
-          </div>
+        </div>
+        <div className="mt-4 grid gap-3 lg:grid-cols-3">
+          {siteContent.hero.actions.map((action, index) => (
+            <div key={action.href} className="rounded-2xl border border-slate-200/70 p-4">
+              <Field label={`متن دکمهٔ ${index + 1}`} defaultValue={action.label} />
+              <div className="mt-3">
+                <Field label="نشانی دکمه" defaultValue={action.href} latin />
+              </div>
+            </div>
+          ))}
         </div>
         <div className="mt-4 flex gap-2">
           <Button>ذخیرهٔ تغییرات هیرو</Button>
