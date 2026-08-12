@@ -5,16 +5,12 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import { ArrowLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
 import { brandLogos, type BrandLogo } from "@/lib/brands"
+import { siteContent } from "@/lib/data"
 import Logo from "./Logo"
 import BrandIcon from "./BrandIcon"
 
-const heroCopy = {
-  badge: "تحویل فوری و خودکار",
-  headlineLead: "خرید مطمئن اکانت",
-  headlineTail: "با اچ‌شاپ",
-  subheadline:
-    "اکانت اورجینال و لایسنس رسمی بیش از ۴۰ برند معتبر جهانی — تحویل خودکار در کمتر از دو دقیقه، ضمانت بازگشت وجه و پشتیبانی شبانه‌روزی فارسی.",
-}
+/** متن هیرو از منبع واحد محتوا خوانده می‌شود (قابل ویرایش در پنل مدیریت) */
+const hero = siteContent.hero
 
 const rotatingProducts = [
   "Spotify",
@@ -31,12 +27,6 @@ const trustItems = [
   { icon: ShieldCheck, label: "پرداخت امن" },
   { icon: Zap, label: "تحویل آنی" },
   { icon: Headphones, label: "پشتیبانی ۲۴/۷" },
-]
-
-const heroActions = [
-  { label: "مشاهدهٔ محصولات", href: "/products", primary: true },
-  { label: "پنل کاربری", href: "/dashboard", primary: false },
-  { label: "ارتباط با ما", href: "/contact", primary: false },
 ]
 
 const topRow = brandLogos.slice(0, 13)
@@ -80,10 +70,10 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto max-w-3xl px-6 text-center"
         >
-          <DeliveryBadge label={heroCopy.badge} />
+          <DeliveryBadge label={hero.badge} />
 
           <h1 className="mt-5 font-display text-[30px] md:text-[50px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
-            {heroCopy.headlineLead}{" "}
+            {hero.headlineLead}{" "}
             <span className="inline-grid align-baseline text-center">
               {rotatingProducts.map((name) => (
                 <span
@@ -107,11 +97,11 @@ export default function Hero() {
                 </motion.span>
               </AnimatePresence>
             </span>{" "}
-            {heroCopy.headlineTail}
+            {hero.headlineTail}
           </h1>
 
           <p className="mx-auto mt-5 max-w-2xl text-[13.5px] md:text-[15px] font-medium leading-8 text-[#475569]">
-            {heroCopy.subheadline}
+            {hero.subheadline}
           </p>
 
           <motion.div
@@ -120,7 +110,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
           >
-            {heroActions.map((action) =>
+            {hero.actions.map((action) =>
               action.primary ? (
                 <Link
                   key={action.href}

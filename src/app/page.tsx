@@ -24,7 +24,7 @@ import ProductRequestForm from "@/components/site/ProductRequestForm"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { newArrivals } from "@/lib/newArrivals"
-import { faDate } from "@/lib/utils"
+import { faDate, latinDigits } from "@/lib/utils"
 
 /** همان ۶ محصولی که در دک بالای صفحه نمایش داده می‌شوند */
 const deckIds = new Set(
@@ -36,23 +36,6 @@ const deckIds = new Set(
 
 /** آیکون هر کاشی آمار */
 const statIcons = [BadgeCheck, Zap, Users, Headphones]
-
-/** تبدیل ارقام فارسی و عربی به لاتین */
-function latinDigits(value: string | number) {
-  const fa = "\u06f0\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9"
-  const ar = "\u0660\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669"
-
-  return String(value)
-    .split("")
-    .map((char) => {
-      const faIndex = fa.indexOf(char)
-      if (faIndex > -1) return String(faIndex)
-      const arIndex = ar.indexOf(char)
-      if (arIndex > -1) return String(arIndex)
-      return char
-    })
-    .join("")
-}
 
 export default function HomePage() {
   // اکانت‌های پرکاربرد، بدون تکرار محصولات دک

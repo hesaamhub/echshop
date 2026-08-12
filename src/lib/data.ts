@@ -14,19 +14,16 @@ export const siteContent = {
     logoMark: "✦",
   },
   hero: {
-    headlineTop: "بنیانِ نسل تازهٔ",
-    headlineBottom: "خرید اکانت‌های دیجیتال",
+    badge: "تحویل فوری و خودکار",
+    headlineLead: "خرید مطمئن اکانت",
+    headlineTail: "با اچ‌شاپ",
     subheadline:
-      "اچ‌شاپ اکانت‌ها و لایسنس‌های اورجینال را با تحویل فوری، گارانتی بازگشت وجه و پشتیبانی شبانه‌روزی در اختیار شما می‌گذارد.",
-    ctaLabel: "تماس با ما",
-    ctaHref: "/contact",
-    videoSrc:
-      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260505_101331_74f9b798-3f00-4e86-8a01-377aa16ffeaa.mp4",
-    navLinks: [
-      { label: "محصولات", href: "/products" },
-      { label: "بلاگ", href: "/blog" },
+      "اکانت اورجینال و لایسنس رسمی بیش از ۴۰ برند معتبر جهانی — تحویل خودکار در کمتر از دو دقیقه، ضمانت بازگشت وجه و پشتیبانی شبانه‌روزی فارسی.",
+    actions: [
+      { label: "مشاهدهٔ محصولات", href: "/products", primary: true },
+      { label: "پنل کاربری", href: "/dashboard", primary: false },
+      { label: "ارتباط با ما", href: "/contact", primary: false },
     ],
-    navCta: { label: "ارتباط با ما", href: "/contact" },
   },
   features: [
     {
@@ -102,48 +99,46 @@ export const siteContent = {
 /*  دسته‌بندی‌ها                                                              */
 /* -------------------------------------------------------------------------- */
 
-export const categories: Category[] = [
+/**
+ * تعداد محصول هر دسته دستی نگهداری نمی‌شود؛ پایین همین فایل، پس از تعریف
+ * فهرست محصولات، به‌صورت خودکار محاسبه و به ساختار دسته اضافه می‌شود.
+ */
+const categorySeed: Omit<Category, "count">[] = [
   {
     slug: "music-video",
     title: "موسیقی و ویدیو",
     description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
     icon: "Music",
-    count: 6,
   },
   {
     slug: "ai-tools",
     title: "هوش مصنوعی",
     description: "اکانت ChatGPT Plus، Claude، Midjourney و ابزارهای مولد.",
     icon: "Sparkles",
-    count: 5,
   },
   {
     slug: "design",
     title: "طراحی و گرافیک",
     description: "لایسنس Adobe، Canva Pro، Figma و منابع طراحی.",
     icon: "PenTool",
-    count: 5,
   },
   {
     slug: "gaming",
     title: "گیمینگ",
     description: "گیفت‌کارت استیم، اکانت گیم‌پس، پلی‌استیشن پلاس.",
     icon: "Gamepad2",
-    count: 5,
   },
   {
     slug: "software",
     title: "نرم‌افزار و لایسنس",
     description: "ویندوز، آفیس، وی‌پی‌ان و ابزارهای کاربردی.",
     icon: "MonitorSmartphone",
-    count: 6,
   },
   {
     slug: "social",
     title: "شبکه‌های اجتماعی",
     description: "تلگرام پرمیوم، دیسکورد نیترو و خدمات ارتقای اکانت.",
     icon: "MessageCircle",
-    count: 4,
   },
 ]
 
@@ -342,6 +337,12 @@ const baseProducts: Product[] = [
 ]
 
 export const products: Product[] = [...baseProducts, ...productsB, ...productsC]
+
+/** دسته‌بندی‌ها با شمارش زندهٔ محصولات — بدون نگهداری دستی count */
+export const categories: Category[] = categorySeed.map((category) => ({
+  ...category,
+  count: products.filter((product) => product.categorySlug === category.slug).length,
+}))
 
 /* -------------------------------------------------------------------------- */
 /*  بلاگ                                                                      */

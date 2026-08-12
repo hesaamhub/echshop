@@ -25,4 +25,5 @@ export const cartSubtotal = cartLines.reduce(
 
 export const cartDiscount = 180000
 
-export const cartTotal = cartSubtotal - cartDiscount
+/** مبلغ نهایی هرگز منفی نمی‌شود */
+export const cartTotal = Math.max(0, cartSubtotal - cartDiscount)

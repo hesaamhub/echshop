@@ -54,7 +54,7 @@ export default function CheckoutPage() {
                     <CreditCard className="h-4 w-4 text-[#1b39f5]" /> درگاه پرداخت اینترنتی
                   </span>
                   <span className="mt-1.5 block text-[11.5px] leading-6 text-slate-600">
-                    درگاه نهایی در بخش تنطیمات پنل مدیریت متصل می‌شود (فعلاً حالت نمایشی).
+                    درگاه نهایی در بخش تنظیمات پنل مدیریت متصل می‌شود (فعلاً حالت نمایشی).
                   </span>
                 </span>
               </label>
@@ -65,7 +65,7 @@ export default function CheckoutPage() {
                   <span className="flex items-center gap-2 text-[12.5px] font-bold text-[#0a1b33]">
                     <Wallet className="h-4 w-4 text-[#1b39f5]" /> کیف پول اچ‌شاپ
                   </span>
-                  <span className="mt-1.5 block text-[11.5px] text-slate-600">
+                  <span className="mt-1.5 block text-[11.5px] leading-6 text-slate-600">
                     موجودی فعلی: <span className="num">{toman(1_250_000)}</span> تومان
                   </span>
                 </span>
