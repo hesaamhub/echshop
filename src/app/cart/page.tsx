@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Minus, Plus, Trash2 } from "lucide-react"
 import Shell from "@/components/site/Shell"
+import BrandIcon from "@/components/site/BrandIcon"
 import { cartDiscount, cartLines, cartSubtotal, cartTotal } from "@/lib/cart"
 import { deliveryLabels } from "@/lib/types"
 import { num, toman } from "@/lib/utils"
@@ -23,12 +24,7 @@ export default function CartPage() {
               <div
                 className={`grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${line.product.gradient}`}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={line.product.logo}
-                  alt={line.product.brand}
-                  className="h-6 w-auto max-w-[44px] object-contain brightness-0 invert"
-                />
+                <BrandIcon slug={line.product.logo} size={28} color="#ffffff" />
               </div>
 
               <div className="min-w-[180px] flex-1">
@@ -47,6 +43,7 @@ export default function CartPage() {
               <div className="glass-plate flex items-center gap-1 rounded-full p-1">
                 <button
                   type="button"
+                  aria-label="افزایش تعداد"
                   className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-white/70"
                 >
                   <Plus className="h-3.5 w-3.5 text-[#1b39f5]" />
@@ -56,6 +53,7 @@ export default function CartPage() {
                 </span>
                 <button
                   type="button"
+                  aria-label="کاهش تعداد"
                   className="grid h-7 w-7 place-items-center rounded-full transition-colors hover:bg-white/70"
                 >
                   <Minus className="h-3.5 w-3.5 text-[#1b39f5]" />

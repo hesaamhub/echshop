@@ -6,6 +6,8 @@ import PromoBanner from "@/components/site/PromoBanner"
 import { siteContent } from "@/lib/data"
 
 export const metadata: Metadata = {
+  // مبنای ساخت نشانی مطلق تصاویر OpenGraph — با دامنهٔ نهایی سایت به‌روزرسانی شود
+  metadataBase: new URL("https://echshop.ir"),
   title: {
     default: `${siteContent.brand.nameFa} | ${siteContent.brand.tagline}`,
     template: `%s | ${siteContent.brand.nameFa}`,
