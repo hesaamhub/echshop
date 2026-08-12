@@ -6,8 +6,10 @@ import {
   Headphones,
   Paperclip,
   Send,
+  ShieldCheck,
   Users,
   Zap,
+  type LucideIcon,
 } from "lucide-react"
 import Header from "@/components/site/Header"
 import Hero from "@/components/site/Hero"
@@ -24,7 +26,7 @@ import ProductRequestForm from "@/components/site/ProductRequestForm"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
 import { newArrivals } from "@/lib/newArrivals"
-import { faDate, latinDigits } from "@/lib/utils"
+import { faDate, latinDigits, num } from "@/lib/utils"
 
 /** همان ۶ محصولی که در دک بالای صفحه نمایش داده می‌شوند */
 const deckIds = new Set(
@@ -36,6 +38,14 @@ const deckIds = new Set(
 
 /** آیکون هر کاشی آمار */
 const statIcons = [BadgeCheck, Zap, Users, Headphones]
+
+/** نگاشت نام آیکون مزیت‌ها (در siteContent) به کامپوننت lucide */
+const featureIcons: Record<string, LucideIcon> = {
+  Zap,
+  ShieldCheck,
+  Headphones,
+  BadgeCheck,
+}
 
 export default function HomePage() {
   // اکانت‌های پرکاربرد، بدون تکرار محصولات دک
@@ -53,10 +63,21 @@ export default function HomePage() {
         {/* دک معرفی محصولات */}
         <ShowcaseDeck />
 
+        {/* نوار مزیت‌ها */}
+        <Section
+          eyebrow="چرا اچ‌شاپ؟"
+          title="خریدی که خیالت را راحت می‌کند"
+          className="mt-14"
+        >
+          <FeaturesStrip />
+        </Section>
+
         {/* دسته‌بندی‌ها */}
         <Section
+          eyebrow={`${latinDigits(categories.length)} دستهٔ اصلی`}
           title="دسته‌بندی محصولات"
           subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
+          className="mt-20"
         >
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
             {categories.map((category) => (
@@ -66,12 +87,18 @@ export default function HomePage() {
         </Section>
 
         {/* پوسترهای پیشنهادی */}
-        <Section>
+        <Section className="mt-20">
           <PosterGrid />
         </Section>
 
         {/* اکانت‌های پرکاربرد */}
-        <Section title="اکانت‌هایی که لازم داری" href="/products" linkLabel="همهٔ محصولات">
+        <Section
+          eyebrow="پیشنهاد اچ‌شاپ"
+          title="اکانت‌هایی که لازم داری"
+          href="/products"
+          linkLabel="همهٔ محصولات"
+          className="mt-24"
+        >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {essentials.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -80,17 +107,23 @@ export default function HomePage() {
         </Section>
 
         {/* آمار */}
-        <Section>
+        <Section className="mt-24">
           <StatsPanel />
         </Section>
 
         {/* پرداخت ارزی */}
-        <Section>
+        <Section className="mt-24">
           <CurrencyPay />
         </Section>
 
         {/* محصولات جدید با بنر تصویری */}
-        <Section title="جدیدترین محصولات" href="/products" linkLabel="مشاهدهٔ همه">
+        <Section
+          eyebrow="تازه رسیده"
+          title="جدیدترین محصولات"
+          href="/products"
+          linkLabel="مشاهدهٔ همه"
+          className="mt-20"
+        >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {newArrivals.map((item) => (
               <NewArrivalBanner key={item.slug} item={item} />
@@ -99,12 +132,18 @@ export default function HomePage() {
         </Section>
 
         {/* سفارش سریع */}
-        <Section>
+        <Section className="mt-24">
           <QuickOrder />
         </Section>
 
         {/* بلاگ */}
-        <Section title="از بلاگ اچ‌شاپ" href="/blog" linkLabel="همهٔ مقالات">
+        <Section
+          eyebrow="مجلهٔ اچ‌شاپ"
+          title="از بلاگ اچ‌شاپ"
+          href="/blog"
+          linkLabel="همهٔ مقالات"
+          className="mt-24"
+        >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {posts.map((post) => (
               <Link
@@ -136,7 +175,7 @@ export default function HomePage() {
         </Section>
 
         {/* خبرنامه و درخواست محصول */}
-        <Section>
+        <Section className="mt-24">
           <div className="grid items-stretch gap-4 lg:grid-cols-2">
             <NewsletterCTA />
             <ProductRequestForm />
@@ -145,6 +184,30 @@ export default function HomePage() {
       </main>
       <Footer />
     </>
+  )
+}
+
+/** نوار مزیت‌ها — محتوا از siteContent.features خوانده می‌شود */
+function FeaturesStrip() {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {siteContent.features.map((feature) => {
+        const Icon = featureIcons[feature.icon] ?? Zap
+
+        return (
+          <div
+            key={feature.title}
+            className="group rounded-[24px] border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_26px_50px_-34px_rgba(27,57,245,0.55)]"
+          >
+            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#1b39f5]/8 text-[#1b39f5] transition-all duration-500 group-hover:bg-[#1b39f5] group-hover:text-white group-hover:shadow-[0_14px_26px_-14px_rgba(27,57,245,0.9)]">
+              <Icon className="h-5 w-5" strokeWidth={2.1} />
+            </span>
+            <h3 className="mt-3.5 text-[14px] font-bold text-[#0a1b33]">{feature.title}</h3>
+            <p className="mt-1.5 text-[12px] leading-6 text-slate-500">{feature.body}</p>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -325,10 +388,13 @@ function CategoryFolder({ category }: { category: (typeof categories)[number] })
           )
         })}
 
-        {/* درِ شیشه‌ای پوشه با نام دسته */}
-        <span className="absolute inset-x-1 bottom-0 z-10 flex h-[74px] items-end rounded-[18px] border border-white/70 bg-white/60 px-3 pb-3 shadow-[0_16px_34px_-24px_rgba(10,27,51,0.55)] backdrop-blur-md">
+        {/* درِ شیشه‌ای پوشه با نام دسته و شمارش محصول */}
+        <span className="absolute inset-x-1 bottom-0 z-10 flex h-[78px] flex-col items-end justify-end gap-0.5 rounded-[18px] border border-white/70 bg-white/60 px-3 pb-3 shadow-[0_16px_34px_-24px_rgba(10,27,51,0.55)] backdrop-blur-md">
           <span className="line-clamp-2 text-right text-[13px] font-extrabold leading-5 text-[#0a1b33] transition-colors duration-500 group-hover:text-[#1b39f5]">
             {category.title}
+          </span>
+          <span className="text-[10px] font-semibold text-slate-400">
+            <span className="num">{num(category.count)}</span> محصول
           </span>
         </span>
       </div>
@@ -339,21 +405,32 @@ function CategoryFolder({ category }: { category: (typeof categories)[number] })
 function Section({
   title,
   subtitle,
+  eyebrow,
   href,
   linkLabel,
+  className,
   children,
 }: {
   title?: string
   subtitle?: string
+  /** برچسب کوچک بالای عنوان برای سلسله‌مراتب بصری */
+  eyebrow?: string
   href?: string
   linkLabel?: string
+  /** کنترل ریتم فاصلهٔ عمودی سکشن (پیش‌فرض mt-16) */
+  className?: string
   children: React.ReactNode
 }) {
   return (
-    <section className="mx-auto max-w-[1400px] px-4 md:px-6 mt-16">
+    <section className={`mx-auto max-w-[1400px] px-4 md:px-6 ${className ?? "mt-16"}`}>
       {title ? (
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
+            {eyebrow ? (
+              <span className="mb-2.5 inline-flex items-center rounded-full bg-[#1b39f5]/8 px-3 py-1 text-[10.5px] font-bold text-[#1b39f5]">
+                {eyebrow}
+              </span>
+            ) : null}
             <h2 className="flex items-center gap-3 font-display text-[22px] md:text-[26px] font-semibold text-[#0a1b33]">
               <span className="h-6 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
               {title}

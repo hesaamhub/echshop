@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "motion/react"
-import { ArrowLeft, Headphones, ShieldCheck, Zap } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { ArrowLeft, Headphones, ShieldCheck, Star, Zap } from "lucide-react"
 import { brandLogos, type BrandLogo } from "@/lib/brands"
 import { siteContent } from "@/lib/data"
 import Logo from "./Logo"
@@ -34,6 +34,14 @@ const middleLeft = brandLogos.slice(13, 19)
 const middleRight = brandLogos.slice(19, 25)
 const bottomRow = brandLogos.slice(25, 38)
 
+/** آواتارهای گرادیانی ردیف اثبات اجتماعی */
+const PROOF_AVATARS = [
+  "linear-gradient(140deg, #2a49ff, #1226c4)",
+  "linear-gradient(140deg, #7c3aed, #4c1d95)",
+  "linear-gradient(140deg, #06b6d4, #0e7490)",
+  "linear-gradient(140deg, #f59e0b, #b45309)",
+]
+
 function visibilityFor(distance: number): string {
   if (distance <= 1) return "inline-flex"
   if (distance <= 2) return "hidden sm:inline-flex"
@@ -43,6 +51,7 @@ function visibilityFor(distance: number): string {
 
 export default function Hero() {
   const [productIndex, setProductIndex] = useState(0)
+  const reduceMotion = useReducedMotion()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -54,13 +63,25 @@ export default function Hero() {
 
   return (
     <section className="px-4 md:px-6 pt-1">
-      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-white pt-4 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-6">
+      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f6f8ff] via-white to-white pt-4 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-6">
+        {/* هاله‌های رنگی نرم */}
         <span
           className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[720px] -translate-x-1/2 rounded-full bg-[#1b39f5]/8 blur-3xl"
           aria-hidden
         />
         <span
           className="pointer-events-none absolute bottom-10 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
+          aria-hidden
+        />
+        {/* بافت نقطه‌ای ظریف برای عمق دادن به بک‌دراپ */}
+        <span
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            backgroundImage: "radial-gradient(rgba(27,57,245,0.13) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+            maskImage: "radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
+            WebkitMaskImage: "radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
+          }}
           aria-hidden
         />
 
@@ -70,7 +91,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto max-w-3xl px-6 text-center"
         >
-          <DeliveryBadge label={hero.badge} />
+          <DeliveryBadge label={hero.badge} reduceMotion={reduceMotion ?? false} />
 
           <h1 className="mt-5 font-display text-[30px] md:text-[50px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
             {hero.headlineLead}{" "}
@@ -91,7 +112,7 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -14 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="wordmark col-start-1 row-start-1 whitespace-nowrap text-[#1b39f5]"
+                  className="wordmark col-start-1 row-start-1 whitespace-nowrap bg-gradient-to-l from-[#1b39f5] to-[#7d92ff] bg-clip-text text-transparent"
                 >
                   {rotatingProducts[productIndex]}
                 </motion.span>
@@ -132,7 +153,40 @@ export default function Hero() {
             )}
           </motion.div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          {/* اثبات اجتماعی + نشانه‌های اعتماد */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3"
+          >
+            <span className="flex flex-wrap items-center justify-center gap-2.5">
+              <span className="flex" aria-hidden>
+                {PROOF_AVATARS.map((background, index) => (
+                  <span
+                    key={index}
+                    className="-ms-2 h-7 w-7 rounded-full border-2 border-white shadow-sm first:ms-0"
+                    style={{ background }}
+                  />
+                ))}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="flex text-[#EAC26B]" aria-hidden>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Star key={index} className="h-3.5 w-3.5 fill-[#EAC26B]" />
+                  ))}
+                </span>
+                <span className="font-latin text-[12px] font-bold text-[#0a1b33]" dir="ltr">
+                  4.9/5
+                </span>
+              </span>
+              <span className="text-[11.5px] font-medium text-slate-500">
+                از <span className="font-latin font-bold text-[#0a1b33]">48,000+</span> سفارش موفق
+              </span>
+            </span>
+
+            <span className="hidden h-4 w-px bg-[#0a1b33]/10 sm:block" aria-hidden />
+
             {trustItems.map((item) => (
               <span
                 key={item.label}
@@ -142,7 +196,7 @@ export default function Hero() {
                 {item.label}
               </span>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         <div
@@ -155,10 +209,15 @@ export default function Hero() {
           }}
         >
           <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-5">
-            <LogoRow logos={topRow} startIndex={0} />
+            <LogoRow logos={topRow} startIndex={0} reduceMotion={reduceMotion ?? false} />
 
             <div className="flex w-full items-center justify-center gap-3 sm:gap-4 md:gap-5">
-              <LogoRow logos={middleLeft} startIndex={topRow.length} align="end" />
+              <LogoRow
+                logos={middleLeft}
+                startIndex={topRow.length}
+                align="end"
+                reduceMotion={reduceMotion ?? false}
+              />
 
               <motion.span
                 initial={{ opacity: 0, scale: 0.7 }}
@@ -181,12 +240,14 @@ export default function Hero() {
                 logos={middleRight}
                 startIndex={topRow.length + middleLeft.length}
                 align="start"
+                reduceMotion={reduceMotion ?? false}
               />
             </div>
 
             <LogoRow
               logos={bottomRow}
               startIndex={topRow.length + middleLeft.length + middleRight.length}
+              reduceMotion={reduceMotion ?? false}
             />
           </div>
 
@@ -199,33 +260,43 @@ export default function Hero() {
   )
 }
 
-function DeliveryBadge({ label }: { label: string }) {
+function DeliveryBadge({ label, reduceMotion }: { label: string; reduceMotion: boolean }) {
+  const pulseProps = reduceMotion
+    ? {}
+    : {
+        animate: {
+          boxShadow: [
+            "0 0 0 0 rgba(70,161,113,0)",
+            "0 0 22px 2px rgba(70,161,113,0.28)",
+            "0 0 0 0 rgba(70,161,113,0)",
+          ],
+        },
+        transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" as const },
+      }
+
   return (
     <motion.span
-      animate={{
-        boxShadow: [
-          "0 0 0 0 rgba(70,161,113,0)",
-          "0 0 22px 2px rgba(70,161,113,0.28)",
-          "0 0 0 0 rgba(70,161,113,0)",
-        ],
-      }}
-      transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+      {...pulseProps}
       className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[#46A171]/30 bg-[#46A171]/10 px-4 py-1.5 text-[12px] font-semibold text-[#2F7A50]"
     >
-      <motion.span
-        aria-hidden
-        initial={{ x: "-160%" }}
-        animate={{ x: "260%" }}
-        transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
-        className="pointer-events-none absolute inset-y-0 w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/75 to-transparent"
-      />
-      <span className="relative flex h-2 w-2 items-center justify-center">
+      {reduceMotion ? null : (
         <motion.span
           aria-hidden
-          animate={{ scale: [1, 2.2, 1], opacity: [0.55, 0, 0.55] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-          className="absolute h-2 w-2 rounded-full bg-[#46A171]"
+          initial={{ x: "-160%" }}
+          animate={{ x: "260%" }}
+          transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+          className="pointer-events-none absolute inset-y-0 w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/75 to-transparent"
         />
+      )}
+      <span className="relative flex h-2 w-2 items-center justify-center">
+        {reduceMotion ? null : (
+          <motion.span
+            aria-hidden
+            animate={{ scale: [1, 2.2, 1], opacity: [0.55, 0, 0.55] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            className="absolute h-2 w-2 rounded-full bg-[#46A171]"
+          />
+        )}
         <span className="relative h-1.5 w-1.5 rounded-full bg-[#46A171]" />
       </span>
       <span className="relative">{label}</span>
@@ -237,10 +308,12 @@ function LogoRow({
   logos,
   startIndex,
   align = "center",
+  reduceMotion,
 }: {
   logos: BrandLogo[]
   startIndex: number
   align?: "center" | "start" | "end"
+  reduceMotion: boolean
 }) {
   const middle = (logos.length - 1) / 2
   const justify =
@@ -262,6 +335,7 @@ function LogoRow({
             logo={logo}
             order={startIndex + index}
             visibility={visibilityFor(distance)}
+            reduceMotion={reduceMotion}
           />
         )
       })}
@@ -273,10 +347,12 @@ function BrandTile({
   logo,
   order,
   visibility,
+  reduceMotion,
 }: {
   logo: BrandLogo
   order: number
   visibility: string
+  reduceMotion: boolean
 }) {
   return (
     <motion.span
@@ -286,12 +362,27 @@ function BrandTile({
       className={`${visibility} group h-16 w-16 shrink-0 items-center justify-center rounded-[20px] border border-[#1b39f5]/10 bg-white shadow-[0_12px_28px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_18px_34px_-14px_rgba(27,57,245,0.5)] md:h-[72px] md:w-[72px] md:rounded-[22px]`}
       title={logo.name}
     >
-      <BrandIcon
-        slug={logo.slug}
-        size={32}
-        color={`#${logo.color}`}
-        className="transition-transform duration-500 group-hover:scale-110"
-      />
+      <motion.span
+        {...(reduceMotion
+          ? {}
+          : {
+              animate: { y: [0, -5, 0] },
+              transition: {
+                duration: 5 + (order % 4) * 0.6,
+                repeat: Infinity,
+                ease: "easeInOut" as const,
+                delay: (order % 6) * 0.55,
+              },
+            })}
+        className="grid place-items-center"
+      >
+        <BrandIcon
+          slug={logo.slug}
+          size={32}
+          color={`#${logo.color}`}
+          className="transition-transform duration-500 group-hover:scale-110"
+        />
+      </motion.span>
     </motion.span>
   )
 }
