@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7f3f8"/>
+      <stop offset="0.52" stop-color="#f7f2e7"/>
+      <stop offset="1" stop-color="#edf4ec"/>
+    </linearGradient>
+    <filter id="blurBig" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="52"/>
+    </filter>
+    <filter id="blurMid" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="blurSoft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+
+  <!-- soft dreamy colour fields -->
+  <g filter="url(#blurBig)">
+    <ellipse cx="230" cy="130" rx="280" ry="160" fill="#c4e2ee"/>
+    <ellipse cx="980" cy="110" rx="310" ry="175" fill="#cfe9f2"/>
+    <ellipse cx="615" cy="330" rx="340" ry="205" fill="#f7e7c7"/>
+    <ellipse cx="170" cy="480" rx="290" ry="200" fill="#f3ddba"/>
+    <ellipse cx="1030" cy="530" rx="310" ry="215" fill="#ddebd9"/>
+    <ellipse cx="600" cy="720" rx="440" ry="190" fill="#e4ede1"/>
+  </g>
+
+  <!-- sun -->
+  <circle cx="872" cy="168" r="54" fill="#ffffff" opacity="0.9" filter="url(#blurMid)"/>
+
+  <!-- drifting clouds -->
+  <g fill="#ffffff" opacity="0.85" filter="url(#blurMid)">
+    <ellipse cx="330" cy="150" rx="120" ry="34"/>
+    <ellipse cx="395" cy="130" rx="90" ry="30"/>
+    <ellipse cx="720" cy="105" rx="130" ry="30"/>
+  </g>
+
+  <!-- golden grove, left -->
+  <g filter="url(#blurMid)" opacity="0.8">
+    <ellipse cx="118" cy="430" rx="48" ry="70" fill="#f2cf8c"/>
+    <ellipse cx="192" cy="458" rx="38" ry="56" fill="#ecc07c"/>
+    <ellipse cx="66" cy="472" rx="34" ry="50" fill="#f5d9a3"/>
+  </g>
+
+  <!-- pale trees, right -->
+  <g filter="url(#blurMid)" opacity="0.72">
+    <ellipse cx="1092" cy="418" rx="52" ry="76" fill="#e9d8ae"/>
+    <ellipse cx="1018" cy="455" rx="38" ry="54" fill="#f0e0b8"/>
+  </g>
+
+  <!-- distant hills -->
+  <path d="M0 575 Q 260 480 520 552 T 1200 528 V800 H0 Z" fill="#e0ead6" opacity="0.75" filter="url(#blurMid)"/>
+  <path d="M0 655 Q 320 585 640 642 T 1200 620 V800 H0 Z" fill="#d4e3d0" opacity="0.85" filter="url(#blurMid)"/>
+
+  <!-- water sheen at the very bottom -->
+  <rect x="0" y="700" width="1200" height="100" fill="#e8f0ee" opacity="0.6" filter="url(#blurMid)"/>
+
+  <!-- fine grain dots for texture -->
+  <g fill="#ffffff" opacity="0.5" filter="url(#blurSoft)">
+    <circle cx="500" cy="200" r="6"/>
+    <circle cx="760" cy="260" r="5"/>
+    <circle cx="300" cy="330" r="5"/>
+    <circle cx="950" cy="300" r="6"/>
+  </g>
+</svg>

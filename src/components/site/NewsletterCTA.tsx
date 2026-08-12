@@ -47,37 +47,38 @@ export default function NewsletterCTA() {
 
   return (
     <>
-      {/* کارت شیشه‌ای خبرنامه */}
-      <div className="relative flex h-full min-h-[380px] items-center justify-center overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#eaf0ff] via-[#f3f0ff] to-[#eafaf3] p-6 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.5)]">
-        {/* هاله‌های رنگی محو مثل پس‌زمینهٔ تصویری */}
-        <span className="pointer-events-none absolute -top-10 right-10 h-56 w-56 rounded-full bg-[#2a49ff]/30 blur-[70px]" aria-hidden />
-        <span className="pointer-events-none absolute bottom-0 left-6 h-52 w-52 rounded-full bg-[#7c3aed]/25 blur-[70px]" aria-hidden />
-        <span className="pointer-events-none absolute top-16 left-1/3 h-40 w-40 rounded-full bg-[#f59e0b]/20 blur-[70px]" aria-hidden />
-        <span className="pointer-events-none absolute bottom-8 right-1/4 h-44 w-44 rounded-full bg-[#06b6d4]/20 blur-[70px]" aria-hidden />
+      {/* کارت خبرنامه — نقاشی پاستلی با پنل شیشه‌ای مرکزی */}
+      <div className="relative flex h-full min-h-[380px] items-center justify-center overflow-hidden rounded-[32px] border border-white/60 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.5)]">
+        {/* نقاشی پاستلی پس‌زمینه (public/newsletter-bg.svg) */}
+        <span
+          className="pointer-events-none absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/newsletter-bg.svg)" }}
+          aria-hidden
+        />
 
-        {/* کارت مات روی پس‌زمینه */}
-        <div className="relative w-full max-w-md rounded-[26px] border border-white/60 bg-white/25 p-7 text-center shadow-[0_20px_50px_-30px_rgba(10,21,45,0.5)] backdrop-blur-2xl">
-          <div className="flex items-center justify-center">
-            <span className="inline-flex" aria-hidden>
+        {/* پنل شیشه‌ای مرکزی */}
+        <div className="relative m-6 w-full max-w-md rounded-[28px] border border-white/70 bg-white/55 p-7 text-center shadow-[0_24px_60px_-30px_rgba(10,21,45,0.45)] backdrop-blur-2xl">
+          <h3 className="font-display text-[21px] font-bold leading-[2.1] text-[#0a152d] md:text-[24px]">
+            عضویت در خبرنامهٔ
+            <span className="mx-1.5 inline-flex align-middle" aria-hidden>
               {AVATARS.map((background, index) => (
                 <span
                   key={index}
-                  className="-ms-3 h-8 w-8 rounded-full border-2 border-white shadow-sm first:ms-0"
+                  className="-ms-2.5 h-7 w-7 rounded-full border-2 border-white shadow-sm first:ms-0"
                   style={{ background }}
                 />
               ))}
             </span>
-          </div>
-
-          <h3 className="font-display mt-4 text-[22px] leading-9 font-bold text-[#0a152d] md:text-[25px]">
-            عضو خبرنامهٔ اچ‌شاپ شو
+            اچ‌شاپ
+            <br />
+            برای تخفیف‌های هفتگی
           </h3>
-          <p className="mt-2 text-[13.5px] leading-7 text-[#0a152d]/70">
-            هر هفته جدیدترین محصولات، تخفیف‌ها و کدهای ویژه را زودتر از همه دریافت کن.
+          <p className="mt-2 text-[13px] leading-7 text-[#0a152d]/65">
+            جدیدترین محصولات، تخفیف‌ها و کدهای ویژه را زودتر از همه دریافت کن.
           </p>
-          <p className="mt-3 text-[12px] text-[#0a152d]/55">
-            به بیش از <span className="font-latin font-bold text-[#0a152d]/75">10,000</span> مشتری راضی با امتیاز{" "}
-            <span className="font-latin font-bold text-[#0a152d]/75">4.9</span> از{" "}
+          <p className="mt-2.5 text-[12px] text-[#0a152d]/55">
+            به بیش از <span className="font-latin font-bold text-[#0a152d]/80">10,000</span> مشتری راضی با امتیاز{" "}
+            <span className="font-latin font-bold text-[#0a152d]/80">4.9</span> از{" "}
             <span className="font-latin">5</span> بپیوند.
           </p>
 
@@ -87,9 +88,9 @@ export default function NewsletterCTA() {
               setDone(false)
               setOpen(true)
             }}
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#0a152d] px-6 py-3 text-[13px] font-bold text-white shadow-[0_18px_36px_-20px_rgba(10,21,45,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#1b39f5]"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[13px] font-bold text-[#0a152d] shadow-[0_16px_34px_-18px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_-18px_rgba(27,57,245,0.5)]"
           >
-            <Sparkles className="h-4 w-4 text-[#EAC26B]" />
+            <Sparkles className="h-4 w-4 text-[#1b39f5]" />
             عضویت در خبرنامه
           </button>
         </div>

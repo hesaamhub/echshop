@@ -61,11 +61,11 @@ export default function ProductRequestForm() {
 
   return (
     <div className="relative h-full">
-      {/* کارت‌های پشتی برای حس عمق */}
-      <div className="absolute inset-x-5 top-4 -bottom-2 rounded-[30px] bg-white/45" aria-hidden />
-      <div className="absolute inset-x-2.5 top-2 -bottom-1 rounded-[32px] bg-white/70" aria-hidden />
+      {/* کارت‌های پشتی پاستلی برای حس عمق — هماهنگ با کارت خبرنامه */}
+      <div className="absolute inset-x-5 top-4 -bottom-2 rounded-[30px] bg-gradient-to-br from-[#dfe8fb]/70 to-[#fdeede]/70" aria-hidden />
+      <div className="absolute inset-x-2.5 top-2 -bottom-1 rounded-[32px] bg-white/60 backdrop-blur-sm" aria-hidden />
 
-      <div className="relative flex h-full min-h-[380px] flex-col rounded-[32px] border border-black/5 bg-white p-7 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.55)]">
+      <div className="relative flex h-full min-h-[380px] flex-col rounded-[32px] border border-white/70 bg-white/80 p-7 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.55)] backdrop-blur-xl">
         {done ? (
           <div className="flex flex-1 flex-col items-center justify-center text-center">
             <span className="grid h-16 w-16 place-items-center rounded-full bg-[#1b39f5]/10 text-[#1b39f5]">
