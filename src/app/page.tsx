@@ -2,12 +2,8 @@ import Link from "next/link"
 import {
   ArrowLeft,
   BadgeCheck,
-  Globe,
   Headphones,
-  Paperclip,
-  Send,
   ShieldCheck,
-  Users,
   Zap,
   type LucideIcon,
 } from "lucide-react"
@@ -35,9 +31,6 @@ const deckIds = new Set(
     .slice(0, 6)
     .map((product) => product.id),
 )
-
-/** آیکون هر کاشی آمار */
-const statIcons = [BadgeCheck, Zap, Users, Headphones]
 
 /** نگاشت نام آیکون مزیت‌ها (در siteContent) به کامپوننت lucide */
 const featureIcons: Record<string, LucideIcon> = {
@@ -72,20 +65,6 @@ export default function HomePage() {
           <FeaturesStrip />
         </Section>
 
-        {/* دسته‌بندی‌ها */}
-        <Section
-          eyebrow={`${latinDigits(categories.length)} دستهٔ اصلی`}
-          title="دسته‌بندی محصولات"
-          subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
-          className="mt-20"
-        >
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
-            {categories.map((category) => (
-              <CategoryFolder key={category.slug} category={category} />
-            ))}
-          </div>
-        </Section>
-
         {/* پوسترهای پیشنهادی */}
         <Section className="mt-20">
           <PosterGrid />
@@ -106,9 +85,18 @@ export default function HomePage() {
           </div>
         </Section>
 
-        {/* آمار */}
-        <Section className="mt-24">
-          <StatsPanel />
+        {/* دسته‌بندی‌ها */}
+        <Section
+          eyebrow={`${latinDigits(categories.length)} دستهٔ اصلی`}
+          title="دسته‌بندی محصولات"
+          subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
+          className="mt-20"
+        >
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
+            {categories.map((category) => (
+              <CategoryFolder key={category.slug} category={category} />
+            ))}
+          </div>
         </Section>
 
         {/* پرداخت ارزی */}
@@ -207,111 +195,6 @@ function FeaturesStrip() {
           </div>
         )
       })}
-    </div>
-  )
-}
-
-/** پنل شیشه‌ای آمار */
-function StatsPanel() {
-  return (
-    <div className="relative overflow-hidden rounded-[36px] border border-white/70 bg-[#f2f4fb] p-3 shadow-[0_30px_70px_-50px_rgba(10,21,45,0.8)] md:p-5">
-      {/* پس‌زمینهٔ مش رنگی نرم */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(120% 90% at 12% 0%, rgba(27,57,245,0.16) 0%, rgba(27,57,245,0) 55%), radial-gradient(100% 80% at 95% 10%, rgba(129,88,245,0.16) 0%, rgba(129,88,245,0) 60%), radial-gradient(90% 90% at 70% 110%, rgba(10,21,45,0.10) 0%, rgba(10,21,45,0) 60%)",
-        }}
-        aria-hidden
-      />
-
-      {/* پنل بالا: کاشی‌های آمار */}
-      <div className="relative rounded-[28px] border border-white/80 bg-white/55 p-3 backdrop-blur-xl md:p-4">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-          {siteContent.stats.map((stat, index) => {
-            const Icon = statIcons[index % statIcons.length]
-            const featured = index === 1
-
-            return (
-              <div
-                key={stat.label}
-                className={`group relative overflow-hidden rounded-[22px] px-4 py-6 text-center transition-all duration-500 hover:-translate-y-1 ${
-                  featured
-                    ? "bg-gradient-to-b from-[#2a49ff] to-[#1226c4] shadow-[0_26px_46px_-26px_rgba(27,57,245,0.9)]"
-                    : "border border-white bg-white shadow-[0_18px_40px_-32px_rgba(10,21,45,0.9)]"
-                }`}
-              >
-                {featured ? (
-                  <span
-                    className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/25 to-transparent"
-                    aria-hidden
-                  />
-                ) : null}
-
-                <span
-                  className={`relative mx-auto grid h-11 w-11 place-items-center rounded-2xl transition-all duration-500 ${
-                    featured
-                      ? "bg-white/20 text-white ring-1 ring-white/40"
-                      : "bg-[#1b39f5]/8 text-[#1b39f5] group-hover:bg-[#1b39f5] group-hover:text-white"
-                  }`}
-                >
-                  <Icon className="h-[18px] w-[18px]" strokeWidth={2.1} />
-                </span>
-
-                <div
-                  className={`font-latin relative mt-3 font-display text-[28px] font-semibold leading-9 tracking-tight md:text-[32px] ${
-                    featured ? "text-white" : "text-[#0a1b33]"
-                  }`}
-                  dir="ltr"
-                >
-                  {latinDigits(stat.value)}
-                </div>
-
-                <div
-                  className={`relative mt-1 text-[11.5px] font-semibold leading-5 ${
-                    featured ? "text-white/80" : "text-slate-500"
-                  }`}
-                >
-                  {stat.label}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* پنل پایین: پیام و اقدام‌ها */}
-      <div className="relative mt-3 flex flex-col gap-5 rounded-[28px] border border-white/80 bg-white/55 px-5 py-6 backdrop-blur-xl md:flex-row md:items-center md:justify-between md:px-7">
-        <div>
-          <p className="text-[16px] font-bold leading-8 text-[#0a1b33] md:text-[19px]">
-            هر اکانت و لایسنسی که لازم داری، اورجینال و با فعال‌سازی فوری.
-          </p>
-          <div className="mt-4 flex flex-wrap items-center gap-2.5">
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 rounded-full border border-white bg-white/80 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] shadow-[0_10px_24px_-20px_rgba(10,21,45,0.9)] transition-all hover:-translate-y-0.5 hover:bg-white"
-            >
-              <Paperclip className="h-4 w-4 text-[#1b39f5]" />
-              همهٔ محصولات
-            </Link>
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 rounded-full border border-white bg-white/80 px-4 py-2 text-[12.5px] font-semibold text-[#0a1b33] shadow-[0_10px_24px_-20px_rgba(10,21,45,0.9)] transition-all hover:-translate-y-0.5 hover:bg-white"
-            >
-              <Globe className="h-4 w-4 text-[#1b39f5]" />
-              راهنمای خرید
-            </Link>
-          </div>
-        </div>
-
-        <Link
-          href="/contact"
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[#0a152d] px-6 py-3.5 text-[13px] font-semibold text-white shadow-[0_20px_40px_-24px_rgba(10,21,45,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#1b39f5]"
-        >
-          <Send className="h-4 w-4 -scale-x-100" />
-          گفت‌وگو با پشتیبانی
-        </Link>
-      </div>
     </div>
   )
 }
