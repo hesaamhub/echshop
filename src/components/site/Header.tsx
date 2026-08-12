@@ -31,7 +31,6 @@ import CartMenu from "./CartMenu"
 import NotificationsMenu, { unreadCount } from "./NotificationsMenu"
 import PanelMenu from "./PanelMenu"
 import ProductMiniList from "./ProductMiniList"
-import Logo from "./Logo"
 
 /** لینک‌های سادهٔ منو */
 const navItems = [
@@ -89,18 +88,13 @@ export default function Header() {
     <header className="sticky top-11 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-12">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <div ref={barRef} className="flex h-14 items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
-              <Logo className="h-5 w-5" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="wordmark text-[18px] leading-none text-[#0a1b33]">
-                echshop
-              </span>
-              <span className="mt-1 text-[10.5px] font-semibold leading-none text-slate-400">
-                اچ‌شاپ
-              </span>
-            </span>
+          <Link
+            href="/"
+            aria-label="اچ‌شاپ — بازگشت به صفحهٔ اصلی"
+            className="flex shrink-0 items-center rounded-xl transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            {/* لوگوتایپ اچ‌شاپ — با الهام از نشان ستارهٔ برند (public/logo-type.svg) */}
+            <img src="/logo-type.svg" alt="اچ‌شاپ" className="h-9 w-auto md:h-10" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1 mr-2">
