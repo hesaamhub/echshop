@@ -20,6 +20,9 @@ function stepLabel(index: number) {
   return (index + 1).toString().padStart(2, "0")
 }
 
+const inputClass =
+  "w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-[13px] text-white outline-none transition-all placeholder:text-white/25 focus:border-[#7d92ff] focus:bg-white/10"
+
 export default function ProductRequestForm() {
   const [step, setStep] = useState(0)
   const [done, setDone] = useState(false)
@@ -60,175 +63,189 @@ export default function ProductRequestForm() {
   }
 
   return (
-    <div className="relative h-full">
-      {/* کارت‌های پشتی پاستلی برای حس عمق — هماهنگ با کارت خبرنامه */}
-      <div className="absolute inset-x-5 top-4 -bottom-2 rounded-[30px] bg-gradient-to-br from-[#dfe8fb]/70 to-[#fdeede]/70" aria-hidden />
-      <div className="absolute inset-x-2.5 top-2 -bottom-1 rounded-[32px] bg-white/60 backdrop-blur-sm" aria-hidden />
+    <div
+      className="relative flex h-full min-h-[380px] flex-col overflow-hidden rounded-[32px] bg-gradient-to-b from-[#0d1c3f] to-[#0a152d] p-7 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.85)]"
+    >
+      {/* هالهٔ نرم بالای کارت */}
+      <span
+        className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[420px] -translate-x-1/2 rounded-full bg-[#1b39f5]/25 blur-3xl"
+        aria-hidden
+      />
+      <span
+        className="pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-[#7d92ff]/15 blur-3xl"
+        aria-hidden
+      />
 
-      <div className="relative flex h-full min-h-[380px] flex-col rounded-[32px] border border-white/70 bg-white/80 p-7 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.55)] backdrop-blur-xl">
-        {done ? (
-          <div className="flex flex-1 flex-col items-center justify-center text-center">
-            <span className="grid h-16 w-16 place-items-center rounded-full bg-[#1b39f5]/10 text-[#1b39f5]">
-              <Check className="h-8 w-8" />
-            </span>
-            <h3 className="font-display mt-4 text-[20px] font-bold text-[#0a152d]">درخواستت ثبت شد</h3>
-            <p className="mx-auto mt-2 max-w-xs text-[13px] leading-7 text-[#0a152d]/60">
-              تیم اچ‌شاپ درخواستت را بررسی می‌کند و به‌زودی از راه ارتباطی‌ای که دادی با تو تماس می‌گیرد.
-            </p>
-            <button
-              type="button"
-              onClick={reset}
-              className="mt-5 rounded-full bg-[#0a152d] px-6 py-2.5 text-[12.5px] font-bold text-white transition-colors hover:bg-[#1b39f5]"
-            >
-              ثبت درخواست جدید
-            </button>
-          </div>
-        ) : (
-          <>
-            {/* نوار پیشرفت */}
-            <div className="flex items-center gap-2">
-              {Array.from({ length: STEPS }).map((_, index) => (
-                <span
-                  key={index}
-                  className={`h-1.5 flex-1 rounded-full transition-colors ${
-                    index <= step ? "bg-[#0a152d]" : "bg-[#0a152d]/12"
-                  }`}
-                />
-              ))}
-              <span className="ms-1 grid h-7 w-7 place-items-center rounded-full bg-[#1b39f5]/10 text-[#1b39f5]">
-                <PackageSearch className="h-4 w-4" />
-              </span>
+      {done ? (
+        <div className="relative flex flex-1 flex-col items-center justify-center text-center">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-[#3ff0a5]/15 text-[#3ff0a5]">
+            <Check className="h-8 w-8" />
+          </span>
+          <h3 className="font-display mt-4 text-[20px] font-bold text-white">درخواستت ثبت شد</h3>
+          <p className="mx-auto mt-2 max-w-xs text-[13px] leading-7 text-white/55">
+            تیم اچ‌شاپ درخواستت را بررسی می‌کند و به‌زودی از راه ارتباطی‌ای که دادی با تو تماس می‌گیرد.
+          </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="mt-5 rounded-full bg-white px-6 py-2.5 text-[12.5px] font-bold text-[#0a152d] transition-colors hover:bg-[#7d92ff] hover:text-white"
+          >
+            ثبت درخواست جدید
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* سربرگ */}
+          <div className="relative flex items-start justify-between gap-4">
+            <div>
+              <h3 className="font-display text-[20px] font-bold text-white md:text-[22px]">
+                محصولت را پیدا نکردی؟
+              </h3>
+              <p className="mt-1.5 text-[12px] leading-6 text-white/50">
+                بگو چی لازم داری — ما پیدا و شارژش می‌کنیم.
+              </p>
             </div>
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-white shadow-[0_14px_28px_-12px_rgba(27,57,245,0.9)]">
+              <PackageSearch className="h-5 w-5" />
+            </span>
+          </div>
 
-            <p className="mt-6 text-[11px] font-bold tracking-[0.18em] text-[#0a152d]/40">
-              درخواست محصول · <span className="font-latin">{stepLabel(step)}</span>
-            </p>
+          {/* نوار پیشرفت */}
+          <div className="relative mt-5 flex items-center gap-2">
+            {Array.from({ length: STEPS }).map((_, index) => (
+              <span
+                key={index}
+                className={`h-1.5 flex-1 rounded-full transition-colors duration-500 ${
+                  index <= step ? "bg-[#7d92ff]" : "bg-white/10"
+                }`}
+              />
+            ))}
+            <span className="ms-1 text-[10px] font-bold tracking-[0.18em] text-white/35">
+              مرحلهٔ <span className="font-latin">{stepLabel(step)}</span>
+            </span>
+          </div>
 
-            {/* مرحلهٔ ۱: دسته‌بندی */}
-            {step === 0 ? (
-              <div className="mt-2">
-                <h3 className="font-display text-[21px] leading-8 font-bold text-[#0a152d] md:text-[23px]">
-                  چه نوع محصولی می‌خواهی؟
-                </h3>
-                <p className="mt-4 text-[11px] font-bold tracking-[0.14em] text-[#0a152d]/40">یک گزینه را انتخاب کن</p>
-                <div className="mt-3 space-y-2">
-                  {CATEGORIES.map((option) => {
-                    const active = category === option.value
-                    return (
-                      <button
-                        key={option.value}
-                        type="button"
-                        onClick={() => setCategory(option.value)}
-                        className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-right transition-all ${
-                          active
-                            ? "border-[#1b39f5] bg-[#1b39f5]/6"
-                            : "border-black/8 hover:border-[#1b39f5]/40 hover:bg-[#1b39f5]/4"
+          {/* مرحلهٔ ۱: دسته‌بندی */}
+          {step === 0 ? (
+            <div className="relative mt-5">
+              <p className="text-[11px] font-bold tracking-[0.14em] text-white/35">یک گزینه را انتخاب کن</p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                {CATEGORIES.map((option) => {
+                  const active = category === option.value
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setCategory(option.value)}
+                      className={`flex items-center gap-2.5 rounded-2xl border px-3.5 py-3 text-right transition-all ${
+                        active
+                          ? "border-[#7d92ff]/70 bg-[#1b39f5]/20"
+                          : "border-white/10 bg-white/[0.03] hover:border-white/25 hover:bg-white/[0.06]"
+                      }`}
+                    >
+                      <span
+                        className={`grid h-4.5 w-4.5 h-[18px] w-[18px] shrink-0 place-items-center rounded-full border-2 ${
+                          active ? "border-[#7d92ff]" : "border-white/25"
                         }`}
                       >
-                        <span
-                          className={`grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${
-                            active ? "border-[#1b39f5]" : "border-black/20"
-                          }`}
-                        >
-                          {active ? <span className="h-2.5 w-2.5 rounded-full bg-[#1b39f5]" /> : null}
-                        </span>
-                        <span className="text-[13px] font-semibold text-[#0a152d]">{option.label}</span>
-                      </button>
-                    )
-                  })}
-                </div>
+                        {active ? <span className="h-2 w-2 rounded-full bg-[#7d92ff]" /> : null}
+                      </span>
+                      <span className={`text-[12px] font-semibold leading-5 ${active ? "text-white" : "text-white/65"}`}>
+                        {option.label}
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
-            ) : null}
+            </div>
+          ) : null}
 
-            {/* مرحلهٔ ۲: مشخصات محصول */}
-            {step === 1 ? (
-              <div className="mt-2">
-                <h3 className="font-display text-[21px] leading-8 font-bold text-[#0a152d] md:text-[23px]">
-                  چه محصولی را دقیقاً لازم داری؟
-                </h3>
-                <label className="mt-5 block">
-                  <span className="mb-1.5 block text-[12px] font-semibold text-[#0a152d]/70">نام محصول یا سرویس</span>
-                  <input
-                    value={productName}
-                    onChange={(event) => setProductName(event.target.value)}
-                    placeholder="مثلاً Midjourney یا اشتراک Spotify"
-                    className="w-full rounded-2xl border border-black/8 bg-[#f7f8fc] px-4 py-3 text-[13px] text-[#0a152d] outline-none transition-all placeholder:text-[#0a152d]/30 focus:border-[#1b39f5] focus:bg-white"
-                  />
-                </label>
-                <label className="mt-3 block">
-                  <span className="mb-1.5 block text-[12px] font-semibold text-[#0a152d]/70">پلن یا مدت اشتراک <span className="font-normal text-[#0a152d]/40">(اختیاری)</span></span>
-                  <input
-                    value={plan}
-                    onChange={(event) => setPlan(event.target.value)}
-                    placeholder="مثلاً ۱‌ماهه، سالانه یا پلن حرفه‌ای"
-                    className="w-full rounded-2xl border border-black/8 bg-[#f7f8fc] px-4 py-3 text-[13px] text-[#0a152d] outline-none transition-all placeholder:text-[#0a152d]/30 focus:border-[#1b39f5] focus:bg-white"
-                  />
-                </label>
-              </div>
-            ) : null}
+          {/* مرحلهٔ ۲: مشخصات محصول */}
+          {step === 1 ? (
+            <div className="relative mt-5">
+              <label className="block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-white/60">نام محصول یا سرویس</span>
+                <input
+                  value={productName}
+                  onChange={(event) => setProductName(event.target.value)}
+                  placeholder="مثلاً Midjourney یا اشتراک Spotify"
+                  className={inputClass}
+                />
+              </label>
+              <label className="mt-3 block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-white/60">
+                  پلن یا مدت اشتراک <span className="font-normal text-white/30">(اختیاری)</span>
+                </span>
+                <input
+                  value={plan}
+                  onChange={(event) => setPlan(event.target.value)}
+                  placeholder="مثلاً ۱‌ماهه، سالانه یا پلن حرفه‌ای"
+                  className={inputClass}
+                />
+              </label>
+            </div>
+          ) : null}
 
-            {/* مرحلهٔ ۳: راه ارتباطی */}
-            {step === 2 ? (
-              <div className="mt-2">
-                <h3 className="font-display text-[21px] leading-8 font-bold text-[#0a152d] md:text-[23px]">
-                  چطور با تو در تماس باشیم؟
-                </h3>
-                <label className="mt-5 block">
-                  <span className="mb-1.5 block text-[12px] font-semibold text-[#0a152d]/70">نام</span>
-                  <input
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    placeholder="نام و نام خانوادگی"
-                    className="w-full rounded-2xl border border-black/8 bg-[#f7f8fc] px-4 py-3 text-[13px] text-[#0a152d] outline-none transition-all placeholder:text-[#0a152d]/30 focus:border-[#1b39f5] focus:bg-white"
-                  />
-                </label>
-                <label className="mt-3 block">
-                  <span className="mb-1.5 block text-[12px] font-semibold text-[#0a152d]/70">ایمیل یا شماره تماس</span>
-                  <input
-                    dir="ltr"
-                    value={contact}
-                    onChange={(event) => setContact(event.target.value)}
-                    placeholder="you@email.com یا 0912..."
-                    className="w-full rounded-2xl border border-black/8 bg-[#f7f8fc] px-4 py-3 text-right text-[13px] text-[#0a152d] outline-none transition-all placeholder:text-[#0a152d]/30 focus:border-[#1b39f5] focus:bg-white"
-                  />
-                </label>
-                <label className="mt-3 block">
-                  <span className="mb-1.5 block text-[12px] font-semibold text-[#0a152d]/70">توضیح بیشتر <span className="font-normal text-[#0a152d]/40">(اختیاری)</span></span>
-                  <textarea
-                    rows={2}
-                    value={note}
-                    onChange={(event) => setNote(event.target.value)}
-                    placeholder="هر توضیحی که به سفارش کمک می‌کند"
-                    className="w-full resize-none rounded-2xl border border-black/8 bg-[#f7f8fc] px-4 py-3 text-[13px] text-[#0a152d] outline-none transition-all placeholder:text-[#0a152d]/30 focus:border-[#1b39f5] focus:bg-white"
-                  />
-                </label>
-              </div>
-            ) : null}
+          {/* مرحلهٔ ۳: راه ارتباطی */}
+          {step === 2 ? (
+            <div className="relative mt-5">
+              <label className="block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-white/60">نام</span>
+                <input
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  placeholder="نام و نام خانوادگی"
+                  className={inputClass}
+                />
+              </label>
+              <label className="mt-3 block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-white/60">ایمیل یا شماره تماس</span>
+                <input
+                  dir="ltr"
+                  value={contact}
+                  onChange={(event) => setContact(event.target.value)}
+                  placeholder="you@email.com یا 0912..."
+                  className={`${inputClass} text-right`}
+                />
+              </label>
+              <label className="mt-3 block">
+                <span className="mb-1.5 block text-[12px] font-semibold text-white/60">
+                  توضیح بیشتر <span className="font-normal text-white/30">(اختیاری)</span>
+                </span>
+                <textarea
+                  rows={2}
+                  value={note}
+                  onChange={(event) => setNote(event.target.value)}
+                  placeholder="هر توضیحی که به سفارش کمک می‌کند"
+                  className={`${inputClass} resize-none`}
+                />
+              </label>
+            </div>
+          ) : null}
 
-            {/* دکمه‌ها */}
-            <div className="mt-auto flex items-center justify-end gap-3 pt-6">
-              {step > 0 ? (
-                <button
-                  type="button"
-                  onClick={back}
-                  className="rounded-full px-4 py-2.5 text-[13px] font-semibold text-[#0a152d]/60 transition-colors hover:text-[#0a152d]"
-                >
-                  بازگشت
-                </button>
-              ) : null}
+          {/* دکمه‌ها */}
+          <div className="relative mt-auto flex items-center justify-end gap-3 pt-6">
+            {step > 0 ? (
               <button
                 type="button"
-                onClick={next}
-                disabled={!canNext}
-                className="inline-flex items-center gap-2 rounded-full bg-[#1b39f5] px-6 py-3 text-[13px] font-bold text-white shadow-[0_18px_36px_-20px_rgba(27,57,245,0.9)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#1226c4] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+                onClick={back}
+                className="rounded-full px-4 py-2.5 text-[13px] font-semibold text-white/50 transition-colors hover:text-white"
               >
-                {step === STEPS - 1 ? "ثبت درخواست" : "بعدی"}
-                <ArrowLeft className="h-3.5 w-3.5" />
+                بازگشت
               </button>
-            </div>
-          </>
-        )}
-      </div>
+            ) : null}
+            <button
+              type="button"
+              onClick={next}
+              disabled={!canNext}
+              className="inline-flex items-center gap-2 rounded-full bg-[#1b39f5] px-6 py-3 text-[13px] font-bold text-white shadow-[0_18px_36px_-18px_rgba(27,57,245,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#2a49ff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+            >
+              {step === STEPS - 1 ? "ثبت درخواست" : "بعدی"}
+              <ArrowLeft className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   )
 }
