@@ -157,15 +157,16 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* وردمارک غول‌پیکر با گرادیان برند، برق متحرک و هالهٔ نرم */}
+        {/* وردمارک غول‌پیکر — حروف بزرگ توخالی با کشش، سبک معماری */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
           <span
-            className="absolute inset-x-1/4 top-1/3 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/12 blur-3xl"
+            className="absolute inset-x-1/4 top-1/3 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
           />
           <p
-            className="watermark-shine font-latin relative -mb-[0.36em] text-center text-[clamp(96px,16vw,228px)] font-extrabold leading-none tracking-tight"
+            className="font-latin relative -mb-[0.3em] text-center text-[clamp(96px,15vw,220px)] font-extrabold uppercase leading-none tracking-[0.05em] text-transparent"
             dir="ltr"
             style={{
+              WebkitTextStroke: "2px rgba(27,57,245,0.3)",
               maskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
               WebkitMaskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
             }}
