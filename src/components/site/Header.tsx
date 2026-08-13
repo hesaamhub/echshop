@@ -35,6 +35,7 @@ import CartMenu from "./CartMenu"
 import NotificationsMenu, { unreadCount } from "./NotificationsMenu"
 import PanelMenu from "./PanelMenu"
 import ProductMiniList from "./ProductMiniList"
+import Wordmark from "./Wordmark"
 
 /** لینک‌های سادهٔ منو */
 const navItems = [
@@ -100,11 +101,9 @@ export default function Header() {
             aria-label="اچ‌شاپ — بازگشت به صفحهٔ اصلی"
             className="flex shrink-0 items-center gap-2.5"
           >
-            {/* نشان سه‌بعدی برند + وردمارک لاتین — بدون زیرنویس */}
+            {/* نشان سه‌بعدی برند + وردمارک تایپوگرافی دست‌ساز */}
             <img src={LOGO_MARK_URI} alt="اچ‌شاپ" className="h-9 w-9 md:h-10 md:w-10" />
-            <span className="wordmark text-[20px] font-bold leading-none text-[#0a1b33]" dir="ltr">
-              echshop
-            </span>
+            <Wordmark className="h-[22px] w-auto md:h-6" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1 mr-2">
