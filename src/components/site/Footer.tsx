@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { siteContent } from "@/lib/data"
 import Logo from "./Logo"
+import Wordmark from "./Wordmark"
 
 /** نمادهای اعتماد و پرداخت */
 const trustBadges = [
@@ -52,8 +53,8 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <Logo className="h-14 w-14 rounded-[18px] shadow-[0_16px_32px_-16px_rgba(27,57,245,0.55)]" />
-              <div className="flex flex-col gap-1 leading-none">
-                <span className="wordmark text-[19px] font-bold text-[#0a1b33]" dir="ltr">echshop</span>
+              <div className="flex flex-col items-start gap-1.5 leading-none">
+                <Wordmark className="h-[26px] w-auto" />
                 <span className="text-[11px] font-semibold text-slate-400">{brand.tagline}</span>
               </div>
             </div>

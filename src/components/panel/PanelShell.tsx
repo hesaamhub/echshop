@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ChevronLeft } from "lucide-react"
-import { siteContent } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import Logo from "@/components/site/Logo"
+import Wordmark from "@/components/site/Wordmark"
 
 export type PanelNavItem = { href: string; label: string; badge?: number }
 
@@ -33,10 +33,8 @@ export default function PanelShell({
               <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
                 <Logo className="h-5 w-5" />
               </span>
-              <span>
-                <span className="block text-[13.5px] font-bold text-[#0a1b33]">
-                  {siteContent.brand.nameFa}
-                </span>
+              <span className="flex flex-col items-start gap-1">
+                <Wordmark className="h-[18px] w-auto" />
                 <span className="block text-[10.5px] text-slate-400">{role}</span>
               </span>
             </Link>
