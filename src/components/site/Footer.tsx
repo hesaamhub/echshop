@@ -157,22 +157,23 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* وردمارک غول‌پیکر — حروف بزرگ توخالی با کشش، سبک معماری */}
+        {/* امضای برند — نشان سه‌بعدی کلید + وردمارک فارسی غول‌پیکر با گرادیان برند */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
           <span
-            className="absolute inset-x-1/4 top-1/3 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
+            className="absolute inset-x-1/4 top-1/2 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
           />
-          <p
-            className="font-latin relative -mb-[0.3em] text-center text-[clamp(96px,15vw,220px)] font-extrabold uppercase leading-none tracking-[0.05em] text-transparent"
-            dir="ltr"
+          <div
+            className="relative flex items-end justify-center gap-4 md:gap-7"
             style={{
-              WebkitTextStroke: "2px rgba(27,57,245,0.3)",
-              maskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
-              WebkitMaskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
+              maskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
+              WebkitMaskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
             }}
           >
-            echshop
-          </p>
+            <Logo className="-mb-3 h-[clamp(84px,9.5vw,140px)] w-[clamp(84px,9.5vw,140px)] shrink-0 drop-shadow-[0_20px_30px_rgba(27,57,245,0.35)] md:-mb-4" />
+            <span className="-mb-[0.28em] bg-gradient-to-b from-[#1b39f5] via-[#4d68ff]/80 to-[#7d92ff]/25 bg-clip-text text-[clamp(92px,14vw,200px)] font-extrabold leading-[0.95] text-transparent">
+              اچ‌شاپ
+            </span>
+          </div>
         </div>
 
         {/* نوار پایانی */}
