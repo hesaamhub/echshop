@@ -4,6 +4,7 @@ import "@fontsource-variable/sora"
 import "./globals.css"
 import PromoBanner from "@/components/site/PromoBanner"
 import { siteContent } from "@/lib/data"
+import { LOGO_MARK_URI } from "@/lib/brandMark"
 
 export const metadata: Metadata = {
   // مبنای ساخت نشانی مطلق تصاویر OpenGraph — با دامنهٔ نهایی سایت به‌روزرسانی شود
@@ -15,9 +16,10 @@ export const metadata: Metadata = {
   description: siteContent.hero.subheadline,
   keywords: ["خرید اکانت", "لایسنس", "اچ شاپ", "echshop", "اشتراک پرمیوم"],
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    // فاوآیکون — نشان سه‌بعدی برند (کلید آبی) به‌صورت data URI
+    icon: LOGO_MARK_URI,
+    shortcut: LOGO_MARK_URI,
+    apple: LOGO_MARK_URI,
   },
   openGraph: {
     title: `${siteContent.brand.nameFa} — ${siteContent.brand.tagline}`,

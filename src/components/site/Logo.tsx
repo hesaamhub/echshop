@@ -1,17 +1,17 @@
-import { LOGO_DATA_URI } from "@/lib/logoData"
+import { LOGO_MARK_URI } from "@/lib/brandMark"
 
 /**
- * نشان (لوگو) رسمی اچ‌شاپ — کلید سه‌بعدی آبی با لبخند.
- * تصویر به‌صورت data URI در src/lib/logoData.ts نگه‌داری می‌شود تا
+ * نشان (لوگو) رسمی اچ‌شاپ — کلید سه‌بعدی آبی با لبخند، بدون پس‌زمینه.
+ * تصویر به‌صورت data URI در src/lib/brandMark.ts نگه‌داری می‌شود تا
  * بدون هیچ درخواست شبکه‌ای در همهٔ بخش‌های سایت آماده باشد.
  */
 export default function Logo({ className = "h-6 w-6" }: { className?: string }) {
   return (
     <img
-      src={LOGO_DATA_URI}
+      src={LOGO_MARK_URI}
       alt="اچ‌شاپ"
-      width={128}
-      height={128}
+      width={144}
+      height={144}
       loading="eager"
       className={`${className} object-cover`}
     />
