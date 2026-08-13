@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useCallback, useEffect, useState, type ReactNode } from "react"
-import { AnimatePresence, motion } from "motion/react"
+import { motion } from "motion/react"
 import { ArrowLeft, ChevronLeft, ChevronRight, Flame, ShoppingBag, Star, Zap } from "lucide-react"
 import BrandIcon from "./BrandIcon"
 import { brandLogos } from "@/lib/brands"
@@ -205,10 +205,116 @@ const VARIANTS: Variant[] = [
   },
 ]
 
+/** کارت محصول داخل دک — بدون تغییر در چیدمان داخلی */
+function DeckCard({ product, position }: { product: Product; position: number }) {
+  const color = brandColor(product.logo)
+  const variant = VARIANTS[position % VARIANTS.length]
+  const plan = cheapestPlan(product)
+  const low = plan.stock > 0 && plan.stock <= 15
+
+  return (
+    <article className="group relative h-full">
+      <div
+        className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[540px]"
+        style={{ background: variant.background(color) }}
+      >
+        {variant.art(color)}
+
+        <div className="relative flex items-start justify-between gap-2">
+          <div>
+            <h3 className="font-display text-[20px] font-bold leading-[1.4] text-[#0a1b33] md:text-[21px]">
+              {product.brand}
+            </h3>
+            <span className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
+              <Star className="h-3.5 w-3.5 text-[#EAC26B]" />
+              <span className="num">{product.rating}</span>
+              <span className="text-slate-400">از ۵</span>
+            </span>
+          </div>
+
+          {product.badge ? (
+            <span
+              className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-bold text-white"
+              style={{ background: `#${color}` }}
+            >
+              <Flame className="h-3 w-3" />
+              {product.badge}
+            </span>
+          ) : (
+            <span className="shrink-0 rounded-full bg-white/70 px-2.5 py-1 text-[10.5px] font-bold text-[#0a1b33]">
+              <span className="num">{num(product.sold)}</span> فروش
+            </span>
+          )}
+        </div>
+
+        <p className="relative mt-3 line-clamp-2 text-[11.5px] leading-6 text-slate-500">
+          {product.excerpt}
+        </p>
+
+        <div className="relative flex flex-1 items-center justify-center py-2">
+          <motion.span
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
+          >
+            <span className={`grid place-items-center ${variant.holderInner}`}>
+              <BrandIcon slug={product.logo} size={48} color="#ffffff" />
+            </span>
+          </motion.span>
+        </div>
+
+        <div className="relative flex flex-wrap gap-1.5">
+          <span className="inline-flex items-center gap-1 rounded-full border border-[#0a1b33]/10 bg-white/70 px-2.5 py-1 text-[10.5px] font-semibold text-[#0a1b33]">
+            <Zap className="h-3 w-3 text-[#1b39f5]" />
+            {deliveryLabels[plan.delivery]}
+          </span>
+          {product.features.slice(0, 1).map((feature) => (
+            <span
+              key={feature}
+              className="truncate rounded-full border border-[#0a1b33]/10 bg-white/70 px-2.5 py-1 text-[10.5px] font-semibold text-slate-600"
+            >
+              {feature}
+            </span>
+          ))}
+        </div>
+
+        <div className="relative mt-3 flex items-end justify-between gap-3">
+          <div>
+            <div className="text-[11px] text-slate-500">شروع قیمت از</div>
+            <div className="mt-0.5 text-[18px] font-bold text-[#0a1b33]">
+              <span className="num">{toman(plan.price)}</span>
+              <span className="mr-1.5 text-[11.5px] font-medium text-slate-500">تومان</span>
+            </div>
+          </div>
+
+          <span
+            className={`shrink-0 rounded-full px-2.5 py-1 text-[10.5px] font-bold ${
+              low ? "bg-[#E56458]/12 text-[#E56458]" : "bg-[#137a4b]/12 text-[#137a4b]"
+            }`}
+          >
+            {stockLabel(plan.stock)}
+          </span>
+        </div>
+
+        <Link
+          href={`/products/${product.slug}`}
+          className="relative mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
+        >
+          <ShoppingBag className="h-4 w-4" />
+          خرید و تحویل فوری
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+      </div>
+    </article>
+  )
+}
+
 export default function ShowcaseDeck() {
   const [index, setIndex] = useState(0)
   const [visible, setVisible] = useState(3)
   const [paused, setPaused] = useState(false)
+
+  const steps = Math.max(1, deck.length - visible + 1)
 
   useEffect(() => {
     const sync = () => {
@@ -221,23 +327,26 @@ export default function ShowcaseDeck() {
     return () => window.removeEventListener("resize", sync)
   }, [])
 
-  const go = useCallback((direction: number) => {
-    setIndex((current) => (current + direction + deck.length) % deck.length)
-  }, [])
+  // اگر با تغییر اندازهٔ صفحه اندیس از محدوده بیرون رفت، برگردان
+  useEffect(() => {
+    setIndex((current) => Math.min(current, steps - 1))
+  }, [steps])
+
+  const go = useCallback(
+    (direction: number) => {
+      setIndex((current) => (current + direction + steps) % steps)
+    },
+    [steps],
+  )
 
   useEffect(() => {
     if (paused) return
     const timer = setInterval(() => {
-      setIndex((current) => (current + 1) % deck.length)
+      setIndex((current) => (current + 1) % steps)
     }, 4600)
 
     return () => clearInterval(timer)
-  }, [paused])
-
-  const shown = Array.from({ length: visible }, (_, offset) => {
-    const position = (index + offset) % deck.length
-    return { product: deck[position], position }
-  })
+  }, [paused, steps])
 
   return (
     <section className="mx-auto mt-12 max-w-[1400px] px-4 md:px-6">
@@ -267,142 +376,49 @@ export default function ShowcaseDeck() {
         </div>
       </div>
 
-      <motion.div
-        drag="x"
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.12}
-        onDragStart={() => setPaused(true)}
-        onDragEnd={(_, info) => {
-          if (info.offset.x < -70) go(1)
-          else if (info.offset.x > 70) go(-1)
-        }}
+      {/*
+        کاروسل روان: همهٔ کارت‌ها یک‌بار رندر می‌شوند و فقط تراک با translateX
+        می‌لغزد — بدون mount/unmount و بدون گیرکردن انیمیشن.
+        در RTL کارت‌های بعدی سمت چپ‌اند، پس تراک به‌سمت راست (+x) حرکت می‌کند.
+      */}
+      <div
+        className="overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        className="flex cursor-grab select-none gap-4 active:cursor-grabbing md:gap-6"
       >
-        <AnimatePresence initial={false} mode="popLayout">
-          {shown.map(({ product, position }) => {
-            const color = brandColor(product.logo)
-            const variant = VARIANTS[position % VARIANTS.length]
-            const plan = cheapestPlan(product)
-            const low = plan.stock > 0 && plan.stock <= 15
-
-            return (
-              <motion.article
-                key={product.id}
-                layout
-                initial={{ opacity: 0, x: 70, scale: 0.93 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: -70, scale: 0.93 }}
-                transition={{ type: "spring", stiffness: 260, damping: 30 }}
-                className="group relative min-w-0 flex-1"
-              >
-                <div
-                  className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[540px] md:p-6"
-                  style={{ background: variant.background(color) }}
-                >
-                  {variant.art(color)}
-
-                  <div className="relative flex items-start justify-between gap-2">
-                    <div>
-                      <h3 className="font-display text-[20px] font-bold leading-[1.4] text-[#0a1b33] md:text-[21px]">
-                        {product.brand}
-                      </h3>
-                      <span className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
-                        <Star className="h-3.5 w-3.5 text-[#EAC26B]" />
-                        <span className="num">{product.rating}</span>
-                        <span className="text-slate-400">از ۵</span>
-                      </span>
-                    </div>
-
-                    {product.badge ? (
-                      <span
-                        className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-bold text-white"
-                        style={{ background: `#${color}` }}
-                      >
-                        <Flame className="h-3 w-3" />
-                        {product.badge}
-                      </span>
-                    ) : (
-                      <span className="shrink-0 rounded-full bg-white/70 px-2.5 py-1 text-[10.5px] font-bold text-[#0a1b33]">
-                        <span className="num">{num(product.sold)}</span> فروش
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="relative mt-3 line-clamp-2 text-[11.5px] leading-6 text-slate-500">
-                    {product.excerpt}
-                  </p>
-
-                  <div className="relative flex flex-1 items-center justify-center py-2">
-                    <motion.span
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                      className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
-                    >
-                      <span className={`grid place-items-center ${variant.holderInner}`}>
-                        <BrandIcon slug={product.logo} size={48} color="#ffffff" />
-                      </span>
-                    </motion.span>
-                  </div>
-
-                  <div className="relative flex flex-wrap gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded-full border border-[#0a1b33]/10 bg-white/70 px-2.5 py-1 text-[10.5px] font-semibold text-[#0a1b33]">
-                      <Zap className="h-3 w-3 text-[#1b39f5]" />
-                      {deliveryLabels[plan.delivery]}
-                    </span>
-                    {product.features.slice(0, 1).map((feature) => (
-                      <span
-                        key={feature}
-                        className="truncate rounded-full border border-[#0a1b33]/10 bg-white/70 px-2.5 py-1 text-[10.5px] font-semibold text-slate-600"
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="relative mt-3 flex items-end justify-between gap-3">
-                    <div>
-                      <div className="text-[11px] text-slate-500">شروع قیمت از</div>
-                      <div className="mt-0.5 text-[18px] font-bold text-[#0a1b33]">
-                        <span className="num">{toman(plan.price)}</span>
-                        <span className="mr-1.5 text-[11.5px] font-medium text-slate-500">تومان</span>
-                      </div>
-                    </div>
-
-                    <span
-                      className={`shrink-0 rounded-full px-2.5 py-1 text-[10.5px] font-bold ${
-                        low
-                          ? "bg-[#E56458]/12 text-[#E56458]"
-                          : "bg-[#137a4b]/12 text-[#137a4b]"
-                      }`}
-                    >
-                      {stockLabel(plan.stock)}
-                    </span>
-                  </div>
-
-                  <Link
-                    href={`/products/${product.slug}`}
-                    className="relative mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
-                  >
-                    <ShoppingBag className="h-4 w-4" />
-                    خرید و تحویل فوری
-                    <ArrowLeft className="h-4 w-4" />
-                  </Link>
-                </div>
-              </motion.article>
-            )
-          })}
-        </AnimatePresence>
-      </motion.div>
+        <motion.div
+          className="flex cursor-grab select-none active:cursor-grabbing"
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.1}
+          onDragStart={() => setPaused(true)}
+          onDragEnd={(_, info) => {
+            if (info.offset.x < -70) go(1)
+            else if (info.offset.x > 70) go(-1)
+            setPaused(false)
+          }}
+          animate={{ x: `${index * (100 / visible)}%` }}
+          transition={{ type: "tween", duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
+        >
+          {deck.map((product, position) => (
+            <div
+              key={product.id}
+              className="shrink-0 px-2 md:px-3"
+              style={{ width: `${100 / visible}%` }}
+            >
+              <DeckCard product={product} position={position} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
       <div className="mt-6 flex items-center justify-center gap-2">
-        {deck.map((product, position) => (
+        {Array.from({ length: steps }).map((_, position) => (
           <button
-            key={product.id}
+            key={position}
             type="button"
             onClick={() => setIndex(position)}
-            aria-label={product.title}
+            aria-label={`اسلاید ${position + 1}`}
             className={`h-2 rounded-full transition-all ${
               position === index ? "w-7 bg-[#1b39f5]" : "w-2 bg-[#1b39f5]/25 hover:bg-[#1b39f5]/50"
             }`}
