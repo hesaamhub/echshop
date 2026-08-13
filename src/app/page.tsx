@@ -13,6 +13,7 @@ import Footer from "@/components/site/Footer"
 import BrandIcon from "@/components/site/BrandIcon"
 import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
+import HeroBanners from "@/components/site/HeroBanners"
 import PosterGrid from "@/components/site/PosterGrid"
 import PosterShowcase from "@/components/site/PosterShowcase"
 import QuickOrder from "@/components/site/QuickOrder"
@@ -56,6 +57,11 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
+
+        {/* بنرهای تبلیغاتی چرخان — تمام عرض، زیر هیرو و بالای دک محصولات */}
+        <section className="mx-auto mt-5 max-w-[1400px] px-4 md:mt-6 md:px-6">
+          <HeroBanners />
+        </section>
 
         {/* دک معرفی محصولات */}
         <ShowcaseDeck />
