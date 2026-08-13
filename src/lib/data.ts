@@ -1,4 +1,9 @@
 import type { Category, Order, Post, Product, Ticket } from "./types"
+import { B_HOURGLASS_URI } from "./art/b-hourglass"
+import { T_BLUEPRINT_URI } from "./art/t-blueprint"
+import { T_TARGET_URI } from "./art/t-target"
+import { T_TILES_URI } from "./art/t-tiles"
+import { T_TRAY_URI } from "./art/t-tray"
 import { productsB } from "./productsB"
 import { productsC } from "./productsC"
 
@@ -368,29 +373,30 @@ export const categories: Category[] = categorySeed.map((category) => ({
 
 /**
  * پنج قاب پوستر: دو قاب کناری راست، یک قاب بزرگ وسط و دو قاب کناری چپ.
- * برای گذاشتن پوستر خودتان، فایل تصویر را در پوشهٔ public آپلود کنید و آدرسش را
- * در فیلد image بنویسید (مثل /posters/kling.png)؛ فیلد href مقصد کلیک روی پوستر است.
+ * فعلاً با آرت‌بردهای سه‌بعدی داخلی پر شده‌اند؛ برای گذاشتن پوستر واقعی خودتان
+ * کافی است فایل تصویر را در پوشهٔ public آپلود کنید و آدرسش را در فیلد image
+ * بنویسید (مثل /posters/kling.png)؛ فیلد href مقصد کلیک روی پوستر است.
  */
 export type HomePoster = {
   id: string
-  /** عنوان لاتین روی قاب — تا وقتی پوستر آپلود نشده نمایش داده می‌شود */
+  /** عنوان لاتین روی قاب */
   title: string
   /** برچسب کوچک بالای عنوان */
   kicker: string
-  /** آدرس تصویر پوستر؛ خالی = قاب پیش‌فرض رنگی */
+  /** تصویر پوستر — آرت داخلی یا آدرس فایل آپلودی شما */
   image: string
   /** مقصد کلیک روی پوستر */
   href: string
-  /** رنگ اصلی قاب پیش‌فرض */
+  /** رنگ اصلی قاب */
   tint: string
 }
 
 export const homePosters: HomePoster[] = [
-  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: "", href: "/new/kling-ai", tint: "#7b2ff7" },
-  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: "", href: "/new/notebooklm-plus", tint: "#1b39f5" },
-  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: "", href: "/new/hexafield", tint: "#0b6b5b" },
-  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: "", href: "/new/kimi-k3", tint: "#c77414" },
-  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: "", href: "/products/chatgpt-plus", tint: "#10A37F" },
+  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: T_TILES_URI, href: "/new/kling-ai", tint: "#7b2ff7" },
+  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: T_BLUEPRINT_URI, href: "/new/notebooklm-plus", tint: "#1b39f5" },
+  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: B_HOURGLASS_URI, href: "/new/hexafield", tint: "#0b6b5b" },
+  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: T_TRAY_URI, href: "/new/kimi-k3", tint: "#c77414" },
+  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: T_TARGET_URI, href: "/products/chatgpt-plus", tint: "#10A37F" },
 ]
 
 /* -------------------------------------------------------------------------- */
@@ -486,10 +492,8 @@ export const tickets: Ticket[] = [
     status: "closed",
     priority: "کم",
     updatedAt: "2026-07-21",
-    messages: [
-      { from: "user", body: "تمدید روی همان اکانت ممکن است؟", at: "2026-07-20" },
-      { from: "support", body: "بله، از پنل کاربری گزینهٔ تمدید فعال است.", at: "2026-07-21" },
-    ],
+    messages: [{ from: "user", body: "تمدید روی همان اکانت ممکن است؟", at: "2026-07-20" },
+      { from: "support", body: "بله، از پنل کاربری گزینهٔ تمدید فعال است.", at: "2026-07-21" }],
   },
 ]
 
