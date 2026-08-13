@@ -157,12 +157,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* امضای برند — نشان سه‌بعدی کلید + وردمارک فارسی غول‌پیکر با گرادیان برند */}
+        {/* امضای برند — نشان سه‌بعدی کلید + وردمارک لاتین با گرادیان و برق متحرک */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
           <span
             className="absolute inset-x-1/4 top-1/2 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
           />
           <div
+            dir="ltr"
             className="relative flex items-end justify-center gap-4 md:gap-7"
             style={{
               maskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
@@ -170,8 +171,8 @@ export default function Footer() {
             }}
           >
             <Logo className="-mb-3 h-[clamp(84px,9.5vw,140px)] w-[clamp(84px,9.5vw,140px)] shrink-0 drop-shadow-[0_20px_30px_rgba(27,57,245,0.35)] md:-mb-4" />
-            <span className="-mb-[0.28em] bg-gradient-to-b from-[#1b39f5] via-[#4d68ff]/80 to-[#7d92ff]/25 bg-clip-text text-[clamp(92px,14vw,200px)] font-extrabold leading-[0.95] text-transparent">
-              اچ‌شاپ
+            <span className="watermark-shine font-latin -mb-[0.3em] text-[clamp(96px,13.5vw,196px)] font-extrabold leading-[0.95] tracking-tight">
+              echshop
             </span>
           </div>
         </div>
