@@ -15,7 +15,7 @@ import {
 import { siteContent } from "@/lib/data"
 import Logo from "./Logo"
 
-/** نمادهای اعتماد و پرداخت — جای آماده برای لوگوهای رسمی (اینماد، زرین‌پال و…) */
+/** نمادهای اعتماد و پرداخت */
 const trustBadges = [
   { icon: ShieldCheck, title: "اینماد", note: "نماد اعتماد الکترونیکی", tint: "#1b39f5" },
   { icon: CreditCard, title: "زرین‌پال", note: "درگاه پرداخت امن", tint: "#D5803B" },
@@ -117,7 +117,7 @@ export default function Footer() {
                   اعتماد شما، اعتبار ماست
                 </p>
                 <p className="mt-1.5 text-[11.5px] leading-6 text-slate-500">
-                  پرداخت‌ها از درگاه‌های رسمی و امن انجام می‌شوند؛ لوگوی رسمی هر نماد اینجا قرار می‌گیرد.
+                  همهٔ پرداخت‌ها از درگاه‌های رسمی و امن انجام می‌شوند و خرید شما تا تحویل کامل سفارش تضمین است.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2.5">
@@ -143,14 +143,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* وردمارک غول‌پیکر محو */}
+        {/* وردمارک غول‌پیکر با گرادیان برند و هالهٔ نرم */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
+          <span
+            className="absolute inset-x-1/4 top-1/2 h-40 -translate-y-1/2 rounded-full bg-[#1b39f5]/15 blur-3xl"
+          />
           <p
-            className="font-latin -mb-[0.34em] text-center text-[clamp(88px,15.5vw,216px)] font-extrabold leading-none tracking-tight text-[#1b39f5]/[0.07]"
+            className="font-latin relative -mb-[0.34em] bg-gradient-to-b from-[#1b39f5]/70 via-[#4d68ff]/45 to-[#7d92ff]/15 bg-clip-text text-center text-[clamp(88px,15.5vw,216px)] font-extrabold leading-none tracking-tight text-transparent"
             dir="ltr"
             style={{
-              maskImage: "linear-gradient(to bottom, #000 40%, transparent 96%)",
-              WebkitMaskImage: "linear-gradient(to bottom, #000 40%, transparent 96%)",
+              maskImage: "linear-gradient(to bottom, #000 42%, transparent 96%)",
+              WebkitMaskImage: "linear-gradient(to bottom, #000 42%, transparent 96%)",
             }}
           >
             echshop
