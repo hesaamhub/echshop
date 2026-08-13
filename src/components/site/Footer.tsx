@@ -160,18 +160,18 @@ export default function Footer() {
         {/* امضای برند — نشان سه‌بعدی کلید + وردمارک لاتین با گرادیان و برق متحرک */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
           <span
-            className="absolute inset-x-1/4 top-1/2 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
+            className="absolute inset-x-1/4 top-1/2 h-36 -translate-y-1/2 rounded-full bg-[#1b39f5]/10 blur-3xl"
           />
           <div
             dir="ltr"
-            className="relative flex items-end justify-center gap-4 md:gap-7"
+            className="relative flex items-end justify-center gap-3 md:gap-5"
             style={{
               maskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
               WebkitMaskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
             }}
           >
-            <Logo className="-mb-3 h-[clamp(84px,9.5vw,140px)] w-[clamp(84px,9.5vw,140px)] shrink-0 drop-shadow-[0_20px_30px_rgba(27,57,245,0.35)] md:-mb-4" />
-            <span className="watermark-shine font-latin -mb-[0.3em] text-[clamp(96px,13.5vw,196px)] font-extrabold leading-[0.95] tracking-tight">
+            <Logo className="-mb-2 h-[clamp(56px,6.5vw,96px)] w-[clamp(56px,6.5vw,96px)] shrink-0 drop-shadow-[0_16px_24px_rgba(27,57,245,0.35)] md:-mb-3" />
+            <span className="watermark-shine font-latin -mb-[0.24em] text-[clamp(64px,9vw,132px)] font-bold leading-[0.95] tracking-tight">
               echshop
             </span>
           </div>
