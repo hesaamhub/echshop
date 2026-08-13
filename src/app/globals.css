@@ -185,9 +185,50 @@
   animation: echshop-marquee 70s linear infinite;
 }
 
+/* برق متحرک وردمارک غول‌پیکر فوتر — لایهٔ شاین روی گرادیان برند با کلیپ متنی */
+.watermark-shine {
+  background-image:
+    linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, 0.55) 50%, transparent 58%),
+    linear-gradient(180deg, #1b39f5 0%, #4d68ff 52%, rgba(125, 146, 255, 0.28) 100%);
+  background-size:
+    220% 100%,
+    100% 100%;
+  background-position:
+    -140% 0,
+    0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: watermark-shine 6.5s ease-in-out infinite;
+}
+
+@keyframes watermark-shine {
+  0% {
+    background-position:
+      -140% 0,
+      0 0;
+  }
+  55% {
+    background-position:
+      240% 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      240% 0,
+      0 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .echshop-marquee-track {
     animation: none;
+  }
+  .watermark-shine {
+    animation: none;
+    background-position:
+      0 0,
+      0 0;
   }
   html {
     scroll-behavior: auto;

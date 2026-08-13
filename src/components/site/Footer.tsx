@@ -23,12 +23,12 @@ const trustBadges = [
   { icon: Lock, title: "SSL", note: "رمزگذاری تراکنش‌ها", tint: "#0A66C2" },
 ]
 
-/** شبکه‌های اجتماعی */
+/** شبکه‌های اجتماعی — هرکدام با رنگ برند خودشان */
 const socials = [
-  { label: "تلگرام", href: "https://t.me/echshop", icon: Send },
-  { label: "اینستاگرام", href: "https://instagram.com/echshop", icon: Instagram },
-  { label: "واتساپ", href: "https://wa.me/", icon: MessageCircle },
-  { label: "یوتیوب", href: "https://youtube.com/", icon: Youtube },
+  { label: "تلگرام", href: "https://t.me/echshop", icon: Send, color: "#2AABEE" },
+  { label: "اینستاگرام", href: "https://instagram.com/echshop", icon: Instagram, color: "#E1306C" },
+  { label: "واتساپ", href: "https://wa.me/", icon: MessageCircle, color: "#25D366" },
+  { label: "یوتیوب", href: "https://youtube.com/", icon: Youtube, color: "#FF0033" },
 ]
 
 export default function Footer() {
@@ -37,14 +37,27 @@ export default function Footer() {
   return (
     <footer className="mt-24 px-4 pb-5 md:px-6">
       <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[36px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f5f8ff] via-white to-white shadow-[0_30px_70px_-50px_rgba(27,57,245,0.45)]">
+        {/* خط برند لبهٔ بالایی + هالهٔ نرم گوشه */}
+        <span
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-[#1b39f5]/45 to-transparent"
+          aria-hidden
+        />
+        <span
+          className="pointer-events-none absolute -top-24 -left-20 h-64 w-64 rounded-full bg-[#1b39f5]/6 blur-3xl"
+          aria-hidden
+        />
+
         {/* بخش بالایی: برند + ستون‌های لینک */}
-        <div className="grid gap-10 p-7 md:p-10 lg:grid-cols-[1.35fr_repeat(3,1fr)]">
+        <div className="relative grid gap-12 p-7 md:p-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
-            <Logo className="h-12 w-12 rounded-[16px] shadow-[0_14px_28px_-14px_rgba(27,57,245,0.55)]" />
-            <p className="mt-4 text-[15px] font-bold text-[#0a1b33]">
-              {brand.nameFa} — {brand.tagline}
-            </p>
-            <p className="mt-2 max-w-xs text-[12.5px] leading-6 text-slate-500">{footer.about}</p>
+            <div className="flex items-center gap-3">
+              <Logo className="h-14 w-14 rounded-[18px] shadow-[0_16px_32px_-16px_rgba(27,57,245,0.55)]" />
+              <div className="flex flex-col gap-1 leading-none">
+                <span className="wordmark text-[19px] font-bold text-[#0a1b33]" dir="ltr">echshop</span>
+                <span className="text-[11px] font-semibold text-slate-400">{brand.tagline}</span>
+              </div>
+            </div>
+            <p className="mt-4 max-w-xs text-[12.5px] leading-6 text-slate-500">{footer.about}</p>
 
             <div className="mt-5 flex items-center gap-2">
               {socials.map((social) => (
@@ -55,7 +68,8 @@ export default function Footer() {
                   rel="noreferrer"
                   aria-label={social.label}
                   title={social.label}
-                  className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-xl text-[#1b39f5]"
+                  style={{ color: social.color }}
+                  className="grid h-9 w-9 place-items-center rounded-xl border border-black/6 bg-white shadow-[0_10px_22px_-16px_rgba(10,21,45,0.5)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-16px_rgba(10,21,45,0.55)]"
                 >
                   <social.icon className="h-4 w-4" />
                 </a>
@@ -74,7 +88,7 @@ export default function Footer() {
                   <li key={`${column.title}-${link.label}`}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-slate-500 transition-colors hover:text-[#1b39f5]"
+                      className="inline-block text-[13px] text-slate-500 transition-all duration-300 hover:ps-1 hover:text-[#1b39f5]"
                     >
                       {link.label}
                     </Link>
@@ -86,7 +100,7 @@ export default function Footer() {
         </div>
 
         {/* نوار تماس فشرده */}
-        <div className="px-7 pb-6 md:px-10">
+        <div className="relative px-7 pb-6 md:px-10">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 border-y border-[#1b39f5]/8 py-4 text-[11.5px] font-medium text-slate-500">
             <span className="inline-flex items-center gap-2">
               <PhoneCall className="h-3.5 w-3.5 text-[#1b39f5]" />
@@ -108,7 +122,7 @@ export default function Footer() {
         </div>
 
         {/* نمادهای اعتماد و پرداخت */}
-        <div className="px-7 pb-8 md:px-10">
+        <div className="relative px-7 pb-8 md:px-10">
           <div className="rounded-[24px] border border-[#1b39f5]/10 bg-white/70 p-4 backdrop-blur-sm md:p-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
@@ -143,17 +157,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* وردمارک غول‌پیکر با گرادیان برند و هالهٔ نرم */}
+        {/* وردمارک غول‌پیکر با گرادیان برند، برق متحرک و هالهٔ نرم */}
         <div className="pointer-events-none relative select-none overflow-hidden" aria-hidden>
           <span
-            className="absolute inset-x-1/4 top-1/2 h-40 -translate-y-1/2 rounded-full bg-[#1b39f5]/15 blur-3xl"
+            className="absolute inset-x-1/4 top-1/3 h-44 -translate-y-1/2 rounded-full bg-[#1b39f5]/12 blur-3xl"
           />
           <p
-            className="font-latin relative -mb-[0.34em] bg-gradient-to-b from-[#1b39f5]/70 via-[#4d68ff]/45 to-[#7d92ff]/15 bg-clip-text text-center text-[clamp(88px,15.5vw,216px)] font-extrabold leading-none tracking-tight text-transparent"
+            className="watermark-shine font-latin relative -mb-[0.36em] text-center text-[clamp(96px,16vw,228px)] font-extrabold leading-none tracking-tight"
             dir="ltr"
             style={{
-              maskImage: "linear-gradient(to bottom, #000 42%, transparent 96%)",
-              WebkitMaskImage: "linear-gradient(to bottom, #000 42%, transparent 96%)",
+              maskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
+              WebkitMaskImage: "linear-gradient(to bottom, #000 38%, transparent 96%)",
             }}
           >
             echshop

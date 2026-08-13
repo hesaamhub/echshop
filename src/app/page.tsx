@@ -124,7 +124,7 @@ export default function HomePage() {
           <QuickOrder />
         </Section>
 
-        {/* بلاگ */}
+        {/* بلاگ — تحریریهٔ مجله: مقالهٔ ویژهٔ تمام‌جلد + ریل شماره‌دار */}
         <Section
           eyebrow="مجلهٔ اچ‌شاپ"
           title="از بلاگ اچ‌شاپ"
@@ -132,70 +132,104 @@ export default function HomePage() {
           linkLabel="همهٔ مقالات"
           className="mt-24"
         >
-          {/* مقالهٔ ویژه — چیدمان افقی */}
-          <Link
-            href={`/blog/${featuredPost.slug}`}
-            className="group grid overflow-hidden rounded-[28px] border border-[#1b39f5]/10 bg-white shadow-[0_22px_50px_-36px_rgba(10,27,51,0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_34px_64px_-34px_rgba(27,57,245,0.4)] lg:grid-cols-[2fr_3fr]"
-          >
-            <PostCover post={featuredPost} index={0} className="h-48 lg:h-auto lg:min-h-[264px]" />
-            <div className="flex flex-col justify-center p-6 md:p-8">
-              <span className="text-[10.5px] font-bold tracking-[0.16em] text-[#1b39f5]">
-                پیشنهاد سردبیر
+          <div className="grid gap-4 lg:grid-cols-[1.55fr_1fr]">
+            {/* مقالهٔ ویژه */}
+            <Link
+              href={`/blog/${featuredPost.slug}`}
+              className="group relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[28px] border border-[#1b39f5]/10 shadow-[0_28px_60px_-40px_rgba(10,27,51,0.65)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_40px_70px_-38px_rgba(27,57,245,0.5)] lg:min-h-[430px]"
+            >
+              {/* جلد */}
+              <span
+                className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]"
+                style={{ background: featuredPost.cover }}
+                aria-hidden
+              />
+              {/* بافت نقطه‌ای */}
+              <span
+                className="absolute inset-0 opacity-[0.13]"
+                style={{
+                  backgroundImage: "radial-gradient(rgba(255,255,255,0.85) 1px, transparent 1px)",
+                  backgroundSize: "16px 16px",
+                }}
+                aria-hidden
+              />
+              {/* شمارهٔ محو */}
+              <span
+                className="font-latin absolute -top-3 left-2 select-none text-[120px] font-extrabold leading-none text-white/12"
+                dir="ltr"
+                aria-hidden
+              >
+                01
               </span>
-              <h3 className="font-display mt-2.5 text-[19px] font-bold leading-[1.6] text-[#0a1b33] transition-colors group-hover:text-[#1b39f5] md:text-[23px]">
-                {featuredPost.title}
-              </h3>
-              <p className="mt-3 line-clamp-3 text-[13px] leading-7 text-slate-500">
-                {featuredPost.excerpt}
-              </p>
-              <div className="mt-5 flex items-center justify-between gap-3 text-[11.5px] text-slate-400">
-                <span className="flex items-center gap-2">
-                  <span className="font-semibold text-slate-500">{featuredPost.author}</span>
-                  <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden />
-                  <span>{faDate(featuredPost.publishedAt)}</span>
-                  <span className="h-1 w-1 rounded-full bg-slate-300" aria-hidden />
-                  <span>
-                    <span className="font-latin">{latinDigits(featuredPost.readMinutes)}</span> دقیقه مطالعه
+              {/* تیره‌سازی پایین برای خوانایی */}
+              <span
+                className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#060d20]/85 via-[#060d20]/30 to-transparent"
+                aria-hidden
+              />
+
+              {/* پنل شیشه‌ای محتوا */}
+              <span className="relative m-4 block rounded-[20px] border border-white/20 bg-[#0a152d]/55 p-5 backdrop-blur-xl md:m-5 md:p-6">
+                <span className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-[10px] font-bold text-white">
+                    {featuredPost.category}
+                  </span>
+                  <span className="text-[10.5px] font-bold tracking-[0.14em] text-[#9fb2ff]">
+                    پیشنهاد سردبیر
                   </span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#1b39f5]">
-                  خواندن مقاله
-                  <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-x-1" />
+                <h3 className="font-display mt-3 text-[19px] font-bold leading-[1.6] text-white md:text-[23px]">
+                  {featuredPost.title}
+                </h3>
+                <p className="mt-2 line-clamp-2 text-[12.5px] leading-6 text-white/65">
+                  {featuredPost.excerpt}
+                </p>
+                <span className="mt-4 flex items-center justify-between gap-3 text-[11px] text-white/50">
+                  <span>
+                    {featuredPost.author}
+                    <span className="mx-1.5 text-white/25">·</span>
+                    {faDate(featuredPost.publishedAt)}
+                    <span className="mx-1.5 text-white/25">·</span>
+                    <span className="font-latin">{latinDigits(featuredPost.readMinutes)}</span> دقیقه مطالعه
+                  </span>
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-[#0a152d] transition-transform duration-500 group-hover:-translate-x-1">
+                    <ArrowLeft className="h-4 w-4" />
+                  </span>
                 </span>
-              </div>
-            </div>
-          </Link>
+              </span>
+            </Link>
 
-          {/* سه مقالهٔ بعدی */}
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {restPosts.map((post, index) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group flex flex-col overflow-hidden rounded-[24px] border border-[#1b39f5]/10 bg-white shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25"
-              >
-                <PostCover post={post} index={index + 1} className="h-40" />
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-[13.5px] font-bold leading-6 text-[#0a1b33] transition-colors group-hover:text-[#1b39f5]">
-                    {post.title}
-                  </h3>
-                  <p className="mt-2 line-clamp-2 text-[12px] leading-6 text-slate-500">
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-[11px] text-slate-400">
-                    <span>
+            {/* ریل شماره‌دار مقالات */}
+            <div className="flex flex-col divide-y divide-slate-100 rounded-[28px] border border-[#1b39f5]/10 bg-white p-2 shadow-[0_22px_50px_-36px_rgba(10,27,51,0.55)] md:p-3">
+              {restPosts.map((post, index) => (
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group relative flex flex-1 items-center gap-4 rounded-[20px] p-4 transition-colors duration-300 hover:bg-[#f6f8ff]"
+                >
+                  <span
+                    className="font-latin w-10 shrink-0 text-[26px] font-extrabold leading-none text-[#1b39f5]/15 transition-colors duration-300 group-hover:text-[#1b39f5]/55"
+                    dir="ltr"
+                  >
+                    {String(index + 2).padStart(2, "0")}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="line-clamp-2 block text-[13px] font-bold leading-6 text-[#0a1b33] transition-colors group-hover:text-[#1b39f5]">
+                      {post.title}
+                    </span>
+                    <span className="mt-1.5 block text-[10.5px] text-slate-400">
+                      {post.category}
+                      <span className="mx-1.5 text-slate-300">·</span>
                       {faDate(post.publishedAt)}
                       <span className="mx-1.5 text-slate-300">·</span>
                       <span className="font-latin">{latinDigits(post.readMinutes)}</span> دقیقه
                     </span>
-                    <span className="inline-flex items-center gap-1 font-bold text-[#1b39f5] opacity-0 transition-all duration-300 group-hover:opacity-100">
-                      خواندن
-                      <ArrowLeft className="h-3 w-3" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                  </span>
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-[#1b39f5]/15 text-[#1b39f5] opacity-0 transition-all duration-300 group-hover:opacity-100">
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
           </div>
         </Section>
 
@@ -209,46 +243,6 @@ export default function HomePage() {
       </main>
       <Footer />
     </>
-  )
-}
-
-/** جلد تحریریهٔ مقاله: گرادیان برند + بافت نقطه‌ای + شمارهٔ محو + نشان دسته */
-function PostCover({
-  post,
-  index,
-  className,
-}: {
-  post: (typeof posts)[number]
-  index: number
-  className?: string
-}) {
-  return (
-    <div
-      className={`relative overflow-hidden ${className ?? ""}`}
-      style={{ background: post.cover }}
-    >
-      {/* بافت نقطه‌ای */}
-      <span
-        className="absolute inset-0 opacity-[0.14]"
-        style={{
-          backgroundImage: "radial-gradient(rgba(255,255,255,0.85) 1px, transparent 1px)",
-          backgroundSize: "16px 16px",
-        }}
-        aria-hidden
-      />
-      {/* شمارهٔ محؤ مقاله */}
-      <span
-        className="font-latin absolute -bottom-4 -left-2 select-none text-[92px] font-extrabold leading-none text-white/15"
-        dir="ltr"
-        aria-hidden
-      >
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      {/* نشان دستهٔ مقاله */}
-      <span className="absolute right-3.5 top-3.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md">
-        {post.category}
-      </span>
-    </div>
   )
 }
 
