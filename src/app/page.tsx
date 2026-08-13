@@ -13,15 +13,14 @@ import Footer from "@/components/site/Footer"
 import BrandIcon from "@/components/site/BrandIcon"
 import ProductCard from "@/components/site/ProductCard"
 import ShowcaseDeck from "@/components/site/ShowcaseDeck"
-import NewArrivalBanner from "@/components/site/NewArrivalBanner"
 import PosterGrid from "@/components/site/PosterGrid"
+import PosterShowcase from "@/components/site/PosterShowcase"
 import QuickOrder from "@/components/site/QuickOrder"
 import CurrencyPay from "@/components/site/CurrencyPay"
 import NewsletterCTA from "@/components/site/NewsletterCTA"
 import ProductRequestForm from "@/components/site/ProductRequestForm"
 import { brandLogos } from "@/lib/brands"
 import { categories, posts, products, siteContent } from "@/lib/data"
-import { newArrivals } from "@/lib/newArrivals"
 import { faDate, latinDigits, num } from "@/lib/utils"
 
 /** همان ۶ محصولی که در دک بالای صفحه نمایش داده می‌شوند */
@@ -46,6 +45,9 @@ export default function HomePage() {
     .filter((product) => !deckIds.has(product.id))
     .sort((a, b) => b.sold - a.sold)
     .slice(0, 4)
+
+  // دسته‌هایی که محصول دارند — دسته‌های سرویسی بدون محصول در گرید خانه نشان داده نمی‌شوند
+  const homeCategories = categories.filter((category) => category.count > 0)
 
   return (
     <>
@@ -87,13 +89,13 @@ export default function HomePage() {
 
         {/* دسته‌بندی‌ها */}
         <Section
-          eyebrow={`${latinDigits(categories.length)} دستهٔ اصلی`}
+          eyebrow={`${latinDigits(homeCategories.length)} دستهٔ اصلی`}
           title="دسته‌بندی محصولات"
           subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
           className="mt-20"
         >
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
-            {categories.map((category) => (
+            {homeCategories.map((category) => (
               <CategoryFolder key={category.slug} category={category} />
             ))}
           </div>
@@ -104,7 +106,7 @@ export default function HomePage() {
           <CurrencyPay />
         </Section>
 
-        {/* محصولات جدید با بنر تصویری */}
+        {/* پوسترهای جدیدترین محصولات */}
         <Section
           eyebrow="تازه رسیده"
           title="جدیدترین محصولات"
@@ -112,11 +114,7 @@ export default function HomePage() {
           linkLabel="مشاهدهٔ همه"
           className="mt-20"
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {newArrivals.map((item) => (
-              <NewArrivalBanner key={item.slug} item={item} />
-            ))}
-          </div>
+          <PosterShowcase />
         </Section>
 
         {/* سفارش سریع */}

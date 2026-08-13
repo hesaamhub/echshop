@@ -105,16 +105,16 @@ export const siteContent = {
  */
 const categorySeed: Omit<Category, "count">[] = [
   {
-    slug: "music-video",
-    title: "موسیقی و ویدیو",
-    description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
-    icon: "Music",
-  },
-  {
     slug: "ai-tools",
     title: "هوش مصنوعی",
     description: "اکانت ChatGPT Plus، Claude، Midjourney و ابزارهای مولد.",
     icon: "Sparkles",
+  },
+  {
+    slug: "music-video",
+    title: "موسیقی و ویدیو",
+    description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
+    icon: "Music",
   },
   {
     slug: "design",
@@ -139,6 +139,24 @@ const categorySeed: Omit<Category, "count">[] = [
     title: "شبکه‌های اجتماعی",
     description: "تلگرام پرمیوم، دیسکورد نیترو و خدمات ارتقای اکانت.",
     icon: "MessageCircle",
+  },
+  {
+    slug: "currency-pay",
+    title: "پرداخت ارزی",
+    description: "پرداخت‌های بین‌المللی، شارژ حساب‌های ارزی و خدمات پرداخت.",
+    icon: "Banknote",
+  },
+  {
+    slug: "virtual-number",
+    title: "شماره مجازی",
+    description: "شمارهٔ مجازی برای ثبت‌نام و فعال‌سازی سرویس‌های خارجی.",
+    icon: "Smartphone",
+  },
+  {
+    slug: "apple-id",
+    title: "اپل آیدی",
+    description: "اپل آیدی اختصاصی با قابلیت تغییر کامل اطلاعات.",
+    icon: "Apple",
   },
 ]
 
@@ -343,6 +361,37 @@ export const categories: Category[] = categorySeed.map((category) => ({
   ...category,
   count: products.filter((product) => product.categorySlug === category.slug).length,
 }))
+
+/* -------------------------------------------------------------------------- */
+/*  پوسترهای بخش «جدیدترین محصولات» در صفحهٔ اصلی                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * پنج قاب پوستر: دو قاب کناری راست، یک قاب بزرگ وسط و دو قاب کناری چپ.
+ * برای گذاشتن پوستر خودتان، فایل تصویر را در پوشهٔ public آپلود کنید و آدرسش را
+ * در فیلد image بنویسید (مثل /posters/kling.png)؛ فیلد href مقصد کلیک روی پوستر است.
+ */
+export type HomePoster = {
+  id: string
+  /** عنوان لاتین روی قاب — تا وقتی پوستر آپلود نشده نمایش داده می‌شود */
+  title: string
+  /** برچسب کوچک بالای عنوان */
+  kicker: string
+  /** آدرس تصویر پوستر؛ خالی = قاب پیش‌فرض رنگی */
+  image: string
+  /** مقصد کلیک روی پوستر */
+  href: string
+  /** رنگ اصلی قاب پیش‌فرض */
+  tint: string
+}
+
+export const homePosters: HomePoster[] = [
+  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: "", href: "/new/kling-ai", tint: "#7b2ff7" },
+  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: "", href: "/new/notebooklm-plus", tint: "#1b39f5" },
+  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: "", href: "/new/hexafield", tint: "#0b6b5b" },
+  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: "", href: "/new/kimi-k3", tint: "#c77414" },
+  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: "", href: "/products/chatgpt-plus", tint: "#10A37F" },
+]
 
 /* -------------------------------------------------------------------------- */
 /*  بلاگ                                                                      */
