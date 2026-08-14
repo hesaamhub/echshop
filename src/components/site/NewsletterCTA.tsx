@@ -48,7 +48,7 @@ export default function NewsletterCTA() {
   return (
     <>
       {/* کارت خبرنامه — نقاشی پاستلی با پنل شیشه‌ای مرکزی */}
-      <div className="relative flex h-full min-h-[380px] items-center justify-center overflow-hidden rounded-[32px] border border-white/60 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.5)]">
+      <div className="relative flex h-full min-h-[340px] items-center justify-center overflow-hidden rounded-[26px] border border-white/60 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.5)]">
         {/* نقاشی پاستلی پس‌زمینه (public/newsletter-bg.svg) */}
         <span
           className="pointer-events-none absolute inset-0 bg-cover bg-center"
@@ -57,8 +57,8 @@ export default function NewsletterCTA() {
         />
 
         {/* پنل شیشه‌ای مرکزی */}
-        <div className="relative m-6 w-full max-w-md rounded-[28px] border border-white/70 bg-white/55 p-7 text-center shadow-[0_24px_60px_-30px_rgba(10,21,45,0.45)] backdrop-blur-2xl">
-          <h3 className="font-display text-[21px] font-bold leading-[2.1] text-[#0a152d] md:text-[24px]">
+        <div className="relative m-5 w-full max-w-md rounded-[22px] border border-white/70 bg-white/55 p-6 text-center shadow-[0_24px_60px_-30px_rgba(10,21,45,0.45)] backdrop-blur-2xl">
+          <h3 className="font-display text-[19px] font-bold leading-[1.9] text-[#0a152d] md:text-[21px]">
             عضویت در خبرنامهٔ
             <span className="mx-1.5 inline-flex align-middle" aria-hidden>
               {AVATARS.map((background, index) => (
@@ -88,7 +88,7 @@ export default function NewsletterCTA() {
               setDone(false)
               setOpen(true)
             }}
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-[13px] font-bold text-[#0a152d] shadow-[0_16px_34px_-18px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_-18px_rgba(27,57,245,0.5)]"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-6 py-2.5 text-[12.5px] font-bold text-[#0a152d] shadow-[0_16px_34px_-18px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_-18px_rgba(27,57,245,0.5)]"
           >
             <Sparkles className="h-4 w-4 text-[#1b39f5]" />
             عضویت در خبرنامه
