@@ -49,7 +49,7 @@ export default function QuickOrder() {
   const total = option.price * quantity
 
   return (
-    <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#0a152d] p-3.5 md:p-5">
+    <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#0a152d] p-3.5 md:p-4">
       {/* مش رنگی پس‌زمینه */}
       <span
         className="pointer-events-none absolute -left-28 -top-28 h-72 w-72 rounded-full bg-[#1b39f5] opacity-40 blur-[100px]"
@@ -72,19 +72,19 @@ export default function QuickOrder() {
       />
 
       {/* سربرگ */}
-      <div className="relative flex flex-wrap items-center justify-between gap-3 px-1 pb-3.5">
+      <div className="relative flex flex-wrap items-center justify-between gap-3 px-1 pb-3">
         <div className="flex items-center gap-3">
-          <span className="relative grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-white/15 bg-white/[0.07] text-white backdrop-blur-xl">
+          <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-white/15 bg-white/[0.07] text-white backdrop-blur-xl">
             <span
               className="pointer-events-none absolute inset-x-3 -bottom-3 h-7 rounded-full bg-[#2a49ff] opacity-60 blur-[20px]"
               aria-hidden
             />
             <span className="relative">
-              <BrandIcon slug="apple" size={24} color="#ffffff" />
+              <BrandIcon slug="apple" size={22} color="#ffffff" />
             </span>
           </span>
           <div>
-            <div className="font-display text-[17px] font-extrabold leading-6 text-white md:text-[20px]">
+            <div className="font-display text-[16px] font-extrabold leading-6 text-white md:text-[18px]">
               سفارش سریع اپل آیدی
             </div>
             <div className="font-latin text-[10px] font-bold tracking-[0.24em] text-[#8ea3ff]">
@@ -108,7 +108,7 @@ export default function QuickOrder() {
 
       <div className="relative grid gap-2.5 lg:grid-cols-[1fr_320px]">
         {/* گزینه‌ها */}
-        <div className="rounded-[26px] border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl">
+        <div className="rounded-[24px] border border-white/10 bg-white/[0.04] p-3 backdrop-blur-xl">
           <div className="flex items-center justify-between px-1 pb-2.5">
             <span className="text-[11.5px] font-bold text-white">نوع اکانت را انتخاب کن</span>
             <span className="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-white/45">
@@ -185,7 +185,7 @@ export default function QuickOrder() {
         </div>
 
         {/* خلاصهٔ سفارش */}
-        <div className="relative flex flex-col justify-between overflow-hidden rounded-[26px] border border-white/12 bg-white/[0.07] p-4 backdrop-blur-2xl">
+        <div className="relative flex flex-col justify-between overflow-hidden rounded-[24px] border border-white/12 bg-white/[0.07] p-4 backdrop-blur-2xl">
           <span
             className="pointer-events-none absolute -right-16 -top-20 h-44 w-44 rounded-full bg-[#2a49ff] opacity-35 blur-[60px]"
             aria-hidden
@@ -194,7 +194,7 @@ export default function QuickOrder() {
           <div className="relative">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <div className="font-display text-[15px] font-extrabold text-white">تأیید و ثبت سفارش</div>
+                <div className="font-display text-[14px] font-extrabold text-white">تأیید و ثبت سفارش</div>
                 <div className="font-latin text-[10px] font-semibold tracking-[0.16em] text-[#8ea3ff]">
                   Accept and Ordering
                 </div>
@@ -252,7 +252,7 @@ export default function QuickOrder() {
 
             <div className="mt-3 flex items-end justify-between rounded-xl bg-white/[0.05] px-3.5 py-2.5">
               <span className="text-[11px] font-semibold text-white/55">مبلغ قابل پرداخت</span>
-              <span className="font-display text-[19px] font-extrabold text-white">
+              <span className="font-display text-[18px] font-extrabold text-white">
                 <span className="font-latin" dir="ltr">
                   {latinPrice(total)}
                 </span>
@@ -264,7 +264,7 @@ export default function QuickOrder() {
           <div className="relative">
             <button
               type="button"
-              className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-5 py-3 text-[12.5px] font-extrabold text-white shadow-[0_22px_40px_-22px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
+              className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-5 py-2.5 text-[12px] font-extrabold text-white shadow-[0_22px_40px_-22px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
             >
               <ShoppingBag className="h-4 w-4" />
               افزودن به سبد خرید
