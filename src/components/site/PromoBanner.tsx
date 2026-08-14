@@ -248,7 +248,7 @@ export default function PromoBanner() {
     <div
       className={`sticky top-0 z-50 w-full overflow-hidden transition-colors duration-700 ${slide.bar}`}
     >
-      <div className="relative mx-auto h-11 w-full max-w-[1400px] md:h-12">
+      <div className="relative mx-auto h-9 w-full max-w-[1280px] md:h-10">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={slide.id}
@@ -266,18 +266,18 @@ export default function PromoBanner() {
 
               {slide.chip ? (
                 <span
-                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10.5px] font-bold sm:inline-block ${slide.chipClass ?? ""}`}
+                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10px] font-bold sm:inline-block ${slide.chipClass ?? ""}`}
                 >
                   {slide.chip}
                 </span>
               ) : null}
 
-              <span className={`text-[12px] font-bold md:text-[13.5px] ${slide.text}`}>
+              <span className={`text-[11.5px] font-bold md:text-[12.5px] ${slide.text}`}>
                 {slide.lead}
                 {slide.highlight ? (
                   <span
                     dir="ltr"
-                    className={`wordmark mx-1.5 inline-block rounded-md px-1.5 py-0.5 text-[11px] md:text-[12.5px] ${slide.highlightClass ?? ""}`}
+                    className={`wordmark mx-1.5 inline-block rounded-md px-1.5 py-0.5 text-[10.5px] md:text-[12px] ${slide.highlightClass ?? ""}`}
                   >
                     {slide.highlight}
                   </span>
@@ -287,14 +287,14 @@ export default function PromoBanner() {
 
               {slide.note ? (
                 <span
-                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10.5px] font-bold md:inline-block ${slide.noteClass ?? ""}`}
+                  className={`hidden shrink-0 rounded-md px-2 py-0.5 text-[10px] font-bold md:inline-block ${slide.noteClass ?? ""}`}
                 >
                   {slide.note}
                 </span>
               ) : null}
 
               <span
-                className={`hidden shrink-0 items-center gap-1 text-[11.5px] font-bold lg:inline-flex ${slide.ctaClass}`}
+                className={`hidden shrink-0 items-center gap-1 text-[11px] font-bold lg:inline-flex ${slide.ctaClass}`}
               >
                 {slide.cta}
                 <ChevronLeft className="h-3.5 w-3.5" />
@@ -327,14 +327,14 @@ function SlideMark({ slide }: { slide: PromoSlide }) {
   const Icon = slide.icon
   if (!brand && !Icon) return null
 
-  const tile = `grid h-6 w-6 shrink-0 place-items-center rounded-[8px] md:h-7 md:w-7 md:rounded-[9px] ${slide.markClass ?? "bg-white"}`
+  const tile = `grid h-5 w-5 shrink-0 place-items-center rounded-[7px] md:h-6 md:w-6 md:rounded-[8px] ${slide.markClass ?? "bg-white"}`
 
   return (
     <span className={tile} aria-hidden>
       {brand ? (
-        <BrandIcon slug={brand.slug} size={14} color={`#${brand.color}`} />
+        <BrandIcon slug={brand.slug} size={12} color={`#${brand.color}`} />
       ) : Icon ? (
-        <Icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+        <Icon className="h-3 w-3 md:h-3.5 md:w-3.5" />
       ) : null}
     </span>
   )
