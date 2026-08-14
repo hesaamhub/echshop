@@ -1,19 +1,19 @@
-import Image from "next/image"
+import { LOGO_MARK_URI } from "@/lib/brandMark"
 
 /**
- * نشان (لوگو) رسمی اچ‌شاپ.
- * فایل اصلی در public/logo.png قرار دارد؛ برای عوض کردن لوگو فقط
- * همان فایل را جایگزین کنید — همهٔ سایت خودبه‌خود به‌روز می‌شود.
+ * نشان (لوگو) رسمی اچ‌شاپ — کلید سه‌بعدی آبی با لبخند، بدون پس‌زمینه.
+ * تصویر به‌صورت data URI در src/lib/brandMark.ts نگه‌داری می‌شود تا
+ * بدون هیچ درخواست شبکه‌ای در همهٔ بخش‌های سایت آماده باشد.
  */
 export default function Logo({ className = "h-6 w-6" }: { className?: string }) {
   return (
-    <Image
-      src="/logo.png"
+    <img
+      src={LOGO_MARK_URI}
       alt="اچ‌شاپ"
-      width={128}
-      height={128}
-      priority
-      className={`${className} object-contain`}
+      width={144}
+      height={144}
+      loading="eager"
+      className={`${className} object-cover`}
     />
   )
 }

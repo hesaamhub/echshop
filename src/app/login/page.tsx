@@ -6,6 +6,7 @@ import { ShieldCheck } from "lucide-react"
 import { siteContent } from "@/lib/data"
 import { cn } from "@/lib/utils"
 import Logo from "@/components/site/Logo"
+import Wordmark from "@/components/site/Wordmark"
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login")
@@ -19,9 +20,9 @@ export default function LoginPage() {
             <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
               <Logo className="h-5 w-5" />
             </span>
-            <span className="flex flex-col leading-none">
-              <span className="wordmark text-[16px] leading-none text-[#0a1b33]">echshop</span>
-              <span className="mt-1 text-[10.5px] font-semibold leading-none text-slate-400">
+            <span className="flex flex-col items-start gap-1 leading-none">
+              <Wordmark className="h-5 w-auto" />
+              <span className="text-[10.5px] font-semibold leading-none text-slate-400">
                 {siteContent.brand.nameFa}
               </span>
             </span>

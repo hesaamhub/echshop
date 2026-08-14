@@ -105,16 +105,16 @@ export const siteContent = {
  */
 const categorySeed: Omit<Category, "count">[] = [
   {
-    slug: "music-video",
-    title: "موسیقی و ویدیو",
-    description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
-    icon: "Music",
-  },
-  {
     slug: "ai-tools",
     title: "هوش مصنوعی",
     description: "اکانت ChatGPT Plus، Claude، Midjourney و ابزارهای مولد.",
     icon: "Sparkles",
+  },
+  {
+    slug: "music-video",
+    title: "موسیقی و ویدیو",
+    description: "اشتراک اسپاتیفای، یوتیوب پرمیوم، نتفلیکس و سرویس‌های استریم.",
+    icon: "Music",
   },
   {
     slug: "design",
@@ -139,6 +139,24 @@ const categorySeed: Omit<Category, "count">[] = [
     title: "شبکه‌های اجتماعی",
     description: "تلگرام پرمیوم، دیسکورد نیترو و خدمات ارتقای اکانت.",
     icon: "MessageCircle",
+  },
+  {
+    slug: "currency-pay",
+    title: "پرداخت ارزی",
+    description: "پرداخت‌های بین‌المللی، شارژ حساب‌های ارزی و خدمات پرداخت.",
+    icon: "Banknote",
+  },
+  {
+    slug: "virtual-number",
+    title: "شماره مجازی",
+    description: "شمارهٔ مجازی برای ثبت‌نام و فعال‌سازی سرویس‌های خارجی.",
+    icon: "Smartphone",
+  },
+  {
+    slug: "apple-id",
+    title: "اپل آیدی",
+    description: "اپل آیدی اختصاصی با قابلیت تغییر کامل اطلاعات.",
+    icon: "Apple",
   },
 ]
 
@@ -345,6 +363,38 @@ export const categories: Category[] = categorySeed.map((category) => ({
 }))
 
 /* -------------------------------------------------------------------------- */
+/*  پوسترهای بخش «جدیدترین محصولات» در صفحهٔ اصلی                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * پنج قاب پوستر: دو قاب کناری راست، یک قاب بزرگ وسط و دو قاب کناری چپ.
+ * پوسترهای فعلی در public/art قرار دارند؛ برای جایگزینی کافی است فایل جدید را
+ * همان‌جا آپلود کنید و آدرسش را در فیلد image بنویسید (مثل /art/my-poster.jpg).
+ * فیلد href مقصد کلیک روی پوستر است.
+ */
+export type HomePoster = {
+  id: string
+  /** عنوان لاتین روی قاب */
+  title: string
+  /** برچسب کوچک بالای عنوان */
+  kicker: string
+  /** تصویر پوستر — مسیر فایل در public */
+  image: string
+  /** مقصد کلیک روی پوستر */
+  href: string
+  /** رنگ اصلی قاب (برای حالت بدون تصویر) */
+  tint: string
+}
+
+export const homePosters: HomePoster[] = [
+  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: "/art/p-kling.jpg", href: "/new/kling-ai", tint: "#7b2ff7" },
+  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: "/art/p-notebooklm.jpg", href: "/new/notebooklm-plus", tint: "#1b39f5" },
+  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: "/art/p-hexafield.jpg", href: "/new/hexafield", tint: "#0b6b5b" },
+  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: "/art/p-kimi.jpg", href: "/new/kimi-k3", tint: "#c77414" },
+  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: "/art/p-chatgpt.jpg", href: "/products/chatgpt-plus", tint: "#10A37F" },
+]
+
+/* -------------------------------------------------------------------------- */
 /*  بلاگ                                                                      */
 /* -------------------------------------------------------------------------- */
 
@@ -437,10 +487,8 @@ export const tickets: Ticket[] = [
     status: "closed",
     priority: "کم",
     updatedAt: "2026-07-21",
-    messages: [
-      { from: "user", body: "تمدید روی همان اکانت ممکن است؟", at: "2026-07-20" },
-      { from: "support", body: "بله، از پنل کاربری گزینهٔ تمدید فعال است.", at: "2026-07-21" },
-    ],
+    messages: [{ from: "user", body: "تمدید روی همان اکانت ممکن است؟", at: "2026-07-20" },
+      { from: "support", body: "بله، از پنل کاربری گزینهٔ تمدید فعال است.", at: "2026-07-21" }],
   },
 ]
 

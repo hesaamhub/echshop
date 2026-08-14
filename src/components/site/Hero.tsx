@@ -223,7 +223,7 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="relative mx-1.5 grid h-[74px] w-[74px] shrink-0 place-items-center rounded-[26px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] shadow-[0_24px_54px_-14px_rgba(27,57,245,0.75)] md:h-[94px] md:w-[94px] md:rounded-[30px]"
+                className="relative mx-1.5 grid h-[74px] w-[74px] shrink-0 place-items-center rounded-[26px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] p-1.5 shadow-[0_24px_54px_-14px_rgba(27,57,245,0.75)] md:h-[94px] md:w-[94px] md:rounded-[30px] md:p-2"
               >
                 <span
                   className="pointer-events-none absolute -inset-8 rounded-full bg-[#1b39f5]/25 blur-2xl"
@@ -233,7 +233,7 @@ export default function Hero() {
                   className="pointer-events-none absolute inset-0 rounded-[26px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[30px]"
                   aria-hidden
                 />
-                <Logo className="relative z-10 h-10 w-10 brightness-0 invert md:h-14 md:w-14" />
+                <Logo className="relative z-10 h-full w-full rounded-[20px] md:rounded-[24px]" />
               </motion.span>
 
               <LogoRow

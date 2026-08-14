@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
 import {
+  Apple,
+  Banknote,
   Bell,
   ChevronDown,
   Flame,
@@ -16,6 +18,7 @@ import {
   Percent,
   Search,
   ShoppingCart,
+  Smartphone,
   Sparkles,
   UserRound,
   X,
@@ -24,6 +27,7 @@ import {
 import { cartCount } from "@/lib/cart"
 import { newArrivals, topDiscounts } from "@/lib/collections"
 import { categories, categoryCount } from "@/lib/data"
+import { LOGO_MARK_URI } from "@/lib/brandMark"
 import { session } from "@/lib/session"
 import { cn, num } from "@/lib/utils"
 import BestSellersMenu from "./BestSellersMenu"
@@ -31,7 +35,7 @@ import CartMenu from "./CartMenu"
 import NotificationsMenu, { unreadCount } from "./NotificationsMenu"
 import PanelMenu from "./PanelMenu"
 import ProductMiniList from "./ProductMiniList"
-import Logo from "./Logo"
+import Wordmark from "./Wordmark"
 
 /** لینک‌های سادهٔ منو */
 const navItems = [
@@ -48,6 +52,9 @@ const categoryIcons: Record<string, LucideIcon> = {
   Gamepad2,
   MonitorSmartphone,
   MessageCircle,
+  Banknote,
+  Smartphone,
+  Apple,
 }
 
 /** فهرست‌های ویژهٔ منوی محصولات */
@@ -89,18 +96,14 @@ export default function Header() {
     <header className="sticky top-11 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-12">
       <div className="mx-auto max-w-[1400px] px-4 md:px-6">
         <div ref={barRef} className="flex h-14 items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
-              <Logo className="h-5 w-5" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="wordmark text-[18px] leading-none text-[#0a1b33]">
-                echshop
-              </span>
-              <span className="mt-1 text-[10.5px] font-semibold leading-none text-slate-400">
-                اچ‌شاپ
-              </span>
-            </span>
+          <Link
+            href="/"
+            aria-label="اچ‌شاپ — بازگشت به صفحهٔ اصلی"
+            className="flex shrink-0 items-center gap-2.5"
+          >
+            {/* نشان سه‌بعدی برند + وردمارک تایپوگرافی دست‌ساز */}
+            <img src={LOGO_MARK_URI} alt="اچ‌شاپ" className="h-9 w-9 md:h-10 md:w-10" />
+            <Wordmark className="h-[22px] w-auto md:h-6" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1 mr-2">
