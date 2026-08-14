@@ -1,9 +1,4 @@
 import type { Category, Order, Post, Product, Ticket } from "./types"
-import { B_HOURGLASS_URI } from "./art/b-hourglass"
-import { T_BLUEPRINT_URI } from "./art/t-blueprint"
-import { T_TARGET_URI } from "./art/t-target"
-import { T_TILES_URI } from "./art/t-tiles"
-import { T_TRAY_URI } from "./art/t-tray"
 import { productsB } from "./productsB"
 import { productsC } from "./productsC"
 
@@ -373,9 +368,9 @@ export const categories: Category[] = categorySeed.map((category) => ({
 
 /**
  * پنج قاب پوستر: دو قاب کناری راست، یک قاب بزرگ وسط و دو قاب کناری چپ.
- * فعلاً با آرت‌بردهای سه‌بعدی داخلی پر شده‌اند؛ برای گذاشتن پوستر واقعی خودتان
- * کافی است فایل تصویر را در پوشهٔ public آپلود کنید و آدرسش را در فیلد image
- * بنویسید (مثل /posters/kling.png)؛ فیلد href مقصد کلیک روی پوستر است.
+ * پوسترهای فعلی در public/art قرار دارند؛ برای جایگزینی کافی است فایل جدید را
+ * همان‌جا آپلود کنید و آدرسش را در فیلد image بنویسید (مثل /art/my-poster.jpg).
+ * فیلد href مقصد کلیک روی پوستر است.
  */
 export type HomePoster = {
   id: string
@@ -383,20 +378,20 @@ export type HomePoster = {
   title: string
   /** برچسب کوچک بالای عنوان */
   kicker: string
-  /** تصویر پوستر — آرت داخلی یا آدرس فایل آپلودی شما */
+  /** تصویر پوستر — مسیر فایل در public */
   image: string
   /** مقصد کلیک روی پوستر */
   href: string
-  /** رنگ اصلی قاب */
+  /** رنگ اصلی قاب (برای حالت بدون تصویر) */
   tint: string
 }
 
 export const homePosters: HomePoster[] = [
-  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: T_TILES_URI, href: "/new/kling-ai", tint: "#7b2ff7" },
-  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: T_BLUEPRINT_URI, href: "/new/notebooklm-plus", tint: "#1b39f5" },
-  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: B_HOURGLASS_URI, href: "/new/hexafield", tint: "#0b6b5b" },
-  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: T_TRAY_URI, href: "/new/kimi-k3", tint: "#c77414" },
-  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: T_TARGET_URI, href: "/products/chatgpt-plus", tint: "#10A37F" },
+  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: "/art/p-kling.jpg", href: "/new/kling-ai", tint: "#7b2ff7" },
+  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: "/art/p-notebooklm.jpg", href: "/new/notebooklm-plus", tint: "#1b39f5" },
+  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: "/art/p-hexafield.jpg", href: "/new/hexafield", tint: "#0b6b5b" },
+  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: "/art/p-kimi.jpg", href: "/new/kimi-k3", tint: "#c77414" },
+  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: "/art/p-chatgpt.jpg", href: "/products/chatgpt-plus", tint: "#10A37F" },
 ]
 
 /* -------------------------------------------------------------------------- */

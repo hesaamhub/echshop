@@ -5,7 +5,7 @@ import { homePosters, type HomePoster } from "@/lib/data"
 /**
  * پنج قاب پوستر «جدیدترین محصولات»: دو قاب کناری راست، یک قاب بزرگ وسط و دو قاب کناری چپ.
  * محتوای قاب‌ها (تصویر و لینک) از homePosters در src/lib/data.ts خوانده می‌شود؛
- * صاحب فروشگاه فایل پوستر را در public می‌گذارد و آدرسش را در همان آرایه می‌نویسد.
+ * صاحب فروشگاه فایل پوستر را در public/art می‌گذارد و آدرسش را در همان آرایه می‌نویسد.
  */
 export default function PosterShowcase() {
   const [rightTop, rightBottom, center, leftTop, leftBottom] = homePosters
@@ -34,11 +34,13 @@ function PosterSlot({
     <Link
       href={poster.href}
       className={`group relative block overflow-hidden rounded-[26px] border border-[#1b39f5]/10 shadow-[0_22px_50px_-36px_rgba(10,27,51,0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_34px_64px_-34px_rgba(27,57,245,0.45)] ${
-        tall ? "h-[300px] lg:h-full" : "h-[210px] lg:h-full"
+        tall
+          ? "aspect-[108/87] h-auto lg:aspect-auto lg:h-full"
+          : "aspect-[83/42] h-auto lg:aspect-auto lg:h-full"
       } ${className}`}
     >
       {poster.image ? (
-        // پوستر آپلودشده توسط صاحب فروشگاه
+        // نسبت قاب با نسبت پوستر یکی است تا متن پخته‌شده کراپ نشود
         <img
           src={poster.image}
           alt={poster.title}
