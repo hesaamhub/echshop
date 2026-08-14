@@ -36,8 +36,8 @@ export default function Footer() {
   const { brand, footer, contact } = siteContent
 
   return (
-    <footer className="mt-24 px-4 pb-5 md:px-6">
-      <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[36px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f5f8ff] via-white to-white shadow-[0_30px_70px_-50px_rgba(27,57,245,0.45)]">
+    <footer className="mt-16 px-4 pb-5 md:px-6">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[28px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f5f8ff] via-white to-white shadow-[0_30px_70px_-50px_rgba(27,57,245,0.45)]">
         {/* خط برند لبهٔ بالایی + هالهٔ نرم گوشه */}
         <span
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-[#1b39f5]/45 to-transparent"
@@ -49,12 +49,12 @@ export default function Footer() {
         />
 
         {/* بخش بالایی: برند + ستون‌های لینک */}
-        <div className="relative grid gap-12 p-7 md:p-10 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="relative grid gap-10 p-6 md:p-8 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div>
             <div className="flex items-center gap-3">
-              <Logo className="h-14 w-14 rounded-[18px] shadow-[0_16px_32px_-16px_rgba(27,57,245,0.55)]" />
+              <Logo className="h-12 w-12 rounded-[16px] shadow-[0_16px_32px_-16px_rgba(27,57,245,0.55)]" />
               <div className="flex flex-col items-start gap-1.5 leading-none">
-                <Wordmark className="h-[26px] w-auto" />
+                <Wordmark className="h-[24px] w-auto" />
                 <span className="text-[11px] font-semibold text-slate-400">{brand.tagline}</span>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Footer() {
         </div>
 
         {/* نوار تماس فشرده */}
-        <div className="relative px-7 pb-6 md:px-10">
+        <div className="relative px-6 pb-5 md:px-8">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 border-y border-[#1b39f5]/8 py-4 text-[11.5px] font-medium text-slate-500">
             <span className="inline-flex items-center gap-2">
               <PhoneCall className="h-3.5 w-3.5 text-[#1b39f5]" />
@@ -123,8 +123,8 @@ export default function Footer() {
         </div>
 
         {/* نمادهای اعتماد و پرداخت */}
-        <div className="relative px-7 pb-8 md:px-10">
-          <div className="rounded-[24px] border border-[#1b39f5]/10 bg-white/70 p-4 backdrop-blur-sm md:p-5">
+        <div className="relative px-6 pb-7 md:px-8">
+          <div className="rounded-[24px] border border-[#1b39f5]/10 bg-white/70 p-4 backdrop-blur-sm">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="flex items-center gap-2 text-[13px] font-bold text-[#0a1b33]">
@@ -179,7 +179,7 @@ export default function Footer() {
         </div>
 
         {/* نوار پایانی */}
-        <div className="relative flex flex-col gap-3 border-t border-[#1b39f5]/10 px-7 py-5 text-[12px] text-slate-400 sm:flex-row sm:items-center sm:justify-between md:px-10">
+        <div className="relative flex flex-col gap-3 border-t border-[#1b39f5]/10 px-6 py-5 text-[12px] text-slate-400 sm:flex-row sm:items-center sm:justify-between md:px-8">
           <p>تمامی حقوق برای {brand.nameFa} محفوظ است. ۱۴۰۵</p>
           <p>{contact.hours}</p>
         </div>
