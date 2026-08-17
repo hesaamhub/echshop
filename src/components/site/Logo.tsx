@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- نشان برند data-URI است و بهینه‌سازی next/image سودی ندارد */
 import { LOGO_MARK_URI } from "@/lib/brandMark"
 
 /**

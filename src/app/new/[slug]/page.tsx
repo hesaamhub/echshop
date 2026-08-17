@@ -7,8 +7,6 @@ import Footer from "@/components/site/Footer"
 import NewArrivalBanner, { ART_IMAGES } from "@/components/site/NewArrivalBanner"
 import { getNewArrival, newArrivals } from "@/lib/newArrivals"
 
-const SITE_URL = "https://echshop.ir"
-
 function latinPrice(value: number) {
   return new Intl.NumberFormat("en-US").format(value)
 }

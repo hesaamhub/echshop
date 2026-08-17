@@ -1,5 +1,6 @@
 "use client"
 
+/* eslint-disable @next/next/no-img-element -- نشان برند data-URI است و بهینه‌سازی next/image سودی ندارد */
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
