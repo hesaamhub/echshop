@@ -93,7 +93,7 @@ export default function Hero() {
         >
           <DeliveryBadge label={hero.badge} reduceMotion={reduceMotion ?? false} />
 
-          <h1 className="mt-4 font-display text-[26px] md:text-[40px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
+          <h1 className="mt-4 font-display text-[26px] md:text-[40px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] lg:whitespace-nowrap">
             {hero.headlineLead}{" "}
             <span className="inline-grid align-baseline text-center">
               {rotatingProducts.map((name) => (

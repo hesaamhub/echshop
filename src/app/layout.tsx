@@ -26,7 +26,13 @@ export const metadata: Metadata = {
     description: siteContent.hero.subheadline,
     locale: "fa_IR",
     type: "website",
-    images: [{ url: "/logo.png", width: 640, height: 640, alt: siteContent.brand.nameFa }],
+    images: [{ url: "/art/hero-1.jpg", width: 2560, height: 768, alt: siteContent.brand.nameFa }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteContent.brand.nameFa} — ${siteContent.brand.tagline}`,
+    description: siteContent.hero.subheadline,
+    images: ["/art/hero-1.jpg"],
   },
 }
 

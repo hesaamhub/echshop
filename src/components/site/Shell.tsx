@@ -16,7 +16,7 @@ export default function Shell({
   return (
     <>
       <Header />
-      <main className="mx-auto max-w-[1400px] px-4 md:px-6 py-10">
+      <main className="mx-auto max-w-[1280px] px-4 md:px-6 py-10">
         {breadcrumb?.length ? (
           <nav className="mb-4 flex flex-wrap items-center gap-2 text-[12px] text-slate-400">
             {breadcrumb.map((item, index) => (
