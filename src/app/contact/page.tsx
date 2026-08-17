@@ -1,8 +1,19 @@
+import type { Metadata } from "next"
 import { Clock, Mail, MapPin, PhoneCall, Send } from "lucide-react"
 import Shell from "@/components/site/Shell"
 import { siteContent } from "@/lib/data"
 
-export const metadata = { title: "تماس با ما" }
+export const metadata: Metadata = {
+  title: "تماس با ما — پشتیبانی ۲۴/۷",
+  description:
+    "ارتباط با پشتیبانی اچ‌شاپ: تیکت شبانه‌روزی، تماس تلفنی ۹ تا ۲۱، ایمیل و تلگرام. پاسخ سریع برای پیگیری سفارش، همکاری و فروش عمده.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "تماس با اچ‌شاپ",
+    description: "پشتیبانی شبانه‌روزی تیکت و پاسخ سریع برای پیگیری سفارش و همکاری.",
+    url: "/contact",
+  },
+}
 
 export default function ContactPage() {
   const { contact } = siteContent

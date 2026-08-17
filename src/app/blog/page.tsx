@@ -1,9 +1,21 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import Shell from "@/components/site/Shell"
 import { posts } from "@/lib/data"
 import { faDate } from "@/lib/utils"
 
-export const metadata = { title: "بلاگ" }
+export const metadata: Metadata = {
+  title: "بلاگ — راهنمای خرید اکانت و مقایسهٔ سرویس‌ها",
+  description:
+    "راهنمای خرید امن اکانت‌های پرمیوم، مقایسهٔ دقیق اشتراک‌ها و لایسنس‌ها، و نکات امنیتی حساب‌های دیجیتال از تحریریهٔ اچ‌شاپ.",
+  keywords: ["بلاگ اچ‌شاپ", "راهنمای خرید اکانت", "مقایسه اشتراک", "امنیت اکانت"],
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "بلاگ اچ‌شاپ",
+    description: "راهنمای خرید امن اکانت‌های پرمیوم و مقایسهٔ سرویس‌ها.",
+    url: "/blog",
+  },
+}
 
 export default function BlogPage() {
   const [featured, ...rest] = posts
