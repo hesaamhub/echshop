@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpLeft } from "lucide-react"
 import { homePosters, type HomePoster } from "@/lib/data"
@@ -40,11 +41,14 @@ function PosterSlot({
       } ${className}`}
     >
       {poster.image ? (
-        // نسبت قاب با نسبت پوستر یکی است تا متن پخته‌شده کراپ نشود
-        <img
+        // نسبت قاب با نسبت پوستر یکی است تا متن پخته‌شده کراپ نشود؛
+        // next/image به‌صورت خودکار نسخهٔ AVIF/WebP و سایز مناسب دستگاه را سرو می‌کند
+        <Image
           src={poster.image}
           alt={poster.title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+          fill
+          sizes={tall ? "(max-width: 1024px) 100vw, 540px" : "(max-width: 1024px) 100vw, 400px"}
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
       ) : (
         // قاب پیش‌فرض تا وقتی پوستر آپلود شود

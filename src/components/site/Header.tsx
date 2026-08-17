@@ -364,14 +364,26 @@ export default function Header() {
         </div>
       </div>
 
-      {/* منوی موبایل */}
+      {/* منوی موبایل — با اسکرول مستقل تا در صفحات کوتاه هم بریده نشود */}
       <div
         className={cn(
           "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
-          open ? "max-h-[1600px]" : "max-h-0",
+          open ? "max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain" : "max-h-0",
         )}
       >
         <div className="px-4 py-4 space-y-1">
+          {/* جستجو در موبایل */}
+          <form action="/products" className="glass-plate mb-2 flex h-10 items-center gap-2 rounded-full px-4">
+            <Search className="h-4 w-4 shrink-0 text-[#1b39f5]/70" />
+            <input
+              name="q"
+              type="search"
+              aria-label="جستجوی محصول"
+              placeholder="جستجوی محصول، برند یا دسته‌بندی…"
+              className="h-full w-full bg-transparent text-[12.5px] font-medium outline-none placeholder:text-slate-400"
+            />
+          </form>
+
           {/* محصولات — با لمس باز می‌شود */}
           <MobileSection
             label="محصولات"

@@ -1,10 +1,21 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { BadgeCheck, Headphones, ShieldCheck, Zap } from "lucide-react"
 import Shell from "@/components/site/Shell"
 import GlassIcon from "@/components/site/GlassIcon"
 import { siteContent } from "@/lib/data"
 
-export const metadata = { title: "دربارهٔ ما" }
+export const metadata: Metadata = {
+  title: "دربارهٔ ما",
+  description:
+    "اچ‌شاپ از سال ۱۳۹۹ فروشگاه اکانت پرمیوم و لایسنس رسمی است؛ بیش از ۴۸ هزار سفارش موفق با تحویل خودکار، گارانتی واقعی و پشتیبانی شبانه‌روزی فارسی.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "دربارهٔ اچ‌شاپ",
+    description: siteContent.footer.about,
+    url: "/about",
+  },
+}
 
 const timeline = [
   { year: "۱۴۰۱", title: "شروع با فروش لایسنس نرم‌افزاری", body: "فعالیت را با تامین لایسنس‌های طراحی و نرم‌افزاری برای تیم‌های کوچک آغاز کردیم." },

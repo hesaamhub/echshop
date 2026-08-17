@@ -3,17 +3,18 @@ import { Search } from "lucide-react"
 import { products } from "@/lib/data"
 import { num, toman } from "@/lib/utils"
 import BrandIcon from "./BrandIcon"
+import ProductPoster from "./ProductPoster"
 
-/** پنج محصول پرفروش — بادبزن کارت‌های داخل هیرو */
+/** پنج محصول پرفروش — بادبزن پوسترهای داخل هیرو */
 const fanProducts = [...products].sort((a, b) => b.sold - a.sold).slice(0, 5)
 
-/** قاب‌بندی بادبزن — چرخش و برآمدگی هر کارت (سمت راست در RTL) */
+/** قاب‌بندی بادبزن — چرخش و برآمدگی هر پوستر (سمت راست در RTL) */
 const FAN_STYLE = [
-  { rotate: "12deg", lift: 30, height: "h-[210px] md:h-[270px]", show: "hidden min-[560px]:block" },
-  { rotate: "6deg", lift: 14, height: "h-[230px] md:h-[295px]", show: "hidden min-[420px]:block" },
-  { rotate: "0deg", lift: 0, height: "h-[250px] md:h-[320px]", show: "block" },
-  { rotate: "-6deg", lift: 14, height: "h-[230px] md:h-[295px]", show: "hidden min-[420px]:block" },
-  { rotate: "-12deg", lift: 30, height: "h-[210px] md:h-[270px]", show: "hidden min-[560px]:block" },
+  { rotate: "12deg", lift: 34, height: "h-[235px] md:h-[300px]", show: "hidden min-[560px]:block" },
+  { rotate: "6deg", lift: 16, height: "h-[258px] md:h-[330px]", show: "hidden min-[420px]:block" },
+  { rotate: "0deg", lift: 0, height: "h-[280px] md:h-[360px]", show: "block" },
+  { rotate: "-6deg", lift: 16, height: "h-[258px] md:h-[330px]", show: "hidden min-[420px]:block" },
+  { rotate: "-12deg", lift: 34, height: "h-[235px] md:h-[300px]", show: "hidden min-[560px]:block" },
 ]
 
 /** کمترین قیمت میان پلن‌های محصول */
@@ -22,12 +23,13 @@ function minPrice(product: (typeof products)[number]) {
 }
 
 /**
- * هیروی صفحهٔ محصولات — پنل تیره با بادبزن کارت‌های رنگی برندها.
- * الهام از رابط‌های فروشگاه بازی (کارت‌های کمیاب رو به بیننده).
+ * هیروی صفحهٔ محصولات — پنل تیره با بادبزن پوسترهای تبلیغاتی برندها.
+ * هر کارت یک مینی‌پوستر تبلیغاتی کامل است: آرت برند (گرادیان + موتیف +
+ * وردمارک توخالی + نشان)، برچسب، امتیاز، عنوان و کمترین قیمت.
  */
 export default function ProductsHero() {
   return (
-    <section className="relative flex min-h-[560px] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(120%_100%_at_50%_0%,#16224a_0%,#0b1226_55%,#080e1f_100%)] shadow-[0_40px_80px_-40px_rgba(8,14,31,0.6)] md:min-h-[620px]">
+    <section className="relative flex min-h-[580px] flex-col overflow-hidden rounded-[28px] border border-white/10 bg-[radial-gradient(120%_100%_at_50%_0%,#16224a_0%,#0b1226_55%,#080e1f_100%)] shadow-[0_40px_80px_-40px_rgba(8,14,31,0.6)] md:min-h-[640px]">
       {/* بافت شبکه‌ای ظریف */}
       <span
         className="pointer-events-none absolute inset-0 opacity-60"
@@ -67,7 +69,8 @@ export default function ProductsHero() {
           همهٔ اکانت‌ها و لایسنس‌ها
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-[13px] font-medium leading-7 text-[#94a3c7] md:text-[15px]">
-          بیش از ۴۰ برند جهانی با تحویل فوری، خودکار یا دستی — همه با گارانتی و پشتیبانی فارسی.
+          هر اشتراکی که لازم داری اینجاست — قیمت منصفانه، تحویل در چند دقیقه و گارانتی واقعی.
+          جستجو کن، مقایسه کن، همین حالا فعالش کن.
         </p>
 
         <form action="/products" className="relative mx-auto mt-6 w-full max-w-md">
@@ -84,7 +87,7 @@ export default function ProductsHero() {
         </form>
       </div>
 
-      {/* بادبزن کارت‌های برند */}
+      {/* بادبزن پوسترهای تبلیغاتی محصولات */}
       <div className="relative z-10 mt-auto flex items-end justify-center pt-10">
         {fanProducts.map((product, index) => {
           const style = FAN_STYLE[index]
@@ -100,26 +103,34 @@ export default function ProductsHero() {
             >
               <Link
                 href={`/products/${product.slug}`}
-                className={`group relative block w-[132px] overflow-hidden rounded-t-[20px] border border-white/10 bg-gradient-to-b shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.6)] transition-transform duration-500 hover:-translate-y-1.5 md:w-[180px] lg:w-[200px] ${style.height} ${product.gradient}`}
+                className={`group relative block w-[140px] overflow-hidden rounded-t-[22px] border border-white/15 shadow-[0_-24px_50px_-20px_rgba(0,0,0,0.65)] transition-transform duration-500 hover:-translate-y-2 md:w-[185px] lg:w-[205px] ${style.height}`}
               >
-                {/* هالهٔ پشت نشان */}
-                <span
-                  className="pointer-events-none absolute left-1/2 top-[18%] h-[120px] w-[120px] -translate-x-1/2 rounded-full bg-white/25 blur-[46px]"
-                  aria-hidden
-                />
-                {/* نشان برند */}
-                <span className="absolute left-1/2 top-[34%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_14px_30px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:scale-110">
-                  <BrandIcon slug={product.logo} size={64} color="#ffffff" />
+                {/* آرت پوستر برند — گرادیان + موتیف + وردمارک توخالی + نشان بزرگ */}
+                <ProductPoster slug={product.logo} brand={product.brand} />
+
+                {/* برچسب محصول */}
+                {product.badge ? (
+                  <span className="absolute left-3 top-3 z-10 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-extrabold text-white backdrop-blur-md">
+                    {product.badge}
+                  </span>
+                ) : null}
+                {/* امتیاز */}
+                <span className="absolute right-3 top-3 z-10 inline-flex items-center gap-1 rounded-full bg-black/40 px-2.5 py-1 text-[11px] font-extrabold text-[#fbbf24] backdrop-blur-md">
+                  ★ <span className="font-latin">{num(product.rating)}</span>
                 </span>
-                {/* نشان امتیاز */}
-                <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-extrabold text-white backdrop-blur-md">
-                  ★ {num(product.rating)}
-                </span>
-                {/* نام و قیمت */}
-                <span className="absolute inset-x-0 bottom-0 block bg-gradient-to-t from-[#040812bf] to-transparent px-3.5 pb-4 pt-8 text-right">
-                  <span className="wordmark block text-[14px] font-bold text-white">{product.brand}</span>
-                  <span className="mt-1 block text-[11px] font-semibold text-white/60">
-                    از <span className="font-latin">{toman(minPrice(product))}</span> تومان
+
+                {/* نوار اطلاعات پایین پوستر */}
+                <span className="absolute inset-x-0 bottom-0 z-10 block border-t border-white/12 bg-[#060b1a]/75 px-3.5 py-2.5 text-right backdrop-blur-md">
+                  <span className="block truncate text-[12px] font-bold text-white">
+                    {product.title}
+                  </span>
+                  <span className="mt-1.5 flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-semibold text-white/55">
+                      از <span className="font-latin">{toman(minPrice(product))}</span> تومان
+                    </span>
+                    <span className="rounded-full bg-white/12 px-2.5 py-0.5 text-[9.5px] font-bold text-white transition-colors duration-300 group-hover:bg-[#1b39f5]">
+                      خرید
+                    </span>
                   </span>
                 </span>
               </Link>

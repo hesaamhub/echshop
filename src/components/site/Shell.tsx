@@ -1,5 +1,8 @@
+import Link from "next/link"
 import Header from "@/components/site/Header"
 import Footer from "@/components/site/Footer"
+
+const SITE_URL = "https://echshop.ir"
 
 /** پوستهٔ مشترک صفحات فروشگاه */
 export default function Shell({
@@ -13,22 +16,46 @@ export default function Shell({
   subtitle?: string
   breadcrumb?: { label: string; href?: string }[]
 }) {
+  // دادهٔ ساخت‌یافتهٔ مسیر صفحه — نمایش breadcrumb در نتایج گوگل
+  const breadcrumbLd = breadcrumb?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumb.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.label,
+          ...(item.href ? { item: `${SITE_URL}${item.href}` } : {}),
+        })),
+      }
+    : null
+
   return (
     <>
       <Header />
       <main className="mx-auto max-w-[1280px] px-4 md:px-6 py-10">
+        {breadcrumbLd ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+          />
+        ) : null}
+
         {breadcrumb?.length ? (
-          <nav className="mb-4 flex flex-wrap items-center gap-2 text-[12px] text-slate-400">
+          <nav
+            aria-label="مسیر صفحه"
+            className="mb-4 flex flex-wrap items-center gap-2 text-[12px] text-slate-400"
+          >
             {breadcrumb.map((item, index) => (
               <span key={`${item.label}-${index}`} className="flex items-center gap-2">
                 {item.href ? (
-                  <a href={item.href} className="transition-colors hover:text-[#1b39f5]">
+                  <Link href={item.href} className="transition-colors hover:text-[#1b39f5]">
                     {item.label}
-                  </a>
+                  </Link>
                 ) : (
                   <span className="text-slate-600">{item.label}</span>
                 )}
-                {index < breadcrumb.length - 1 ? <span>/</span> : null}
+                {index < breadcrumb.length - 1 ? <span aria-hidden>/</span> : null}
               </span>
             ))}
           </nav>

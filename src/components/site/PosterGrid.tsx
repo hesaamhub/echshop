@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 type Tile = { id: string; image: string; alt: string; href: string; wide?: boolean }
@@ -26,11 +27,14 @@ export default function PosterGrid() {
             tile.wide ? "aspect-[70/19] lg:col-span-2" : "aspect-[69/38]"
           }`}
         >
-          {/* نسبت قاب با نسبت تصویر یکی است تا متن پخته‌شده کراپ نشود */}
-          <img
+          {/* نسبت قاب با نسبت تصویر یکی است تا متن پخته‌شده کراپ نشود؛
+              next/image به‌صورت خودکار نسخهٔ AVIF/WebP و سایز مناسب دستگاه را سرو می‌کند */}
+          <Image
             src={tile.image}
             alt={tile.alt}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            fill
+            sizes={tile.wide ? "(max-width: 1024px) 100vw, 1232px" : "(max-width: 1024px) 100vw, 608px"}
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
           />
         </Link>
       ))}

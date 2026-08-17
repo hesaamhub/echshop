@@ -30,6 +30,8 @@
     font-family: var(--font-sans);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
+    /* حذف فلش پیش‌فرض لمس در موبایل */
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* اعداد و متن لاتین */
@@ -246,4 +248,21 @@
 }
 *::-webkit-scrollbar-thumb:hover {
   background: #cbd5e1;
+}
+
+/* نوار اسکرول باریک برندی برای پنل‌های داخلی (مثل ستون فیلتر محصولات) */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27, 57, 245, 0.25) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(27, 57, 245, 0.22);
+  border-radius: 999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(27, 57, 245, 0.4);
 }

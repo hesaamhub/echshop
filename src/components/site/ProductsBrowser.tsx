@@ -148,10 +148,10 @@ export default function ProductsBrowser({
         <ChevronDown className={cn("h-4 w-4 transition-transform", filtersOpen && "rotate-180")} />
       </button>
 
-      {/* فیلترها */}
+      {/* فیلترها — ستون با اسکرول مستقل از صفحه (موبایل و دسکتاپ) */}
       <aside
         className={cn(
-          "space-y-4 self-start lg:sticky lg:top-28 lg:block",
+          "scrollbar-thin max-h-[75dvh] space-y-4 self-start overflow-y-auto overscroll-contain lg:sticky lg:top-28 lg:block lg:max-h-[calc(100dvh-8rem)]",
           filtersOpen ? "block" : "hidden",
         )}
       >

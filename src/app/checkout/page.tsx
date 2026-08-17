@@ -1,9 +1,13 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { CreditCard, Wallet } from "lucide-react"
 import Shell from "@/components/site/Shell"
 import { toman } from "@/lib/utils"
 
-export const metadata = { title: "تسویه حساب" }
+export const metadata: Metadata = {
+  title: "تسویه حساب",
+  robots: { index: false, follow: false },
+}
 
 export default function CheckoutPage() {
   const total = 2_420_000

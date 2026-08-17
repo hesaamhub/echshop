@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { Minus, Plus, Trash2 } from "lucide-react"
 import Shell from "@/components/site/Shell"
@@ -6,7 +7,10 @@ import { cartDiscount, cartLines, cartSubtotal, cartTotal } from "@/lib/cart"
 import { deliveryLabels } from "@/lib/types"
 import { num, toman } from "@/lib/utils"
 
-export const metadata = { title: "سبد خرید" }
+export const metadata: Metadata = {
+  title: "سبد خرید",
+  robots: { index: false, follow: false },
+}
 
 export default function CartPage() {
   return (
