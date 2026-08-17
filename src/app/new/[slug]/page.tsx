@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, BadgeCheck, Check, Headphones, Zap } from "lucide-react"
@@ -6,12 +7,35 @@ import Footer from "@/components/site/Footer"
 import NewArrivalBanner, { ART_IMAGES } from "@/components/site/NewArrivalBanner"
 import { getNewArrival, newArrivals } from "@/lib/newArrivals"
 
+const SITE_URL = "https://echshop.ir"
+
 function latinPrice(value: number) {
   return new Intl.NumberFormat("en-US").format(value)
 }
 
 export function generateStaticParams() {
   return newArrivals.map((item) => ({ slug: item.slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const item = getNewArrival(slug)
+  if (!item) return { title: "محصول یافت نشد" }
+
+  return {
+    title: `${item.name} — تازه رسیده در اچ‌شاپ`,
+    description: `${item.pitch} شروع قیمت از ${latinPrice(item.priceFrom)} تومان؛ فعال‌سازی فوری و گارانتی کامل.`,
+    alternates: { canonical: `/new/${item.slug}` },
+    openGraph: {
+      title: `${item.name} | اچ‌شاپ`,
+      description: item.pitch,
+      url: `/new/${item.slug}`,
+    },
+  }
 }
 
 export default async function NewArrivalPage({
@@ -26,9 +50,29 @@ export default async function NewArrivalPage({
 
   const others = newArrivals.filter((entry) => entry.slug !== item.slug)
 
+  // دادهٔ ساخت‌یافتهٔ پرسش‌های پرتکرار این محصول
+  const faqLd =
+    item.faq.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: item.faq.map((entry) => ({
+            "@type": "Question",
+            name: entry.q,
+            acceptedAnswer: { "@type": "Answer", text: entry.a },
+          })),
+        }
+      : null
+
   return (
     <>
       <Header />
+      {faqLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      ) : null}
       <main className="pb-20 pt-6">
         <div className="mx-auto max-w-[1400px] px-4 md:px-6">
           {/* مسیر */}
