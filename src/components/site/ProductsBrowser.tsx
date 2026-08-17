@@ -148,90 +148,95 @@ export default function ProductsBrowser({
         <ChevronDown className={cn("h-4 w-4 transition-transform", filtersOpen && "rotate-180")} />
       </button>
 
-      {/* فیلترها — ستون با اسکرول مستقل از صفحه (موبایل و دسکتاپ) */}
+      {/* فیلترها — ستون با اسکرول مستقل از صفحه؛
+          ظرف با direction:ltr تنظیم شده تا خط اسکرول در سمت راست پنل قرار بگیرد
+          و محتوای داخلی دوباره راست‌به‌چپ می‌شود */}
       <aside
         className={cn(
-          "scrollbar-thin max-h-[75dvh] space-y-4 self-start overflow-y-auto overscroll-contain lg:sticky lg:top-28 lg:block lg:max-h-[calc(100dvh-8rem)]",
+          "scrollbar-thin max-h-[75dvh] self-start overflow-y-auto overscroll-contain lg:sticky lg:top-28 lg:block lg:max-h-[calc(100dvh-8rem)] lg:pe-1",
           filtersOpen ? "block" : "hidden",
         )}
+        style={{ direction: "ltr" }}
       >
-        <FilterCard title="دسته‌بندی">
-          <div className="flex flex-wrap gap-1.5">
-            {categories.map((category) => {
-              const active = selectedCategories.includes(category.slug)
+        <div className="space-y-4" style={{ direction: "rtl" }}>
+          <FilterCard title="دسته‌بندی">
+            <div className="flex flex-wrap gap-1.5">
+              {categories.map((category) => {
+                const active = selectedCategories.includes(category.slug)
 
-              return (
-                <button
-                  key={category.slug}
-                  type="button"
-                  onClick={() => setSelectedCategories((current) => toggle(current, category.slug))}
-                  aria-pressed={active}
-                  className={cn(
-                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
-                    active
-                      ? "glass-solid"
-                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
-                  )}
-                >
-                  {category.title}
-                  <span className={cn("num mr-1.5 text-[10px]", active ? "text-white/70" : "text-slate-400")}>
-                    {num(category.count)}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
-        </FilterCard>
+                return (
+                  <button
+                    key={category.slug}
+                    type="button"
+                    onClick={() => setSelectedCategories((current) => toggle(current, category.slug))}
+                    aria-pressed={active}
+                    className={cn(
+                      "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                      active
+                        ? "glass-solid"
+                        : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                    )}
+                  >
+                    {category.title}
+                    <span className={cn("num mr-1.5 text-[10px]", active ? "text-white/70" : "text-slate-400")}>
+                      {num(category.count)}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </FilterCard>
 
-        <FilterCard title="نوع تحویل">
-          <div className="flex flex-wrap gap-1.5">
-            {(Object.entries(deliveryLabels) as [DeliveryMethod, string][]).map(([key, label]) => {
-              const active = deliveries.includes(key)
+          <FilterCard title="نوع تحویل">
+            <div className="flex flex-wrap gap-1.5">
+              {(Object.entries(deliveryLabels) as [DeliveryMethod, string][]).map(([key, label]) => {
+                const active = deliveries.includes(key)
 
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setDeliveries((current) => toggle(current, key))}
-                  aria-pressed={active}
-                  className={cn(
-                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
-                    active
-                      ? "glass-solid"
-                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
-                  )}
-                >
-                  {label}
-                </button>
-              )
-            })}
-          </div>
-        </FilterCard>
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setDeliveries((current) => toggle(current, key))}
+                    aria-pressed={active}
+                    className={cn(
+                      "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                      active
+                        ? "glass-solid"
+                        : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                    )}
+                  >
+                    {label}
+                  </button>
+                )
+              })}
+            </div>
+          </FilterCard>
 
-        <FilterCard title="محدودهٔ قیمت">
-          <div className="flex flex-wrap gap-1.5">
-            {priceRanges.map((range) => {
-              const active = priceRangeId === range.id
+          <FilterCard title="محدودهٔ قیمت">
+            <div className="flex flex-wrap gap-1.5">
+              {priceRanges.map((range) => {
+                const active = priceRangeId === range.id
 
-              return (
-                <button
-                  key={range.id}
-                  type="button"
-                  onClick={() => setPriceRangeId(range.id)}
-                  aria-pressed={active}
-                  className={cn(
-                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
-                    active
-                      ? "glass-solid"
-                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
-                  )}
-                >
-                  {range.label}
-                </button>
-              )
-            })}
-          </div>
-        </FilterCard>
+                return (
+                  <button
+                    key={range.id}
+                    type="button"
+                    onClick={() => setPriceRangeId(range.id)}
+                    aria-pressed={active}
+                    className={cn(
+                      "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                      active
+                        ? "glass-solid"
+                        : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                    )}
+                  >
+                    {range.label}
+                  </button>
+                )
+              })}
+            </div>
+          </FilterCard>
+        </div>
       </aside>
 
       {/* لیست */}
@@ -274,7 +279,7 @@ export default function ProductsBrowser({
             ))}
           </div>
 
-          {/* بج‌های فیلتر فعال */}
+          {/* بجهای فیلتر فعال */}
           {activeBadges.length > 0 ? (
             <div className="flex flex-wrap items-center gap-1.5 border-t border-[#1b39f5]/8 pt-3">
               {activeBadges.map((badge) => (
