@@ -59,7 +59,7 @@ export default function CurrencyPay() {
   const total = subtotal + fee
 
   return (
-    <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-[#0a152d] px-4 py-6 md:px-8 md:py-7">
+    <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#0a152d] px-4 py-5 md:px-7 md:py-6">
       {/* مش رنگی و شبکه */}
       <span
         className="pointer-events-none absolute -right-28 -top-36 h-[380px] w-[380px] rounded-full bg-[#1b39f5] opacity-45 blur-[110px]"
@@ -89,10 +89,10 @@ export default function CurrencyPay() {
             سرویس پرداخت جهانی
           </span>
 
-          <h2 className="font-display mt-3 text-[24px] font-extrabold leading-tight text-white md:text-[32px]">
+          <h2 className="font-display mt-3 text-[21px] font-extrabold leading-tight text-white md:text-[28px]">
             پرداخت ارزی آنلاین
           </h2>
-          <p className="mt-1.5 bg-gradient-to-l from-[#9fb2ff] to-[#c9b9ff] bg-clip-text text-[13px] font-bold text-transparent md:text-[15px]">
+          <p className="mt-1.5 bg-gradient-to-l from-[#9fb2ff] to-[#c9b9ff] bg-clip-text text-[12.5px] font-bold text-transparent md:text-[14px]">
             سریع، امن و بدون واسطه
           </p>
           <p className="mt-2.5 max-w-[520px] text-[12.5px] leading-6 text-white/65">
@@ -120,14 +120,14 @@ export default function CurrencyPay() {
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-6 py-3 text-[12.5px] font-extrabold text-white shadow-[0_22px_40px_-24px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-5 py-2.5 text-[12px] font-extrabold text-white shadow-[0_22px_40px_-24px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
             >
               شروع پرداخت ارزی
               <ArrowLeft className="h-4 w-4" />
             </Link>
             <Link
               href="/blog"
-              className="rounded-full border border-white/25 bg-white/[0.06] px-6 py-3 text-[12.5px] font-bold text-white backdrop-blur-xl transition-colors hover:bg-white/15"
+              className="rounded-full border border-white/25 bg-white/[0.06] px-5 py-2.5 text-[12px] font-bold text-white backdrop-blur-xl transition-colors hover:bg-white/15"
             >
               راهنمای پرداخت
             </Link>
@@ -135,7 +135,7 @@ export default function CurrencyPay() {
         </div>
 
         {/* کارت مبدل نرخ */}
-        <div className="relative rounded-[28px] border border-white/12 bg-white/[0.07] p-4 shadow-[0_36px_70px_-50px_rgba(0,0,0,0.9)] backdrop-blur-2xl md:p-5">
+        <div className="relative rounded-[24px] border border-white/12 bg-white/[0.07] p-4 shadow-[0_36px_70px_-50px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
           <span
             className="pointer-events-none absolute -left-14 -top-16 h-40 w-40 rounded-full bg-[#8158f5] opacity-35 blur-[60px]"
             aria-hidden
@@ -259,7 +259,7 @@ export default function CurrencyPay() {
 
             <div className="mt-2.5 flex items-end justify-between rounded-xl bg-white/[0.05] px-3.5 py-2.5">
               <span className="text-[11px] font-semibold text-white/55">مبلغ قابل پرداخت</span>
-              <span className="font-display text-[20px] font-extrabold text-white md:text-[23px]">
+              <span className="font-display text-[18px] font-extrabold text-white md:text-[21px]">
                 <span className="font-latin" dir="ltr">
                   {latinNumber(total)}
                 </span>

@@ -93,8 +93,8 @@ export default function Header() {
   }, [menu])
 
   return (
-    <header className="sticky top-11 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-12">
-      <div className="mx-auto max-w-[1400px] px-4 md:px-6">
+    <header className="sticky top-9 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-10">
+      <div className="mx-auto max-w-[1280px] px-4 md:px-6">
         <div ref={barRef} className="flex h-14 items-center gap-4">
           <Link
             href="/"
@@ -102,7 +102,7 @@ export default function Header() {
             className="flex shrink-0 items-center gap-2.5"
           >
             {/* نشان سه‌بعدی برند + وردمارک تایپوگرافی دست‌ساز */}
-            <img src={LOGO_MARK_URI} alt="اچ‌شاپ" className="h-9 w-9 md:h-10 md:w-10" />
+            <img src={LOGO_MARK_URI} alt="اچ‌شاپ" className="h-8 w-8 md:h-9 md:w-9" />
             <Wordmark className="h-[22px] w-auto md:h-6" />
           </Link>
 
@@ -398,8 +398,8 @@ export default function Header() {
                     {num(categoryCount(category.slug))}
                   </span>
                 </Link>
-              )
-            })}
+              )}
+            )}
 
             <MenuListTitle
               icon={Flame}

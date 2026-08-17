@@ -63,7 +63,7 @@ export default function Hero() {
 
   return (
     <section className="px-4 md:px-6 pt-1">
-      <div className="relative mx-auto w-full max-w-[1400px] overflow-hidden rounded-[48px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f6f8ff] via-white to-white pt-4 pb-4 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-6">
+      <div className="relative mx-auto w-full max-w-[1280px] overflow-hidden rounded-[36px] border border-[#1b39f5]/10 bg-gradient-to-b from-[#f6f8ff] via-white to-white pt-3 pb-3 shadow-[0_40px_100px_-40px_rgba(27,57,245,0.35)] md:pt-5">
         {/* هاله‌های رنگی نرم */}
         <span
           className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[720px] -translate-x-1/2 rounded-full bg-[#1b39f5]/8 blur-3xl"
@@ -93,7 +93,7 @@ export default function Hero() {
         >
           <DeliveryBadge label={hero.badge} reduceMotion={reduceMotion ?? false} />
 
-          <h1 className="mt-5 font-display text-[30px] md:text-[50px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
+          <h1 className="mt-4 font-display text-[26px] md:text-[40px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] md:whitespace-nowrap">
             {hero.headlineLead}{" "}
             <span className="inline-grid align-baseline text-center">
               {rotatingProducts.map((name) => (
@@ -121,7 +121,7 @@ export default function Hero() {
             {hero.headlineTail}
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-[13.5px] md:text-[15px] font-medium leading-8 text-[#475569]">
+          <p className="mx-auto mt-4 max-w-xl text-[12.5px] md:text-[14px] font-medium leading-8 text-[#475569]">
             {hero.subheadline}
           </p>
 
@@ -129,14 +129,14 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
+            className="mt-7 flex flex-wrap items-center justify-center gap-2.5"
           >
             {hero.actions.map((action) =>
               action.primary ? (
                 <Link
                   key={action.href}
                   href={action.href}
-                  className="glass-solid inline-flex items-center gap-2 rounded-full px-7 py-3 text-[13px] font-semibold"
+                  className="glass-solid inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[12.5px] font-semibold"
                 >
                   {action.label}
                   <ArrowLeft className="h-4 w-4" />
@@ -145,7 +145,7 @@ export default function Hero() {
                 <Link
                   key={action.href}
                   href={action.href}
-                  className="glass-plate glass-plate-hover rounded-full px-7 py-3 text-[13px] font-semibold text-[#1b39f5]"
+                  className="glass-plate glass-plate-hover rounded-full px-6 py-2.5 text-[12.5px] font-semibold text-[#1b39f5]"
                 >
                   {action.label}
                 </Link>
@@ -158,7 +158,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3"
+            className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-3"
           >
             <span className="flex flex-wrap items-center justify-center gap-2.5">
               <span className="flex" aria-hidden>
@@ -200,7 +200,7 @@ export default function Hero() {
         </motion.div>
 
         <div
-          className="relative z-10 mt-10 px-2 pb-8 md:mt-12 md:px-6"
+          className="relative z-10 mt-8 px-2 pb-6 md:mt-10 md:px-6"
           style={{
             maskImage:
               "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
@@ -208,10 +208,10 @@ export default function Hero() {
               "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
           }}
         >
-          <div className="flex flex-col items-center gap-3 sm:gap-4 md:gap-5">
+          <div className="flex flex-col items-center gap-2.5 sm:gap-3 md:gap-4">
             <LogoRow logos={topRow} startIndex={0} reduceMotion={reduceMotion ?? false} />
 
-            <div className="flex w-full items-center justify-center gap-3 sm:gap-4 md:gap-5">
+            <div className="flex w-full items-center justify-center gap-2.5 sm:gap-3 md:gap-4">
               <LogoRow
                 logos={middleLeft}
                 startIndex={topRow.length}
@@ -223,17 +223,17 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="relative mx-1.5 grid h-[74px] w-[74px] shrink-0 place-items-center rounded-[26px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] p-1.5 shadow-[0_24px_54px_-14px_rgba(27,57,245,0.75)] md:h-[94px] md:w-[94px] md:rounded-[30px] md:p-2"
+                className="relative mx-1.5 grid h-[64px] w-[64px] shrink-0 place-items-center rounded-[22px] bg-gradient-to-br from-[#1b39f5] to-[#5b78ff] p-1.5 shadow-[0_24px_54px_-14px_rgba(27,57,245,0.75)] md:h-[80px] md:w-[80px] md:rounded-[26px] md:p-2"
               >
                 <span
                   className="pointer-events-none absolute -inset-8 rounded-full bg-[#1b39f5]/25 blur-2xl"
                   aria-hidden
                 />
                 <span
-                  className="pointer-events-none absolute inset-0 rounded-[26px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[30px]"
+                  className="pointer-events-none absolute inset-0 rounded-[22px] bg-gradient-to-b from-white/35 to-transparent md:rounded-[26px]"
                   aria-hidden
                 />
-                <Logo className="relative z-10 h-full w-full rounded-[20px] md:rounded-[24px]" />
+                <Logo className="relative z-10 h-full w-full rounded-[18px] md:rounded-[20px]" />
               </motion.span>
 
               <LogoRow
@@ -251,7 +251,7 @@ export default function Hero() {
             />
           </div>
 
-          <p className="mt-9 text-center text-[11.5px] font-medium text-slate-400">
+          <p className="mt-7 text-center text-[11px] font-medium text-slate-400">
             اکانت و لایسنس رسمی برندهای معتبر جهانی
           </p>
         </div>
@@ -320,7 +320,7 @@ function LogoRow({
     align === "center" ? "justify-center" : align === "start" ? "justify-start" : "justify-end"
 
   return (
-    <div className={`flex items-center gap-3 sm:gap-4 md:gap-5 ${justify}`}>
+    <div className={`flex items-center gap-2.5 sm:gap-3 md:gap-4 ${justify}`}>
       {logos.map((logo, index) => {
         const distance =
           align === "center"
@@ -359,7 +359,7 @@ function BrandTile({
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.2 + order * 0.02, ease: [0.16, 1, 0.3, 1] }}
-      className={`${visibility} group h-16 w-16 shrink-0 items-center justify-center rounded-[20px] border border-[#1b39f5]/10 bg-white shadow-[0_12px_28px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_18px_34px_-14px_rgba(27,57,245,0.5)] md:h-[72px] md:w-[72px] md:rounded-[22px]`}
+      className={`${visibility} group h-14 w-14 shrink-0 items-center justify-center rounded-[16px] border border-[#1b39f5]/10 bg-white shadow-[0_12px_28px_-16px_rgba(27,57,245,0.6)] transition-all hover:-translate-y-1 hover:border-[#1b39f5]/30 hover:shadow-[0_18px_34px_-14px_rgba(27,57,245,0.5)] md:h-[60px] md:w-[60px] md:rounded-[18px]`}
       title={logo.name}
     >
       <motion.span
@@ -378,7 +378,7 @@ function BrandTile({
       >
         <BrandIcon
           slug={logo.slug}
-          size={32}
+          size={28}
           color={`#${logo.color}`}
           className="transition-transform duration-500 group-hover:scale-110"
         />

@@ -41,7 +41,7 @@ export default function HeroBanners() {
 
   return (
     <div
-      className="group relative overflow-hidden rounded-[36px] border border-[#1b39f5]/10 bg-white shadow-[0_30px_70px_-48px_rgba(27,57,245,0.55)]"
+      className="group relative overflow-hidden rounded-[28px] border border-[#1b39f5]/10 bg-white shadow-[0_30px_70px_-48px_rgba(27,57,245,0.55)]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >

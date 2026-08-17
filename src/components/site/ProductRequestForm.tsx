@@ -64,7 +64,7 @@ export default function ProductRequestForm() {
 
   return (
     <div
-      className="relative flex h-full min-h-[380px] flex-col overflow-hidden rounded-[32px] bg-gradient-to-b from-[#0d1c3f] to-[#0a152d] p-7 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.85)]"
+      className="relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-[26px] bg-gradient-to-b from-[#0d1c3f] to-[#0a152d] p-6 shadow-[0_30px_70px_-40px_rgba(10,21,45,0.85)]"
     >
       {/* هالهٔ نرم بالای کارت */}
       <span
@@ -81,7 +81,7 @@ export default function ProductRequestForm() {
           <span className="grid h-16 w-16 place-items-center rounded-full bg-[#3ff0a5]/15 text-[#3ff0a5]">
             <Check className="h-8 w-8" />
           </span>
-          <h3 className="font-display mt-4 text-[20px] font-bold text-white">درخواستت ثبت شد</h3>
+          <h3 className="font-display mt-4 text-[18px] font-bold text-white">درخواستت ثبت شد</h3>
           <p className="mx-auto mt-2 max-w-xs text-[13px] leading-7 text-white/55">
             تیم اچ‌شاپ درخواستت را بررسی می‌کند و به‌زودی از راه ارتباطی‌ای که دادی با تو تماس می‌گیرد.
           </p>
@@ -98,14 +98,14 @@ export default function ProductRequestForm() {
           {/* سربرگ */}
           <div className="relative flex items-start justify-between gap-4">
             <div>
-              <h3 className="font-display text-[20px] font-bold text-white md:text-[22px]">
+              <h3 className="font-display text-[18px] font-bold text-white md:text-[20px]">
                 محصولت را پیدا نکردی؟
               </h3>
               <p className="mt-1.5 text-[12px] leading-6 text-white/50">
                 بگو چی لازم داری — ما پیدا و شارژش می‌کنیم.
               </p>
             </div>
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-white shadow-[0_14px_28px_-12px_rgba(27,57,245,0.9)]">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-white shadow-[0_14px_28px_-12px_rgba(27,57,245,0.9)]">
               <PackageSearch className="h-5 w-5" />
             </span>
           </div>
@@ -144,7 +144,7 @@ export default function ProductRequestForm() {
                       }`}
                     >
                       <span
-                        className={`grid h-4.5 w-4.5 h-[18px] w-[18px] shrink-0 place-items-center rounded-full border-2 ${
+                        className={`grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full border-2 ${
                           active ? "border-[#7d92ff]" : "border-white/25"
                         }`}
                       >
@@ -238,7 +238,7 @@ export default function ProductRequestForm() {
               type="button"
               onClick={next}
               disabled={!canNext}
-              className="inline-flex items-center gap-2 rounded-full bg-[#1b39f5] px-6 py-3 text-[13px] font-bold text-white shadow-[0_18px_36px_-18px_rgba(27,57,245,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#2a49ff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+              className="inline-flex items-center gap-2 rounded-full bg-[#1b39f5] px-6 py-2.5 text-[12.5px] font-bold text-white shadow-[0_18px_36px_-18px_rgba(27,57,245,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#2a49ff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
             >
               {step === STEPS - 1 ? "ثبت درخواست" : "بعدی"}
               <ArrowLeft className="h-3.5 w-3.5" />

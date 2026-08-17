@@ -16,10 +16,10 @@ export default function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0f1017] p-2.5 shadow-[0_22px_50px_-34px_rgba(10,27,51,0.7)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_64px_-32px_rgba(10,27,51,0.65)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-white/10 bg-[#0f1017] p-2.5 shadow-[0_22px_50px_-34px_rgba(10,27,51,0.7)] transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_32px_64px_-32px_rgba(10,27,51,0.65)]"
     >
       {/* قاب پوستر محصول */}
-      <div className="relative h-[190px] overflow-hidden rounded-[19px]">
+      <div className="relative h-[168px] overflow-hidden rounded-[16px]">
         <ProductPoster slug={product.logo} brand={product.brand} />
 
         {/* برچسب محصول */}
@@ -60,7 +60,7 @@ export default function ProductCard({ product }: Props) {
       {/* متن کارت */}
       <div className="flex flex-1 flex-col px-2.5 pt-3.5 pb-1.5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="line-clamp-1 text-[14.5px] leading-6 font-bold text-white">{product.title}</h3>
+          <h3 className="line-clamp-1 text-[13.5px] leading-6 font-bold text-white">{product.title}</h3>
           <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-white/[0.07] px-2 py-1 text-[10.5px] font-bold text-white/80">
             <Star className="h-3 w-3 fill-[#EAC26B] text-[#EAC26B]" />
             <span className="font-latin">{product.rating}</span>

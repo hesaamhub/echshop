@@ -45,7 +45,7 @@ const VARIANTS: Variant[] = [
   // ۱) دایره‌های هم‌مرکز
   {
     background: (color) => `radial-gradient(120% 90% at 50% 8%, #${color}30 0%, #ffffff 62%)`,
-    holder: "h-[104px] w-[104px] rounded-full",
+    holder: "h-[88px] w-[88px] rounded-full",
     holderInner: "",
     art: (color) => (
       <svg
@@ -73,7 +73,7 @@ const VARIANTS: Variant[] = [
   // ۲) موج‌های نرم
   {
     background: (color) => `linear-gradient(180deg, #ffffff 0%, #${color}26 100%)`,
-    holder: "h-[108px] w-[108px] rounded-[36px]",
+    holder: "h-[92px] w-[92px] rounded-[30px]",
     holderInner: "",
     art: (color) => (
       <svg
@@ -104,7 +104,7 @@ const VARIANTS: Variant[] = [
   // ۳) شبکهٔ نقطه‌ای + مربع چرخیده
   {
     background: (color) => `linear-gradient(145deg, #${color}24 0%, #ffffff 58%)`,
-    holder: "h-[104px] w-[104px] rotate-12 rounded-[28px]",
+    holder: "h-[88px] w-[88px] rotate-12 rounded-[24px]",
     holderInner: "-rotate-12",
     art: (color) => (
       <>
@@ -130,7 +130,7 @@ const VARIANTS: Variant[] = [
   // ۴) خطوط مورب
   {
     background: (color) => `linear-gradient(200deg, #ffffff 0%, #${color}2b 100%)`,
-    holder: "h-[116px] w-[98px] rounded-[999px]",
+    holder: "h-[98px] w-[82px] rounded-[999px]",
     holderInner: "",
     art: (color) => (
       <>
@@ -155,7 +155,7 @@ const VARIANTS: Variant[] = [
   // ۵) هالهٔ چندرنگ (مشبک)
   {
     background: () => `linear-gradient(180deg, #f8fafc 0%, #ffffff 70%)`,
-    holder: "h-[110px] w-[110px] rounded-[44px_16px_44px_16px]",
+    holder: "h-[94px] w-[94px] rounded-[38px_14px_38px_14px]",
     holderInner: "",
     art: (color) => (
       <>
@@ -179,7 +179,7 @@ const VARIANTS: Variant[] = [
   // ۶) کمان‌های باز
   {
     background: (color) => `radial-gradient(110% 80% at 20% 100%, #${color}2e 0%, #ffffff 60%)`,
-    holder: "h-[104px] w-[104px] rotate-45 rounded-[24px]",
+    holder: "h-[88px] w-[88px] rotate-45 rounded-[20px]",
     holderInner: "-rotate-45",
     art: (color) => (
       <svg
@@ -215,14 +215,14 @@ function DeckCard({ product, position }: { product: Product; position: number })
   return (
     <article className="group relative h-full">
       <div
-        className="relative flex h-[560px] flex-col overflow-hidden rounded-[34px] border border-white/70 p-6 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[540px]"
+        className="relative flex h-[470px] flex-col overflow-hidden rounded-[28px] border border-white/70 p-5 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[460px]"
         style={{ background: variant.background(color) }}
       >
         {variant.art(color)}
 
         <div className="relative flex items-start justify-between gap-2">
           <div>
-            <h3 className="font-display text-[20px] font-bold leading-[1.4] text-[#0a1b33] md:text-[21px]">
+            <h3 className="font-display text-[17px] font-bold leading-[1.4] text-[#0a1b33] md:text-[18px]">
               {product.brand}
             </h3>
             <span className="mt-1 inline-flex items-center gap-1.5 text-[11px] font-semibold text-slate-500">
@@ -258,7 +258,7 @@ function DeckCard({ product, position }: { product: Product; position: number })
             className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
           >
             <span className={`grid place-items-center ${variant.holderInner}`}>
-              <BrandIcon slug={product.logo} size={48} color="#ffffff" />
+              <BrandIcon slug={product.logo} size={40} color="#ffffff" />
             </span>
           </motion.span>
         </div>
@@ -281,9 +281,9 @@ function DeckCard({ product, position }: { product: Product; position: number })
         <div className="relative mt-3 flex items-end justify-between gap-3">
           <div>
             <div className="text-[11px] text-slate-500">شروع قیمت از</div>
-            <div className="mt-0.5 text-[18px] font-bold text-[#0a1b33]">
+            <div className="mt-0.5 text-[16px] font-bold text-[#0a1b33]">
               <span className="num">{toman(plan.price)}</span>
-              <span className="mr-1.5 text-[11.5px] font-medium text-slate-500">تومان</span>
+              <span className="mr-1.5 text-[11px] font-medium text-slate-500">تومان</span>
             </div>
           </div>
 
@@ -298,7 +298,7 @@ function DeckCard({ product, position }: { product: Product; position: number })
 
         <Link
           href={`/products/${product.slug}`}
-          className="relative mt-3.5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-5 py-3 text-[13px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
+          className="relative mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0a152d] px-4 py-2.5 text-[12.5px] font-bold text-white transition-all duration-300 hover:bg-[#1b39f5] hover:shadow-[0_18px_40px_-18px_rgba(27,57,245,0.7)]"
         >
           <ShoppingBag className="h-4 w-4" />
           خرید و تحویل فوری
@@ -349,10 +349,10 @@ export default function ShowcaseDeck() {
   }, [paused, steps])
 
   return (
-    <section className="mx-auto mt-12 max-w-[1400px] px-4 md:px-6">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="flex items-center gap-3 font-display text-[22px] font-semibold text-[#0a1b33] md:text-[26px]">
-          <span className="h-6 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+    <section className="mx-auto mt-10 max-w-[1280px] px-4 md:px-6">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="flex items-center gap-2.5 font-display text-[19px] font-semibold text-[#0a1b33] md:text-[22px]">
+          <span className="h-5 w-1 rounded-full bg-[#1b39f5]" aria-hidden />
           اکانت‌هایی که همه می‌خواهند
         </h2>
 
@@ -361,7 +361,7 @@ export default function ShowcaseDeck() {
             type="button"
             onClick={() => go(-1)}
             aria-label="محصول قبلی"
-            className="glass-plate glass-plate-hover grid h-10 w-10 place-items-center rounded-full text-[#1b39f5]"
+            className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-full text-[#1b39f5]"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -369,7 +369,7 @@ export default function ShowcaseDeck() {
             type="button"
             onClick={() => go(1)}
             aria-label="محصول بعدی"
-            className="glass-plate glass-plate-hover grid h-10 w-10 place-items-center rounded-full text-[#1b39f5]"
+            className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-full text-[#1b39f5]"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -412,7 +412,7 @@ export default function ShowcaseDeck() {
         </motion.div>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-2">
+      <div className="mt-5 flex items-center justify-center gap-2">
         {Array.from({ length: steps }).map((_, position) => (
           <button
             key={position}

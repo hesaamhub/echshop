@@ -11,7 +11,7 @@ export default function PosterShowcase() {
   const [rightTop, rightBottom, center, leftTop, leftBottom] = homePosters
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[1fr_1.3fr_1fr] lg:grid-rows-[210px_210px]">
+    <div className="grid gap-4 lg:grid-cols-[1fr_1.3fr_1fr] lg:grid-rows-[190px_190px]">
       <PosterSlot poster={rightTop} className="lg:col-start-1 lg:row-start-1" />
       <PosterSlot poster={rightBottom} className="lg:col-start-1 lg:row-start-2" />
       <PosterSlot poster={center} tall className="max-lg:order-first lg:col-start-2 lg:row-span-2" />
@@ -33,7 +33,7 @@ function PosterSlot({
   return (
     <Link
       href={poster.href}
-      className={`group relative block overflow-hidden rounded-[26px] border border-[#1b39f5]/10 shadow-[0_22px_50px_-36px_rgba(10,27,51,0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_34px_64px_-34px_rgba(27,57,245,0.45)] ${
+      className={`group relative block overflow-hidden rounded-[22px] border border-[#1b39f5]/10 shadow-[0_22px_50px_-36px_rgba(10,27,51,0.6)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_34px_64px_-34px_rgba(27,57,245,0.45)] ${
         tall
           ? "aspect-[108/87] h-auto lg:aspect-auto lg:h-full"
           : "aspect-[83/42] h-auto lg:aspect-auto lg:h-full"

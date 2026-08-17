@@ -59,7 +59,7 @@ export default function HomePage() {
         <Hero />
 
         {/* بنرهای تبلیغاتی چرخان — تمام عرض، زیر هیرو و بالای دک محصولات */}
-        <section className="mx-auto mt-5 max-w-[1400px] px-4 md:mt-6 md:px-6">
+        <section className="mx-auto mt-4 max-w-[1280px] px-4 md:mt-5 md:px-6">
           <HeroBanners />
         </section>
 
@@ -70,13 +70,13 @@ export default function HomePage() {
         <Section
           eyebrow="چرا اچ‌شاپ؟"
           title="خریدی که خیالت را راحت می‌کند"
-          className="mt-14"
+          className="mt-12"
         >
           <FeaturesStrip />
         </Section>
 
         {/* پوسترهای پیشنهادی */}
-        <Section className="mt-20">
+        <Section className="mt-14">
           <PosterGrid />
         </Section>
 
@@ -86,7 +86,7 @@ export default function HomePage() {
           title="اکانت‌هایی که لازم داری"
           href="/products"
           linkLabel="همهٔ محصولات"
-          className="mt-24"
+          className="mt-16"
         >
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {essentials.map((product) => (
@@ -100,7 +100,7 @@ export default function HomePage() {
           eyebrow={`${latinDigits(homeCategories.length)} دستهٔ اصلی`}
           title="دسته‌بندی محصولات"
           subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
-          className="mt-20"
+          className="mt-14"
         >
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
             {homeCategories.map((category) => (
@@ -110,7 +110,7 @@ export default function HomePage() {
         </Section>
 
         {/* پرداخت ارزی */}
-        <Section className="mt-24">
+        <Section className="mt-16">
           <CurrencyPay />
         </Section>
 
@@ -120,13 +120,13 @@ export default function HomePage() {
           title="جدیدترین محصولات"
           href="/products"
           linkLabel="مشاهدهٔ همه"
-          className="mt-20"
+          className="mt-14"
         >
           <PosterShowcase />
         </Section>
 
         {/* سفارش سریع */}
-        <Section className="mt-24">
+        <Section className="mt-16">
           <QuickOrder />
         </Section>
 
@@ -136,13 +136,13 @@ export default function HomePage() {
           title="از بلاگ اچ‌شاپ"
           href="/blog"
           linkLabel="همهٔ مقالات"
-          className="mt-24"
+          className="mt-16"
         >
           <div className="grid gap-4 lg:grid-cols-[1.55fr_1fr]">
             {/* مقالهٔ ویژه */}
             <Link
               href={`/blog/${featuredPost.slug}`}
-              className="group relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[28px] border border-[#1b39f5]/10 shadow-[0_28px_60px_-40px_rgba(10,27,51,0.65)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_40px_70px_-38px_rgba(27,57,245,0.5)] lg:min-h-[430px]"
+              className="group relative flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[28px] border border-[#1b39f5]/10 shadow-[0_28px_60px_-40px_rgba(10,27,51,0.65)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_40px_70px_-38px_rgba(27,57,245,0.5)] lg:min-h-[400px]"
             >
               {/* جلد */}
               <span
@@ -183,10 +183,10 @@ export default function HomePage() {
                     پیشنهاد سردبیر
                   </span>
                 </span>
-                <h3 className="font-display mt-3 text-[19px] font-bold leading-[1.6] text-white md:text-[23px]">
+                <h3 className="font-display mt-3 text-[18px] font-bold leading-[1.6] text-white md:text-[21px]">
                   {featuredPost.title}
                 </h3>
-                <p className="mt-2 line-clamp-2 text-[12.5px] leading-6 text-white/65">
+                <p className="mt-2 line-clamp-2 text-[12px] leading-6 text-white/65">
                   {featuredPost.excerpt}
                 </p>
                 <span className="mt-4 flex items-center justify-between gap-3 text-[11px] text-white/50">
@@ -240,7 +240,7 @@ export default function HomePage() {
         </Section>
 
         {/* خبرنامه و درخواست محصول */}
-        <Section className="mt-24">
+        <Section className="mt-16">
           <div className="grid items-stretch gap-4 lg:grid-cols-2">
             <NewsletterCTA />
             <ProductRequestForm />
@@ -262,12 +262,12 @@ function FeaturesStrip() {
         return (
           <div
             key={feature.title}
-            className="group rounded-[24px] border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_26px_50px_-34px_rgba(27,57,245,0.55)]"
+            className="group rounded-[24px] border border-[#1b39f5]/10 bg-white p-4 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_26px_50px_-34px_rgba(27,57,245,0.55)]"
           >
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#1b39f5]/8 text-[#1b39f5] transition-all duration-500 group-hover:bg-[#1b39f5] group-hover:text-white group-hover:shadow-[0_14px_26px_-14px_rgba(27,57,245,0.9)]">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[#1b39f5]/8 text-[#1b39f5] transition-all duration-500 group-hover:bg-[#1b39f5] group-hover:text-white group-hover:shadow-[0_14px_26px_-14px_rgba(27,57,245,0.9)]">
               <Icon className="h-5 w-5" strokeWidth={2.1} />
             </span>
-            <h3 className="mt-3.5 text-[14px] font-bold text-[#0a1b33]">{feature.title}</h3>
+            <h3 className="mt-3 text-[13.5px] font-bold text-[#0a1b33]">{feature.title}</h3>
             <p className="mt-1.5 text-[12px] leading-6 text-slate-500">{feature.body}</p>
           </div>
         )
@@ -377,25 +377,25 @@ function Section({
   eyebrow?: string
   href?: string
   linkLabel?: string
-  /** کنترل ریتم فاصلهٔ عمودی سکشن (پیش‌فرض mt-16) */
+  /** کنترل ریتم فاصلهٔ عمودی سکشن (پیش‌فرض mt-12) */
   className?: string
   children: React.ReactNode
 }) {
   return (
-    <section className={`mx-auto max-w-[1400px] px-4 md:px-6 ${className ?? "mt-16"}`}>
+    <section className={`mx-auto max-w-[1280px] px-4 md:px-6 ${className ?? "mt-12"}`}>
       {title ? (
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             {eyebrow ? (
-              <span className="mb-2.5 inline-flex items-center rounded-full bg-[#1b39f5]/8 px-3 py-1 text-[10.5px] font-bold text-[#1b39f5]">
+              <span className="mb-2 inline-flex items-center rounded-full bg-[#1b39f5]/8 px-3 py-1 text-[10.5px] font-bold text-[#1b39f5]">
                 {eyebrow}
               </span>
             ) : null}
-            <h2 className="flex items-center gap-3 font-display text-[22px] md:text-[26px] font-semibold text-[#0a1b33]">
-              <span className="h-6 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
+            <h2 className="flex items-center gap-2.5 font-display text-[19px] md:text-[22px] font-semibold text-[#0a1b33]">
+              <span className="h-5 w-1 rounded-full bg-[#1b39f5]" aria-hidden />
               {title}
             </h2>
-            {subtitle ? <p className="mt-2 text-[13px] text-slate-500">{subtitle}</p> : null}
+            {subtitle ? <p className="mt-1.5 text-[12.5px] text-slate-500">{subtitle}</p> : null}
           </div>
           {href && linkLabel ? (
             <Link
