@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
-import { AnimatePresence, motion } from "motion/react"
+import { motion } from "motion/react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -13,10 +14,10 @@ type HeroSlide = { id: string; image: string; alt: string; href: string }
  * برای تعویض بنر، فایل جدید را در public/art بگذارید و مسیرش را این‌جا بنویسید.
  */
 const SLIDES: HeroSlide[] = [
-  { id: "instant", image: "/art/hero-1.jpg", alt: "تحویل خودکار در کمتر از دو دقیقه", href: "/products" },
-  { id: "ai", image: "/art/hero-2.jpg", alt: "ده برابر سریع‌تر با هوش مصنوعی", href: "/category/ai-tools" },
-  { id: "currency", image: "/art/hero-3.jpg", alt: "پرداخت ارزی بدون کارت خارجی", href: "/category/currency-pay" },
-  { id: "services", image: "/art/hero-4.jpg", alt: "همهٔ سرویس‌های دیجیتال یک‌جا", href: "/products" },
+  { id: "instant", image: "/art/hero-1.jpg", alt: "سفارش‌ات قبل از قهوه‌ات می‌رسد — تحویل خودکار", href: "/products" },
+  { id: "ai", image: "/art/hero-2.jpg", alt: "هوش مصنوعی، برای همه — ChatGPT و ابزارهای برتر", href: "/category/ai-tools" },
+  { id: "stream", image: "/art/hero-3.jpg", alt: "شبِ فیلم و موسیقیه — Netflix و Spotify با گارانتی", href: "/category/stream" },
+  { id: "trust", image: "/art/hero-4.jpg", alt: "رسمی، ارزان‌تر، با گارانتی — ضمانت بازگشت وجه", href: "/products" },
 ]
 
 const INTERVAL = 5500
@@ -37,30 +38,47 @@ export default function HeroBanners() {
     return () => clearInterval(timer)
   }, [paused])
 
-  const slide = SLIDES[index]
-
   return (
     <div
-      className="group relative overflow-hidden rounded-[28px] border border-[#1b39f5]/10 bg-white shadow-[0_30px_70px_-48px_rgba(27,57,245,0.55)]"
+      className="group relative overflow-hidden rounded-[24px] border border-[#1b39f5]/10 bg-white shadow-[0_24px_60px_-44px_rgba(27,57,245,0.5)]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* نسبت ۱۶۰۰×۵۶۰ تصویرهای بنر — با نگه‌داشت نسبت، متن پخته‌شده هرگز کراپ نمی‌شود */}
-      <div className="relative aspect-[20/7]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={slide.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="absolute inset-0"
-          >
-            <Link href={slide.href} aria-label={slide.alt} className="block h-full w-full">
-              <img src={slide.image} alt={slide.alt} className="h-full w-full object-cover" />
-            </Link>
-          </motion.div>
-        </AnimatePresence>
+      {/* نسبت کوتاه‌تر از قبل: موبایل ۱۶:۹، دسکتاپ ۱۰:۳ — با next/image برای لود بهینه */}
+      <div className="relative aspect-[16/9] md:aspect-[10/3]">
+        {/* همهٔ اسلایدها سوار بر هم؛ کراس‌فید نرم بدون خلأ بین تعویض */}
+        {SLIDES.map((slide, slideIndex) => {
+          const active = slideIndex === index
+
+          return (
+            <motion.div
+              key={slide.id}
+              initial={false}
+              animate={{ opacity: active ? 1 : 0, scale: active ? 1 : 1.02 }}
+              transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
+              className="absolute inset-0"
+              style={{ pointerEvents: active ? "auto" : "none" }}
+              aria-hidden={!active}
+            >
+              <Link
+                href={slide.href}
+                aria-label={slide.alt}
+                tabIndex={active ? 0 : -1}
+                className="block h-full w-full"
+              >
+                <Image
+                  src={slide.image}
+                  alt={slide.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 1232px"
+                  priority={slideIndex === 0}
+                  loading={slideIndex === 0 ? undefined : "lazy"}
+                  className="object-cover"
+                />
+              </Link>
+            </motion.div>
+          )
+        })}
       </div>
 
       {/* فلش بعدی (چپ در RTL) */}
@@ -83,7 +101,7 @@ export default function HeroBanners() {
       </button>
 
       {/* نقطه‌های ناوبری */}
-      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/60 px-2.5 py-2 backdrop-blur-md">
+      <div className="absolute bottom-3.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-white/60 px-2.5 py-2 backdrop-blur-md">
         {SLIDES.map((item, dotIndex) => (
           <button
             key={item.id}

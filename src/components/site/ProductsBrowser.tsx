@@ -1,10 +1,12 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { motion } from "motion/react"
+import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react"
 import ProductCard from "@/components/site/ProductCard"
 import { deliveryLabels, type Category, type DeliveryMethod, type Product } from "@/lib/types"
-import { num } from "@/lib/utils"
+import { cn, num } from "@/lib/utils"
 
 type SortKey = "newest" | "bestselling" | "cheapest" | "priciest"
 
@@ -45,18 +47,36 @@ export default function ProductsBrowser({
   products: Product[]
   categories: Category[]
 }) {
+  const searchParams = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get("q") ?? "")
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [deliveries, setDeliveries] = useState<DeliveryMethod[]>([])
   const [priceRangeId, setPriceRangeId] = useState("all")
   const [sort, setSort] = useState<SortKey>("newest")
+  const [filtersOpen, setFiltersOpen] = useState(false)
+
+  const activeCount =
+    (query.trim() ? 1 : 0) +
+    selectedCategories.length +
+    deliveries.length +
+    (priceRangeId !== "all" ? 1 : 0)
 
   const visible = useMemo(() => {
+    const q = query.trim().toLowerCase()
     const range = priceRanges.find((item) => item.id === priceRangeId) ?? priceRanges[0]
 
     const filtered = products.filter((product) => {
+      const matchesQuery =
+        !q ||
+        [product.title, product.brand, product.excerpt].some((field) =>
+          field.toLowerCase().includes(q),
+        )
+      const matchesCategory =
+        selectedCategories.length === 0 || selectedCategories.includes(product.categorySlug)
       const matchesDelivery =
         deliveries.length === 0 ||
         product.plans.some((plan) => deliveries.includes(plan.delivery))
-      return matchesDelivery && range.test(minPrice(product))
+      return matchesQuery && matchesCategory && matchesDelivery && range.test(minPrice(product))
     })
 
     switch (sort) {
@@ -70,93 +90,173 @@ export default function ProductsBrowser({
         // «جدیدترین» تا اتصال دیتابیس همان ترتیب فهرست داده است
         return filtered
     }
-  }, [products, deliveries, priceRangeId, sort])
+  }, [products, query, selectedCategories, deliveries, priceRangeId, sort])
 
-  const toggleDelivery = (method: DeliveryMethod) => {
-    setDeliveries((current) =>
-      current.includes(method)
-        ? current.filter((item) => item !== method)
-        : [...current, method],
-    )
-  }
+  const toggle = <T,>(list: T[], item: T) =>
+    list.includes(item) ? list.filter((entry) => entry !== item) : [...list, item]
 
   const resetFilters = () => {
+    setQuery("")
+    setSelectedCategories([])
     setDeliveries([])
     setPriceRangeId("all")
   }
 
+  const activeBadges: { key: string; label: string; clear: () => void }[] = [
+    ...(query.trim()
+      ? [{ key: "q", label: `جستجو: ${query.trim()}`, clear: () => setQuery("") }]
+      : []),
+    ...selectedCategories.map((slug) => ({
+      key: `cat-${slug}`,
+      label: categories.find((category) => category.slug === slug)?.title ?? slug,
+      clear: () => setSelectedCategories((current) => current.filter((item) => item !== slug)),
+    })),
+    ...deliveries.map((method) => ({
+      key: `dl-${method}`,
+      label: deliveryLabels[method],
+      clear: () => setDeliveries((current) => current.filter((item) => item !== method)),
+    })),
+    ...(priceRangeId !== "all"
+      ? [
+          {
+            key: "price",
+            label: priceRanges.find((range) => range.id === priceRangeId)?.label ?? "",
+            clear: () => setPriceRangeId("all"),
+          },
+        ]
+      : []),
+  ]
+
   return (
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
+      {/* دکمهٔ فیلترها در موبایل */}
+      <button
+        type="button"
+        onClick={() => setFiltersOpen((value) => !value)}
+        aria-expanded={filtersOpen}
+        className="flex w-full items-center justify-between rounded-2xl border border-[#1b39f5]/10 bg-white px-4 py-3 text-[13px] font-bold text-[#0a1b33] shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] lg:hidden"
+      >
+        <span className="inline-flex items-center gap-2">
+          <SlidersHorizontal className="h-4 w-4 text-[#1b39f5]" />
+          فیلترها
+          {activeCount > 0 ? (
+            <span className="num grid h-5 min-w-5 place-items-center rounded-full bg-[#1b39f5] px-1.5 text-[10px] font-bold text-white">
+              {num(activeCount)}
+            </span>
+          ) : null}
+        </span>
+        <ChevronDown className={cn("h-4 w-4 transition-transform", filtersOpen && "rotate-180")} />
+      </button>
+
       {/* فیلترها */}
-      <aside className="space-y-4">
+      <aside
+        className={cn(
+          "space-y-4 self-start lg:sticky lg:top-28 lg:block",
+          filtersOpen ? "block" : "hidden",
+        )}
+      >
         <FilterCard title="دسته‌بندی">
-          <div className="space-y-1">
-            <Link
-              href="/products"
-              className="glass-solid block rounded-xl px-3 py-2 text-[12px] font-semibold"
-            >
-              همهٔ محصولات
-            </Link>
-            {categories.map((category) => (
-              <Link
-                key={category.slug}
-                href={`/category/${category.slug}`}
-                className="flex items-center justify-between rounded-xl px-3 py-2 text-[12px] text-slate-600 transition-all hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]"
-              >
-                {category.title}
-                <span className="num text-[10px] text-slate-400">{num(category.count)}</span>
-              </Link>
-            ))}
+          <div className="flex flex-wrap gap-1.5">
+            {categories.map((category) => {
+              const active = selectedCategories.includes(category.slug)
+
+              return (
+                <button
+                  key={category.slug}
+                  type="button"
+                  onClick={() => setSelectedCategories((current) => toggle(current, category.slug))}
+                  aria-pressed={active}
+                  className={cn(
+                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                    active
+                      ? "glass-solid"
+                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                  )}
+                >
+                  {category.title}
+                  <span className={cn("num mr-1.5 text-[10px]", active ? "text-white/70" : "text-slate-400")}>
+                    {num(category.count)}
+                  </span>
+                </button>
+              )
+            })}
           </div>
         </FilterCard>
 
         <FilterCard title="نوع تحویل">
-          <div className="space-y-2.5">
-            {(Object.entries(deliveryLabels) as [DeliveryMethod, string][]).map(([key, label]) => (
-              <label
-                key={key}
-                className="flex cursor-pointer items-center gap-2 text-[12px] text-slate-600"
-              >
-                <input
-                  type="checkbox"
-                  checked={deliveries.includes(key)}
-                  onChange={() => toggleDelivery(key)}
-                  className="h-4 w-4 rounded border-slate-300 accent-[#1b39f5]"
-                />
-                {label}
-              </label>
-            ))}
+          <div className="flex flex-wrap gap-1.5">
+            {(Object.entries(deliveryLabels) as [DeliveryMethod, string][]).map(([key, label]) => {
+              const active = deliveries.includes(key)
+
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setDeliveries((current) => toggle(current, key))}
+                  aria-pressed={active}
+                  className={cn(
+                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                    active
+                      ? "glass-solid"
+                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                  )}
+                >
+                  {label}
+                </button>
+              )
+            })}
           </div>
         </FilterCard>
 
         <FilterCard title="محدودهٔ قیمت">
-          <div className="space-y-2.5">
-            {priceRanges.map((range) => (
-              <label
-                key={range.id}
-                className="flex cursor-pointer items-center gap-2 text-[12px] text-slate-600"
-              >
-                <input
-                  type="radio"
-                  name="price"
-                  checked={priceRangeId === range.id}
-                  onChange={() => setPriceRangeId(range.id)}
-                  className="h-4 w-4 accent-[#1b39f5]"
-                />
-                {range.label}
-              </label>
-            ))}
+          <div className="flex flex-wrap gap-1.5">
+            {priceRanges.map((range) => {
+              const active = priceRangeId === range.id
+
+              return (
+                <button
+                  key={range.id}
+                  type="button"
+                  onClick={() => setPriceRangeId(range.id)}
+                  aria-pressed={active}
+                  className={cn(
+                    "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
+                    active
+                      ? "glass-solid"
+                      : "border border-[#1b39f5]/12 bg-white text-slate-600 hover:border-[#1b39f5]/30 hover:text-[#1b39f5]",
+                  )}
+                >
+                  {range.label}
+                </button>
+              )
+            })}
           </div>
         </FilterCard>
       </aside>
 
       {/* لیست */}
       <div>
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#1b39f5]/10 bg-white px-4 py-3 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
-          <span className="text-[12px] text-slate-500">
-            <span className="num">{num(visible.length)}</span> محصول یافت شد
-          </span>
-          <div className="flex items-center gap-1.5">
+        {/* جستجوی زنده + شمارش + مرتب‌سازی */}
+        <div className="mb-4 space-y-3 rounded-2xl border border-[#1b39f5]/10 bg-white px-4 py-3 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className="relative min-w-[200px] flex-1 sm:max-w-xs">
+              <Search className="pointer-events-none absolute inset-y-0 start-3 my-auto h-4 w-4 text-slate-400" />
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                aria-label="جستجو در نتایج"
+                placeholder="جستجو در نتایج…"
+                className="h-9 w-full rounded-full border border-[#1b39f5]/12 bg-[#f8f9ff] ps-9 pe-3 text-[12.5px] font-semibold text-[#0a1b33] outline-none transition-colors placeholder:text-slate-400 focus:border-[#1b39f5]/40"
+              />
+            </span>
+
+            <span className="text-[12px] text-slate-500">
+              <span className="num">{num(visible.length)}</span> محصول یافت شد
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1.5">
             {sortOptions.map((option) => (
               <button
                 key={option.key}
@@ -173,12 +273,49 @@ export default function ProductsBrowser({
               </button>
             ))}
           </div>
+
+          {/* بج‌های فیلتر فعال */}
+          {activeBadges.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-1.5 border-t border-[#1b39f5]/8 pt-3">
+              {activeBadges.map((badge) => (
+                <span
+                  key={badge.key}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#1b39f5]/8 px-3 py-1 text-[11px] font-semibold text-[#1b39f5]"
+                >
+                  {badge.label}
+                  <button
+                    type="button"
+                    onClick={badge.clear}
+                    aria-label={`حذف فیلتر ${badge.label}`}
+                    className="grid h-4 w-4 place-items-center rounded-full transition-colors hover:bg-[#1b39f5]/15"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </span>
+              ))}
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="rounded-full px-3 py-1 text-[11px] font-bold text-[#E56458] transition-colors hover:bg-[#E56458]/8"
+              >
+                حذف همه
+              </button>
+            </div>
+          ) : null}
         </div>
 
         {visible.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {visible.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {visible.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.4), ease: [0.16, 1, 0.3, 1] }}
+                className="h-full"
+              >
+                <ProductCard product={product} />
+              </motion.div>
             ))}
           </div>
         ) : (
