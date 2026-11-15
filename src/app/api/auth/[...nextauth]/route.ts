@@ -3,6 +3,47 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "@/lib/db";
 import User from "@/lib/db/models/User";
 
+interface Credentials {
+  email?: string;
+  phone?: string;
+  password?: string;
+}
+
+interface UserSession {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  role: "user" | "admin";
+  avatar?: string;
+  emailVerified: boolean;
+  phoneVerified: boolean;
+}
+
+interface CustomToken {
+  id?: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  role?: "user" | "admin";
+  avatar?: string;
+  emailVerified?: boolean;
+  phoneVerified?: boolean;
+}
+
+interface CustomSession {
+  user: {
+    id?: string;
+    name?: string;
+    email?: string;
+    phone?: string;
+    role?: "user" | "admin";
+    avatar?: string;
+    emailVerified?: boolean;
+    phoneVerified?: boolean;
+  };
+}
+
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -13,7 +54,7 @@ export const authOptions = {
         phone: { label: "شماره موبایل", type: "text" },
         password: { label: "رمز عبور", type: "password" },
       },
-      async authorize(credentials: any) {
+      async authorize(credentials: Credentials | undefined) {
         await dbConnect();
 
         // Check if email or phone is provided
@@ -58,7 +99,7 @@ export const authOptions = {
           avatar: user.avatar,
           emailVerified: user.emailVerified,
           phoneVerified: user.phoneVerified,
-        };
+        } as UserSession;
       },
     }),
   ],
@@ -71,7 +112,7 @@ export const authOptions = {
   
   // Callbacks
   callbacks: {
-    async jwt({ token, user }: any) {
+    async jwt({ token, user }: { token: CustomToken; user: UserSession }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -81,12 +122,14 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: any) {
-      session.user.id = token.id;
-      session.user.role = token.role;
-      session.user.avatar = token.avatar;
-      session.user.emailVerified = token.emailVerified;
-      session.user.phoneVerified = token.phoneVerified;
+    async session({ session, token }: { session: CustomSession; token: CustomToken }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.avatar = token.avatar;
+        session.user.emailVerified = token.emailVerified;
+        session.user.phoneVerified = token.phoneVerified;
+      }
       return session;
     },
   },
