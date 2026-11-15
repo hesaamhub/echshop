@@ -3,6 +3,7 @@ import "@fontsource-variable/vazirmatn"
 import "@fontsource-variable/sora"
 import "./globals.css"
 import PromoBanner from "@/components/site/PromoBanner"
+import AuthProvider from "@/components/providers/AuthProvider"
 import { siteContent } from "@/lib/data"
 import { LOGO_MARK_URI } from "@/lib/brandMark"
 
@@ -111,8 +112,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <PromoBanner />
-        {children}
+        <AuthProvider>
+          <PromoBanner />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   )
