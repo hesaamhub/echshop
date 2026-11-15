@@ -83,11 +83,12 @@ async function testConnection() {
     console.log("🎉 تمام تست‌ها با موفقیت انجام شدند!");
     process.exit(0);
 
-  } catch (error: any) {
-    console.error("❌ خطا در تست:", error.message);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("❌ خطا در تست:", err.message);
     
     // راهنمایی برای حل مشکل
-    if (error.message.includes("ECONNREFUSED")) {
+    if (err.message.includes("ECONNREFUSED")) {
       console.log("\n💡 راهنمایی: MongoDB در حال اجرا نیست");
       console.log("برای راه‌اندازی MongoDB محلی:");
       console.log("1. MongoDB را نصب کنید: https://www.mongodb.com/try/download/community");
@@ -96,7 +97,7 @@ async function testConnection() {
       console.log("   - مک/لینوکس: mongod");
       console.log("3. یا از MongoDB Atlas استفاده کنید:");
       console.log("   https://www.mongodb.com/atlas/database");
-    } else if (error.message.includes("authentication")) {
+    } else if (err.message.includes("authentication")) {
       console.log("\n💡 راهنمایی: مشکل در احراز هویت");
       console.log("فایل .env.local را چک کنید:");
       console.log("MONGODB_URI=mongodb://username:password@host:port/database");

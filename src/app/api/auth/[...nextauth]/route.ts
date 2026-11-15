@@ -1,15 +1,16 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import dbConnect from "@/lib/db";
 import User from "@/lib/db/models/User";
+import { Session } from "next-auth";
 
-interface Credentials {
+interface CredentialsType {
   email?: string;
   phone?: string;
   password?: string;
 }
 
-interface UserSession {
+interface UserType {
   id: string;
   name: string;
   email: string;
@@ -20,7 +21,7 @@ interface UserSession {
   phoneVerified: boolean;
 }
 
-interface CustomToken {
+interface TokenType {
   id?: string;
   name?: string;
   email?: string;
@@ -31,33 +32,18 @@ interface CustomToken {
   phoneVerified?: boolean;
 }
 
-interface CustomSession {
-  user: {
-    id?: string;
-    name?: string;
-    email?: string;
-    phone?: string;
-    role?: "user" | "admin";
-    avatar?: string;
-    emailVerified?: boolean;
-    phoneVerified?: boolean;
-  };
-}
-
-export const authOptions = {
-  // Configure one or more authentication providers
+const handler = NextAuth({
   providers: [
-    CredentialsProvider({
+    Credentials({
       name: "Credentials",
       credentials: {
         email: { label: "ایمیل", type: "email" },
         phone: { label: "شماره موبایل", type: "text" },
         password: { label: "رمز عبور", type: "password" },
       },
-      async authorize(credentials: Credentials | undefined) {
+      async authorize(credentials: CredentialsType | undefined) {
         await dbConnect();
 
-        // Check if email or phone is provided
         if (!credentials?.email && !credentials?.phone) {
           throw new Error("لطفاً ایمیل یا شماره موبایل وارد کنید");
         }
@@ -66,7 +52,6 @@ export const authOptions = {
           throw new Error("لطفاً رمز عبور وارد کنید");
         }
 
-        // Find user by email or phone
         const user = await User.findOne({
           $or: [
             { email: credentials.email },
@@ -82,14 +67,12 @@ export const authOptions = {
           throw new Error("حساب کاربری شما غیرفعال است");
         }
 
-        // Check password
         const isValid = await user.comparePassword(credentials.password);
         
         if (!isValid) {
           throw new Error("رمز عبور اشتباه است");
         }
 
-        // Return user object without password
         return {
           id: user._id.toString(),
           name: user.name,
@@ -99,20 +82,16 @@ export const authOptions = {
           avatar: user.avatar,
           emailVerified: user.emailVerified,
           phoneVerified: user.phoneVerified,
-        } as UserSession;
+        } as UserType;
       },
     }),
   ],
-  
-  // Custom pages
   pages: {
     signIn: "/login",
     error: "/login",
   },
-  
-  // Callbacks
   callbacks: {
-    async jwt({ token, user }: { token: CustomToken; user: UserSession }) {
+    async jwt({ token, user }: { token: TokenType; user: UserType }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
@@ -122,31 +101,23 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: { session: CustomSession; token: CustomToken }) {
+    async session({ session, token }: { session: Session; token: TokenType }) {
       if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.user.avatar = token.avatar;
-        session.user.emailVerified = token.emailVerified;
-        session.user.phoneVerified = token.phoneVerified;
+        session.user.id = token.id as string;
+        session.user.role = token.role as "user" | "admin";
+        session.user.avatar = token.avatar as string;
+        session.user.emailVerified = token.emailVerified as boolean;
+        session.user.phoneVerified = token.phoneVerified as boolean;
       }
       return session;
     },
   },
-  
-  // Session configuration
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60,
   },
-  
-  // Secret for JWT
   secret: process.env.NEXTAUTH_SECRET,
-  
-  // Security
   trustHost: true,
-};
-
-const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };

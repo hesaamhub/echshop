@@ -71,11 +71,13 @@ const UserSchema = new Schema<IUser>(
 );
 
 // Hash password before saving
-UserSchema.pre<IUser>("save", async function (next) {
+UserSchema.pre("save", async function (next) {
+  // @ts-expect-error - this is a Mongoose Document method
   if (!this.isModified("password")) return next();
   
   try {
     const salt = await bcrypt.genSalt(12);
+    // @ts-expect-error - this is a Mongoose Document
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
@@ -84,10 +86,11 @@ UserSchema.pre<IUser>("save", async function (next) {
 });
 
 // Method to compare passwords
-UserSchema.methods.comparePassword = async function (candidatePassword: string) {
+UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+  // @ts-expect-error - this is a Mongoose Document
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.models.User || mongoose.model<IUser>("User", UserSchema);
+const User = mongoose.models.User<IUser> || mongoose.model<IUser>("User", UserSchema);
 
 export default User;

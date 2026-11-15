@@ -84,7 +84,8 @@ const OrderSchema = new Schema<IOrder>(
 );
 
 // Generate order number before save
-OrderSchema.pre<IOrder>("save", function (next) {
+OrderSchema.pre("save", function (next) {
+  // @ts-expect-error - this is a Mongoose Document method
   if (this.isModified("orderNumber") && !this.orderNumber) {
     const date = new Date();
     const year = date.getFullYear().toString().slice(-2);
@@ -93,11 +94,12 @@ OrderSchema.pre<IOrder>("save", function (next) {
     const random = Math.floor(Math.random() * 10000)
       .toString()
       .padStart(4, "0");
+    // @ts-expect-error - this is a Mongoose Document
     this.orderNumber = `ECH-${year}${month}${day}-${random}`;
   }
   next();
 });
 
-const Order = mongoose.models.Order || mongoose.model<IOrder>("Order", OrderSchema);
+const Order = mongoose.models.Order<IOrder> || mongoose.model<IOrder>("Order", OrderSchema);
 
 export default Order;
