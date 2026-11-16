@@ -3,6 +3,7 @@ import Link from "next/link"
 import { BadgeCheck, Headphones, ShieldCheck, Zap } from "lucide-react"
 import Shell from "@/components/site/Shell"
 import GlassIcon from "@/components/site/GlassIcon"
+import AboutStorySection from "@/components/site/AboutStorySection"
 import { siteContent } from "@/lib/data"
 
 export const metadata: Metadata = {
@@ -38,6 +39,8 @@ export default function AboutPage() {
       subtitle={siteContent.footer.about}
       breadcrumb={[{ label: "صفحه اصلی", href: "/" }, { label: "دربارهٔ ما" }]}
     >
+      <AboutStorySection />
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {siteContent.stats.map((stat) => (
           <div

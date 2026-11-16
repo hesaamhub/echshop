@@ -3,19 +3,12 @@ import { ArrowLeft, Zap } from "lucide-react"
 import type { NewArrival, NewArrivalArt } from "@/lib/newArrivals"
 import { num } from "@/lib/utils"
 
-const PHOTO_BASE = "https://images.pexels.com/photos"
-const WIDE_QUERY = "?auto=compress&cs=tinysrgb&w=1400"
-
-function widePhoto(id: number) {
-  return `${PHOTO_BASE}/${id}/pexels-photo-${id}.jpeg${WIDE_QUERY}`
-}
-
 /** تصویر عریض هدر صفحهٔ محصول، متناسب با کاربرد همان سرویس */
 export const ART_IMAGES: Record<NewArrivalArt, string> = {
-  film: widePhoto(29043652),
-  notebook: widePhoto(5185074),
-  hex: widePhoto(29652326),
-  orbit: widePhoto(16978372),
+  film: "/art/banners/p-kling.jpg",
+  notebook: "/art/banners/p-notebooklm.jpg",
+  hex: "/art/banners/p-hexafield.jpg",
+  orbit: "/art/banners/p-kimi.jpg",
 }
 
 /** دکمهٔ مختص کاربرد هر سرویس */

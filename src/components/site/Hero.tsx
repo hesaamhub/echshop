@@ -6,8 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { ArrowLeft, Headphones, ShieldCheck, Star, Zap } from "lucide-react"
 import { brandLogos, type BrandLogo } from "@/lib/brands"
 import { siteContent } from "@/lib/data"
+import { fetchSiteSettings } from "@/lib/firebase/repository"
 import Logo from "./Logo"
 import BrandIcon from "./BrandIcon"
+import RichTextContent from "./RichTextContent"
 
 /** متن هیرو از منبع واحد محتوا خوانده می‌شود (قابل ویرایش در پنل مدیریت) */
 const hero = siteContent.hero
@@ -51,6 +53,12 @@ function visibilityFor(distance: number): string {
 
 export default function Hero() {
   const [productIndex, setProductIndex] = useState(0)
+  const [heroCopy, setHeroCopy] = useState({
+    badge: hero.badge,
+    headlineLead: hero.headlineLead,
+    headlineTail: hero.headlineTail,
+    subheadline: hero.subheadline,
+  })
   const reduceMotion = useReducedMotion()
 
   useEffect(() => {
@@ -59,6 +67,24 @@ export default function Hero() {
     }, 2200)
 
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    let active = true
+    fetchSiteSettings()
+      .then((res) => {
+        if (!active || !res.fromFirestore) return
+        setHeroCopy({
+          badge: res.data.heroBadge || hero.badge,
+          headlineLead: res.data.heroHeadlineLead || hero.headlineLead,
+          headlineTail: res.data.heroHeadlineTail || hero.headlineTail,
+          subheadline: res.data.heroSubheadline || hero.subheadline,
+        })
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
   }, [])
 
   return (
@@ -91,10 +117,10 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative z-10 mx-auto max-w-3xl px-6 text-center"
         >
-          <DeliveryBadge label={hero.badge} reduceMotion={reduceMotion ?? false} />
+          <DeliveryBadge label={heroCopy.badge} reduceMotion={reduceMotion ?? false} />
 
           <h1 className="mt-4 font-display text-[26px] md:text-[40px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] lg:whitespace-nowrap">
-            {hero.headlineLead}{" "}
+            {heroCopy.headlineLead}{" "}
             <span className="inline-grid align-baseline text-center">
               {rotatingProducts.map((name) => (
                 <span
@@ -105,25 +131,26 @@ export default function Hero() {
                   {name}
                 </span>
               ))}
-              <AnimatePresence mode="wait" initial={false}>
+              <AnimatePresence initial={false}>
                 <motion.span
                   key={rotatingProducts[productIndex]}
-                  initial={{ opacity: 0, y: 14 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -14 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                   className="wordmark col-start-1 row-start-1 whitespace-nowrap bg-gradient-to-l from-[#1b39f5] to-[#7d92ff] bg-clip-text text-transparent"
                 >
                   {rotatingProducts[productIndex]}
                 </motion.span>
               </AnimatePresence>
             </span>{" "}
-            {hero.headlineTail}
+            {heroCopy.headlineTail}
           </h1>
 
-          <p className="mx-auto mt-4 max-w-xl text-[12.5px] md:text-[14px] font-medium leading-8 text-[#475569]">
-            {hero.subheadline}
-          </p>
+          <RichTextContent
+            content={heroCopy.subheadline}
+            className="mx-auto mt-4 max-w-xl text-[12.5px] md:text-[14px] font-medium leading-8 text-[#475569]"
+          />
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}

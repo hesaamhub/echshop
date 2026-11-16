@@ -1,22 +1,88 @@
+"use client"
+
+import { useCallback, useEffect, useState } from "react"
 import { Badge, Button, Card, Field, StatCard, Table, Td } from "@/components/panel/Ui"
+import {
+  creditWalletAsAdmin,
+  fetchAllUsersAsAdmin,
+  updateUserPlanAsAdmin,
+  type UserPublicProfile,
+} from "@/lib/firebase/repository"
 import { toman } from "@/lib/utils"
 
-const users = [
-  { name: "حسام رضایی", phone: "09120000001", orders: 14, spent: 12480000, wallet: 320000, level: "طلایی", tone: "amber" },
-  { name: "مریم کریمی", phone: "09120000002", orders: 6, spent: 4150000, wallet: 0, level: "نقره‌ای", tone: "gray" },
-  { name: "علی محمدی", phone: "09120000003", orders: 21, spent: 19870000, wallet: 1250000, level: "طلایی", tone: "amber" },
-  { name: "سارا نوری", phone: "09120000004", orders: 2, spent: 780000, wallet: 50000, level: "عادی", tone: "blue" },
-  { name: "رضا احمدی", phone: "09120000005", orders: 9, spent: 7320000, wallet: 0, level: "نقره‌ای", tone: "gray" },
-] as const
-
 export default function AdminUsersPage() {
+  const [users, setUsers] = useState<UserPublicProfile[]>([])
+  const [search, setSearch] = useState("")
+  const [selectedUid, setSelectedUid] = useState("")
+  const [creditAmount, setCreditAmount] = useState("")
+  const [creditNote, setCreditNote] = useState("")
+  const [planValue, setPlanValue] = useState("طلایی")
+  const [loading, setLoading] = useState(true)
+  const [busy, setBusy] = useState(false)
+  const [feedback, setFeedback] = useState("")
+
+  const load = useCallback(async () => {
+    setLoading(true)
+    try {
+      const list = await fetchAllUsersAsAdmin()
+      setUsers(list)
+      if (list.length > 0 && !selectedUid) {
+        setSelectedUid(list[0].uid)
+      }
+    } finally {
+      setLoading(false)
+    }
+  }, [selectedUid])
+
+  useEffect(() => {
+    void load()
+  }, [load])
+
+  async function handleCredit(event: React.FormEvent) {
+    event.preventDefault()
+    const amount = Number(creditAmount)
+    if (!selectedUid || !amount) return
+    setBusy(true)
+    setFeedback("")
+    try {
+      await creditWalletAsAdmin(selectedUid, amount, creditNote)
+      setCreditAmount("")
+      setCreditNote("")
+      setFeedback("تراکنش کیف پول با موفقیت ثبت شد.")
+      await load()
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function handlePlanSave(event: React.FormEvent) {
+    event.preventDefault()
+    if (!selectedUid) return
+    setBusy(true)
+    setFeedback("")
+    try {
+      await updateUserPlanAsAdmin(selectedUid, planValue)
+      setFeedback("سطح کاربری به‌روزرسانی شد.")
+      await load()
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const totalWallet = users.reduce((sum, u) => sum + (u.walletBalance || 0), 0)
+  const filtered = search.trim()
+    ? users.filter((u) => u.displayName.includes(search.trim()) || u.uid.includes(search.trim()))
+    : users
+
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="کل کاربران" value={`${toman(8421)} نفر`} tone="up" hint="۱۲۴ عضو جدید این هفته" />
-        <StatCard label="خریداران فعال" value={`${toman(2148)} نفر`} />
-        <StatCard label="موجودی کل کیف پول‌ها" value={`${toman(148920000)} تومان`} />
-        <StatCard label="میانگین سبد خرید" value={`${toman(940000)} تومان`} tone="up" hint="۶٪ رشد" />
+      <div className="grid gap-4 sm:grid-cols-3">
+        <StatCard label="کل کاربران" value={`${toman(users.length)} نفر`} tone="up" />
+        <StatCard label="موجودی کل کیف پول‌ها" value={`${toman(totalWallet)} تومان`} />
+        <StatCard
+          label="کاربران ویژه"
+          value={`${toman(users.filter((u) => u.plan !== "عادی").length)} نفر`}
+        />
       </div>
 
       <Card
@@ -24,65 +90,84 @@ export default function AdminUsersPage() {
         action={
           <div className="w-56">
             <input
-              placeholder="جستجوی نام یا شماره…"
-              className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-[11.5px] outline-none focus:border-[#2783de]"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="جستجوی نام یا شناسه…"
+              className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-[11.5px] outline-none focus:border-[#1b39f5]"
             />
           </div>
         }
       >
-        <Table head={["کاربر", "شماره موبایل", "سفارش‌ها", "مجموع خرید", "کیف پول", "سطح", "عملیات"]}>
-          {users.map((user) => (
-            <tr key={user.phone}>
-              <Td className="font-semibold text-[#0a1b33]">{user.name}</Td>
-              <Td className="font-latin text-slate-500">{user.phone}</Td>
-              <Td className="num">{toman(user.orders)}</Td>
-              <Td className="num">{toman(user.spent)}</Td>
-              <Td className="num">{toman(user.wallet)}</Td>
-              <Td>
-                <Badge tone={user.tone}>{user.level}</Badge>
-              </Td>
-              <Td>
-                <div className="flex gap-1.5">
-                  <Button variant="ghost">پروفایل</Button>
-                  <Button variant="ghost">شارژ کیف پول</Button>
-                  <Button variant="danger">مسدود</Button>
-                </div>
-              </Td>
-            </tr>
-          ))}
-        </Table>
+        {loading ? (
+          <p className="py-8 text-center text-[12px] text-slate-400">در حال بارگذاری…</p>
+        ) : (
+          <Table head={["نام", "شناسه", "کیف پول", "علاقه‌مندی", "سطح", "عملیات"]}>
+            {filtered.map((user) => (
+              <tr key={user.uid}>
+                <Td className="font-semibold text-[#0a1b33]">{user.displayName}</Td>
+                <Td className="font-latin text-[11px] text-slate-400">{user.uid.slice(0, 12)}…</Td>
+                <Td className="num">{toman(user.walletBalance)}</Td>
+                <Td className="num">{toman(user.favorites?.length ?? 0)}</Td>
+                <Td>
+                  <Badge tone={user.plan === "طلایی" ? "amber" : user.plan === "نقره‌ای" ? "blue" : "gray"}>
+                    {user.plan}
+                  </Badge>
+                </Td>
+                <Td>
+                  <Button variant="ghost" onClick={() => setSelectedUid(user.uid)}>
+                    انتخاب
+                  </Button>
+                </Td>
+              </tr>
+            ))}
+          </Table>
+        )}
       </Card>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="شارژ دستی کیف پول">
-          <div className="space-y-4">
-            <Field label="شماره موبایل کاربر" placeholder="09120000001" latin />
-            <Field label="مبلغ (تومان)" placeholder="۵۰۰٬۰۰۰" />
-            <Field label="توضیح" placeholder="دلیل شارژ یا جبران خسارت" />
-            <Button>ثبت شارژ</Button>
-          </div>
+        <Card title="شارژ / اصلاح کیف پول کاربر">
+          <form onSubmit={(e) => void handleCredit(e)} className="space-y-4">
+            <label className="block">
+              <span className="text-[12px] font-semibold text-[#0a1b33]">کاربر</span>
+              <select
+                value={selectedUid}
+                onChange={(e) => setSelectedUid(e.target.value)}
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+              >
+                {users.map((u) => (
+                  <option key={u.uid} value={u.uid}>
+                    {u.displayName} ({toman(u.walletBalance)} تومان)
+                  </option>
+                ))}
+              </select>
+            </label>
+            <Field label="مبلغ (تومان)" type="number" latin value={creditAmount} onChange={(e) => setCreditAmount(e.target.value)} placeholder="500000" required />
+            <Field label="شرح تراکنش" value={creditNote} onChange={(e) => setCreditNote(e.target.value)} placeholder="شارژ هدیه یا جبران خسارت" />
+            <Button type="submit" disabled={busy || !selectedUid}>
+              ثبت شارژ
+            </Button>
+          </form>
         </Card>
 
-        <Card title="نقش‌ها و دسترسی‌ها">
-          <div className="space-y-3">
-            {[
-              { role: "مدیر کل", access: "دسترسی کامل به تمام بخش‌ها" },
-              { role: "کارشناس پشتیبانی", access: "تیکت‌ها، سفارش‌ها و تحویل دستی" },
-              { role: "انباردار", access: "موجودی اکانت و لایسنس" },
-              { role: "نویسندهٔ محتوا", access: "بلاگ و مدیریت متن‌های سایت" },
-            ].map((item) => (
-              <div
-                key={item.role}
-                className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3.5"
+        <Card title="تغییر سطح کاربری">
+          <form onSubmit={(e) => void handlePlanSave(e)} className="space-y-4">
+            <label className="block">
+              <span className="text-[12px] font-semibold text-[#0a1b33]">سطح جدید</span>
+              <select
+                value={planValue}
+                onChange={(e) => setPlanValue(e.target.value)}
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
               >
-                <div>
-                  <p className="text-[12px] font-bold text-[#0a1b33]">{item.role}</p>
-                  <p className="mt-1 text-[11px] text-slate-400">{item.access}</p>
-                </div>
-                <Button variant="ghost">ویرایش</Button>
-              </div>
-            ))}
-          </div>
+                <option value="عادی">عادی</option>
+                <option value="نقره‌ای">نقره‌ای</option>
+                <option value="طلایی">طلایی</option>
+              </select>
+            </label>
+            {feedback ? <p className="text-[12px] font-semibold text-[#2F7A50]">{feedback}</p> : null}
+            <Button type="submit" disabled={busy || !selectedUid}>
+              ذخیرهٔ سطح کاربر
+            </Button>
+          </form>
         </Card>
       </div>
     </div>

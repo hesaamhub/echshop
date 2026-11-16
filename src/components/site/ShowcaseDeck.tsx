@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useCallback, useEffect, useState, type ReactNode } from "react"
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 import { ArrowLeft, ChevronLeft, ChevronRight, Flame, ShoppingBag, Star, Zap } from "lucide-react"
 import BrandIcon from "./BrandIcon"
 import { brandLogos } from "@/lib/brands"
@@ -205,12 +205,13 @@ const VARIANTS: Variant[] = [
   },
 ]
 
-/** کارت محصول داخل دک — بدون تغییر در چیدمان داخلی */
+/** کارت محصول داخل دک — گرافیک هندسی خالص و متمایز برای هر برند */
 function DeckCard({ product, position }: { product: Product; position: number }) {
   const color = brandColor(product.logo)
   const variant = VARIANTS[position % VARIANTS.length]
   const plan = cheapestPlan(product)
   const low = plan.stock > 0 && plan.stock <= 15
+  const prefersReduced = useReducedMotion()
 
   return (
     <article className="group relative h-full">
@@ -253,8 +254,8 @@ function DeckCard({ product, position }: { product: Product; position: number })
 
         <div className="relative flex flex-1 items-center justify-center py-2">
           <motion.span
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            animate={prefersReduced ? undefined : { y: [0, -10, 0] }}
+            transition={prefersReduced ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
             className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
           >
             <span className={`grid place-items-center ${variant.holderInner}`}>

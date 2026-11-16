@@ -1,6 +1,7 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   // هدر اضافی X-Powered-By حذف شود
   poweredByHeader: false,
   reactStrictMode: true,

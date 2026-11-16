@@ -13,6 +13,7 @@ import {
   Youtube,
 } from "lucide-react"
 import { siteContent } from "@/lib/data"
+import LiveRichSetting from "./LiveRichSetting"
 import Logo from "./Logo"
 import Wordmark from "./Wordmark"
 
@@ -58,7 +59,11 @@ export default function Footer() {
                 <span className="text-[11px] font-semibold text-slate-400">{brand.tagline}</span>
               </div>
             </div>
-            <p className="mt-4 max-w-xs text-[12.5px] leading-6 text-slate-500">{footer.about}</p>
+            <LiveRichSetting
+              field="footerAbout"
+              fallback={footer.about}
+              className="mt-4 max-w-xs text-[12.5px] leading-6 text-slate-500"
+            />
 
             <div className="mt-5 flex items-center gap-2">
               {socials.map((social) => (

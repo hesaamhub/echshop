@@ -1,0 +1,361 @@
+{
+  "entities": {
+    "Category": {
+      "title": "Category",
+      "description": "Product category metadata for the storefront catalog.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "description": { "type": "string", "maxLength": 300 },
+        "icon": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "count": { "type": "number" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "title", "description", "icon", "count", "isActive", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Digital subscription or license product with plans and FAQ.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "slug": { "type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "brand": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "logo": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "categorySlug": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-z0-9-]+$" },
+        "excerpt": { "type": "string", "minLength": 1, "maxLength": 300 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "badge": { "type": "string", "maxLength": 40 },
+        "rating": { "type": "number" },
+        "sold": { "type": "number" },
+        "gradient": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "plans": { "type": "array" },
+        "features": { "type": "array" },
+        "faq": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "slug", "title", "brand", "logo", "categorySlug", "excerpt", "description", "rating", "sold", "gradient", "plans", "features", "faq", "isActive", "updatedAt"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Blog article for the storefront editorial section.",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string", "minLength": 1, "maxLength": 100, "pattern": "^[a-z0-9-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "excerpt": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "body": { "type": "string", "minLength": 1, "maxLength": 20000 },
+        "category": { "type": "string", "minLength": 1, "maxLength": 60 },
+        "author": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "readMinutes": { "type": "number" },
+        "publishedAt": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "cover": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "isPublished": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "title", "excerpt", "body", "category", "author", "readMinutes", "publishedAt", "cover", "isPublished", "updatedAt"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Storefront configurable copy, contact details, and feature flags.",
+      "type": "object",
+      "properties": {
+        "brandNameFa": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "brandNameEn": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "tagline": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "logoMark": { "type": "string", "minLength": 1, "maxLength": 20 },
+        "heroBadge": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "heroHeadlineLead": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "heroHeadlineTail": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "heroSubheadline": { "type": "string", "minLength": 1, "maxLength": 2500 },
+        "contactPhone": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "contactEmail": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "contactTelegram": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "contactAddress": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "contactHours": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "footerAbout": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "aboutDescription": { "type": "string", "maxLength": 8000 },
+        "maintenanceMode": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["brandNameFa", "brandNameEn", "tagline", "heroBadge", "heroHeadlineLead", "heroHeadlineTail", "heroSubheadline", "contactPhone", "contactEmail", "contactTelegram", "contactAddress", "contactHours", "footerAbout", "updatedAt"]
+    },
+    "DiscountCode": {
+      "title": "DiscountCode",
+      "description": "Promotional discount codes managed by administrators.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "minLength": 2, "maxLength": 32, "pattern": "^[A-Z0-9_-]+$" },
+        "type": { "type": "string", "enum": ["percent", "fixed"] },
+        "value": { "type": "number" },
+        "limit": { "type": "number" },
+        "used": { "type": "number" },
+        "minOrder": { "type": "number" },
+        "expiresAt": { "type": "string", "maxLength": 40 },
+        "firstPurchaseOnly": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "type", "value", "limit", "used", "minOrder", "isActive", "updatedAt"]
+    },
+    "UserPublic": {
+      "title": "UserPublic",
+      "description": "Non-PII user account state such as display name, tier, wallet balance, and favorites.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "plan": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "walletBalance": { "type": "number" },
+        "favorites": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "plan", "walletBalance", "favorites", "createdAt", "updatedAt"]
+    },
+    "UserPrivate": {
+      "title": "UserPrivate",
+      "description": "Isolated PII profile document restricted strictly to owner and admins.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "email": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "nationalId": { "type": "string", "maxLength": 20 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Trusted administrator registry keyed by Firebase Auth UID.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "email": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "role": { "type": "string", "enum": ["admin", "superadmin"] },
+        "grantedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "grantedAt"]
+    },
+    "WalletTransaction": {
+      "title": "WalletTransaction",
+      "description": "User wallet ledger record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "type": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["success", "failed", "pending"] },
+        "note": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "amount", "status", "createdAt"]
+    },
+    "UserNotification": {
+      "title": "UserNotification",
+      "description": "User notification item.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "body": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "unread": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "body", "unread", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order with delivery state and credentials.",
+      "type": "object",
+      "properties": {
+        "orderNumber": { "type": "string", "minLength": 3, "maxLength": 40, "pattern": "^[A-Z0-9_-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "customerName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "customerEmail": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "customerPhone": { "type": "string", "maxLength": 20 },
+        "productId": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "productTitle": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "planId": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "planTitle": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "delivery": { "type": "string", "enum": ["manual", "stock", "api", "upgrade", "gift_code", "scheduled"] },
+        "quantity": { "type": "number" },
+        "amount": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "discountCode": { "type": "string", "maxLength": 32 },
+        "paymentMethod": { "type": "string", "enum": ["gateway", "wallet"] },
+        "status": { "type": "string", "enum": ["pending", "paid", "delivered", "failed", "refunded"] },
+        "deliveryNote": { "type": "string", "maxLength": 1000 },
+        "deliveryCredentialsText": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderNumber", "userId", "customerName", "customerEmail", "productId", "productTitle", "planId", "planTitle", "delivery", "quantity", "amount", "paymentMethod", "status", "createdAt", "updatedAt"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Admin-only stock credentials or activation codes.",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "productTitle": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "planId": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "planTitle": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "deliveryType": { "type": "string", "enum": ["manual", "stock", "api", "upgrade", "gift_code", "scheduled"] },
+        "credentialValue": { "type": "string", "minLength": 1, "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["available", "reserved", "delivered"] },
+        "assignedOrderId": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "productTitle", "planId", "planTitle", "deliveryType", "credentialValue", "status", "createdAt", "updatedAt"]
+    },
+    "Ticket": {
+      "title": "Ticket",
+      "description": "Customer support ticket header.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "userName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "subject": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "department": { "type": "string", "enum": ["پشتیبانی فنی", "مالی و پرداخت", "پیش از خرید"] },
+        "status": { "type": "string", "enum": ["open", "answered", "pending_user", "closed"] },
+        "priority": { "type": "string", "enum": ["کم", "متوسط", "زیاد"] },
+        "orderId": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "userName", "subject", "department", "status", "priority", "createdAt", "updatedAt"]
+    },
+    "TicketMessage": {
+      "title": "TicketMessage",
+      "description": "Individual message inside a ticket subcollection.",
+      "type": "object",
+      "properties": {
+        "ticketId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "ticketOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "senderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_-]+$" },
+        "senderRole": { "type": "string", "enum": ["user", "support"] },
+        "body": { "type": "string", "minLength": 1, "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ticketId", "ticketOwnerId", "senderId", "senderRole", "body", "createdAt"]
+    },
+    "ProductRequest": {
+      "title": "ProductRequest",
+      "description": "Custom product sourcing request submitted from the homepage.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "category": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "productName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "plan": { "type": "string", "maxLength": 120 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "contact": { "type": "string", "minLength": 3, "maxLength": 160 },
+        "note": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["new", "reviewed", "fulfilled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["category", "productName", "name", "contact", "status", "createdAt"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "General contact inquiry submitted from the contact page.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 160 },
+        "subject": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "message": { "type": "string", "minLength": 1, "maxLength": 3000 },
+        "status": { "type": "string", "enum": ["new", "replied"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "subject", "message", "status", "createdAt"]
+    },
+    "ConnectionTest": {
+      "title": "ConnectionTest",
+      "description": "Connectivity verification document.",
+      "type": "object",
+      "properties": {
+        "ok": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Public storefront product categories; writable only by admins."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Public storefront product catalog; writable only by admins."
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Public blog posts; writable only by admins."
+    },
+    "/site_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Public storefront configuration and editable copy; writable only by admins."
+    },
+    "/discounts/{discountId}": {
+      "schema": { "$ref": "#/entities/DiscountCode" },
+      "description": "Discount codes; signed-in users can look up a specific code by ID, admins can list and manage all codes."
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserPublic" },
+      "description": "User non-PII state (tier, wallet balance, favorites); readable and writable by owner (non-privileged fields) or admin."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivate" },
+      "description": "Isolated PII profile (email, phone, nationalId); strictly restricted to owner or admin."
+    },
+    "/users/{userId}/wallet_transactions/{txId}": {
+      "schema": { "$ref": "#/entities/WalletTransaction" },
+      "description": "User wallet ledger transactions."
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/UserNotification" },
+      "description": "User-specific notifications."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Trusted admin role documents; readable by the user checking own admin record or existing admins; writable only by admins."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders; owner can create pending orders and read own orders; admins can manage delivery and status."
+    },
+    "/inventory/{itemId}": {
+      "schema": { "$ref": "#/entities/InventoryItem" },
+      "description": "Admin-only stock credentials and activation codes; never readable or writable by non-admins."
+    },
+    "/tickets/{ticketId}": {
+      "schema": { "$ref": "#/entities/Ticket" },
+      "description": "Support tickets; owner and admins can read/update."
+    },
+    "/tickets/{ticketId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/TicketMessage" },
+      "description": "Messages belonging to a support ticket, gated via parent ticket ownership or admin."
+    },
+    "/product_requests/{requestId}": {
+      "schema": { "$ref": "#/entities/ProductRequest" },
+      "description": "Custom product sourcing requests; creatable by visitors/users, readable and manageable only by admins."
+    },
+    "/contact_messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ContactMessage" },
+      "description": "Contact form inquiries; creatable by visitors/users, readable and manageable only by admins."
+    },
+    "/test/{testId}": {
+      "schema": { "$ref": "#/entities/ConnectionTest" },
+      "description": "Connectivity check document for startup verification."
+    }
+  }
+}

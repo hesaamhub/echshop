@@ -93,6 +93,10 @@ export const siteContent = {
       },
     ],
   },
+  about: {
+    description:
+      "<p>اچ‌شاپ از سال ۱۳۹۹ با هدف دسترسی ساده، امن و مستقیم کاربران و تیم‌های ایرانی به سرویس‌های هوش مصنوعی، استریم و نرم‌افزارهای رسمی راه‌اندازی شد.</p><p>تمام اشتراک‌ها از مسیرهای معتبر تهیه می‌شوند و سفارش‌ها با تحویل خودکار از انبار، ارتقای ایمیل شخصی یا API در کوتاه‌ترین زمان فعال می‌گردند؛ همراه با گارانتی کامل دوره و پشتیبانی فارسی.</p>",
+  },
 }
 
 /* -------------------------------------------------------------------------- */
@@ -378,6 +382,12 @@ export type HomePoster = {
   title: string
   /** برچسب کوچک بالای عنوان */
   kicker: string
+  /** توضیح کوتاه کاربرد محصول */
+  summary: string
+  /** شروع قیمت (تومان) */
+  priceFrom: number
+  /** اسلاگ آیکون برند در صورت وجود */
+  logo?: string
   /** تصویر پوستر — مسیر فایل در public */
   image: string
   /** مقصد کلیک روی پوستر */
@@ -387,11 +397,58 @@ export type HomePoster = {
 }
 
 export const homePosters: HomePoster[] = [
-  { id: "side-r-1", title: "Kling AI", kicker: "NEW", image: "/art/p-kling.jpg", href: "/new/kling-ai", tint: "#7b2ff7" },
-  { id: "side-r-2", title: "NotebookLM Plus", kicker: "NEW", image: "/art/p-notebooklm.jpg", href: "/new/notebooklm-plus", tint: "#1b39f5" },
-  { id: "center", title: "Hexafield", kicker: "EXCLUSIVE", image: "/art/p-hexafield.jpg", href: "/new/hexafield", tint: "#0b6b5b" },
-  { id: "side-l-1", title: "Kimi K3", kicker: "NEXT GEN", image: "/art/p-kimi.jpg", href: "/new/kimi-k3", tint: "#c77414" },
-  { id: "side-l-2", title: "ChatGPT Plus", kicker: "POPULAR", image: "/art/p-chatgpt.jpg", href: "/products/chatgpt-plus", tint: "#10A37F" },
+  {
+    id: "side-r-1",
+    title: "Kling AI",
+    kicker: "AI VIDEO",
+    summary: "ساخت ویدیوی سینمایی از متن و تصویر با کیفیت 1080p",
+    priceFrom: 690000,
+    image: "/art/banners/p-kling.jpg",
+    href: "/new/kling-ai",
+    tint: "#7b2ff7",
+  },
+  {
+    id: "side-r-2",
+    title: "NotebookLM Plus",
+    kicker: "RESEARCH",
+    summary: "تحلیل و خلاصه‌سازی PDFها و منابع پژوهشی",
+    priceFrom: 480000,
+    logo: "google",
+    image: "/art/banners/p-notebooklm.jpg",
+    href: "/new/notebooklm-plus",
+    tint: "#1b39f5",
+  },
+  {
+    id: "center",
+    title: "Hexafield",
+    kicker: "3D & RENDER",
+    summary: "استودیوی ابری طراحی سه‌بعدی و رندر تیمی بدون سیستم سنگین",
+    priceFrom: 390000,
+    image: "/art/banners/p-hexafield.jpg",
+    href: "/new/hexafield",
+    tint: "#0b6b5b",
+  },
+  {
+    id: "side-l-1",
+    title: "Kimi K3",
+    kicker: "LONG CONTEXT",
+    summary: "بررسی یک‌جای قراردادها، کدبیس و اسناد طولانی",
+    priceFrom: 590000,
+    image: "/art/banners/p-kimi.jpg",
+    href: "/new/kimi-k3",
+    tint: "#c77414",
+  },
+  {
+    id: "side-l-2",
+    title: "ChatGPT Plus",
+    kicker: "POPULAR",
+    summary: "اکانت اختصاصی با دسترسی به جدیدترین مدل‌های OpenAI",
+    priceFrom: 1180000,
+    logo: "openai",
+    image: "/art/banners/p-chatgpt.jpg",
+    href: "/products/chatgpt-plus",
+    tint: "#10A37F",
+  },
 ]
 
 /* -------------------------------------------------------------------------- */

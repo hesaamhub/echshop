@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Clock, Mail, MapPin, PhoneCall, Send } from "lucide-react"
 import Shell from "@/components/site/Shell"
+import ContactForm from "@/components/site/ContactForm"
 import { siteContent } from "@/lib/data"
 
 export const metadata: Metadata = {
@@ -33,25 +34,7 @@ export default function ContactPage() {
       breadcrumb={[{ label: "صفحه اصلی", href: "/" }, { label: "تماس با ما" }]}
     >
       <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
-        <form className="rounded-[32px] border border-[#1b39f5]/10 bg-white p-8 shadow-[0_22px_48px_-36px_rgba(27,57,245,0.5)]">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="نام و نام خانوادگی" placeholder="مانند: زهرا موسوی" />
-            <Field label="شماره تماس" placeholder="۰۹۱۲۳۴۵۶۷۸۹" />
-            <Field label="ایمیل" placeholder="you@example.com" latin />
-            <Field label="موضوع" placeholder="مانند: همکاری عمده" />
-          </div>
-          <label className="mt-4 block">
-            <span className="text-[12px] font-semibold text-[#0a1b33]">متن پیام</span>
-            <textarea
-              rows={6}
-              placeholder="توضیح درخواست خود را بنویسید…"
-              className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] leading-7 outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
-            />
-          </label>
-          <button type="button" className="glass-solid mt-5 rounded-full px-8 py-3.5 text-[13px] font-semibold">
-            ارسال پیام
-          </button>
-        </form>
+        <ContactForm />
 
         <aside className="space-y-3">
           {items.map((item) => (
@@ -76,26 +59,5 @@ export default function ContactPage() {
         </aside>
       </div>
     </Shell>
-  )
-}
-
-function Field({
-  label,
-  placeholder,
-  latin,
-}: {
-  label: string
-  placeholder: string
-  latin?: boolean
-}) {
-  return (
-    <label className="block">
-      <span className="text-[12px] font-semibold text-[#0a1b33]">{label}</span>
-      <input
-        placeholder={placeholder}
-        dir={latin ? "ltr" : undefined}
-        className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
-      />
-    </label>
   )
 }

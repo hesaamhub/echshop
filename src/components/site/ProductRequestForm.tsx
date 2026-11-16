@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { ArrowLeft, Check, PackageSearch } from "lucide-react"
+import { useFirebase } from "@/components/providers/FirebaseProvider"
+import { submitProductRequest } from "@/lib/firebase/repository"
 
 /** دسته‌بندیهای درخواست */
 const CATEGORIES = [
@@ -24,8 +26,11 @@ const inputClass =
   "w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-[13px] text-white outline-none transition-all placeholder:text-white/25 focus:border-[#7d92ff] focus:bg-white/10"
 
 export default function ProductRequestForm() {
+  const { user } = useFirebase()
   const [step, setStep] = useState(0)
   const [done, setDone] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
   const [category, setCategory] = useState("")
   const [productName, setProductName] = useState("")
   const [plan, setPlan] = useState("")
@@ -36,24 +41,43 @@ export default function ProductRequestForm() {
   const canNext =
     (step === 0 && category !== "") ||
     (step === 1 && productName.trim() !== "") ||
-    (step === 2 && name.trim() !== "" && contact.trim() !== "")
+    (step === 2 && name.trim() !== "" && contact.trim().length >= 3)
 
-  function next() {
-    if (!canNext) return
+  async function next() {
+    if (!canNext || submitting) return
+    setError("")
     if (step === STEPS - 1) {
-      setDone(true)
+      setSubmitting(true)
+      try {
+        await submitProductRequest({
+          userId: user?.uid || "",
+          category,
+          productName,
+          plan,
+          name,
+          contact,
+          note,
+        })
+        setDone(true)
+      } catch {
+        setError("ثبت درخواست انجام نشد. دوباره تلاش کنید.")
+      } finally {
+        setSubmitting(false)
+      }
       return
     }
     setStep((current) => Math.min(current + 1, STEPS - 1))
   }
 
   function back() {
+    setError("")
     setStep((current) => Math.max(current - 1, 0))
   }
 
   function reset() {
     setStep(0)
     setDone(false)
+    setError("")
     setCategory("")
     setProductName("")
     setPlan("")
@@ -223,6 +247,12 @@ export default function ProductRequestForm() {
             </div>
           ) : null}
 
+          {error ? (
+            <p className="relative mt-4 rounded-xl bg-[#A8382C]/20 px-3 py-2 text-[11.5px] font-semibold text-[#fca5a5]">
+              {error}
+            </p>
+          ) : null}
+
           {/* دکمه‌ها */}
           <div className="relative mt-auto flex items-center justify-end gap-3 pt-6">
             {step > 0 ? (
@@ -236,11 +266,11 @@ export default function ProductRequestForm() {
             ) : null}
             <button
               type="button"
-              onClick={next}
-              disabled={!canNext}
+              onClick={() => void next()}
+              disabled={!canNext || submitting}
               className="inline-flex items-center gap-2 rounded-full bg-[#1b39f5] px-6 py-2.5 text-[12.5px] font-bold text-white shadow-[0_18px_36px_-18px_rgba(27,57,245,1)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#2a49ff] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
             >
-              {step === STEPS - 1 ? "ثبت درخواست" : "بعدی"}
+              {submitting ? "در حال ثبت…" : step === STEPS - 1 ? "ثبت درخواست" : "بعدی"}
               <ArrowLeft className="h-3.5 w-3.5" />
             </button>
           </div>

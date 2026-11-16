@@ -2,18 +2,37 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ShieldCheck } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft, CheckCircle2, LogOut, ShieldCheck, UserCheck } from "lucide-react"
 import { siteContent } from "@/lib/data"
-import { cn } from "@/lib/utils"
+import { useFirebase } from "@/components/providers/FirebaseProvider"
 import Logo from "@/components/site/Logo"
 import Wordmark from "@/components/site/Wordmark"
 
 export default function LoginPage() {
-  const [mode, setMode] = useState<"login" | "register">("login")
+  const router = useRouter()
+  const { user, authReady, isAdmin, publicProfile, signInWithGoogle, signOutUser } = useFirebase()
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState("")
+
+  async function handleGoogleLogin() {
+    setError("")
+    setBusy(true)
+    try {
+      const signedIn = await signInWithGoogle()
+      if (signedIn) {
+        router.push("/dashboard")
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "ورود با گوگل انجام نشد. دوباره تلاش کنید."
+      setError(msg.includes("popup-closed") ? "پنجرهٔ ورود بسته شد." : "خطا در ورود با حساب گوگل. دسترسی پاپ‌آپ مرورگر را بررسی کنید.")
+    } finally {
+      setBusy(false)
+    }
+  }
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      {/* فرم */}
       <div className="flex items-center justify-center px-6 py-14">
         <div className="w-full max-w-sm">
           <Link href="/" className="flex items-center gap-2.5">
@@ -28,80 +47,91 @@ export default function LoginPage() {
             </span>
           </Link>
 
-          <h1 className="mt-8 font-display text-[24px] font-semibold text-[#0a1b33]">
-            {mode === "login" ? "ورود به حساب کاربری" : "ساخت حساب جدید"}
-          </h1>
-          <p className="mt-2 text-[12.5px] leading-7 text-slate-500">
-            {mode === "login"
-              ? "برای مشاهدهٔ سفارش‌ها و دریافت اکانت‌ها وارد شوید."
-              : "فقط با شماره موبایل و ایمیل در دو دقیقه ثبت‌نام کنید."}
-          </p>
+          {authReady && user ? (
+            <div className="mt-8 rounded-3xl border border-[#1b39f5]/15 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+              <div className="flex items-center gap-3">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-[16px] font-bold text-white">
+                  {(publicProfile?.displayName || user.displayName || "ک").charAt(0)}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="truncate text-[14px] font-bold text-[#0a1b33]">
+                      {publicProfile?.displayName || user.displayName || "کاربر اچ‌شاپ"}
+                    </span>
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-[#46A171]" />
+                  </div>
+                  <p dir="ltr" className="font-latin truncate text-right text-[11px] text-slate-400">
+                    {user.email}
+                  </p>
+                </div>
+              </div>
 
-          <div className="mt-6 flex rounded-full bg-[#1b39f5]/6 p-1">
-            {(
-              [
-                { key: "login", label: "ورود" },
-                { key: "register", label: "ثبت‌نام" },
-              ] as const
-            ).map((tab) => (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => setMode(tab.key)}
-                className={cn(
-                  "flex-1 rounded-full py-2 text-[12px] font-semibold transition-all",
-                  mode === tab.key ? "glass-solid" : "text-slate-500 hover:text-[#1b39f5]",
-                )}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+              <div className="mt-6 space-y-2.5">
+                <Link
+                  href="/dashboard"
+                  className="glass-solid flex w-full items-center justify-center gap-2 rounded-full py-3 text-[13px] font-semibold"
+                >
+                  ورود به پنل کاربری
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                {isAdmin ? (
+                  <Link
+                    href="/admin"
+                    className="glass-plate glass-plate-hover flex w-full items-center justify-center gap-2 rounded-full py-3 text-[13px] font-semibold text-[#1b39f5]"
+                  >
+                    <UserCheck className="h-4 w-4" />
+                    ورود به پنل مدیریت
+                  </Link>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={() => void signOutUser()}
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#FDF1EF] py-2.5 text-[12px] font-bold text-[#A8382C] transition-colors hover:bg-[#FCE4E0]"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                  خروج از حساب کاربری
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1 className="mt-8 font-display text-[24px] font-semibold text-[#0a1b33]">
+                ورود به حساب کاربری
+              </h1>
+              <p className="mt-2 text-[12.5px] leading-7 text-slate-500">
+                برای ثبت سفارش، مشاهدهٔ اکانت‌های تحویل‌شده و پیگیری تیکت‌ها با حساب گوگل خود وارد شوید.
+              </p>
 
-          <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
-            {mode === "register" ? (
-              <label className="block">
-                <span className="text-[12px] font-semibold text-[#0a1b33]">نام و نام خانوادگی</span>
-                <input
-                  className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
-                  placeholder="مانند: علی محمدی"
-                />
-              </label>
-            ) : null}
+              <div className="mt-6 rounded-3xl border border-[#1b39f5]/12 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.45)]">
+                <button
+                  type="button"
+                  onClick={handleGoogleLogin}
+                  disabled={busy || !authReady}
+                  className="glass-solid flex w-full items-center justify-center gap-2.5 rounded-full py-3.5 text-[13px] font-semibold disabled:opacity-60"
+                >
+                  {busy ? "در حال اتصال به گوگل…" : "ورود / ثبت‌نام با حساب گوگل"}
+                </button>
 
-            <label className="block">
-              <span className="text-[12px] font-semibold text-[#0a1b33]">موبایل یا ایمیل</span>
-              <input
-                className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
-                placeholder="۰۹۱۲۳۴۵۶۷۸۹"
-              />
-            </label>
+                {error ? (
+                  <p role="alert" className="mt-3 rounded-2xl bg-[#FDF1EF] px-4 py-2.5 text-[11.5px] font-semibold text-[#A8382C]">
+                    {error}
+                  </p>
+                ) : null}
 
-            <label className="block">
-              <span className="text-[12px] font-semibold text-[#0a1b33]">کلمهٔ عبور</span>
-              <input
-                type="password"
-                className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
-                placeholder="••••••••"
-              />
-            </label>
-
-            <Link
-              href="/dashboard"
-              className="glass-solid block rounded-full py-3.5 text-center text-[13px] font-semibold"
-            >
-              {mode === "login" ? "ورود به پنل" : "ثبت‌نام و ورود"}
-            </Link>
-          </form>
+                <p className="mt-4 text-center text-[11px] leading-6 text-slate-400">
+                  با اولین ورود، پروفایل کاربری و کیف پول شما به‌صورت خودکار ساخته می‌شود.
+                </p>
+              </div>
+            </>
+          )}
 
           <p className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
             <ShieldCheck className="h-3.5 w-3.5 text-[#1b39f5]" />
-            ورود امن با رمز یک‌بارمصرف پیامکی
+            احراز هویت امن مبتنی بر Firebase Auth
           </p>
         </div>
       </div>
 
-      {/* تصویر کناری */}
       <div className="relative hidden overflow-hidden bg-[#0a152d] lg:block">
         <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-[#1b39f5]/45 blur-3xl" />
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#1b39f5]/25 blur-3xl" />

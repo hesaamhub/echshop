@@ -8,9 +8,13 @@ import PlanPicker from "@/components/site/PlanPicker"
 import ProductPoster from "@/components/site/ProductPoster"
 import BrandIcon from "@/components/site/BrandIcon"
 import { getCategory, getProduct, lowestPrice, products } from "@/lib/data"
+import {
+  buildProductDetailGraphJsonLd,
+  DEFAULT_PRODUCT_REVIEWS,
+  resolveSiteUrl,
+  serializeJsonLd,
+} from "@/lib/seo/structuredData"
 import { num, toman } from "@/lib/utils"
-
-const SITE_URL = "https://echshop.ir"
 
 export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }))
@@ -34,6 +38,13 @@ export async function generateMetadata({
       description: product.excerpt,
       url: `/products/${product.slug}`,
       type: "website",
+      images: [{ url: "/art/hero-1.jpg", width: 2560, height: 768, alt: product.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.title} | اچ‌شاپ`,
+      description: product.excerpt,
+      images: ["/art/hero-1.jpg"],
     },
   }
 }
@@ -59,58 +70,20 @@ export default async function ProductPage({
     .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
     .slice(0, 4)
 
-  // دادهٔ ساخت‌یافتهٔ محصول — کارت قیمت و امتیاز در نتایج گوگل
-  const productLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.title,
-    description: product.description,
-    brand: { "@type": "Brand", name: product.brand },
-    category: category?.title,
-    url: `${SITE_URL}/products/${product.slug}`,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: product.rating,
-      bestRating: 5,
-      ratingCount: product.sold,
-    },
-    offers: {
-      "@type": "AggregateOffer",
-      priceCurrency: "IRR",
-      lowPrice: lowestPrice(product) * 10,
-      highPrice: Math.max(...product.plans.map((plan) => plan.price)) * 10,
-      offerCount: product.plans.length,
-      availability: "https://schema.org/InStock",
-      url: `${SITE_URL}/products/${product.slug}`,
-    },
-  }
-
-  // دادهٔ ساخت‌یافتهٔ سوالات متداول
-  const faqLd =
-    product.faq.length > 0
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: product.faq.map((item) => ({
-            "@type": "Question",
-            name: item.q,
-            acceptedAnswer: { "@type": "Answer", text: item.a },
-          })),
-        }
-      : null
+  // دادهٔ ساخت‌یافتهٔ یکپارچهٔ محصول، مسیر صفحه، نظرات و سوالات متداول
+  const jsonLd = buildProductDetailGraphJsonLd({
+    product,
+    category,
+    reviews: DEFAULT_PRODUCT_REVIEWS,
+    siteUrl: resolveSiteUrl(),
+  })
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }}
       />
-      {faqLd ? (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
-        />
-      ) : null}
 
       <Shell
         breadcrumb={[
@@ -119,6 +92,7 @@ export default async function ProductPage({
           ...(category ? [{ label: category.title, href: `/category/${category.slug}` }] : []),
           { label: product.title },
         ]}
+        includeBreadcrumbSchema={false}
       >
         {/* ─── کلاژ بنتو هیروی محصول ───
             بوم یکپارچهٔ روشن با کاشی‌های نرم — الهام از طرح مرجع Halo Lab،
@@ -231,7 +205,7 @@ export default async function ProductPage({
               id="buy"
               className="order-3 space-y-3 scroll-mt-28 md:space-y-4 lg:order-none lg:col-span-3 lg:row-span-3"
             >
-              <PlanPicker plans={product.plans} />
+              <PlanPicker productId={product.id} plans={product.plans} />
 
               <div className="space-y-4 rounded-[24px] border border-[#1b39f5]/10 bg-white p-6 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.4)]">
                 <Assurance icon={<ShieldCheck className="h-4 w-4 text-[#1b39f5]" />} title="گارانتی کامل مدت اشتراک">
@@ -343,11 +317,7 @@ export default async function ProductPage({
               نظرات خریداران
             </h2>
             <div className="mt-4 space-y-4">
-              {[
-                { name: "مریم ا.", body: "خیلی سریع تحویل گرفتم، زیر ده دقیقه. همه‌چیز درست کار کرد.", rating: 5 },
-                { name: "سینا ک.", body: "پشتیبانی در تیکت سریع جواب داد و مشکل من حل شد.", rating: 5 },
-                { name: "نگار م.", body: "قیمت منطقی و روند خرید ساده. دوباره خرید می‌کنم.", rating: 4 },
-              ].map((review) => (
+              {DEFAULT_PRODUCT_REVIEWS.map((review) => (
                 <div
                   key={review.name}
                   className="rounded-2xl border border-[#1b39f5]/10 bg-[#1b39f5]/4 p-5"

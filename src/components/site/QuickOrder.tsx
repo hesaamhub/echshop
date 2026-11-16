@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import {
   BadgeCheck,
   Check,
@@ -13,9 +14,11 @@ import {
   Zap,
 } from "lucide-react"
 import BrandIcon from "@/components/site/BrandIcon"
+import { useCart } from "@/lib/cartStore"
 
 type QuickOption = {
   id: string
+  planId: string
   title: string
   note: string
   price: number
@@ -23,12 +26,12 @@ type QuickOption = {
 }
 
 const OPTIONS: QuickOption[] = [
-  { id: "us", title: "اپل آیدی آمریکا", note: "تحویل فوری", price: 100000, tag: "محبوب" },
-  { id: "custom", title: "اپل آیدی کشور دلخواه", note: "تحویل فوری", price: 130000 },
-  { id: "personal", title: "اپل آیدی با اطلاعات شخصی", note: "تحویل 2 تا 4 ساعت", price: 180000 },
-  { id: "canada", title: "اپل آیدی کانادا", note: "دائمی و بدون محدودیت", price: 150000 },
-  { id: "pack", title: "پکیج اپل آیدی", note: "ویژهٔ فروشندگان", price: 850000, tag: "عمده" },
-  { id: "fix", title: "رفع خطای Not Active", note: "رفع مشکل فعال نشدن اپل آیدی", price: 90000 },
+  { id: "us", planId: "pl-65", title: "اپل آیدی آمریکا", note: "تحویل فوری", price: 100000, tag: "محبوب" },
+  { id: "custom", planId: "pl-66", title: "اپل آیدی کشور دلخواه", note: "تحویل فوری", price: 130000 },
+  { id: "personal", planId: "pl-67", title: "اپل آیدی با اطلاعات شخصی", note: "تحویل 2 تا 4 ساعت", price: 180000 },
+  { id: "canada", planId: "pl-68", title: "اپل آیدی کانادا", note: "دائمی و بدون محدودیت", price: 150000 },
+  { id: "pack", planId: "pl-69", title: "پکیج اپل آیدی", note: "ویژهٔ فروشندگان", price: 850000, tag: "عمده" },
+  { id: "fix", planId: "pl-70", title: "رفع خطای Not Active", note: "رفع مشکل فعال نشدن اپل آیدی", price: 90000 },
 ]
 
 const TRUST = [
@@ -42,11 +45,18 @@ function latinPrice(value: number) {
 }
 
 export default function QuickOrder() {
+  const router = useRouter()
+  const { add } = useCart()
   const [selected, setSelected] = useState(OPTIONS[0].id)
   const [quantity, setQuantity] = useState(1)
 
   const option = OPTIONS.find((entry) => entry.id === selected) ?? OPTIONS[0]
   const total = option.price * quantity
+
+  function handleAddQuickOrder() {
+    add("p-32", option.planId, quantity)
+    router.push("/cart")
+  }
 
   return (
     <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[#0a152d] p-3.5 md:p-4">
@@ -264,6 +274,7 @@ export default function QuickOrder() {
           <div className="relative">
             <button
               type="button"
+              onClick={handleAddQuickOrder}
               className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#2a49ff] to-[#8158f5] px-5 py-2.5 text-[12px] font-extrabold text-white shadow-[0_22px_40px_-22px_rgba(129,88,245,0.95)] transition-transform hover:-translate-y-0.5"
             >
               <ShoppingBag className="h-4 w-4" />

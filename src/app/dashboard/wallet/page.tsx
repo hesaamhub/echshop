@@ -1,66 +1,102 @@
-import { Badge, Button, Card, Field, StatCard, Table, Td } from "@/components/panel/Ui"
-import { toman } from "@/lib/utils"
+"use client"
 
-const transactions = [
-  { id: "TRX-8841", type: "شارژ کیف پول", amount: 2000000, status: "موفق", tone: "green", date: "۱۴۰۵/۰۴/۲۹" },
-  { id: "TRX-8836", type: "خرید اشتراک اسپاتیفای", amount: -890000, status: "موفق", tone: "green", date: "۱۴۰۵/۰۴/۲۷" },
-  { id: "TRX-8829", type: "بازگشت وجه سفارش ناموفق", amount: 640000, status: "موفق", tone: "blue", date: "۱۴۰۵/۰۴/۲۱" },
-  { id: "TRX-8820", type: "خرید لایسنس ادوبی", amount: -3200000, status: "موفق", tone: "green", date: "۱۴۰۵/۰۴/۱۵" },
-  { id: "TRX-8814", type: "شارژ کیف پول", amount: 1500000, status: "ناموفق", tone: "red", date: "۱۴۰۵/۰۴/۱۱" },
-] as const
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { useFirebase } from "@/components/providers/FirebaseProvider"
+import { Badge, Card, StatCard, Table, Td } from "@/components/panel/Ui"
+import { fetchWalletTransactions, type FirestoreWalletTx } from "@/lib/firebase/repository"
+import { faDate, toman } from "@/lib/utils"
+
+const toneMap = {
+  success: "green",
+  failed: "red",
+  pending: "amber",
+} as const
+
+const statusLabelMap = {
+  success: "موفق",
+  failed: "ناموفق",
+  pending: "در انتظار",
+} as const
 
 export default function WalletPage() {
+  const { user, publicProfile } = useFirebase()
+  const [transactions, setTransactions] = useState<FirestoreWalletTx[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!user?.uid) return
+    let active = true
+    setLoading(true)
+    fetchWalletTransactions(user.uid)
+      .then((data) => {
+        if (active) setTransactions(data)
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [user?.uid])
+
+  const totalCredit = transactions
+    .filter((tx) => tx.status === "success" && tx.amount > 0)
+    .reduce((sum, tx) => sum + tx.amount, 0)
+  const totalDebit = transactions
+    .filter((tx) => tx.status === "success" && tx.amount < 0)
+    .reduce((sum, tx) => sum + Math.abs(tx.amount), 0)
+
   return (
     <div className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="موجودی فعلی" value={`${toman(1250000)} تومان`} hint="قابل استفاده در خرید" />
-        <StatCard label="مجموع شارژ" value={`${toman(9400000)} تومان`} />
-        <StatCard label="مجموع خرید" value={`${toman(8150000)} تومان`} />
+        <StatCard
+          label="موجودی فعلی"
+          value={`${toman(publicProfile?.walletBalance ?? 0)} تومان`}
+          hint="قابل استفاده پس از اتصال درگاه"
+        />
+        <StatCard label="مجموع واریز و شارژ" value={`${toman(totalCredit)} تومان`} />
+        <StatCard label="مجموع برداشت" value={`${toman(totalDebit)} تومان`} />
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[1fr_1.6fr]">
-        <Card title="شارژ کیف پول">
-          <Field label="مبلغ شارژ (تومان)" placeholder="۵۰۰٬۰۰۰" hint="حداقل مبلغ شارژ ۵۰ هزار تومان است." />
-          <div className="mt-4 flex flex-wrap gap-2">
-            {["۲۰۰ هزار", "۵۰۰ هزار", "۱ میلیون", "۲ میلیون"].map((amount) => (
-              <button
-                key={amount}
-                type="button"
-                className="rounded-full border border-slate-200 px-3.5 py-2 text-[11.5px] text-slate-600 hover:border-slate-300"
-              >
-                {amount}
-              </button>
-            ))}
+        <Card title="افزایش موجودی کیف پول">
+          <div className="rounded-2xl border border-[#cfe6f7] bg-[#f2f9fe] p-5 text-[12px] leading-7 text-[#1c5f9e]">
+            شارژ خودکار آنلاین پس از اتصال درگاه بانکی فعال می‌شود. تا آن زمان می‌توانید از طریق ثبت تیکت یا پنل مدیریت کیف پول را شارژ کنید.
           </div>
-          <div className="mt-5">
-            <Button>پرداخت و شارژ</Button>
+          <div className="mt-4">
+            <Link
+              href="/dashboard/tickets"
+              className="glass-solid inline-flex rounded-full px-5 py-2.5 text-[12px] font-semibold"
+            >
+              درخواست شارژ از پشتیبانی
+            </Link>
           </div>
-          <p className="mt-4 text-[10.5px] leading-6 text-slate-400">
-            درگاه پرداخت در بخش تنطیمات پنل مدیریت متصل می‌شود؛ در این نسخه فرایند به صورت نمایشی است.
-          </p>
         </Card>
 
         <Card title="تاریخچهٔ تراکنش‌ها">
-          <Table head={["شناسه", "شرح", "مبلغ", "وضعیت", "تاریخ"]}>
-            {transactions.map((item) => (
-              <tr key={item.id}>
-                <Td className="num font-semibold text-[#0a1b33]">{item.id}</Td>
-                <Td>{item.type}</Td>
-                <Td
-                  className={
-                    item.amount > 0 ? "num text-[#46A171] font-semibold" : "num text-[#0a1b33]"
-                  }
-                >
-                  {item.amount > 0 ? "+" : "−"}
-                  {toman(Math.abs(item.amount))}
-                </Td>
-                <Td>
-                  <Badge tone={item.tone}>{item.status}</Badge>
-                </Td>
-                <Td className="num text-slate-400">{item.date}</Td>
-              </tr>
-            ))}
-          </Table>
+          {loading ? (
+            <p className="py-8 text-center text-[12px] text-slate-400">در حال بارگذاری تراکنش‌ها…</p>
+          ) : transactions.length === 0 ? (
+            <p className="py-8 text-center text-[12px] text-slate-400">هنوز تراکنشی در کیف پول ثبت نشده است.</p>
+          ) : (
+            <Table head={["شناسه", "شرح", "مبلغ", "وضعیت", "تاریخ"]}>
+              {transactions.map((item) => (
+                <tr key={item.id}>
+                  <Td className="num font-semibold text-[#0a1b33]">{item.id}</Td>
+                  <Td>{item.type}</Td>
+                  <Td className={item.amount > 0 ? "num font-semibold text-[#46A171]" : "num text-[#0a1b33]"}>
+                    {item.amount > 0 ? "+" : "−"}
+                    {toman(Math.abs(item.amount))}
+                  </Td>
+                  <Td>
+                    <Badge tone={toneMap[item.status]}>{statusLabelMap[item.status]}</Badge>
+                  </Td>
+                  <Td className="num text-slate-400">{faDate(item.createdAt)}</Td>
+                </tr>
+              ))}
+            </Table>
+          )}
         </Card>
       </div>
     </div>

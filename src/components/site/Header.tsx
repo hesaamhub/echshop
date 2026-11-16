@@ -1,6 +1,5 @@
 "use client"
 
-/* eslint-disable @next/next/no-img-element -- نشان برند data-URI است و بهینه‌سازی next/image سودی ندارد */
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
@@ -25,15 +24,16 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react"
-import { cartCount } from "@/lib/cart"
 import { newArrivals, topDiscounts } from "@/lib/collections"
-import { categories, categoryCount } from "@/lib/data"
-import { LOGO_MARK_URI } from "@/lib/brandMark"
-import { session } from "@/lib/session"
+import { useCart } from "@/lib/cartStore"
+import { fetchUserNotifications, type FirestoreNotification } from "@/lib/firebase/repository"
+import { useCatalog } from "@/lib/firebase/useCatalog"
+import { useFirebase } from "@/components/providers/FirebaseProvider"
 import { cn, num } from "@/lib/utils"
 import BestSellersMenu from "./BestSellersMenu"
 import CartMenu from "./CartMenu"
-import NotificationsMenu, { unreadCount } from "./NotificationsMenu"
+import Logo from "./Logo"
+import NotificationsMenu from "./NotificationsMenu"
 import PanelMenu from "./PanelMenu"
 import ProductMiniList from "./ProductMiniList"
 import Wordmark from "./Wordmark"
@@ -65,11 +65,35 @@ const discountedProducts = topDiscounts(4)
 type MenuKey = "products" | "panel" | "cart" | "bell"
 
 export default function Header() {
-  const isLoggedIn = session.isLoggedIn
+  const { user, publicProfile } = useFirebase()
+  const { products, categories } = useCatalog()
+  const { count: cartCount } = useCart(products)
+  const [notificationsList, setNotificationsList] = useState<FirestoreNotification[]>([])
   const [open, setOpen] = useState(false)
   const [menu, setMenu] = useState<MenuKey | null>(null)
   const [mobileSection, setMobileSection] = useState<"products" | "panel" | null>(null)
   const barRef = useRef<HTMLDivElement>(null)
+
+  const isLoggedIn = Boolean(user)
+  const unreadCount = notificationsList.filter((n) => n.unread).length
+  const userInitial = (publicProfile?.displayName || user?.displayName || "ک").trim().charAt(0)
+  const categoryCount = (slug: string) => products.filter((p) => p.categorySlug === slug).length
+
+  useEffect(() => {
+    if (!user?.uid) {
+      setNotificationsList([])
+      return
+    }
+    let active = true
+    fetchUserNotifications(user.uid)
+      .then((items) => {
+        if (active) setNotificationsList(items)
+      })
+      .catch(() => undefined)
+    return () => {
+      active = false
+    }
+  }, [user?.uid])
 
   // بستن منوی بازشونده با کلیک بیرون یا کلید Escape
   useEffect(() => {
@@ -102,8 +126,8 @@ export default function Header() {
             aria-label="اچ‌شاپ — بازگشت به صفحهٔ اصلی"
             className="flex shrink-0 items-center gap-2.5"
           >
-            {/* نشان سه‌بعدی برند + وردمارک تایپوگرافی دست‌ساز */}
-            <img src={LOGO_MARK_URI} alt="اچ‌شاپ" className="h-8 w-8 md:h-9 md:w-9" />
+            {/* لوگوموشن سه‌بعدی برند + وردمارک تایپوگرافی متحرک */}
+            <Logo className="h-8 w-8 rounded-[10px] shadow-[0_8px_18px_-8px_rgba(27,57,245,0.5)] md:h-9 md:w-9 md:rounded-[11px]" />
             <Wordmark className="h-[22px] w-auto md:h-6" />
           </Link>
 
@@ -252,7 +276,7 @@ export default function Header() {
                 <IconTrigger
                   href="/dashboard/notifications"
                   label="اطلاع‌رسانی‌ها"
-                  badge={num(unreadCount)}
+                  badge={unreadCount > 0 ? num(unreadCount) : undefined}
                   active={menu === "bell"}
                   onOpen={() => setMenu("bell")}
                 >
@@ -262,7 +286,13 @@ export default function Header() {
                 <AnimatePresence>
                   {menu === "bell" ? (
                     <DropdownPanel align="left" className="w-[336px]">
-                      <NotificationsMenu onNavigate={() => setMenu(null)} />
+                      <NotificationsMenu
+                        items={notificationsList}
+                        onMarkedRead={() =>
+                          setNotificationsList((prev) => prev.map((n) => ({ ...n, unread: false })))
+                        }
+                        onNavigate={() => setMenu(null)}
+                      />
                     </DropdownPanel>
                   ) : null}
                 </AnimatePresence>
@@ -278,7 +308,7 @@ export default function Header() {
               <IconTrigger
                 href="/cart"
                 label="سبد خرید"
-                badge={num(cartCount)}
+                badge={cartCount > 0 ? num(cartCount) : undefined}
                 active={menu === "cart"}
                 onOpen={() => setMenu("cart")}
               >
@@ -319,13 +349,13 @@ export default function Header() {
                       : "shadow-[0_10px_22px_-14px_rgba(27,57,245,0.9)] hover:-translate-y-[1px]",
                   )}
                 >
-                  {session.user.name.trim().charAt(0)}
+                  {userInitial}
                 </Link>
 
                 <AnimatePresence>
                   {menu === "panel" ? (
                     <DropdownPanel align="left" className="w-[312px]">
-                      <PanelMenu onNavigate={() => setMenu(null)} />
+                      <PanelMenu unreadNotifications={unreadCount} onNavigate={() => setMenu(null)} />
                     </DropdownPanel>
                   ) : null}
                 </AnimatePresence>
@@ -465,7 +495,11 @@ export default function Header() {
               open={mobileSection === "panel"}
               onToggle={() => setMobileSection((value) => (value === "panel" ? null : "panel"))}
             >
-              <PanelMenu variant="mobile" onNavigate={() => setOpen(false)} />
+              <PanelMenu
+                variant="mobile"
+                unreadNotifications={unreadCount}
+                onNavigate={() => setOpen(false)}
+              />
             </MobileSection>
           ) : null}
 

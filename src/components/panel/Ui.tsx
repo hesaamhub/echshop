@@ -112,13 +112,18 @@ export function Field(props: {
   label: string
   placeholder?: string
   defaultValue?: string
+  value?: string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   textarea?: boolean
   latin?: boolean
   hint?: string
   rows?: number
+  type?: string
+  disabled?: boolean
+  required?: boolean
 }) {
   const base =
-    "mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] leading-7 outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
+    "mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] leading-7 outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)] disabled:opacity-60"
   return (
     <label className="block">
       <span className="text-[12px] font-semibold text-[#0a1b33]">{props.label}</span>
@@ -126,13 +131,22 @@ export function Field(props: {
         <textarea
           rows={props.rows ?? 4}
           placeholder={props.placeholder}
-          defaultValue={props.defaultValue}
+          defaultValue={props.value === undefined ? props.defaultValue : undefined}
+          value={props.value}
+          onChange={props.onChange}
+          disabled={props.disabled}
+          required={props.required}
           className={base}
         />
       ) : (
         <input
+          type={props.type ?? "text"}
           placeholder={props.placeholder}
-          defaultValue={props.defaultValue}
+          defaultValue={props.value === undefined ? props.defaultValue : undefined}
+          value={props.value}
+          onChange={props.onChange}
+          disabled={props.disabled}
+          required={props.required}
           dir={props.latin ? "ltr" : undefined}
           className={cn(base, props.latin && "font-latin")}
         />
@@ -147,16 +161,23 @@ export function Field(props: {
 export function Button(props: {
   children: React.ReactNode
   variant?: "primary" | "ghost" | "danger"
+  type?: "button" | "submit" | "reset"
+  onClick?: () => void
+  disabled?: boolean
+  className?: string
 }) {
   const variant = props.variant ?? "primary"
   return (
     <button
-      type="button"
+      type={props.type ?? "button"}
+      onClick={props.onClick}
+      disabled={props.disabled}
       className={cn(
-        "rounded-full px-5 py-2.5 text-[12px] font-semibold transition-all",
+        "rounded-full px-5 py-2.5 text-[12px] font-semibold transition-all disabled:cursor-not-allowed disabled:opacity-50",
         variant === "primary" && "glass-solid",
         variant === "ghost" && "glass-plate glass-plate-hover text-[#1b39f5]",
         variant === "danger" && "bg-[#FCEAE8] text-[#A8382C] hover:bg-[#f8ddda]",
+        props.className,
       )}
     >
       {props.children}

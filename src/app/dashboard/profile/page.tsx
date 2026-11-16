@@ -1,60 +1,101 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useFirebase } from "@/components/providers/FirebaseProvider"
 import { Badge, Button, Card, Field } from "@/components/panel/Ui"
+import { updateUserProfile } from "@/lib/firebase/repository"
 
 export default function ProfilePage() {
+  const { user, publicProfile, privateProfile, refreshProfile, signOutUser } = useFirebase()
+  const [displayName, setDisplayName] = useState("")
+  const [phone, setPhone] = useState("")
+  const [nationalId, setNationalId] = useState("")
+  const [busy, setBusy] = useState(false)
+  const [savedMsg, setSavedMsg] = useState("")
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    setDisplayName(publicProfile?.displayName ?? user?.displayName ?? "")
+    setPhone(privateProfile?.phone ?? "")
+    setNationalId(privateProfile?.nationalId ?? "")
+  }, [publicProfile?.displayName, privateProfile?.phone, privateProfile?.nationalId, user?.displayName])
+
+  async function handleSave(event: React.FormEvent) {
+    event.preventDefault()
+    if (!user) return
+    setSavedMsg("")
+    setError("")
+    if (!displayName.trim()) {
+      setError("نام نمایشی را وارد کنید.")
+      return
+    }
+    setBusy(true)
+    try {
+      await updateUserProfile(user.uid, { displayName, phone, nationalId })
+      await refreshProfile()
+      setSavedMsg("تغییرات پروفایل ذخیره شد.")
+    } catch {
+      setError("ذخیرهٔ پروفایل انجام نشد.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
     <div className="grid gap-5 xl:grid-cols-2">
       <Card title="اطلاعات شخصی">
-        <div className="space-y-4">
-          <Field label="نام و نام خانوادگی" defaultValue="حسام رضایی" />
-          <Field label="شماره موبایل" defaultValue="۰۹۱۲۳۴۵۶۷۸۹" hint="شمارهٔ تاییدشده برای ورود و پیامک" />
-          <Field label="ایمیل" defaultValue="hesaam@example.com" latin />
-          <Field label="کد ملی (اختیاری)" placeholder="برای صدور فاکتور رسمی" />
-          <Button>ذخیرهٔ تغییرات</Button>
-        </div>
+        <form className="space-y-4" onSubmit={(event) => void handleSave(event)}>
+          <Field
+            label="نام و نام خانوادگی"
+            value={displayName}
+            onChange={(event) => setDisplayName(event.target.value)}
+            required
+          />
+          <Field
+            label="شماره موبایل"
+            value={phone}
+            onChange={(event) => setPhone(event.target.value)}
+            placeholder="0912..."
+            latin
+          />
+          <Field
+            label="ایمیل"
+            value={privateProfile?.email || user?.email || ""}
+            disabled
+            latin
+            hint="ایمیل از حساب گوگل خوانده می‌شود."
+          />
+          <Field
+            label="کد ملی (اختیاری)"
+            value={nationalId}
+            onChange={(event) => setNationalId(event.target.value)}
+            placeholder="برای صدور فاکتور رسمی"
+            latin
+          />
+          {savedMsg ? <p className="text-[11.5px] font-semibold text-[#2F7A50]">{savedMsg}</p> : null}
+          {error ? <p className="text-[11.5px] font-semibold text-[#A8382C]">{error}</p> : null}
+          <Button type="submit" disabled={busy}>
+            {busy ? "در حال ذخیره…" : "ذخیرهٔ تغییرات"}
+          </Button>
+        </form>
       </Card>
 
-      <div className="space-y-5">
-        <Card title="تغییر کلمهٔ عبور">
-          <div className="space-y-4">
-            <Field label="کلمهٔ عبور فعلی" placeholder="••••••••" />
-            <Field label="کلمهٔ عبور جدید" placeholder="حداقل ۸ کاراکتر" />
-            <Field label="تکرار کلمهٔ عبور جدید" placeholder="••••••••" />
-            <Button>به‌روزرسانی کلمهٔ عبور</Button>
+      <Card title="امنیت و وضعیت حساب">
+        <div className="space-y-4">
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[12px] font-bold text-[#0a1b33]">وضعیت احراز هویت</span>
+              <Badge tone="green">متصل به گوگل</Badge>
+            </div>
+            <p className="mt-2 text-[11.5px] leading-6 text-slate-500">
+              سطح حساب فعلی شما: <strong className="text-[#0a1b33]">{publicProfile?.plan || "عادی"}</strong>
+            </p>
           </div>
-        </Card>
-
-        <Card title="امنیت حساب">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3.5">
-              <span className="text-[12px] text-slate-600">ورود دومرحله‌ای با پیامک</span>
-              <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#2783de]" />
-            </div>
-            <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3.5">
-              <span className="text-[12px] text-slate-600">اطلاع‌رسانی ورود از دستگاه جدید</span>
-              <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#2783de]" />
-            </div>
-
-            <div className="rounded-2xl bg-slate-50 p-4">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[12px] font-bold text-[#0a1b33]">نشست‌های فعال</span>
-                <Badge tone="green">۲ دستگاه</Badge>
-              </div>
-              <ul className="mt-3 space-y-2 text-[11.5px] text-slate-500">
-                <li className="flex items-center justify-between">
-                  <span>Chrome — تهران</span>
-                  <span className="text-slate-400">دستگاه فعلی</span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span>موبایل — اندروید</span>
-                  <span className="text-slate-400">۲ روز پیش</span>
-                </li>
-              </ul>
-            </div>
-
-            <Button variant="danger">خروج از همهٔ دستگاه‌ها</Button>
-          </div>
-        </Card>
-      </div>
+          <Button variant="danger" onClick={() => void signOutUser()}>
+            خروج از حساب کاربری
+          </Button>
+        </div>
+      </Card>
     </div>
   )
 }

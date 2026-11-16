@@ -1,8 +1,7 @@
 import Link from "next/link"
 import Header from "@/components/site/Header"
 import Footer from "@/components/site/Footer"
-
-const SITE_URL = "https://echshop.ir"
+import { buildBreadcrumbJsonLd, resolveSiteUrl, serializeJsonLd } from "@/lib/seo/structuredData"
 
 /** پوستهٔ مشترک صفحات فروشگاه */
 export default function Shell({
@@ -10,25 +9,19 @@ export default function Shell({
   title,
   subtitle,
   breadcrumb,
+  includeBreadcrumbSchema = true,
 }: {
   children: React.ReactNode
   title?: string
   subtitle?: string
   breadcrumb?: { label: string; href?: string }[]
+  includeBreadcrumbSchema?: boolean
 }) {
   // دادهٔ ساخت‌یافتهٔ مسیر صفحه — نمایش breadcrumb در نتایج گوگل
-  const breadcrumbLd = breadcrumb?.length
-    ? {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumb.map((item, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: item.label,
-          ...(item.href ? { item: `${SITE_URL}${item.href}` } : {}),
-        })),
-      }
-    : null
+  const breadcrumbLd =
+    includeBreadcrumbSchema && breadcrumb?.length
+      ? buildBreadcrumbJsonLd(breadcrumb, { siteUrl: resolveSiteUrl() })
+      : null
 
   return (
     <>
@@ -37,7 +30,7 @@ export default function Shell({
         {breadcrumbLd ? (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }}
           />
         ) : null}
 

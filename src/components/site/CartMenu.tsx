@@ -1,12 +1,18 @@
+"use client"
+
 import Link from "next/link"
 import { ChevronLeft, ShoppingBag, Trash2 } from "lucide-react"
-import { cartCount, cartDiscount, cartLines, cartTotal } from "@/lib/cart"
+import BrandIcon from "@/components/site/BrandIcon"
+import { useCart } from "@/lib/cartStore"
+import { useCatalog } from "@/lib/firebase/useCatalog"
 import { deliveryLabels } from "@/lib/types"
 import { num, toman } from "@/lib/utils"
-import BrandIcon from "@/components/site/BrandIcon"
 
 export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
-  if (cartLines.length === 0) {
+  const { products } = useCatalog()
+  const { lines, count, discount, total, remove } = useCart(products)
+
+  if (lines.length === 0) {
     return (
       <div className="px-4 py-8 text-center">
         <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#1b39f5]/8 text-[#1b39f5]">
@@ -26,7 +32,6 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="space-y-1">
-      {/* سربرگ */}
       <div className="flex items-center justify-between gap-2 border-b border-[#1b39f5]/10 px-2.5 pb-2.5 pt-1.5">
         <span className="flex items-center gap-2.5">
           <span className="grid h-9 w-9 place-items-center rounded-[14px] bg-gradient-to-br from-[#1b39f5] to-[#7d92ff] text-white shadow-[0_10px_22px_-14px_rgba(27,57,245,0.9)]">
@@ -35,7 +40,7 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
           <span className="flex flex-col leading-tight">
             <span className="text-[13px] font-bold text-[#0a1b33]">سبد خرید</span>
             <span className="text-[10.5px] text-slate-400">
-              <span className="num">{num(cartCount)}</span> محصول در سبد
+              <span className="num">{num(count)}</span> محصول در سبد
             </span>
           </span>
         </span>
@@ -49,9 +54,8 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
         </Link>
       </div>
 
-      {/* قلم‌ها */}
       <div className="space-y-0.5 rounded-[20px] bg-[#f3f5fb] p-1">
-        {cartLines.map((line) => (
+        {lines.map((line) => (
           <div
             key={`${line.product.id}-${line.plan.id}`}
             className="group flex items-center gap-2.5 rounded-[16px] px-2.5 py-2 transition-all hover:bg-white hover:shadow-[0_12px_26px_-20px_rgba(10,27,51,0.75)]"
@@ -89,7 +93,8 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
 
             <button
               type="button"
-              aria-label="حذف"
+              aria-label={`حذف ${line.product.title}`}
+              onClick={() => remove(line.product.id, line.plan.id)}
               className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-slate-300 transition-colors hover:bg-[#FDF1EF] hover:text-[#A8382C]"
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -98,22 +103,20 @@ export default function CartMenu({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </div>
 
-      {/* جمع کل */}
       <div className="rounded-[20px] bg-gradient-to-l from-[#1b39f5] to-[#4c63ff] px-3.5 py-3 text-white shadow-[0_18px_36px_-24px_rgba(27,57,245,0.95)]">
         <div className="flex items-center justify-between text-[11px] text-white/75">
           <span>تخفیف اعمال‌شده</span>
-          <span className="num">{toman(cartDiscount)}</span>
+          <span className="num">{toman(discount)}</span>
         </div>
         <div className="mt-1.5 flex items-center justify-between">
           <span className="text-[12px] font-semibold">مبلغ قابل پرداخت</span>
           <span className="text-[15px] font-bold">
-            <span className="num">{toman(cartTotal)}</span>
+            <span className="num">{toman(total)}</span>
             <span className="mr-1 text-[10px] font-medium text-white/75">تومان</span>
           </span>
         </div>
       </div>
 
-      {/* دکمه‌ها */}
       <div className="flex gap-1.5 pt-0.5">
         <Link
           href="/checkout"

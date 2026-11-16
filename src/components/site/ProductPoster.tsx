@@ -143,7 +143,7 @@ type Props = {
   brand: string
 }
 
-/** پوستر اختصاصی هر محصول — رنگ، طرح و وردمارک مخصوص همان برند */
+/** پوستر اختصاصی هر محصول — گرادیان برند، طرح گرافیکی یکتا، وردمارک و نشان */
 export default function ProductPoster({ slug, brand }: Props) {
   const key = slug.toLowerCase()
   const config = POSTERS[key] ?? { kicker: "DIGITAL ACCOUNT", motif: "grid" as Motif }
@@ -156,7 +156,7 @@ export default function ProductPoster({ slug, brand }: Props) {
       style={{ background: `linear-gradient(150deg, ${gradient.from} 0%, ${gradient.to} 100%)` }}
     >
       {/* طرح گرافیکی مختص برند */}
-      <span className="absolute inset-0 opacity-[0.13]" style={motifStyle(config.motif)} aria-hidden />
+      <span className="absolute inset-0 opacity-[0.1]" style={motifStyle(config.motif)} aria-hidden />
 
       {/* وردمارک توخالی تکرارشونده */}
       <div
@@ -164,13 +164,13 @@ export default function ProductPoster({ slug, brand }: Props) {
         dir="ltr"
         aria-hidden
       >
-        {[0.3, 0.18, 0.09].map((opacity, index) => (
+        {[0.24, 0.14, 0.06].map((opacity, index) => (
           <span
             key={index}
-            className="font-display font-latin text-[32px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
+            className="font-display font-latin text-[30px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
             style={{
               color: "transparent",
-              WebkitTextStroke: `1.4px rgba(255,255,255,${opacity})`,
+              WebkitTextStroke: `1.3px rgba(255,255,255,${opacity})`,
             }}
           >
             {name}
@@ -178,15 +178,15 @@ export default function ProductPoster({ slug, brand }: Props) {
         ))}
       </div>
 
-      {/* درخشش پشت نشان */}
+      {/* درخشش نرم پشت نشان */}
       <span
-        className="pointer-events-none absolute top-[30%] left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-white/30 blur-[52px]"
+        className="pointer-events-none absolute top-[28%] left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-white/30 blur-[48px]"
         aria-hidden
       />
 
       {/* نشان اصلی برند */}
       <span
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_16px_30px_rgba(0,0,0,0.45)] transition-transform duration-700 group-hover:scale-110"
+        className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_18px_32px_rgba(0,0,0,0.65)] transition-transform duration-700 group-hover:scale-110"
         aria-hidden
       >
         <BrandIcon slug={slug} size={64} color="#ffffff" />
@@ -194,16 +194,16 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* عنوان دسته */}
       <span
-        className="font-latin absolute bottom-3.5 left-4 text-[8.5px] font-bold tracking-[0.2em] text-white/70 uppercase"
+        className="font-latin absolute bottom-3.5 left-4 z-10 text-[8.5px] font-bold tracking-[0.2em] text-white/75 uppercase"
         dir="ltr"
       >
         {config.kicker}
       </span>
 
-      {/* سایهٔ پایین */}
+      {/* سایهٔ پایین برای کنتراست */}
       <span
         className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
-        style={{ background: "linear-gradient(to top, rgba(5,7,14,0.8) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(5,7,14,0.85) 0%, transparent 100%)" }}
         aria-hidden
       />
     </div>

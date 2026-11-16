@@ -4,8 +4,8 @@ const nav = [
   { href: "/dashboard", label: "پیشخوان" },
   { href: "/dashboard/orders", label: "سفارش‌ها و تحویل" },
   { href: "/dashboard/wallet", label: "کیف پول" },
-  { href: "/dashboard/tickets", label: "تیکت‌ها", badge: 1 },
-  { href: "/dashboard/notifications", label: "اطلاع‌رسانی", badge: 2 },
+  { href: "/dashboard/tickets", label: "تیکت‌ها" },
+  { href: "/dashboard/notifications", label: "اطلاع‌رسانی" },
   { href: "/dashboard/favorites", label: "علاقه‌مندی‌ها" },
   { href: "/dashboard/profile", label: "پروفایل و امنیت" },
 ]
