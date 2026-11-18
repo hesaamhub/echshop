@@ -68,7 +68,7 @@ export const siteContent = {
         title: "فروشگاه",
         links: [
           { label: "همهٔ محصولات", href: "/products" },
-          { label: "دسته‌بندی‌ها", href: "/products" },
+          { label: "دسته‌بندی‌ها", href: "/categories" },
           { label: "سبد خرید", href: "/cart" },
           { label: "پنل کاربری", href: "/dashboard" },
         ],
@@ -85,10 +85,10 @@ export const siteContent = {
       {
         title: "قوانین",
         links: [
-          { label: "قوانین و مقررات", href: "/about" },
-          { label: "حریم خصوصی", href: "/about" },
-          { label: "شرایط بازگشت وجه", href: "/about" },
-          { label: "سوالات متداول", href: "/about" },
+          { label: "قوانین و مقررات", href: "/terms" },
+          { label: "حریم خصوصی", href: "/privacy" },
+          { label: "شرایط بازگشت وجه", href: "/refund" },
+          { label: "سوالات متداول", href: "/faq" },
         ],
       },
     ],

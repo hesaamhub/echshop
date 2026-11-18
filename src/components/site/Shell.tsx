@@ -26,7 +26,7 @@ export default function Shell({
   return (
     <>
       <Header />
-      <main className="mx-auto max-w-[1280px] px-4 md:px-6 py-10">
+      <main className="mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6 py-5 sm:py-8 md:py-10">
         {breadcrumbLd ? (
           <script
             type="application/ld+json"
@@ -37,10 +37,10 @@ export default function Shell({
         {breadcrumb?.length ? (
           <nav
             aria-label="مسیر صفحه"
-            className="mb-4 flex flex-wrap items-center gap-2 text-[12px] text-slate-400"
+            className="mb-3.5 sm:mb-4 flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11.5px] sm:text-[12px] text-slate-400"
           >
             {breadcrumb.map((item, index) => (
-              <span key={`${item.label}-${index}`} className="flex items-center gap-2">
+              <span key={`${item.label}-${index}`} className="flex items-center gap-1.5 sm:gap-2">
                 {item.href ? (
                   <Link href={item.href} className="transition-colors hover:text-[#1b39f5]">
                     {item.label}
@@ -55,13 +55,13 @@ export default function Shell({
         ) : null}
 
         {title ? (
-          <header className="mb-8">
-            <h1 className="flex items-center gap-3 font-display text-[26px] md:text-[32px] font-semibold text-[#0a1b33]">
-              <span className="h-7 w-1.5 shrink-0 rounded-full bg-[#1b39f5]" aria-hidden />
+          <header className="mb-6 sm:mb-8">
+            <h1 className="flex items-center gap-2.5 sm:gap-3 font-display text-[21px] sm:text-[26px] md:text-[32px] font-semibold text-[#0a1b33]">
+              <span className="h-6 sm:h-7 w-1.5 shrink-0 rounded-full bg-[#1b39f5]" aria-hidden />
               {title}
             </h1>
             {subtitle ? (
-              <p className="mt-3 max-w-2xl text-[13px] leading-7 text-slate-500">{subtitle}</p>
+              <p className="mt-2.5 sm:mt-3 max-w-2xl text-[12.5px] sm:text-[13px] leading-7 text-slate-500">{subtitle}</p>
             ) : null}
           </header>
         ) : null}

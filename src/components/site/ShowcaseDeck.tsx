@@ -216,7 +216,7 @@ function DeckCard({ product, position }: { product: Product; position: number })
   return (
     <article className="group relative h-full">
       <div
-        className="relative flex h-[470px] flex-col overflow-hidden rounded-[28px] border border-white/70 p-5 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] md:h-[460px]"
+        className="relative flex h-[380px] flex-col overflow-hidden rounded-[24px] border border-white/70 p-4 shadow-[0_34px_80px_-42px_rgba(10,27,51,0.5)] transition-shadow duration-500 group-hover:shadow-[0_44px_90px_-40px_rgba(27,57,245,0.45)] sm:h-[440px] sm:rounded-[28px] sm:p-5 md:h-[460px]"
         style={{ background: variant.background(color) }}
       >
         {variant.art(color)}

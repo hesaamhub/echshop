@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useFirebase } from "@/components/providers/FirebaseProvider"
+import SpendingOrdersChart from "@/components/panel/SpendingOrdersChart"
 import { Badge, Card, StatCard, Table, Td } from "@/components/panel/Ui"
 import {
   fetchUserNotifications,
@@ -60,7 +61,7 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-4">
         <StatCard
           label="سفارش‌های تحویل‌شده"
           value={`${toman(deliveredCount)} سفارش`}
@@ -84,6 +85,8 @@ export default function DashboardHome() {
           tone={openTicketsCount > 0 ? "down" : "neutral"}
         />
       </div>
+
+      <SpendingOrdersChart orders={orders} loading={loading} />
 
       <div className="grid gap-5 xl:grid-cols-[1.6fr_1fr]">
         <Card

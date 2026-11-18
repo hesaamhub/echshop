@@ -104,14 +104,14 @@ export default function CurrencyPay() {
             {BENEFITS.map((benefit) => (
               <div
                 key={benefit.title}
-                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] px-3.5 py-2 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.08]"
+                className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] px-3 py-2 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.08] sm:px-3.5"
               >
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-b from-[#2a49ff] to-[#1226c4] text-white shadow-[0_14px_26px_-18px_rgba(42,73,255,0.95)]">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-gradient-to-b from-[#2a49ff] to-[#1226c4] text-white shadow-[0_14px_26px_-18px_rgba(42,73,255,0.95)] sm:h-9 sm:w-9">
                   <benefit.icon className="h-4 w-4" />
                 </span>
                 <span>
                   <span className="block text-[12px] font-bold text-white">{benefit.title}</span>
-                  <span className="block text-[11px] leading-5 text-white/50">{benefit.text}</span>
+                  <span className="hidden text-[11px] leading-5 text-white/50 sm:block">{benefit.text}</span>
                 </span>
               </div>
             ))}

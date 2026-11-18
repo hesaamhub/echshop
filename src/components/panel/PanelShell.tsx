@@ -109,7 +109,7 @@ export default function PanelShell({
 
   return (
     <div className="min-h-screen bg-[#f9fafb]">
-      <div className="mx-auto flex max-w-[1500px] gap-6 px-4 py-6 md:px-6">
+      <div className="mx-auto flex max-w-[1500px] gap-4 sm:gap-6 px-3 py-4 sm:px-4 sm:py-6 md:px-6">
         <aside className="hidden w-64 shrink-0 lg:block">
           <div className="sticky top-6 rounded-[28px] border border-[#1b39f5]/10 bg-white p-5 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
             <Link href="/" className="flex items-center gap-2.5">
@@ -167,10 +167,10 @@ export default function PanelShell({
         </aside>
 
         <div className="min-w-0 flex-1">
-          <header className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-[#1b39f5]/10 bg-white px-6 py-5 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+          <header className="mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[24px] sm:rounded-[28px] border border-[#1b39f5]/10 bg-white px-4 py-4 sm:px-6 sm:py-5 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
             <div>
-              <h1 className="font-display text-[19px] font-semibold text-[#0a1b33]">{title}</h1>
-              <p className="mt-1 text-[11.5px] text-slate-400">{role}</p>
+              <h1 className="font-display text-[17px] sm:text-[19px] font-semibold text-[#0a1b33]">{title}</h1>
+              <p className="mt-1 text-[11px] sm:text-[11.5px] text-slate-400">{role}</p>
             </div>
             <div className="flex items-center gap-2">
               {isAdmin && !isAdminRoute ? (

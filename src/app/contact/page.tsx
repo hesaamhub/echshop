@@ -33,22 +33,22 @@ export default function ContactPage() {
       subtitle="برای پیگیری سفارش بهتر است از تیکت پنل کاربری استفاده کنید؛ برای همکاری و فروش عمده از فرم زیر."
       breadcrumb={[{ label: "صفحه اصلی", href: "/" }, { label: "تماس با ما" }]}
     >
-      <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px]">
         <ContactForm />
 
-        <aside className="space-y-3">
+        <aside className="space-y-2.5 sm:space-y-3">
           {items.map((item) => (
             <div
               key={item.label}
-              className="flex items-start gap-3.5 rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]"
+              className="flex items-start gap-3 rounded-3xl border border-[#1b39f5]/10 bg-white p-4 sm:p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]"
             >
               <span className="glass-plate grid h-10 w-10 shrink-0 place-items-center rounded-[14px]">
                 <item.icon className="h-4 w-4 text-[#1b39f5]" />
               </span>
-              <span>
+              <span className="min-w-0">
                 <span className="block text-[11.5px] text-slate-400">{item.label}</span>
                 <span
-                  className={`mt-1 block text-[12.5px] font-semibold text-[#0a1b33] ${item.latin ? "font-latin" : ""}`}
+                  className={`mt-1 block break-words text-[12.5px] font-semibold text-[#0a1b33] ${item.latin ? "font-latin" : ""}`}
                   dir={item.latin ? "ltr" : undefined}
                 >
                   {item.value}

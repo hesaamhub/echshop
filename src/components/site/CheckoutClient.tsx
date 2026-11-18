@@ -148,10 +148,10 @@ export default function CheckoutClient() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
+    <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_360px]">
       <div className="space-y-4">
         {authReady && !user ? (
-          <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[#f2e2c6] bg-[#fdf8ef] p-5">
+          <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-[#f2e2c6] bg-[#fdf8ef] p-4 sm:p-5">
             <div>
               <p className="text-[13px] font-bold text-[#9A6321]">برای ثبت سفارش وارد حساب کاربری شوید</p>
               <p className="mt-1 text-[11.5px] text-[#9A6321]/80">
@@ -168,7 +168,7 @@ export default function CheckoutClient() {
           </div>
         ) : null}
 
-        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-4 sm:p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
           <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
             <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
             اطلاعات خریدار
@@ -191,7 +191,7 @@ export default function CheckoutClient() {
           </label>
         </div>
 
-        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
+        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-4 sm:p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
           <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
             <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
             روش پرداخت
@@ -224,7 +224,7 @@ export default function CheckoutClient() {
         </div>
       </div>
 
-      <aside className="h-fit rounded-3xl border border-[#1b39f5]/10 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] lg:sticky lg:top-24">
+      <aside className="h-fit rounded-3xl border border-[#1b39f5]/10 bg-white p-4 sm:p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)] lg:sticky lg:top-24">
         <h2 className="flex items-center gap-2.5 text-[14px] font-bold text-[#0a1b33]">
           <span className="h-4 w-1.5 rounded-full bg-[#1b39f5]" aria-hidden />
           پرداخت نهایی

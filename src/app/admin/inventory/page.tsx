@@ -96,7 +96,7 @@ export default function AdminInventoryPage() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-4">
         <StatCard label="آمادهٔ تحویل" value={`${toman(availableCount)} مورد`} tone="up" />
         <StatCard label="تحویل‌شده" value={`${toman(deliveredCount)} مورد`} />
         <StatCard label="رزروشده" value={`${toman(reservedCount)} مورد`} />

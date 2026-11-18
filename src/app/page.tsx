@@ -70,13 +70,13 @@ export default function HomePage() {
         <Section
           eyebrow="چرا اچ‌شاپ؟"
           title="خریدی که خیالت را راحت می‌کند"
-          className="mt-12"
+          className="mt-8 md:mt-12"
         >
           <FeaturesStrip />
         </Section>
 
         {/* پوسترهای پیشنهادی */}
-        <Section className="mt-14">
+        <Section className="mt-9 md:mt-14">
           <PosterGrid />
         </Section>
 
@@ -86,9 +86,9 @@ export default function HomePage() {
           title="اکانت‌هایی که لازم داری"
           href="/products"
           linkLabel="همهٔ محصولات"
-          className="mt-16"
+          className="mt-10 md:mt-16"
         >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
             {essentials.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -100,9 +100,9 @@ export default function HomePage() {
           eyebrow={`${latinDigits(homeCategories.length)} دستهٔ اصلی`}
           title="دسته‌بندی محصولات"
           subtitle="از اشتراک‌های استریم تا لایسنس‌های حرفه‌ای طراحی و هوش مصنوعی"
-          className="mt-14"
+          className="mt-10 md:mt-14"
         >
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
             {homeCategories.map((category) => (
               <CategoryFolder key={category.slug} category={category} />
             ))}
@@ -110,7 +110,7 @@ export default function HomePage() {
         </Section>
 
         {/* پرداخت ارزی */}
-        <Section className="mt-16">
+        <Section className="mt-10 md:mt-16">
           <CurrencyPay />
         </Section>
 
@@ -120,13 +120,13 @@ export default function HomePage() {
           title="جدیدترین محصولات"
           href="/products"
           linkLabel="مشاهدهٔ همه"
-          className="mt-14"
+          className="mt-10 md:mt-14"
         >
           <PosterShowcase />
         </Section>
 
         {/* سفارش سریع */}
-        <Section className="mt-16">
+        <Section className="mt-10 md:mt-16">
           <QuickOrder />
         </Section>
 
@@ -136,7 +136,7 @@ export default function HomePage() {
           title="از بلاگ اچ‌شاپ"
           href="/blog"
           linkLabel="همهٔ مقالات"
-          className="mt-16"
+          className="mt-10 md:mt-16"
         >
           <div className="grid gap-4 lg:grid-cols-[1.55fr_1fr]">
             {/* مقالهٔ ویژه */}
@@ -240,7 +240,7 @@ export default function HomePage() {
         </Section>
 
         {/* خبرنامه و درخواست محصول */}
-        <Section className="mt-16">
+        <Section className="mt-10 md:mt-16">
           <div className="grid items-stretch gap-4 lg:grid-cols-2">
             <NewsletterCTA />
             <ProductRequestForm />
@@ -252,23 +252,30 @@ export default function HomePage() {
   )
 }
 
-/** نوار مزیت‌ها — محتوا از siteContent.features خوانده می‌شود */
+/** نوار مزیت‌ها — در موبایل ۲ستونه و فشرده بدون توضیح، در دسکتاپ ۴ستونه کامل */
 function FeaturesStrip() {
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div
+      data-testid="features-grid"
+      className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4"
+    >
       {siteContent.features.map((feature) => {
         const Icon = featureIcons[feature.icon] ?? Zap
 
         return (
           <div
             key={feature.title}
-            className="group rounded-[24px] border border-[#1b39f5]/10 bg-white p-4 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_26px_50px_-34px_rgba(27,57,245,0.55)]"
+            className="group rounded-[18px] border border-[#1b39f5]/10 bg-white p-3 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] transition-all duration-500 hover:-translate-y-1 hover:border-[#1b39f5]/25 hover:shadow-[0_26px_50px_-34px_rgba(27,57,245,0.55)] sm:rounded-[24px] sm:p-4"
           >
-            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[#1b39f5]/8 text-[#1b39f5] transition-all duration-500 group-hover:bg-[#1b39f5] group-hover:text-white group-hover:shadow-[0_14px_26px_-14px_rgba(27,57,245,0.9)]">
-              <Icon className="h-5 w-5" strokeWidth={2.1} />
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#1b39f5]/8 text-[#1b39f5] transition-all duration-500 group-hover:bg-[#1b39f5] group-hover:text-white group-hover:shadow-[0_14px_26px_-14px_rgba(27,57,245,0.9)] sm:h-10 sm:w-10 sm:rounded-2xl">
+              <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2.1} />
             </span>
-            <h3 className="mt-3 text-[13.5px] font-bold text-[#0a1b33]">{feature.title}</h3>
-            <p className="mt-1.5 text-[12px] leading-6 text-slate-500">{feature.body}</p>
+            <h3 className="mt-2.5 text-[12px] font-bold leading-5 text-[#0a1b33] sm:mt-3 sm:text-[13.5px]">
+              {feature.title}
+            </h3>
+            <p className="mt-1.5 hidden text-[12px] leading-6 text-slate-500 sm:block">
+              {feature.body}
+            </p>
           </div>
         )
       })}
@@ -382,25 +389,25 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <section className={`mx-auto max-w-[1280px] px-4 md:px-6 ${className ?? "mt-12"}`}>
+    <section className={`mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6 ${className ?? "mt-9 md:mt-12"}`}>
       {title ? (
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-2.5 md:mb-5 md:gap-3">
           <div>
             {eyebrow ? (
-              <span className="mb-2 inline-flex items-center rounded-full bg-[#1b39f5]/8 px-3 py-1 text-[10.5px] font-bold text-[#1b39f5]">
+              <span className="mb-1.5 inline-flex items-center rounded-full bg-[#1b39f5]/8 px-2.5 py-0.5 text-[10px] font-bold text-[#1b39f5] sm:mb-2 sm:px-3 sm:py-1 sm:text-[10.5px]">
                 {eyebrow}
               </span>
             ) : null}
-            <h2 className="flex items-center gap-2.5 font-display text-[19px] md:text-[22px] font-semibold text-[#0a1b33]">
-              <span className="h-5 w-1 rounded-full bg-[#1b39f5]" aria-hidden />
+            <h2 className="flex items-center gap-2 font-display text-[17px] font-semibold text-[#0a1b33] sm:gap-2.5 sm:text-[19px] md:text-[22px]">
+              <span className="h-4 w-1 rounded-full bg-[#1b39f5] sm:h-5" aria-hidden />
               {title}
             </h2>
-            {subtitle ? <p className="mt-1.5 text-[12.5px] text-slate-500">{subtitle}</p> : null}
+            {subtitle ? <p className="mt-1 text-[11.5px] text-slate-500 sm:mt-1.5 sm:text-[12.5px]">{subtitle}</p> : null}
           </div>
           {href && linkLabel ? (
             <Link
               href={href}
-              className="glass-plate glass-plate-hover inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-semibold text-[#1b39f5]"
+              className="glass-plate glass-plate-hover inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11.5px] font-semibold text-[#1b39f5] sm:px-4 sm:py-2 sm:text-[12px]"
             >
               {linkLabel}
               <ArrowLeft className="h-3.5 w-3.5" />

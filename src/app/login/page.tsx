@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <main className="grid min-h-screen lg:grid-cols-2">
-      <div className="flex items-center justify-center px-6 py-14">
+      <div className="flex items-center justify-center px-4 py-8 sm:px-6 sm:py-14">
         <div className="w-full max-w-sm">
           <Link href="/" className="flex items-center gap-2.5">
             <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">

@@ -1,6 +1,8 @@
 import test from "node:test"
 import assert from "node:assert/strict"
-import { categories, getCategory, getProduct, products } from "../data"
+import { categories, getCategory, getProduct, posts, products } from "../data"
+import { newArrivals } from "../newArrivals"
+import sitemap from "../../app/sitemap"
 import {
   buildBreadcrumbJsonLd,
   buildProductDetailGraphJsonLd,
@@ -98,4 +100,42 @@ test("buildBreadcrumbJsonLd resolves optional currentPath on last item", () => {
     { currentPath: "/products", siteUrl: "https://echshop.ir" },
   )
   assert.equal(ld.itemListElement[1].item, "https://echshop.ir/products")
+})
+
+test("sitemap includes all public static and dynamic routes and excludes private routes", () => {
+  const entries = sitemap()
+  const urls = new Set(entries.map((entry) => entry.url))
+
+  const expectedStatic = [
+    "https://echshop.ir",
+    "https://echshop.ir/products",
+    "https://echshop.ir/categories",
+    "https://echshop.ir/blog",
+    "https://echshop.ir/faq",
+    "https://echshop.ir/about",
+    "https://echshop.ir/contact",
+    "https://echshop.ir/refund",
+    "https://echshop.ir/terms",
+    "https://echshop.ir/privacy",
+  ]
+  for (const url of expectedStatic) {
+    assert.ok(urls.has(url), `Missing static URL in sitemap: ${url}`)
+  }
+
+  for (const product of products) {
+    assert.ok(urls.has(`https://echshop.ir/products/${product.slug}`))
+  }
+  for (const category of categories) {
+    assert.ok(urls.has(`https://echshop.ir/category/${category.slug}`))
+  }
+  for (const post of posts) {
+    assert.ok(urls.has(`https://echshop.ir/blog/${post.slug}`))
+  }
+  for (const arrival of newArrivals) {
+    assert.ok(urls.has(`https://echshop.ir/new/${arrival.slug}`))
+  }
+
+  for (const privatePath of ["/admin", "/dashboard", "/checkout", "/cart", "/login"]) {
+    assert.equal(urls.has(`https://echshop.ir${privatePath}`), false)
+  }
 })

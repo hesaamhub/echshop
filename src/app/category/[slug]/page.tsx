@@ -74,12 +74,12 @@ export default async function CategoryPage({
         subtitle={category.description}
         breadcrumb={[
           { label: "صفحه اصلی", href: "/" },
-          { label: "دسته‌بندی‌ها", href: "/products" },
+          { label: "دسته‌بندی‌ها", href: "/categories" },
           { label: category.title },
         ]}
       >
         {items.length ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
             {items.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

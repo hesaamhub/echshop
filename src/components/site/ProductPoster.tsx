@@ -167,7 +167,7 @@ export default function ProductPoster({ slug, brand }: Props) {
         {[0.24, 0.14, 0.06].map((opacity, index) => (
           <span
             key={index}
-            className="font-display font-latin text-[30px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase"
+            className="font-display font-latin text-[22px] leading-[0.92] font-extrabold tracking-[-0.02em] whitespace-nowrap uppercase sm:text-[30px]"
             style={{
               color: "transparent",
               WebkitTextStroke: `1.3px rgba(255,255,255,${opacity})`,
@@ -186,7 +186,7 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* نشان اصلی برند */}
       <span
-        className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_18px_32px_rgba(0,0,0,0.65)] transition-transform duration-700 group-hover:scale-110"
+        className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 scale-75 drop-shadow-[0_18px_32px_rgba(0,0,0,0.65)] transition-transform duration-700 group-hover:scale-[0.85] sm:scale-100 sm:group-hover:scale-110"
         aria-hidden
       >
         <BrandIcon slug={slug} size={64} color="#ffffff" />
@@ -194,7 +194,7 @@ export default function ProductPoster({ slug, brand }: Props) {
 
       {/* عنوان دسته */}
       <span
-        className="font-latin absolute bottom-3.5 left-4 z-10 text-[8.5px] font-bold tracking-[0.2em] text-white/75 uppercase"
+        className="font-latin absolute bottom-2.5 left-3 z-10 text-[7.5px] font-bold tracking-[0.18em] text-white/75 uppercase sm:bottom-3.5 sm:left-4 sm:text-[8.5px] sm:tracking-[0.2em]"
         dir="ltr"
       >
         {config.kicker}

@@ -86,7 +86,7 @@ export default function AdminReportsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-4">
         <StatCard label="مجموع درآمد تاییدشده" value={`${toman(totalRevenue)} تومان`} tone="up" />
         <StatCard label="کل سفارش‌ها" value={`${toman(orders.length)} سفارش`} hint={`${toman(deliveredRate)}٪ تحویل‌شده`} tone="up" />
         <StatCard label="کاربران ثبت‌شده" value={`${toman(userCount)} کاربر`} />

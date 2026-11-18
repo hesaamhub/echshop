@@ -41,6 +41,7 @@ import Wordmark from "./Wordmark"
 /** لینک‌های سادهٔ منو */
 const navItems = [
   { label: "بلاگ", href: "/blog" },
+  { label: "سوالات متداول", href: "/faq" },
   { label: "درباره ما", href: "/about" },
   { label: "تماس با ما", href: "/contact" },
 ]
@@ -78,6 +79,16 @@ export default function Header() {
   const unreadCount = notificationsList.filter((n) => n.unread).length
   const userInitial = (publicProfile?.displayName || user?.displayName || "ک").trim().charAt(0)
   const categoryCount = (slug: string) => products.filter((p) => p.categorySlug === slug).length
+
+  const canHover = () =>
+    typeof window !== "undefined" &&
+    window.innerWidth >= 768 &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches
+
+  const toggleMenu = (key: MenuKey) => {
+    setOpen(false)
+    setMenu((current) => (current === key ? null : key))
+  }
 
   useEffect(() => {
     if (!user?.uid) {
@@ -118,45 +129,56 @@ export default function Header() {
   }, [menu])
 
   return (
-    <header className="sticky top-9 z-40 bg-[#f9fafb]/75 backdrop-blur-xl border-b border-white/60 md:top-10">
-      <div className="mx-auto max-w-[1280px] px-4 md:px-6">
-        <div ref={barRef} className="flex h-14 items-center gap-4">
+    <header className="sticky top-9 z-40 border-b border-white/60 bg-[#f9fafb]/75 backdrop-blur-xl md:top-10">
+      <div ref={barRef} className="relative mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6">
+        <div className="flex h-14 items-center justify-between gap-2 md:gap-4">
           <Link
             href="/"
             aria-label="اچ‌شاپ — بازگشت به صفحهٔ اصلی"
-            className="flex shrink-0 items-center gap-2.5"
+            className="flex shrink-0 items-center gap-2 sm:gap-2.5"
           >
             {/* لوگوموشن سه‌بعدی برند + وردمارک تایپوگرافی متحرک */}
-            <Logo className="h-8 w-8 rounded-[10px] shadow-[0_8px_18px_-8px_rgba(27,57,245,0.5)] md:h-9 md:w-9 md:rounded-[11px]" />
-            <Wordmark className="h-[22px] w-auto md:h-6" />
+            <Logo className="h-7 w-7 rounded-[9px] shadow-[0_8px_18px_-8px_rgba(27,57,245,0.5)] sm:h-8 sm:w-8 sm:rounded-[10px] md:h-9 md:w-9 md:rounded-[11px]" />
+            <Wordmark className="h-[19px] w-auto sm:h-[22px] md:h-6" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1 mr-2">
             {/* محصولات — بازشونده */}
             <div
               className="relative"
-              onMouseEnter={() => setMenu("products")}
-              onMouseLeave={() => setMenu(null)}
+              onMouseEnter={() => {
+                if (canHover()) setMenu("products")
+              }}
+              onMouseLeave={() => {
+                if (canHover()) setMenu(null)
+              }}
             >
               <MenuTrigger
                 label="محصولات"
                 href="/products"
                 active={menu === "products"}
-                onToggle={() => setMenu((value) => (value === "products" ? null : "products"))}
+                onToggle={() => toggleMenu("products")}
               />
 
               <AnimatePresence>
                 {menu === "products" ? (
                   <DropdownPanel
                     align="right"
-                    className="w-[1080px] max-w-[calc(100vw-3rem)]"
+                    className="lg:w-[1080px] lg:max-w-[calc(100vw-3rem)]"
                   >
                     <div className="flex items-stretch gap-1">
                       {/* دسته‌بندی‌ها */}
                       <div className="min-w-[300px] flex-1">
-                        <p className="px-3 pb-1 pt-1.5 text-[10.5px] font-bold text-slate-400">
-                          دسته‌بندی محصولات
-                        </p>
+                        <div className="flex items-center justify-between px-3 pb-1 pt-1.5">
+                          <p className="text-[10.5px] font-bold text-slate-400">دسته‌بندی محصولات</p>
+                          <Link
+                            href="/categories"
+                            onClick={() => setMenu(null)}
+                            className="text-[10.5px] font-bold text-[#1b39f5] hover:underline"
+                          >
+                            فهرست دسته‌ها
+                          </Link>
+                        </div>
 
                         <div className="grid grid-cols-2 gap-1">
                           {categories.map((category) => {
@@ -246,7 +268,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-1.5 rounded-full text-[13px] font-semibold text-slate-500 transition-all hover:text-[#1b39f5] hover:bg-[#1b39f5]/8"
+                className="whitespace-nowrap px-2.5 xl:px-3 py-1.5 rounded-full text-[12.5px] xl:text-[13px] font-semibold text-slate-500 transition-all hover:text-[#1b39f5] hover:bg-[#1b39f5]/8"
               >
                 {item.label}
               </Link>
@@ -265,27 +287,32 @@ export default function Header() {
             />
           </form>
 
-          <div className="flex items-center gap-1.5 shrink-0">
-            {/* اطلاع‌رسانی‌ها — با موس یا لمس باز می‌شود */}
+          <div className="flex shrink-0 items-center gap-1.5">
+            {/* اطلاع‌رسانی‌ها — در موبایل تمام‌عرض زیر هدر و در دسکتاپ بازشونده */}
             {isLoggedIn ? (
               <div
-                className="relative"
-                onMouseEnter={() => setMenu("bell")}
-                onMouseLeave={() => setMenu(null)}
+                className="md:relative"
+                onMouseEnter={() => {
+                  if (canHover()) setMenu("bell")
+                }}
+                onMouseLeave={() => {
+                  if (canHover()) setMenu(null)
+                }}
               >
                 <IconTrigger
                   href="/dashboard/notifications"
                   label="اطلاع‌رسانی‌ها"
                   badge={unreadCount > 0 ? num(unreadCount) : undefined}
                   active={menu === "bell"}
-                  onOpen={() => setMenu("bell")}
+                  canHover={canHover}
+                  onToggle={() => toggleMenu("bell")}
                 >
                   <Bell className="h-4 w-4" />
                 </IconTrigger>
 
                 <AnimatePresence>
                   {menu === "bell" ? (
-                    <DropdownPanel align="left" className="w-[336px]">
+                    <DropdownPanel align="left" onClose={() => setMenu(null)} className="md:w-[336px]">
                       <NotificationsMenu
                         items={notificationsList}
                         onMarkedRead={() =>
@@ -299,37 +326,46 @@ export default function Header() {
               </div>
             ) : null}
 
-            {/* سبد خرید — با موس یا لمس باز می‌شود */}
+            {/* سبد خرید — در موبایل تمام‌عرض زیر هدر و در دسکتاپ بازشونده */}
             <div
-              className="relative"
-              onMouseEnter={() => setMenu("cart")}
-              onMouseLeave={() => setMenu(null)}
+              className="md:relative"
+              onMouseEnter={() => {
+                if (canHover()) setMenu("cart")
+              }}
+              onMouseLeave={() => {
+                if (canHover()) setMenu(null)
+              }}
             >
               <IconTrigger
                 href="/cart"
                 label="سبد خرید"
                 badge={cartCount > 0 ? num(cartCount) : undefined}
                 active={menu === "cart"}
-                onOpen={() => setMenu("cart")}
+                canHover={canHover}
+                onToggle={() => toggleMenu("cart")}
               >
                 <ShoppingCart className="h-4 w-4" />
               </IconTrigger>
 
               <AnimatePresence>
                 {menu === "cart" ? (
-                  <DropdownPanel align="left" className="w-[372px]">
+                  <DropdownPanel align="left" onClose={() => setMenu(null)} className="md:w-[372px]">
                     <CartMenu onNavigate={() => setMenu(null)} />
                   </DropdownPanel>
                 ) : null}
               </AnimatePresence>
             </div>
 
-            {/* پنل کاربری — فقط برای کاربر واردشده؛ با موس یا لمس باز می‌شود */}
+            {/* پنل کاربری یا ورود */}
             {isLoggedIn ? (
               <div
-                className="relative"
-                onMouseEnter={() => setMenu("panel")}
-                onMouseLeave={() => setMenu(null)}
+                className="md:relative"
+                onMouseEnter={() => {
+                  if (canHover()) setMenu("panel")
+                }}
+                onMouseLeave={() => {
+                  if (canHover()) setMenu(null)
+                }}
               >
                 <Link
                   href="/dashboard"
@@ -337,9 +373,9 @@ export default function Header() {
                   title="پنل کاربری"
                   aria-expanded={menu === "panel"}
                   onClick={(event) => {
-                    if (menu !== "panel") {
+                    if (!canHover() || menu !== "panel") {
                       event.preventDefault()
-                      setMenu("panel")
+                      toggleMenu("panel")
                     }
                   }}
                   className={cn(
@@ -354,27 +390,40 @@ export default function Header() {
 
                 <AnimatePresence>
                   {menu === "panel" ? (
-                    <DropdownPanel align="left" className="w-[312px]">
+                    <DropdownPanel align="left" onClose={() => setMenu(null)} className="md:w-[312px]">
                       <PanelMenu unreadNotifications={unreadCount} onNavigate={() => setMenu(null)} />
                     </DropdownPanel>
                   ) : null}
                 </AnimatePresence>
               </div>
             ) : (
-              <Link
-                href="/login"
-                className="glass-solid hidden sm:inline-flex items-center gap-2 rounded-[14px] px-4 py-2 text-[12px] font-semibold"
-              >
-                <UserRound className="h-4 w-4" />
-                ورود / ثبت‌نام
-              </Link>
+              <>
+                <Link
+                  href="/login"
+                  aria-label="حساب کاربری و ورود"
+                  title="ورود / ثبت‌نام"
+                  className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5] sm:hidden"
+                >
+                  <UserRound className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/login"
+                  className="glass-solid hidden items-center gap-2 rounded-[14px] px-4 py-2 text-[12px] font-semibold sm:inline-flex"
+                >
+                  <UserRound className="h-4 w-4" />
+                  ورود / ثبت‌نام
+                </Link>
+              </>
             )}
 
             <button
               type="button"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => {
+                setMenu(null)
+                setOpen((v) => !v)
+              }}
               aria-label="منو"
-              className="glass-plate glass-plate-hover lg:hidden grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5]"
+              className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px] text-[#1b39f5] lg:hidden"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
@@ -605,28 +654,43 @@ function MenuTrigger({
   )
 }
 
-/** کارت شیشه‌ای منوی بازشونده */
+/** کارت شیشه‌ای منوی بازشونده — تمام‌عرض و خوانا روی موبایل، لنگر کنار آیکون روی دسکتاپ */
 function DropdownPanel({
   align = "right",
   className,
+  onClose,
   children,
 }: {
   align?: "right" | "left"
   className?: string
+  onClose?: () => void
   children: React.ReactNode
 }) {
   return (
     <motion.div
+      data-testid="header-dropdown-panel"
       initial={{ opacity: 0, y: 8, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 6, scale: 0.98 }}
       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "absolute top-full z-50 mt-2 rounded-3xl border border-[#1b39f5]/10 bg-white/95 p-2 shadow-[0_30px_70px_-32px_rgba(27,57,245,0.6)] backdrop-blur-xl",
-        align === "right" ? "right-0" : "left-0",
+        "absolute left-3 right-3 top-full z-50 mt-2 max-h-[calc(100dvh-6.75rem)] overflow-y-auto overscroll-contain rounded-3xl border border-[#1b39f5]/12 bg-white/[0.98] p-2.5 shadow-[0_30px_70px_-32px_rgba(27,57,245,0.65)] backdrop-blur-xl md:left-auto md:right-auto md:max-h-none md:overflow-visible md:p-2",
+        align === "right" ? "md:right-0" : "md:left-0",
         className,
       )}
     >
+      {onClose ? (
+        <div className="mb-1 flex justify-end md:hidden">
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="بستن پنجره"
+            className="grid h-7 w-7 place-items-center rounded-full bg-slate-100 text-slate-500 transition-colors hover:bg-slate-200 hover:text-[#0a1b33]"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      ) : null}
       {children}
     </motion.div>
   )
@@ -677,14 +741,16 @@ function IconTrigger({
   label,
   badge,
   active,
-  onOpen,
+  canHover,
+  onToggle,
   children,
 }: {
   href: string
   label: string
   badge?: string
   active: boolean
-  onOpen: () => void
+  canHover: () => boolean
+  onToggle: () => void
   children: React.ReactNode
 }) {
   return (
@@ -694,9 +760,9 @@ function IconTrigger({
       title={label}
       aria-expanded={active}
       onClick={(event) => {
-        if (!active) {
+        if (!canHover() || !active) {
           event.preventDefault()
-          onOpen()
+          onToggle()
         }
       }}
       className={cn(

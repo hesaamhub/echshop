@@ -154,7 +154,7 @@ export default function SupportChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 flex flex-col items-start">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end sm:bottom-5 sm:right-5">
       <AnimatePresence>
         {open ? (
           <motion.section

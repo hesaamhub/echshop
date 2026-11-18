@@ -68,21 +68,23 @@ const TILES: Tile[] = [
 
 export default function PosterGrid() {
   return (
-    <div className="grid gap-3.5 lg:grid-cols-2">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5">
       {TILES.map((tile) => (
         <Link
           key={tile.id}
           href={tile.href}
           aria-label={tile.title}
-          className={`group relative block overflow-hidden rounded-[24px] border border-white/10 bg-[#070c1b] shadow-[0_24px_50px_-36px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-34px_rgba(27,57,245,0.45)] ${
-            tile.wide ? "aspect-[16/9] lg:col-span-2 lg:aspect-[3.2/1]" : "aspect-[16/10] sm:aspect-[69/38]"
+          className={`group relative block overflow-hidden rounded-[18px] border border-white/10 bg-[#070c1b] shadow-[0_24px_50px_-36px_rgba(10,21,45,0.55)] transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_30px_60px_-34px_rgba(27,57,245,0.45)] sm:rounded-[24px] ${
+            tile.wide
+              ? "col-span-2 aspect-[16/9] lg:aspect-[3.2/1]"
+              : "aspect-[4/3] sm:aspect-[69/38]"
           }`}
         >
           <Image
             src={tile.image}
             alt={tile.title}
             fill
-            sizes={tile.wide ? "(max-width: 1024px) 100vw, 1232px" : "(max-width: 1024px) 100vw, 608px"}
+            sizes={tile.wide ? "(max-width: 1024px) 100vw, 1232px" : "(max-width: 1024px) 50vw, 608px"}
             referrerPolicy="no-referrer"
             className="object-cover object-left transition-transform duration-700 group-hover:scale-[1.03]"
           />
@@ -92,35 +94,43 @@ export default function PosterGrid() {
             className="absolute inset-0 bg-gradient-to-l from-[#040814]/94 via-[#040814]/65 to-[#040814]/15"
           />
 
-          <span className="relative z-10 flex h-full flex-col justify-between p-5 sm:p-7">
-            <span className="flex items-center justify-between gap-3">
-              <span className="font-latin text-[10px] font-bold tracking-[0.2em] text-[#99adff]" dir="ltr">
+          <span className="relative z-10 flex h-full flex-col justify-between p-3 sm:p-6 md:p-7">
+            <span className="flex items-center justify-between gap-2 sm:gap-3">
+              <span className="font-latin truncate text-[8px] font-bold tracking-[0.16em] text-[#99adff] sm:text-[10px] sm:tracking-[0.2em]" dir="ltr">
                 {tile.kicker}
               </span>
-              <span className="flex items-center gap-1.5" aria-hidden>
+              <span className={tile.wide ? "flex items-center gap-1 sm:gap-1.5" : "hidden items-center gap-1.5 sm:flex"} aria-hidden>
                 {tile.brands.map((brand) => (
                   <span
                     key={brand}
-                    className="grid h-7 w-7 place-items-center rounded-lg border border-white/15 bg-black/40 backdrop-blur-md"
+                    className="grid h-6 w-6 place-items-center rounded-lg border border-white/15 bg-black/40 backdrop-blur-md sm:h-7 sm:w-7"
                   >
-                    <BrandIcon slug={brand} size={14} color="#ffffff" />
+                    <BrandIcon slug={brand} size={13} color="#ffffff" />
                   </span>
                 ))}
               </span>
             </span>
 
-            <span className="flex items-end justify-between gap-4">
-              <span className="max-w-[78%]">
-                <span className="block font-display text-[19px] font-extrabold text-white sm:text-[24px]">
+            <span className="flex items-end justify-between gap-2 sm:gap-4">
+              <span className={tile.wide ? "max-w-[80%]" : "min-w-0 flex-1 sm:max-w-[78%]"}>
+                <span
+                  className={`block font-display font-extrabold text-white ${
+                    tile.wide ? "text-[17px] sm:text-[24px]" : "text-[13px] leading-5 sm:text-[24px] sm:leading-normal"
+                  }`}
+                >
                   {tile.title}
                 </span>
-                <span className="mt-1 block text-[11.5px] leading-5 text-slate-200/85 sm:text-[12.5px]">
+                <span
+                  className={`mt-1 text-[11px] leading-5 text-slate-200/85 sm:text-[12.5px] ${
+                    tile.wide ? "line-clamp-2 sm:block" : "hidden sm:block"
+                  }`}
+                >
                   {tile.subtitle}
                 </span>
               </span>
 
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#7d92ff]/50 group-hover:bg-[#1b39f5]">
-                <ArrowUpLeft className="h-4 w-4" />
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-xl border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:border-[#7d92ff]/50 group-hover:bg-[#1b39f5] sm:h-10 sm:w-10 sm:rounded-2xl">
+                <ArrowUpLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </span>
             </span>
           </span>

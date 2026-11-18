@@ -310,7 +310,7 @@ export default function ProductsBrowser({
         </div>
 
         {visible.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-3">
             {visible.map((product, index) => (
               <motion.div
                 key={product.id}

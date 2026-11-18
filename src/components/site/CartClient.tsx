@@ -86,23 +86,23 @@ export default function CartClient() {
         {lines.map((line) => (
           <div
             key={`${line.product.id}-${line.plan.id}`}
-            className="flex flex-wrap items-center gap-4 rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]"
+            className="flex flex-wrap items-center gap-3 rounded-3xl border border-[#1b39f5]/10 bg-white p-4 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] sm:gap-4 sm:p-5"
           >
             <div
-              className={`grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${line.product.gradient}`}
+              className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br sm:h-16 sm:w-16 ${line.product.gradient}`}
             >
-              <BrandIcon slug={line.product.logo} size={28} color="#ffffff" />
+              <BrandIcon slug={line.product.logo} size={24} color="#ffffff" />
             </div>
 
-            <div className="min-w-[180px] flex-1">
+            <div className="min-w-0 flex-1 basis-[140px]">
               <Link
                 href={`/products/${line.product.slug}`}
-                className="text-[13.5px] font-bold text-[#0a1b33] transition-colors hover:text-[#1b39f5]"
+                className="block truncate text-[13px] font-bold text-[#0a1b33] transition-colors hover:text-[#1b39f5] sm:text-[13.5px]"
               >
                 {line.product.title}
               </Link>
-              <p className="mt-1.5 text-[11.5px] text-slate-500">{line.plan.title}</p>
-              <span className="mt-2 inline-flex rounded-full bg-[#1b39f5]/8 px-2.5 py-1 text-[10px] font-semibold text-[#1b39f5]">
+              <p className="mt-1 truncate text-[11px] text-slate-500 sm:mt-1.5 sm:text-[11.5px]">{line.plan.title}</p>
+              <span className="mt-1.5 inline-flex rounded-full bg-[#1b39f5]/8 px-2.5 py-0.5 text-[10px] font-semibold text-[#1b39f5] sm:mt-2 sm:py-1">
                 {deliveryLabels[line.plan.delivery]}
               </span>
             </div>
@@ -116,7 +116,7 @@ export default function CartClient() {
               >
                 <Plus className="h-3.5 w-3.5 text-[#1b39f5]" />
               </button>
-              <span className="num w-8 text-center text-[12px] font-bold text-[#0a1b33]">
+              <span className="num w-7 text-center text-[12px] font-bold text-[#0a1b33] sm:w-8">
                 {num(line.quantity)}
               </span>
               <button
@@ -129,8 +129,8 @@ export default function CartClient() {
               </button>
             </div>
 
-            <div className="w-28 text-left">
-              <span className="num text-[13.5px] font-bold text-[#0a1b33]">
+            <div className="min-w-[84px] text-left sm:w-28">
+              <span className="num text-[13px] font-bold text-[#0a1b33] sm:text-[13.5px]">
                 {toman(line.plan.price * line.quantity)}
               </span>
               <span className="block text-[10px] text-slate-400">تومان</span>
@@ -147,21 +147,21 @@ export default function CartClient() {
           </div>
         ))}
 
-        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-5 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)]">
+        <div className="rounded-3xl border border-[#1b39f5]/10 bg-white p-4 shadow-[0_18px_40px_-34px_rgba(27,57,245,0.5)] sm:p-5">
           <label className="block text-[12.5px] font-bold text-[#0a1b33]">کد تخفیف</label>
           <div className="mt-3 flex gap-2">
             <input
               value={codeInput}
               onChange={(event) => setCodeInput(event.target.value)}
-              placeholder="کد تخفیف را وارد کنید (مثلاً ECH20)"
+              placeholder="کد تخفیف (مثلاً ECH20)"
               dir="ltr"
-              className="font-latin flex-1 rounded-full border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-2.5 text-right text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
+              className="font-latin min-w-0 flex-1 rounded-full border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-3.5 py-2.5 text-right text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)] sm:px-4"
             />
             <button
               type="button"
               onClick={() => void handleApplyDiscount()}
               disabled={checkingCode}
-              className="glass-solid rounded-full px-6 text-[12px] font-semibold disabled:opacity-60"
+              className="glass-solid shrink-0 rounded-full px-4 text-[12px] font-semibold disabled:opacity-60 sm:px-6"
             >
               {checkingCode ? "بررسی…" : "اعمال"}
             </button>
@@ -174,7 +174,7 @@ export default function CartClient() {
                   setCodeInput("")
                   setDiscountMsg("")
                 }}
-                className="grid h-10 w-10 place-items-center rounded-full bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-[#A8382C]"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-[#A8382C]"
               >
                 <X className="h-4 w-4" />
               </button>
