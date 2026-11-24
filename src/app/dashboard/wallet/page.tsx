@@ -8,15 +8,15 @@ import { fetchWalletTransactions, type FirestoreWalletTx } from "@/lib/firebase/
 import { faDate, toman } from "@/lib/utils"
 
 const toneMap = {
-  success: "green",
-  failed: "red",
-  pending: "amber",
+  success:"green",
+  failed:"red",
+  pending:"amber",
 } as const
 
 const statusLabelMap = {
-  success: "موفق",
-  failed: "ناموفق",
-  pending: "در انتظار",
+  success:"موفق",
+  failed:"ناموفق",
+  pending:"در انتظار",
 } as const
 
 export default function WalletPage() {

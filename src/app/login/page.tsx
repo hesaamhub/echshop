@@ -35,17 +35,19 @@ export default function LoginPage() {
     <main className="grid min-h-screen lg:grid-cols-2">
       <div className="flex items-center justify-center px-4 py-8 sm:px-6 sm:py-14">
         <div className="w-full max-w-sm">
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
-              <Logo className="h-5 w-5" />
-            </span>
-            <span className="flex flex-col items-start gap-1 leading-none">
-              <Wordmark className="h-5 w-auto" />
-              <span className="text-[10.5px] font-semibold leading-none text-slate-400">
-                {siteContent.brand.nameFa}
+          <div className="flex items-center justify-between gap-3">
+            <Link href="/" className="flex items-center gap-2.5">
+              <span className="glass-plate glass-plate-hover grid h-9 w-9 place-items-center rounded-[12px]">
+                <Logo className="h-5 w-5" />
               </span>
-            </span>
-          </Link>
+              <span className="flex flex-col items-start gap-1 leading-none">
+                <Wordmark className="h-5 w-auto" />
+                <span className="text-[10.5px] font-semibold leading-none text-slate-400">
+                  {siteContent.brand.nameFa}
+                </span>
+              </span>
+            </Link>
+          </div>
 
           {authReady && user ? (
             <div className="mt-8 rounded-3xl border border-[#1b39f5]/15 bg-white p-6 shadow-[0_20px_44px_-34px_rgba(27,57,245,0.5)]">
@@ -127,7 +129,7 @@ export default function LoginPage() {
 
           <p className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
             <ShieldCheck className="h-3.5 w-3.5 text-[#1b39f5]" />
-            احراز هویت امن مبتنی بر Firebase Auth
+            ورود امن و رمزنگاری‌شده با حساب گوگل
           </p>
         </div>
       </div>

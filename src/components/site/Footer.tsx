@@ -19,18 +19,18 @@ import Wordmark from "./Wordmark"
 
 /** نمادهای اعتماد و پرداخت */
 const trustBadges = [
-  { icon: ShieldCheck, title: "اینماد", note: "نماد اعتماد الکترونیکی", tint: "#1b39f5" },
-  { icon: CreditCard, title: "زرین‌پال", note: "درگاه پرداخت امن", tint: "#D5803B" },
-  { icon: BadgeCheck, title: "ساماندهی", note: "ثبت رسمی کسب‌وکار", tint: "#46A171" },
-  { icon: Lock, title: "SSL", note: "رمزگذاری تراکنش‌ها", tint: "#0A66C2" },
+  { icon: ShieldCheck, title:"اینماد", note:"نماد اعتماد الکترونیکی", tint:"#1b39f5" },
+  { icon: CreditCard, title:"زرین‌پال", note:"درگاه پرداخت امن", tint:"#D5803B" },
+  { icon: BadgeCheck, title:"ساماندهی", note:"ثبت رسمی کسب‌وکار", tint:"#46A171" },
+  { icon: Lock, title:"SSL", note:"رمزگذاری تراکنش‌ها", tint:"#0A66C2" },
 ]
 
 /** شبکه‌های اجتماعی — هرکدام با رنگ برند خودشان */
 const socials = [
-  { label: "تلگرام", href: "https://t.me/echshop", icon: Send, color: "#2AABEE" },
-  { label: "اینستاگرام", href: "https://instagram.com/echshop", icon: Instagram, color: "#E1306C" },
-  { label: "واتساپ", href: "https://wa.me/", icon: MessageCircle, color: "#25D366" },
-  { label: "یوتیوب", href: "https://youtube.com/", icon: Youtube, color: "#FF0033" },
+  { label:"تلگرام", href:"https://t.me/echshop", icon: Send, color:"#2AABEE" },
+  { label:"اینستاگرام", href:"https://instagram.com/echshop", icon: Instagram, color:"#E1306C" },
+  { label:"واتساپ", href:"https://wa.me/", icon: MessageCircle, color:"#25D366" },
+  { label:"یوتیوب", href:"https://youtube.com/", icon: Youtube, color:"#FF0033" },
 ]
 
 export default function Footer() {
@@ -156,7 +156,7 @@ export default function Footer() {
                   >
                     <span
                       className="grid h-7 w-7 shrink-0 place-items-center rounded-lg sm:h-8 sm:w-8 sm:rounded-xl"
-                      style={{ background: `${badge.tint}14`, color: badge.tint }}
+                      style={{ background:`${badge.tint}14`, color: badge.tint }}
                     >
                       <badge.icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </span>
@@ -180,8 +180,8 @@ export default function Footer() {
             dir="ltr"
             className="relative flex items-end justify-center gap-2.5 md:gap-5"
             style={{
-              maskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
-              WebkitMaskImage: "linear-gradient(to bottom, #000 52%, transparent 98%)",
+              maskImage:"linear-gradient(to bottom, #000 52%, transparent 98%)",
+              WebkitMaskImage:"linear-gradient(to bottom, #000 52%, transparent 98%)",
             }}
           >
             <Logo className="-mb-2 h-[clamp(44px,6.5vw,96px)] w-[clamp(44px,6.5vw,96px)] shrink-0 drop-shadow-[0_16px_24px_rgba(27,57,245,0.35)] md:-mb-3" />

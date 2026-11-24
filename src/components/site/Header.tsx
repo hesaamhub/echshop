@@ -40,10 +40,10 @@ import Wordmark from "./Wordmark"
 
 /** لینک‌های سادهٔ منو */
 const navItems = [
-  { label: "بلاگ", href: "/blog" },
-  { label: "سوالات متداول", href: "/faq" },
-  { label: "درباره ما", href: "/about" },
-  { label: "تماس با ما", href: "/contact" },
+  { label:"بلاگ", href:"/blog" },
+  { label:"سوالات متداول", href:"/faq" },
+  { label:"درباره ما", href:"/about" },
+  { label:"تماس با ما", href:"/contact" },
 ]
 
 /** آیکون دسته‌بندی‌ها */
@@ -63,7 +63,7 @@ const categoryIcons: Record<string, LucideIcon> = {
 const freshAccounts = newArrivals(4)
 const discountedProducts = topDiscounts(4)
 
-type MenuKey = "products" | "panel" | "cart" | "bell"
+type MenuKey ="products" |"panel" |"cart" |"bell"
 
 export default function Header() {
   const { user, publicProfile } = useFirebase()
@@ -72,7 +72,7 @@ export default function Header() {
   const [notificationsList, setNotificationsList] = useState<FirestoreNotification[]>([])
   const [open, setOpen] = useState(false)
   const [menu, setMenu] = useState<MenuKey | null>(null)
-  const [mobileSection, setMobileSection] = useState<"products" | "panel" | null>(null)
+  const [mobileSection, setMobileSection] = useState<"products" |"panel" | null>(null)
   const barRef = useRef<HTMLDivElement>(null)
 
   const isLoggedIn = Boolean(user)
@@ -129,7 +129,7 @@ export default function Header() {
   }, [menu])
 
   return (
-    <header className="sticky top-9 z-40 border-b border-white/60 bg-[#f9fafb]/75 backdrop-blur-xl md:top-10">
+    <header className="sticky top-9 z-40 border-b border-white/60 bg-[#f9fafb]/75 backdrop-blur-xl transition-colors md:top-10">
       <div ref={barRef} className="relative mx-auto max-w-[1280px] px-3 sm:px-4 md:px-6">
         <div className="flex h-14 items-center justify-between gap-2 md:gap-4">
           <Link
@@ -283,11 +283,11 @@ export default function Header() {
             <input
               name="q"
               placeholder="جستجوی محصول، برند یا دسته‌بندی…"
-              className="h-full w-full bg-transparent text-[12.5px] outline-none placeholder:text-slate-400"
+              className="h-full w-full bg-transparent text-[12.5px] text-[#0a1b33] outline-none placeholder:text-slate-400"
             />
           </form>
 
-          <div className="flex shrink-0 items-center gap-1.5">
+          <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
             {/* اطلاع‌رسانی‌ها — در موبایل تمام‌عرض زیر هدر و در دسکتاپ بازشونده */}
             {isLoggedIn ? (
               <div
@@ -447,7 +447,7 @@ export default function Header() {
       {/* منوی موبایل — با اسکرول مستقل تا در صفحات کوتاه هم بریده نشود */}
       <div
         className={cn(
-          "lg:hidden overflow-hidden border-t border-white/60 bg-white/85 backdrop-blur-xl transition-all",
+          "lg:hidden overflow-hidden border-t border-white/60 bg-white/95 backdrop-blur-xl transition-all",
           open ? "max-h-[calc(100dvh-5.5rem)] overflow-y-auto overscroll-contain" : "max-h-0",
         )}
       >
@@ -460,7 +460,7 @@ export default function Header() {
               type="search"
               aria-label="جستجوی محصول"
               placeholder="جستجوی محصول، برند یا دسته‌بندی…"
-              className="h-full w-full bg-transparent text-[12.5px] font-medium outline-none placeholder:text-slate-400"
+              className="h-full w-full bg-transparent text-[12.5px] font-medium text-[#0a1b33] outline-none placeholder:text-slate-400"
             />
           </form>
 
@@ -490,8 +490,8 @@ export default function Header() {
                     {num(categoryCount(category.slug))}
                   </span>
                 </Link>
-              )}
-            )}
+              )
+            })}
 
             <MenuListTitle
               icon={Flame}
@@ -643,7 +643,9 @@ function MenuTrigger({
       }}
       className={cn(
         "flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] font-semibold transition-all",
-        active ? "bg-[#1b39f5]/8 text-[#1b39f5]" : "text-slate-500 hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]",
+        active
+          ? "bg-[#1b39f5]/8 text-[#1b39f5]"
+          : "text-slate-500 hover:bg-[#1b39f5]/8 hover:text-[#1b39f5]",
       )}
     >
       {label}
@@ -656,12 +658,12 @@ function MenuTrigger({
 
 /** کارت شیشه‌ای منوی بازشونده — تمام‌عرض و خوانا روی موبایل، لنگر کنار آیکون روی دسکتاپ */
 function DropdownPanel({
-  align = "right",
+  align ="right",
   className,
   onClose,
   children,
 }: {
-  align?: "right" | "left"
+  align?:"right" |"left"
   className?: string
   onClose?: () => void
   children: React.ReactNode

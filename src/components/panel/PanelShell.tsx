@@ -172,11 +172,11 @@ export default function PanelShell({
               <h1 className="font-display text-[17px] sm:text-[19px] font-semibold text-[#0a1b33]">{title}</h1>
               <p className="mt-1 text-[11px] sm:text-[11.5px] text-slate-400">{role}</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {isAdmin && !isAdminRoute ? (
                 <Link
                   href="/admin"
-                  className="rounded-full bg-[#1b39f5]/8 px-3.5 py-2 text-[11.5px] font-bold text-[#1b39f5] hover:bg-[#1b39f5]/15"
+                  className="rounded-full bg-[#1b39f5]/8 px-3 py-2 text-[11.5px] font-bold text-[#1b39f5] hover:bg-[#1b39f5]/15 sm:px-3.5"
                 >
                   پنل مدیریت
                 </Link>
@@ -184,7 +184,7 @@ export default function PanelShell({
               {user && isAdminRoute ? (
                 <Link
                   href="/dashboard"
-                  className="rounded-full bg-[#1b39f5]/8 px-3.5 py-2 text-[11.5px] font-bold text-[#1b39f5] hover:bg-[#1b39f5]/15"
+                  className="rounded-full bg-[#1b39f5]/8 px-3 py-2 text-[11.5px] font-bold text-[#1b39f5] hover:bg-[#1b39f5]/15 sm:px-3.5"
                 >
                   پنل کاربری
                 </Link>

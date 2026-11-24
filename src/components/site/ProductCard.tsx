@@ -74,7 +74,7 @@ export default function ProductCard({ product }: Props) {
         <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:mt-3">
           <span
             className="rounded-md px-2 py-0.5 text-[9.5px] font-semibold text-white sm:rounded-lg sm:px-2.5 sm:py-1 sm:text-[10px]"
-            style={{ background: `${tone}26` }}
+            style={{ background:`${tone}26` }}
           >
             {deliveryLabels[cheapest.delivery]}
           </span>

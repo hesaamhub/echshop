@@ -141,7 +141,7 @@ export default function AdminContentPage() {
       <div className="rounded-3xl border border-[#1b39f5]/15 bg-[#f2f6ff] p-5">
         <p className="text-[12.5px] font-bold text-[#1b39f5]">مدیریت محتوای سایت (با ویرایشگر متنی WYSIWYG)</p>
         <p className="mt-1.5 text-[11.5px] leading-6 text-slate-600">
-          هویت فروشگاه، توضیحات هیرو، معرفی دربارهٔ ما در فوتر و صفحهٔ دربارهٔ ما با قالب‌بندی، تیتر، لینک و فهرست در سند `site_settings/main` روی Firestore ذخیره می‌شوند.
+          هویت فروشگاه، توضیحات هیرو، معرفی دربارهٔ ما در فوتر و صفحهٔ دربارهٔ ما با قالب‌بندی، تیتر، لینک و فهرست در سند`site_settings/main` روی Firestore ذخیره می‌شوند.
         </p>
       </div>
 
@@ -319,7 +319,7 @@ export default function AdminContentPage() {
                     onChange={(e) =>
                       setLogoEdits((prev) => ({ ...prev, [product.id]: e.target.value }))
                     }
-                    className="font-latin min-w-[220px] flex-[2] rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-left text-[11.5px] outline-none focus:border-[#1b39f5]"
+                    className="font-latin min-w-[220px] flex-[2] rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-left text-[11.5px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
                   />
                   <Button variant="ghost" onClick={() => void saveProductLogo(product)}>
                     ثبت لوگو

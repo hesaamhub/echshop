@@ -1,17 +1,19 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { AdminTableSkeleton } from "@/components/panel/AdminSkeletons"
 import { Badge, Button, Card, Field, Table, Td } from "@/components/panel/Ui"
 import { deleteProduct, fetchCategories, fetchProducts, upsertProduct } from "@/lib/firebase/repository"
 import { deliveryLabels, type Category, type DeliveryMethod, type Plan, type Product } from "@/lib/types"
+import { resolveLoadingPhase } from "@/lib/ui/loadingState"
 import { toman } from "@/lib/utils"
 
 function createEmptyPlan(): Plan {
   return {
-    id: `pl-${Date.now().toString().slice(-5)}`,
-    title: "",
+    id:`pl-${Date.now().toString().slice(-5)}`,
+    title:"",
     price: 0,
-    delivery: "stock",
+    delivery:"stock",
     stock: 25,
   }
 }
@@ -20,6 +22,7 @@ export default function AdminProductsPage() {
   const [products, setProducts] = useState<(Product & { isActive?: boolean })[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const [busy, setBusy] = useState(false)
   const [feedback, setFeedback] = useState("")
   const [error, setError] = useState("")
@@ -46,6 +49,7 @@ export default function AdminProductsPage() {
         setCategorySlug((prev) => prev || catRes.items[0].slug)
       }
     } finally {
+      setHasLoadedOnce(true)
       setLoading(false)
     }
   }, [])
@@ -153,14 +157,20 @@ export default function AdminProductsPage() {
     }
   }
 
+  const loadingPhase = resolveLoadingPhase({ isLoading: loading, hasData: hasLoadedOnce })
+  const initialLoading = loadingPhase === "initial-skeleton"
+  const isRefreshing = loadingPhase === "refresh-overlay"
+
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" data-loading-phase={loadingPhase}>
       <Card
         title="فهرست محصولات"
+        refreshing={isRefreshing}
+        refreshLabel="در حال بروزرسانی محصولات…"
         action={<Button onClick={startNew}>افزودن محصول جدید</Button>}
       >
-        {loading ? (
-          <p className="py-8 text-center text-[12px] text-slate-400">در حال بارگذاری محصولات…</p>
+        {initialLoading ? (
+          <AdminTableSkeleton columns={8} rows={6} />
         ) : (
           <Table head={["محصول", "دسته", "پلن‌ها", "کمترین قیمت", "ظرفیت", "فروش", "وضعیت", "عملیات"]}>
             {products.map((product) => {
@@ -212,7 +222,7 @@ export default function AdminProductsPage() {
               <select
                 value={categorySlug}
                 onChange={(e) => setCategorySlug(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {categories.map((category) => (
                   <option key={category.slug} value={category.slug}>
@@ -282,7 +292,7 @@ export default function AdminProductsPage() {
                         ),
                       )
                     }
-                    className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                    className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
                   >
                     {(Object.entries(deliveryLabels) as [DeliveryMethod, string][]).map(([key, label]) => (
                       <option key={key} value={key}>

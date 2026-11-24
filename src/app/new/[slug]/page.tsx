@@ -22,16 +22,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const item = getNewArrival(slug)
-  if (!item) return { title: "محصول یافت نشد" }
+  if (!item) return { title:"محصول یافت نشد" }
 
   return {
-    title: `${item.name} — تازه رسیده در اچ‌شاپ`,
-    description: `${item.pitch} شروع قیمت از ${latinPrice(item.priceFrom)} تومان؛ فعال‌سازی فوری و گارانتی کامل.`,
-    alternates: { canonical: `/new/${item.slug}` },
+    title:`${item.name} — تازه رسیده در اچ‌شاپ`,
+    description:`${item.pitch} شروع قیمت از ${latinPrice(item.priceFrom)} تومان؛ فعال‌سازی فوری و گارانتی کامل.`,
+    alternates: { canonical:`/new/${item.slug}` },
     openGraph: {
-      title: `${item.name} | اچ‌شاپ`,
+      title:`${item.name} | اچ‌شاپ`,
       description: item.pitch,
-      url: `/new/${item.slug}`,
+      url:`/new/${item.slug}`,
     },
   }
 }
@@ -52,12 +52,12 @@ export default async function NewArrivalPage({
   const faqLd =
     item.faq.length > 0
       ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
+          "@context":"https://schema.org",
+          "@type":"FAQPage",
           mainEntity: item.faq.map((entry) => ({
-            "@type": "Question",
+            "@type":"Question",
             name: entry.q,
-            acceptedAnswer: { "@type": "Answer", text: entry.a },
+            acceptedAnswer: {"@type":"Answer", text: entry.a },
           })),
         }
       : null
@@ -90,12 +90,12 @@ export default async function NewArrivalPage({
           <div className="relative mt-4 overflow-hidden rounded-[24px] sm:rounded-[32px] px-5 py-8 sm:px-6 sm:py-12 md:px-12 md:py-16">
             <span
               className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${ART_IMAGES[item.art]})` }}
+              style={{ backgroundImage:`url(${ART_IMAGES[item.art]})` }}
               aria-hidden
             />
             <span
               className="absolute inset-0"
-              style={{ background: `linear-gradient(100deg, ${item.to}f2 0%, ${item.from}b3 62%, rgba(0,0,0,0.1) 100%)` }}
+              style={{ background:`linear-gradient(100deg, ${item.to}f2 0%, ${item.from}b3 62%, rgba(0,0,0,0.1) 100%)` }}
               aria-hidden
             />
             <span
@@ -130,10 +130,10 @@ export default async function NewArrivalPage({
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <div className="rounded-lg border border-white/30 bg-white/10 px-4 sm:px-5 py-2.5 sm:py-3 text-[11.5px] sm:text-[12px] font-semibold backdrop-blur-sm">
-                  شروع از{" "}
+                  شروع از{""}
                   <span className="font-latin" dir="ltr">
                     {latinPrice(item.priceFrom)}
-                  </span>{" "}
+                  </span>{""}
                   تومان
                 </div>
               </div>
@@ -209,9 +209,9 @@ export default async function NewArrivalPage({
 
               <div className="grid gap-2">
                 {[
-                  { icon: Zap, text: "فعال‌سازی فوری پس از پرداخت" },
-                  { icon: BadgeCheck, text: "اورجینال و با گارانتی دورهٔ اشتراک" },
-                  { icon: Headphones, text: "پشتیبانی فارسی در تمام مدت" },
+                  { icon: Zap, text:"فعال‌سازی فوری پس از پرداخت" },
+                  { icon: BadgeCheck, text:"اورجینال و با گارانتی دورهٔ اشتراک" },
+                  { icon: Headphones, text:"پشتیبانی فارسی در تمام مدت" },
                 ].map((assurance) => (
                   <div
                     key={assurance.text}

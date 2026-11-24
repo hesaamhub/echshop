@@ -93,7 +93,7 @@ export default function AdminUsersPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="جستجوی نام یا شناسه…"
-              className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-[11.5px] outline-none focus:border-[#1b39f5]"
+              className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-[11.5px] text-[#0a1b33] placeholder:text-slate-400 outline-none focus:border-[#1b39f5]"
             />
           </div>
         }
@@ -132,7 +132,7 @@ export default function AdminUsersPage() {
               <select
                 value={selectedUid}
                 onChange={(e) => setSelectedUid(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {users.map((u) => (
                   <option key={u.uid} value={u.uid}>
@@ -156,7 +156,7 @@ export default function AdminUsersPage() {
               <select
                 value={planValue}
                 onChange={(e) => setPlanValue(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 <option value="عادی">عادی</option>
                 <option value="نقره‌ای">نقره‌ای</option>

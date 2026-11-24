@@ -1,42 +1,51 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import AdminFinancialCharts from "@/components/panel/AdminFinancialCharts"
+import { AdminListSkeleton, AdminTableSkeleton } from "@/components/panel/AdminSkeletons"
 import { Badge, Card, StatCard, Table, Td } from "@/components/panel/Ui"
 import {
   fetchAllOrders,
   fetchAllTickets,
   fetchAllUsersAsAdmin,
   fetchInventoryItems,
+  fetchProducts,
   type FirestoreInventoryItem,
   type FirestoreOrder,
   type FirestoreTicket,
 } from "@/lib/firebase/repository"
-import { deliveryLabels, orderStatusLabels, ticketStatusLabels, type DeliveryMethod } from "@/lib/types"
+import { deliveryLabels, orderStatusLabels, ticketStatusLabels, type DeliveryMethod, type Product } from "@/lib/types"
+import { resolveLoadingPhase } from "@/lib/ui/loadingState"
 import { faDate, toman } from "@/lib/utils"
 
 const deliveryOrder: DeliveryMethod[] = ["stock", "api", "upgrade", "gift_code", "manual", "scheduled"]
 
 export default function AdminReportsPage() {
   const [orders, setOrders] = useState<FirestoreOrder[]>([])
+  const [products, setProducts] = useState<Product[]>([])
   const [tickets, setTickets] = useState<FirestoreTicket[]>([])
   const [inventory, setInventory] = useState<FirestoreInventoryItem[]>([])
   const [userCount, setUserCount] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
 
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const [ordersData, ticketsData, invData, usersData] = await Promise.all([
+      const [ordersData, prodRes, ticketsData, invData, usersData] = await Promise.all([
         fetchAllOrders(),
+        fetchProducts(true),
         fetchAllTickets(),
         fetchInventoryItems(),
         fetchAllUsersAsAdmin(),
       ])
       setOrders(ordersData)
+      setProducts(prodRes.items)
       setTickets(ticketsData)
       setInventory(invData)
       setUserCount(usersData.length)
     } finally {
+      setHasLoadedOnce(true)
       setLoading(false)
     }
   }, [])
@@ -66,36 +75,74 @@ export default function AdminReportsPage() {
 
   const activityItems = [
     ...orders.slice(0, 6).map((order) => ({
-      id: `ord-${order.id}`,
+      id:`ord-${order.id}`,
       date: order.createdAt,
       badge: orderStatusLabels[order.status],
       tone: (order.status === "delivered" ? "green" : order.status === "failed" ? "red" : "blue") as
-        | "green"
-        | "red"
-        | "blue",
-      text: `سفارش ${order.orderNumber} (${order.productTitle}) — ${toman(order.amount)} تومان`,
+        |"green"
+        |"red"
+        |"blue",
+      text:`سفارش ${order.orderNumber} (${order.productTitle}) — ${toman(order.amount)} تومان`,
     })),
     ...tickets.slice(0, 4).map((ticket) => ({
-      id: `tk-${ticket.id}`,
+      id:`tk-${ticket.id}`,
       date: ticket.updatedAt,
       badge: ticketStatusLabels[ticket.status],
-      tone: (ticket.status === "answered" ? "green" : "amber") as "green" | "amber",
-      text: `تیکت ${ticket.id}: ${ticket.subject}`,
+      tone: (ticket.status === "answered" ? "green" : "amber") as"green" |"amber",
+      text:`تیکت ${ticket.id}: ${ticket.subject}`,
     })),
   ].slice(0, 8)
 
+  const loadingPhase = resolveLoadingPhase({ isLoading: loading, hasData: hasLoadedOnce })
+  const initialLoading = loadingPhase === "initial-skeleton"
+  const isRefreshing = loadingPhase === "refresh-overlay"
+
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" data-loading-phase={loadingPhase}>
       <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-4">
-        <StatCard label="مجموع درآمد تاییدشده" value={`${toman(totalRevenue)} تومان`} tone="up" />
-        <StatCard label="کل سفارش‌ها" value={`${toman(orders.length)} سفارش`} hint={`${toman(deliveredRate)}٪ تحویل‌شده`} tone="up" />
-        <StatCard label="کاربران ثبت‌شده" value={`${toman(userCount)} کاربر`} />
-        <StatCard label="موجودی انبار آماده" value={`${toman(availableStock)} مورد`} />
+        <StatCard
+          label="مجموع درآمد تاییدشده"
+          value={`${toman(totalRevenue)} تومان`}
+          tone="up"
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
+        <StatCard
+          label="کل سفارش‌ها"
+          value={`${toman(orders.length)} سفارش`}
+          hint={`${toman(deliveredRate)}٪ تحویل‌شده`}
+          tone="up"
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
+        <StatCard
+          label="کاربران ثبت‌شده"
+          value={`${toman(userCount)} کاربر`}
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
+        <StatCard
+          label="موجودی انبار آماده"
+          value={`${toman(availableStock)} مورد`}
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
       </div>
 
-      <Card title="عملکرد بر اساس روش تحویل">
-        {loading ? (
-          <p className="py-8 text-center text-[12px] text-slate-400">در حال محاسبهٔ گزارش‌ها…</p>
+      <AdminFinancialCharts
+        orders={orders}
+        products={products}
+        loading={initialLoading}
+        refreshing={isRefreshing}
+      />
+
+      <Card
+        title="عملکرد بر اساس روش تحویل"
+        refreshing={isRefreshing}
+        refreshLabel="در حال محاسبهٔ گزارش‌ها…"
+      >
+        {initialLoading ? (
+          <AdminTableSkeleton columns={4} rows={6} />
         ) : (
           <Table head={["روش تحویل", "تعداد سفارش", "درآمد", "سهم از فروش"]}>
             {byDelivery.map((row) => (
@@ -107,7 +154,7 @@ export default function AdminReportsPage() {
                   <div className="h-2 w-40 overflow-hidden rounded-full bg-slate-100">
                     <div
                       className="h-full rounded-full bg-[#1b39f5]"
-                      style={{ width: `${Math.round((row.revenue / maxDeliveryRevenue) * 100)}%` }}
+                      style={{ width:`${Math.round((row.revenue / maxDeliveryRevenue) * 100)}%` }}
                     />
                   </div>
                 </Td>
@@ -117,8 +164,14 @@ export default function AdminReportsPage() {
         )}
       </Card>
 
-      <Card title="رویدادهای اخیر سامانه">
-        {activityItems.length === 0 ? (
+      <Card
+        title="رویدادهای اخیر سامانه"
+        refreshing={isRefreshing}
+        refreshLabel="در حال بروزرسانی رویدادها…"
+      >
+        {initialLoading ? (
+          <AdminListSkeleton rows={5} />
+        ) : activityItems.length === 0 ? (
           <p className="py-8 text-center text-[12px] text-slate-400">هنوز رویدادی ثبت نشده است.</p>
         ) : (
           <div className="space-y-3">

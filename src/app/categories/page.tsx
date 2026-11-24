@@ -32,34 +32,34 @@ const categoryIcons: Record<string, LucideIcon> = {
 }
 
 export const metadata: Metadata = {
-  title: "دسته‌بندی محصولات — اشتراک‌ها و سرویس‌های دیجیتال",
+  title:"دسته‌بندی محصولات — اشتراک‌ها و سرویس‌های دیجیتال",
   description:
     "مرور همهٔ دسته‌بندی‌های فروشگاه اچ‌شاپ: هوش مصنوعی، موسیقی و ویدیو، طراحی و گرافیک، گیمینگ، نرم‌افزار، شبکه‌های اجتماعی، پرداخت ارزی، شماره مجازی و اپل آیدی.",
-  alternates: { canonical: "/categories" },
+  alternates: { canonical:"/categories" },
   openGraph: {
-    title: "دسته‌بندی‌های اچ‌شاپ",
+    title:"دسته‌بندی‌های اچ‌شاپ",
     description:
       "تمام دسته‌بندی‌های اکانت پرمیوم و لایسنس رسمی در اچ‌شاپ با تحویل فوری و گارانتی کامل.",
-    url: "/categories",
+    url:"/categories",
   },
 }
 
 export default function CategoriesPage() {
   const siteUrl = resolveSiteUrl()
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "دسته‌بندی محصولات اچ‌شاپ",
-    url: `${siteUrl}/categories`,
-    inLanguage: "fa-IR",
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    name:"دسته‌بندی محصولات اچ‌شاپ",
+    url:`${siteUrl}/categories`,
+    inLanguage:"fa-IR",
     mainEntity: {
-      "@type": "ItemList",
+      "@type":"ItemList",
       numberOfItems: categories.length,
       itemListElement: categories.map((category, index) => ({
-        "@type": "ListItem",
+        "@type":"ListItem",
         position: index + 1,
         name: category.title,
-        url: `${siteUrl}/category/${category.slug}`,
+        url:`${siteUrl}/category/${category.slug}`,
       })),
     },
   }
@@ -73,7 +73,7 @@ export default function CategoriesPage() {
       <Shell
         title="دسته‌بندی‌های محصولات"
         subtitle="اشتراک یا لایسنس مورد نظرتان را بر اساس دسته‌بندی پیدا و مقایسه کنید."
-        breadcrumb={[{ label: "صفحه اصلی", href: "/" }, { label: "دسته‌بندی‌ها" }]}
+        breadcrumb={[{ label:"صفحه اصلی", href:"/" }, { label:"دسته‌بندی‌ها" }]}
       >
         <div
           data-testid="categories-directory-grid"
@@ -113,7 +113,7 @@ export default function CategoriesPage() {
                       {previewBrands.map((product) => (
                         <span
                           key={product.id}
-                          className="grid h-7 w-7 place-items-center rounded-lg border border-slate-100 bg-[#f8faff]"
+                          className="grid h-7 w-7 place-items-center rounded-lg border border-slate-100 bg-[#f8faff] text-[#0a1b33]"
                         >
                           <BrandIcon slug={product.logo} size={15} />
                         </span>

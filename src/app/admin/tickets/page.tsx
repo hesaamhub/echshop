@@ -15,28 +15,28 @@ import { ticketStatusLabels } from "@/lib/types"
 import { faDate } from "@/lib/utils"
 
 const tone = {
-  open: "amber",
-  answered: "green",
-  pending_user: "blue",
-  closed: "gray",
+  open:"amber",
+  answered:"green",
+  pending_user:"blue",
+  closed:"gray",
 } as const
 
 const CANNED_REPLIES: { label: string; text: string }[] = [
   {
-    label: "راهنمای ورود به اکانت تحویل‌داده‌شده",
-    text: "اطلاعات اکانت شما در بخش جزئیات سفارش در داشبورد کاربری قرار گرفته است. لطفاً مطابق دستورالعمل وارد شوید و در صورت نیاز به کد تایید همین تیکت را پاسخ دهید.",
+    label:"راهنمای ورود به اکانت تحویل‌داده‌شده",
+    text:"اطلاعات اکانت شما در بخش جزئیات سفارش در داشبورد کاربری قرار گرفته است. لطفاً مطابق دستورالعمل وارد شوید و در صورت نیاز به کد تایید همین تیکت را پاسخ دهید.",
   },
   {
-    label: "مراحل تعویض اکانت دارای اشکال",
-    text: "سفارش شما تحت گارانتی فعال است. اکانت جایگزین در حال آماده‌سازی است و به‌زودی در جزئیات سفارش شما به‌روزرسانی می‌شود.",
+    label:"مراحل تعویض اکانت دارای اشکال",
+    text:"سفارش شما تحت گارانتی فعال است. اکانت جایگزین در حال آماده‌سازی است و به‌زودی در جزئیات سفارش شما به‌روزرسانی می‌شود.",
   },
   {
-    label: "شرایط گارانتی و مرجوعی",
-    text: "تمام اکانت‌های ارائه‌شده در اچ‌شاپ تا پایان دورهٔ اشتراک دارای گارانتی پشتیبانی هستند. تنها تغییر ندادن اطلاعات ایمیل و رمز اکانت اشتراکی شرط حفظ گارانتی است.",
+    label:"شرایط گارانتی و مرجوعی",
+    text:"تمام اکانت‌های ارائه‌شده در اچ‌شاپ تا پایان دورهٔ اشتراک دارای گارانتی پشتیبانی هستند. تنها تغییر ندادن اطلاعات ایمیل و رمز اکانت اشتراکی شرط حفظ گارانتی است.",
   },
   {
-    label: "راهنمای پرداخت ناموفق و بازگشت وجه",
-    text: "مبلغ سفارش‌های ناموفق به‌صورت خودکار ظرف ۲۴ تا ۷۲ ساعت کاری توسط شبکهٔ بانکی به حساب مبدا بازگردانده می‌شود.",
+    label:"راهنمای پرداخت ناموفق و بازگشت وجه",
+    text:"مبلغ سفارش‌های ناموفق به‌صورت خودکار ظرف ۲۴ تا ۷۲ ساعت کاری توسط شبکهٔ بانکی به حساب مبدا بازگردانده می‌شود.",
   },
 ]
 
@@ -98,9 +98,9 @@ export default function AdminTicketsPage() {
         ticketId: selected.id,
         ticketOwnerId: selected.userId,
         senderId: user.uid,
-        senderRole: "support",
+        senderRole:"support",
         body: replyBody,
-        nextStatus: "answered",
+        nextStatus:"answered",
       })
       setReplyBody("")
       setFeedback(`پاسخ برای تیکت ${selected.id} ثبت شد.`)
@@ -168,7 +168,7 @@ export default function AdminTicketsPage() {
                 <p className="font-bold text-[#0a1b33]">{selected.subject}</p>
                 <p className="mt-1 text-[11px] text-slate-500">
                   {selected.userName} · {selected.department}
-                  {selected.orderId ? ` · سفارش ${selected.orderId}` : ""}
+                  {selected.orderId ? `· سفارش ${selected.orderId}` : ""}
                 </p>
               </div>
 

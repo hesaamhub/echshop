@@ -1,17 +1,19 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { AdminTableSkeleton } from "@/components/panel/AdminSkeletons"
 import { Badge, Button, Card, Table, Td } from "@/components/panel/Ui"
 import { deliverOrderAsAdmin, fetchAllOrders, type FirestoreOrder } from "@/lib/firebase/repository"
 import { deliveryLabels, orderStatusLabels, type OrderStatus } from "@/lib/types"
+import { resolveLoadingPhase } from "@/lib/ui/loadingState"
 import { faDate, toman } from "@/lib/utils"
 
 const statusTone = {
-  pending: "amber",
-  paid: "blue",
-  delivered: "green",
-  failed: "red",
-  refunded: "gray",
+  pending:"amber",
+  paid:"blue",
+  delivered:"green",
+  failed:"red",
+  refunded:"gray",
 } as const
 
 export default function AdminOrdersPage() {
@@ -22,6 +24,7 @@ export default function AdminOrdersPage() {
   const [credentialsText, setCredentialsText] = useState("")
   const [deliveryNote, setDeliveryNote] = useState("")
   const [loading, setLoading] = useState(true)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const [busy, setBusy] = useState(false)
   const [feedback, setFeedback] = useState("")
 
@@ -34,6 +37,7 @@ export default function AdminOrdersPage() {
         setSelectedOrderId(list[0].id)
       }
     } finally {
+      setHasLoadedOnce(true)
       setLoading(false)
     }
   }, [selectedOrderId])
@@ -69,9 +73,12 @@ export default function AdminOrdersPage() {
   }
 
   const visible = filter === "all" ? orders : orders.filter((o) => o.status === filter)
+  const loadingPhase = resolveLoadingPhase({ isLoading: loading, hasData: hasLoadedOnce })
+  const initialLoading = loadingPhase === "initial-skeleton"
+  const isRefreshing = loadingPhase === "refresh-overlay"
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" data-loading-phase={loadingPhase}>
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
@@ -79,7 +86,7 @@ export default function AdminOrdersPage() {
           className={
             filter === "all"
               ? "rounded-full bg-[#0a152d] px-4 py-2 text-[11.5px] font-semibold text-white"
-              : "rounded-full border border-slate-200 bg-white px-4 py-2 text-[11.5px] font-semibold text-slate-500"
+              : "rounded-full border border-slate-200 bg-white px-4 py-2 text-[11.5px] font-semibold text-slate-500 hover:border-slate-300"
           }
         >
           همه ({orders.length})
@@ -92,7 +99,7 @@ export default function AdminOrdersPage() {
             className={
               filter === key
                 ? "rounded-full bg-[#0a152d] px-4 py-2 text-[11.5px] font-semibold text-white"
-                : "rounded-full border border-slate-200 bg-white px-4 py-2 text-[11.5px] font-semibold text-slate-500"
+                : "rounded-full border border-slate-200 bg-white px-4 py-2 text-[11.5px] font-semibold text-slate-500 hover:border-slate-300"
             }
           >
             {label}
@@ -100,9 +107,13 @@ export default function AdminOrdersPage() {
         ))}
       </div>
 
-      <Card title="مدیریت سفارش‌ها">
-        {loading ? (
-          <p className="py-8 text-center text-[12px] text-slate-400">در حال بارگذاری سفارش‌ها…</p>
+      <Card
+        title="مدیریت سفارش‌ها"
+        refreshing={isRefreshing}
+        refreshLabel="در حال بروزرسانی سفارش‌ها…"
+      >
+        {initialLoading ? (
+          <AdminTableSkeleton columns={9} rows={6} />
         ) : visible.length === 0 ? (
           <p className="py-8 text-center text-[12px] text-slate-400">سفارشی در این فیلتر ثبت نشده است.</p>
         ) : (
@@ -147,7 +158,7 @@ export default function AdminOrdersPage() {
                   if (found) selectOrder(found)
                   else setSelectedOrderId(e.target.value)
                 }}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {orders.map((order) => (
                   <option key={order.id} value={order.id}>
@@ -162,7 +173,7 @@ export default function AdminOrdersPage() {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as OrderStatus)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {(Object.entries(orderStatusLabels) as [OrderStatus, string][]).map(([key, label]) => (
                   <option key={key} value={key}>
@@ -181,7 +192,7 @@ export default function AdminOrdersPage() {
               value={credentialsText}
               onChange={(e) => setCredentialsText(e.target.value)}
               placeholder={"email: user@mail.com\npassword: ******"}
-              className="font-latin mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-[12px] outline-none focus:border-[#1b39f5]"
+              className="font-latin mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-[12px] text-[#0a1b33] placeholder:text-slate-400 outline-none focus:border-[#1b39f5]"
             />
           </label>
 
@@ -191,7 +202,7 @@ export default function AdminOrdersPage() {
               value={deliveryNote}
               onChange={(e) => setDeliveryNote(e.target.value)}
               placeholder="مانند: رمز اکانت را تغییر ندهید"
-              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] placeholder:text-slate-400 outline-none focus:border-[#1b39f5]"
             />
           </label>
 

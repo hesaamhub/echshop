@@ -27,9 +27,9 @@ type UIMessage = ChatTurn & {
 }
 
 const WELCOME_MESSAGE: UIMessage = {
-  id: "welcome",
-  role: "model",
-  text: "سلام! من دستیار هوشمند اچ‌شاپ هستم. دربارهٔ زمان تحویل، تفاوت پلن‌ها، خرید اکانت مناسب یا پیگیری گارانتی بپرسید تا راهنمایی‌تان کنم.",
+  id:"welcome",
+  role:"model",
+  text:"سلام! من دستیار هوشمند اچ‌شاپ هستم. دربارهٔ زمان تحویل، تفاوت پلن‌ها، خرید اکانت مناسب یا پیگیری گارانتی بپرسید تا راهنمایی‌تان کنم.",
 }
 
 /**
@@ -96,8 +96,8 @@ export default function SupportChatWidget() {
     setShowQuickDrawer(false)
 
     const userMsg: UIMessage = {
-      id: `u-${Date.now()}`,
-      role: "user",
+      id:`u-${Date.now()}`,
+      role:"user",
       text: trimmed,
     }
 
@@ -111,8 +111,8 @@ export default function SupportChatWidget() {
 
     try {
       const res = await fetch("/api/ai/support-chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:"POST",
+        headers: {"Content-Type":"application/json" },
         body: JSON.stringify({
           message: trimmed,
           history: historyForApi,
@@ -134,8 +134,8 @@ export default function SupportChatWidget() {
       setMessages((prev) => [
         ...prev,
         {
-          id: `m-${Date.now()}`,
-          role: "model",
+          id:`m-${Date.now()}`,
+          role:"model",
           text: data.reply as string,
         },
       ])
@@ -207,7 +207,7 @@ export default function SupportChatWidget() {
 
             {/* نوار انتخاب سرعت/دقت پاسخگویی */}
             <div className="flex items-center justify-between gap-2 border-b border-[#1b39f5]/10 bg-[#f6f8ff] px-3.5 py-2 text-[11px]">
-              <div className="flex items-center gap-1 rounded-xl bg-white p-0.5 shadow-xs border border-[#1b39f5]/10">
+              <div className="flex items-center gap-1 rounded-xl border border-[#1b39f5]/10 bg-white p-0.5 shadow-xs">
                 {(["smart", "fast"] as const).map((key) => {
                   const active = mode === key
                   return (
@@ -316,11 +316,11 @@ export default function SupportChatWidget() {
                     <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#1b39f5]" />
                     <span
                       className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#1b39f5]"
-                      style={{ animationDelay: "0.12s" }}
+                      style={{ animationDelay:"0.12s" }}
                     />
                     <span
                       className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#1b39f5]"
-                      style={{ animationDelay: "0.24s" }}
+                      style={{ animationDelay:"0.24s" }}
                     />
                     <span className="mr-1 font-medium">در حال نوشتن پاسخ…</span>
                   </div>

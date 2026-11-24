@@ -16,14 +16,14 @@ import { ticketStatusLabels } from "@/lib/types"
 import { faDate } from "@/lib/utils"
 
 const tone = {
-  open: "amber",
-  answered: "green",
-  pending_user: "blue",
-  closed: "gray",
+  open:"amber",
+  answered:"green",
+  pending_user:"blue",
+  closed:"gray",
 } as const
 
-type Department = "پشتیبانی فنی" | "مالی و پرداخت" | "پیش از خرید"
-type Priority = "کم" | "متوسط" | "زیاد"
+type Department ="پشتیبانی فنی" |"مالی و پرداخت" |"پیش از خرید"
+type Priority ="کم" |"متوسط" |"زیاد"
 
 function TicketsInner() {
   const searchParams = useSearchParams()
@@ -104,11 +104,11 @@ function TicketsInner() {
         ticketId: ticket.id,
         ticketOwnerId: ticket.userId,
         senderId: user.uid,
-        senderRole: "user",
+        senderRole:"user",
         body: text,
-        nextStatus: "open",
+        nextStatus:"open",
       })
-      setReplyByTicket((prev) => ({ ...prev, [ticket.id]: "" }))
+      setReplyByTicket((prev) => ({ ...prev, [ticket.id]:"" }))
       await loadTickets()
     } finally {
       setBusy(false)
@@ -171,7 +171,7 @@ function TicketsInner() {
                         setReplyByTicket((prev) => ({ ...prev, [ticket.id]: event.target.value }))
                       }
                       placeholder="پاسخ خود را بنویسید…"
-                      className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-[11.5px] outline-none focus:border-[#1b39f5]"
+                      className="flex-1 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 text-[11.5px] text-[#0a1b33] placeholder:text-slate-400 outline-none focus:border-[#1b39f5]"
                     />
                     <Button disabled={busy} onClick={() => void handleReply(ticket)}>
                       ارسال
@@ -198,7 +198,7 @@ function TicketsInner() {
             <select
               value={department}
               onChange={(event) => setDepartment(event.target.value as Department)}
-              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
             >
               <option value="پشتیبانی فنی">پشتیبانی فنی</option>
               <option value="مالی و پرداخت">مالی و پرداخت</option>
@@ -210,7 +210,7 @@ function TicketsInner() {
             <select
               value={priority}
               onChange={(event) => setPriority(event.target.value as Priority)}
-              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+              className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
             >
               <option value="کم">کم</option>
               <option value="متوسط">متوسط</option>

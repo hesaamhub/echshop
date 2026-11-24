@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { Copy, Check } from "lucide-react"
 import { Badge, Button, Card, Field } from "@/components/panel/Ui"
 import { siteContent } from "@/lib/data"
 import {
@@ -9,6 +10,16 @@ import {
   type FirestoreSiteSettings,
 } from "@/lib/firebase/repository"
 import { deliveryLabels } from "@/lib/types"
+
+type GatewaysInfo = {
+  gateways: {
+    tetrapay: { configured: boolean; webhookConfigured: boolean; sandbox: boolean }
+  }
+  callbacks: {
+    tetrapayPaymentCallback: string
+    tetrapayWebhook: string
+  }
+}
 
 const DEFAULT_SETTINGS: FirestoreSiteSettings = {
   brandNameFa: siteContent.brand.nameFa,
@@ -34,12 +45,20 @@ export default function AdminSettingsPage() {
   const [busy, setBusy] = useState(false)
   const [feedback, setFeedback] = useState("")
   const [error, setError] = useState("")
+  const [gatewaysInfo, setGatewaysInfo] = useState<GatewaysInfo | null>(null)
+  const [copiedKey, setCopiedKey] = useState("")
 
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const res = await fetchSiteSettings()
+      const [res, gwRes] = await Promise.all([
+        fetchSiteSettings(),
+        fetch("/api/payments/gateways", { cache:"no-store" })
+          .then((r) => (r.ok ? (r.json() as Promise<GatewaysInfo>) : null))
+          .catch(() => null),
+      ])
       setSettings(res.data)
+      if (gwRes) setGatewaysInfo(gwRes)
     } finally {
       setLoading(false)
     }
@@ -48,6 +67,14 @@ export default function AdminSettingsPage() {
   useEffect(() => {
     void load()
   }, [load])
+
+  function handleCopyUrl(key: string, value: string) {
+    if (!navigator.clipboard) return
+    void navigator.clipboard.writeText(value).then(() => {
+      setCopiedKey(key)
+      window.setTimeout(() => setCopiedKey(""), 1800)
+    })
+  }
 
   async function handleSaveGeneral(event: React.FormEvent) {
     event.preventDefault()
@@ -140,24 +167,51 @@ export default function AdminSettingsPage() {
           )}
         </Card>
 
-        <Card title="درگاه پرداخت و تسویه">
-          <div className="rounded-2xl border border-[#f2e2c6] bg-[#fdf8ef] p-4">
-            <div className="flex items-center gap-2">
-              <Badge tone="amber">اتصال بانکی سمت سرور</Badge>
+        <Card title="درگاه پرداخت (TetraPay)">
+          <div className="space-y-3 text-[12px] text-slate-600">
+            <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3">
+              <div>
+                <p className="font-bold text-[#0a1b33]">تتراپی — درگاه پرداخت (Tetra98 API v1)</p>
+                <p className="mt-0.5 text-[11px] text-slate-400">
+                  متغیرها: TETRAPAY_API_KEY و TETRAPAY_WEBHOOK_SECRET
+                  {gatewaysInfo?.gateways.tetrapay.sandbox ? "(حالت سندباکس)" : ""}
+                </p>
+              </div>
+              <Badge tone={gatewaysInfo?.gateways.tetrapay.configured ? "green" : "amber"}>
+                {gatewaysInfo?.gateways.tetrapay.configured ? "متصل" : "در انتظار کلید"}
+              </Badge>
             </div>
-            <p className="mt-2 text-[11.5px] leading-6 text-slate-600">
-              برای امنیت کلیدها، اتصال درگاه شتابی (زرین‌پال، آیدی‌پی یا زیبال) پس از دریافت Merchant ID در Route سمت سرور انجام می‌شود. در حال حاضر ثبت سفارش از طریق سیستم سفارش Firestore فعال است.
-            </p>
-          </div>
-          <div className="mt-4 space-y-3 text-[12px] text-slate-600">
-            <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3.5">
-              <span>ثبت سفارش در انتظار پرداخت (Firestore)</span>
-              <Badge tone="green">فعال</Badge>
-            </div>
-            <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 px-4 py-3.5">
-              <span>شارژ و مدیریت موجودی کیف پول از پنل مدیر</span>
-              <Badge tone="green">فعال</Badge>
-            </div>
+
+            {gatewaysInfo?.callbacks ? (
+              <div className="space-y-2 rounded-2xl border border-slate-200/70 bg-slate-50/75 p-3.5">
+                <p className="text-[11px] font-bold text-[#0a1b33]">
+                  آدرس‌های بازگشت (Callback & Webhook URLs)
+                </p>
+                {(
+                  [
+                    ["tp", "TetraPay Callback URL", gatewaysInfo.callbacks.tetrapayPaymentCallback],
+                    ["tpw", "TetraPay Webhook URL", gatewaysInfo.callbacks.tetrapayWebhook],
+                  ] as const
+                ).map(([key, label, url]) => (
+                  <div key={key} className="flex items-center justify-between gap-2 text-[11px]">
+                    <div className="min-w-0 flex-1">
+                      <span className="block text-[10px] text-slate-400">{label}</span>
+                      <code dir="ltr" className="font-latin block truncate text-left text-[10.5px] text-slate-600">
+                        {url}
+                      </code>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyUrl(key, url)}
+                      aria-label={`کپی ${label}`}
+                      className="grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-slate-200/80 bg-white text-slate-500 hover:text-[#1b39f5]"
+                    >
+                      {copiedKey === key ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </Card>
       </div>

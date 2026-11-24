@@ -5,18 +5,18 @@ import { num } from "@/lib/utils"
 
 /** تصویر عریض هدر صفحهٔ محصول، متناسب با کاربرد همان سرویس */
 export const ART_IMAGES: Record<NewArrivalArt, string> = {
-  film: "/art/banners/p-kling.jpg",
-  notebook: "/art/banners/p-notebooklm.jpg",
-  hex: "/art/banners/p-hexafield.jpg",
-  orbit: "/art/banners/p-kimi.jpg",
+  film:"/art/banners/p-kling.jpg",
+  notebook:"/art/banners/p-notebooklm.jpg",
+  hex:"/art/banners/p-hexafield.jpg",
+  orbit:"/art/banners/p-kimi.jpg",
 }
 
 /** دکمهٔ مختص کاربرد هر سرویس */
 const ACTIONS: Record<string, string> = {
-  "kling-ai": "ساخت ویدیو",
-  "notebooklm-plus": "تحلیل منابع",
-  hexafield: "طراحی سه‌بعدی",
-  "kimi-k3": "تحلیل اسناد",
+  "kling-ai":"ساخت ویدیو",
+  "notebooklm-plus":"تحلیل منابع",
+  hexafield:"طراحی سه‌بعدی",
+  "kimi-k3":"تحلیل اسناد",
 }
 
 /** مسیر شش‌ضلعی نوک‌بالا */

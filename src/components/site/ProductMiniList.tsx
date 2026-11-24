@@ -11,11 +11,11 @@ import BrandIcon from "@/components/site/BrandIcon"
  */
 export default function ProductMiniList({
   items,
-  meta = "price",
+  meta ="price",
   onNavigate,
 }: {
   items: Product[]
-  meta?: "price" | "new" | "discount"
+  meta?:"price" |"new" |"discount"
   onNavigate?: () => void
 }) {
   return (

@@ -24,7 +24,7 @@ import {
 } from "@/lib/orders/orderAnalytics"
 import { cn, toman } from "@/lib/utils"
 
-type ChartMode = "combined" | "spending" | "frequency"
+type ChartMode ="combined" |"spending" |"frequency"
 
 type TooltipPayloadItem = {
   dataKey?: string | number
@@ -88,6 +88,15 @@ export default function SpendingOrdersChart({
   const [mounted, setMounted] = useState(false)
   const gradientId = useId().replace(/:/g, "")
 
+  const gridStroke ="#e2e8f0"
+  const tickFill ="#64748b"
+  const primaryStroke ="#1b39f5"
+  const combinedBarFill ="#c7d3ff"
+  const soloBarFill ="#1b39f5"
+  const cursorBarFill ="rgba(27, 57, 245, 0.05)"
+  const cursorLineStroke ="#cbd5e1"
+  const dotStroke ="#ffffff"
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -98,9 +107,9 @@ export default function SpendingOrdersChart({
   )
 
   const modeTabs: { id: ChartMode; label: string }[] = [
-    { id: "combined", label: "نمای ترکیبی" },
-    { id: "spending", label: "روند هزینه" },
-    { id: "frequency", label: "تعداد سفارش" },
+    { id:"combined", label:"نمای ترکیبی" },
+    { id:"spending", label:"روند هزینه" },
+    { id:"frequency", label:"تعداد سفارش" },
   ]
 
   return (
@@ -223,16 +232,16 @@ export default function SpendingOrdersChart({
                   >
                     <defs>
                       <linearGradient id={`spendGrad-${gradientId}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#1b39f5" stopOpacity={0.22} />
-                        <stop offset="95%" stopColor="#1b39f5" stopOpacity={0.01} />
+                        <stop offset="5%" stopColor={primaryStroke} stopOpacity={0.22} />
+                        <stop offset="95%" stopColor={primaryStroke} stopOpacity={0.01} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridStroke} />
                     <XAxis
                       dataKey="monthLabel"
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                       dy={6}
                     />
                     <YAxis
@@ -241,7 +250,7 @@ export default function SpendingOrdersChart({
                       width={46}
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                       tickFormatter={(val: number) => formatCompactToman(val)}
                     />
                     <YAxis
@@ -251,10 +260,10 @@ export default function SpendingOrdersChart({
                       allowDecimals={false}
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                     />
                     <Tooltip
-                      cursor={{ fill: "rgba(27, 57, 245, 0.05)" }}
+                      cursor={{ fill: cursorBarFill }}
                       content={(props) => (
                         <CustomChartTooltip
                           active={props.active}
@@ -266,7 +275,7 @@ export default function SpendingOrdersChart({
                       yAxisId="orders"
                       dataKey="ordersCount"
                       name="تعداد سفارش"
-                      fill="#c7d3ff"
+                      fill={combinedBarFill}
                       radius={[8, 8, 0, 0]}
                       maxBarSize={28}
                     />
@@ -275,10 +284,10 @@ export default function SpendingOrdersChart({
                       type="monotone"
                       dataKey="spending"
                       name="هزینه تاییدشده"
-                      stroke="#1b39f5"
+                      stroke={primaryStroke}
                       strokeWidth={2.5}
                       fill={`url(#spendGrad-${gradientId})`}
-                      activeDot={{ r: 5, fill: "#1b39f5", stroke: "#ffffff", strokeWidth: 2 }}
+                      activeDot={{ r: 5, fill: primaryStroke, stroke: dotStroke, strokeWidth: 2 }}
                     />
                   </ComposedChart>
                 ) : mode === "spending" ? (
@@ -288,27 +297,27 @@ export default function SpendingOrdersChart({
                   >
                     <defs>
                       <linearGradient id={`spendOnlyGrad-${gradientId}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#1b39f5" stopOpacity={0.26} />
-                        <stop offset="95%" stopColor="#1b39f5" stopOpacity={0.02} />
+                        <stop offset="5%" stopColor={primaryStroke} stopOpacity={0.26} />
+                        <stop offset="95%" stopColor={primaryStroke} stopOpacity={0.02} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridStroke} />
                     <XAxis
                       dataKey="monthLabel"
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                       dy={6}
                     />
                     <YAxis
                       width={46}
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                       tickFormatter={(val: number) => formatCompactToman(val)}
                     />
                     <Tooltip
-                      cursor={{ stroke: "#cbd5e1", strokeDasharray: "3 3" }}
+                      cursor={{ stroke: cursorLineStroke, strokeDasharray:"3 3" }}
                       content={(props) => (
                         <CustomChartTooltip
                           active={props.active}
@@ -320,10 +329,10 @@ export default function SpendingOrdersChart({
                       type="monotone"
                       dataKey="spending"
                       name="هزینه تاییدشده"
-                      stroke="#1b39f5"
+                      stroke={primaryStroke}
                       strokeWidth={2.5}
                       fill={`url(#spendOnlyGrad-${gradientId})`}
-                      activeDot={{ r: 5, fill: "#1b39f5", stroke: "#ffffff", strokeWidth: 2 }}
+                      activeDot={{ r: 5, fill: primaryStroke, stroke: dotStroke, strokeWidth: 2 }}
                     />
                   </AreaChart>
                 ) : (
@@ -331,12 +340,12 @@ export default function SpendingOrdersChart({
                     data={analytics.months}
                     margin={{ top: 10, right: 12, left: 0, bottom: 4 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridStroke} />
                     <XAxis
                       dataKey="monthLabel"
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                       dy={6}
                     />
                     <YAxis
@@ -344,10 +353,10 @@ export default function SpendingOrdersChart({
                       allowDecimals={false}
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#64748b" }}
+                      tick={{ fontSize: 11, fill: tickFill }}
                     />
                     <Tooltip
-                      cursor={{ fill: "rgba(27, 57, 245, 0.05)" }}
+                      cursor={{ fill: cursorBarFill }}
                       content={(props) => (
                         <CustomChartTooltip
                           active={props.active}
@@ -358,7 +367,7 @@ export default function SpendingOrdersChart({
                     <Bar
                       dataKey="ordersCount"
                       name="تعداد سفارش"
-                      fill="#1b39f5"
+                      fill={soloBarFill}
                       radius={[8, 8, 0, 0]}
                       maxBarSize={36}
                     />

@@ -9,15 +9,15 @@ import { faDate } from "@/lib/utils"
 type EditablePost = Post & { isPublished: boolean }
 
 const EMPTY_POST: EditablePost = {
-  slug: "",
-  title: "",
-  excerpt: "",
-  body: "",
-  category: "راهنمای خرید",
-  author: "تحریریه اچ‌شاپ",
+  slug:"",
+  title:"",
+  excerpt:"",
+  body:"",
+  category:"راهنمای خرید",
+  author:"تحریریه اچ‌شاپ",
   readMinutes: 5,
   publishedAt: new Date().toISOString().slice(0, 10),
-  cover: "linear-gradient(135deg, #1b39f5 0%, #3b5bff 100%)",
+  cover:"linear-gradient(135deg, #1b39f5 0%, #3b5bff 100%)",
   isPublished: true,
 }
 

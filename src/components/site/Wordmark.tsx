@@ -7,10 +7,10 @@ import { motion, useReducedMotion } from "motion/react"
  * وردمارک تایپوگرافی متحرک اچ‌شاپ — حروف وکتوری دست‌ساز:
  * «ech» سرمه‌ای + «shop» با گرادیان پویا + چشمک جرقه‌های امضای ✦
  */
-export default function Wordmark({ className = "h-6 w-auto" }: { className?: string }) {
+export default function Wordmark({ className ="h-6 w-auto" }: { className?: string }) {
   const uid = useId().replace(/:/g, "")
-  const gradId = `wmGrad-${uid}`
-  const shimmerId = `wmShimmer-${uid}`
+  const gradId =`wmGrad-${uid}`
+  const shimmerId =`wmShimmer-${uid}`
   const prefersReduced = useReducedMotion()
   const active = !prefersReduced
 
@@ -21,7 +21,7 @@ export default function Wordmark({ className = "h-6 w-auto" }: { className?: str
       role="img"
       aria-label="echshop"
       whileHover={active ? { scale: 1.02 } : undefined}
-      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+      transition={{ type:"spring", stiffness: 320, damping: 24 }}
     >
       <defs>
         <linearGradient id={gradId} x1="0" y1="1" x2="1" y2="0">
@@ -50,7 +50,7 @@ export default function Wordmark({ className = "h-6 w-auto" }: { className?: str
         </linearGradient>
       </defs>
 
-      <g fill="#0a1b33">
+      <g className="fill-[#0a1b33]">
         <path d="M34.61328125 118.9765625Q22.69921875 118.9765625 16.302734375 111.9208984375Q9.90625 104.865234375 9.90625 91.33984375Q9.90625 78.25390625 16.400390625 71.22265625Q22.89453125 64.19140625 34.80859375 64.19140625Q46.185546875 64.19140625 52.19140625 71.7353515625Q58.197265625 79.279296875 58.197265625 93.830078125V94.220703125H24.310546875Q24.310546875 101.935546875 27.1669921875 105.8662109375Q30.0234375 109.796875 35.296875 109.796875Q42.572265625 109.796875 44.4765625 103.498046875L57.416015625 104.62109375Q51.80078125 118.9765625 34.61328125 118.9765625ZM34.61328125 72.833984375Q29.779296875 72.833984375 27.1669921875 76.203125Q24.5546875 79.572265625 24.408203125 85.626953125H44.916015625Q44.525390625 79.23046875 41.83984375 76.0322265625Q39.154296875 72.833984375 34.61328125 72.833984375Z" />
         <path d="M89.119140625 118.9765625Q77.107421875 118.9765625 70.564453125 111.8232421875Q64.021484375 104.669921875 64.021484375 91.876953125Q64.021484375 78.791015625 70.61328125 71.4912109375Q77.205078125 64.19140625 89.314453125 64.19140625Q98.640625 64.19140625 104.744140625 68.87890625Q110.84765625 73.56640625 112.41015625 81.818359375L98.591796875 82.501953125Q98.005859375 78.44921875 95.662109375 76.0322265625Q93.318359375 73.615234375 89.021484375 73.615234375Q78.42578125 73.615234375 78.42578125 91.33984375Q78.42578125 109.6015625 89.216796875 109.6015625Q93.123046875 109.6015625 95.759765625 107.1357421875Q98.396484375 104.669921875 99.03125 99.787109375L112.80078125 100.421875Q112.068359375 105.841796875 108.9189453125 110.08984375Q105.76953125 114.337890625 100.642578125 116.6572265625Q95.515625 118.9765625 89.119140625 118.9765625Z" />
         <path d="M134.73828125 75.71484375Q137.521484375 69.66015625 141.720703125 66.92578125Q145.919921875 64.19140625 151.73046875 64.19140625Q160.12890625 64.19140625 164.62109375 69.3671875Q169.11328125 74.54296875 169.11328125 84.50390625V118.0H155.44140625V88.41015625Q155.44140625 74.494140625 146.017578125 74.494140625Q141.037109375 74.494140625 137.9853515625 78.7666015625Q134.93359375 83.0390625 134.93359375 89.728515625V118.0H121.212890625V45.5390625H134.93359375V65.314453125Q134.93359375 70.63671875 134.54296875 75.71484375Z" />
@@ -65,19 +65,19 @@ export default function Wordmark({ className = "h-6 w-auto" }: { className?: str
         {/* جرقه‌های امضای ✦ با چشمک و چرخش نوبتی در جای خود */}
         <motion.path
           d="M 430.18 33.50 Q 432.39 44.29 443.18 46.50 Q 432.39 48.71 430.18 59.50 Q 427.97 48.71 417.18 46.50 Q 427.97 44.29 430.18 33.50 Z"
-          style={{ transformBox: "fill-box", transformOrigin: "center" }}
+          style={{ transformBox:"fill-box", transformOrigin:"center" }}
           animate={
             active
               ? { scale: [1, 1.24, 0.92, 1], rotate: [0, 12, 0], opacity: [0.85, 1, 0.72, 0.85] }
               : undefined
           }
           transition={
-            active ? { duration: 3.2, repeat: Infinity, ease: "easeInOut" } : undefined
+            active ? { duration: 3.2, repeat: Infinity, ease:"easeInOut" } : undefined
           }
         />
         <motion.path
           d="M 447.18 19.00 Q 448.12 23.57 452.68 24.50 Q 448.12 25.43 447.18 30.00 Q 446.25 25.43 441.68 24.50 Q 446.25 23.57 447.18 19.00 Z"
-          style={{ transformBox: "fill-box", transformOrigin: "center" }}
+          style={{ transformBox:"fill-box", transformOrigin:"center" }}
           animate={
             active
               ? { scale: [0.9, 1.32, 0.9], rotate: [0, -16, 0], opacity: [0.65, 1, 0.65] }
@@ -85,7 +85,7 @@ export default function Wordmark({ className = "h-6 w-auto" }: { className?: str
           }
           transition={
             active
-              ? { duration: 2.6, repeat: Infinity, ease: "easeInOut", delay: 0.7 }
+              ? { duration: 2.6, repeat: Infinity, ease:"easeInOut", delay: 0.7 }
               : undefined
           }
         />

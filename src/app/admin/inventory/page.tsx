@@ -13,9 +13,9 @@ import { deliveryLabels, type Product } from "@/lib/types"
 import { toman } from "@/lib/utils"
 
 const statusMeta = {
-  available: { label: "آماده تحویل", tone: "green" },
-  reserved: { label: "رزرو", tone: "amber" },
-  delivered: { label: "تحویل شده", tone: "gray" },
+  available: { label:"آماده تحویل", tone:"green" },
+  reserved: { label:"رزرو", tone:"amber" },
+  delivered: { label:"تحویل شده", tone:"gray" },
 } as const
 
 export default function AdminInventoryPage() {
@@ -148,7 +148,7 @@ export default function AdminInventoryPage() {
                   setSelectedProductId(e.target.value)
                   setSelectedPlanId(nextProd?.plans[0]?.id ?? "")
                 }}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {products.map((product) => (
                   <option key={product.id} value={product.id}>
@@ -163,7 +163,7 @@ export default function AdminInventoryPage() {
               <select
                 value={selectedPlan?.id ?? ""}
                 onChange={(e) => setSelectedPlanId(e.target.value)}
-                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]"
+                className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
               >
                 {(selectedProduct?.plans ?? []).map((plan) => (
                   <option key={plan.id} value={plan.id}>
@@ -182,7 +182,7 @@ export default function AdminInventoryPage() {
               value={bulkLines}
               onChange={(e) => setBulkLines(e.target.value)}
               placeholder={"user1@mail.com:Pass1234\nNITRO-AAAA-1111"}
-              className="font-latin mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-left text-[12px] outline-none focus:border-[#1b39f5]/45 focus:bg-white"
+              className="font-latin mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-left text-[12px] text-[#0a1b33] placeholder:text-slate-400 outline-none focus:border-[#1b39f5]/45 focus:bg-white"
             />
           </label>
 

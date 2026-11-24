@@ -38,22 +38,22 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const product = getProduct(slug)
-  if (!product) return { title: "محصول یافت نشد" }
+  if (!product) return { title:"محصول یافت نشد" }
 
   return {
-    title: `${product.title} — خرید با تحویل فوری`,
-    description: `${product.excerpt} شروع قیمت از ${toman(lowestPrice(product))} تومان؛ گارانتی کل مدت اشتراک و پشتیبانی شبانه‌روزی.`,
-    alternates: { canonical: `/products/${product.slug}` },
+    title:`${product.title} — خرید با تحویل فوری`,
+    description:`${product.excerpt} شروع قیمت از ${toman(lowestPrice(product))} تومان؛ گارانتی کل مدت اشتراک و پشتیبانی شبانه‌روزی.`,
+    alternates: { canonical:`/products/${product.slug}` },
     openGraph: {
-      title: `${product.title} | اچ‌شاپ`,
+      title:`${product.title} | اچ‌شاپ`,
       description: product.excerpt,
-      url: `/products/${product.slug}`,
-      type: "website",
-      images: [{ url: "/art/hero-1.jpg", width: 2560, height: 768, alt: product.title }],
+      url:`/products/${product.slug}`,
+      type:"website",
+      images: [{ url:"/art/hero-1.jpg", width: 2560, height: 768, alt: product.title }],
     },
     twitter: {
-      card: "summary_large_image",
-      title: `${product.title} | اچ‌شاپ`,
+      card:"summary_large_image",
+      title:`${product.title} | اچ‌شاپ`,
       description: product.excerpt,
       images: ["/art/hero-1.jpg"],
     },
@@ -61,9 +61,9 @@ export async function generateMetadata({
 }
 
 const BUYER_AVATARS = [
-  { initial: "م", gradient: "linear-gradient(135deg,#1b39f5,#7d92ff)" },
-  { initial: "س", gradient: "linear-gradient(135deg,#6d28d9,#a78bfa)" },
-  { initial: "ن", gradient: "linear-gradient(135deg,#0284c7,#38bdf8)" },
+  { initial:"م", gradient:"linear-gradient(135deg,#1b39f5,#7d92ff)" },
+  { initial:"س", gradient:"linear-gradient(135deg,#6d28d9,#a78bfa)" },
+  { initial:"ن", gradient:"linear-gradient(135deg,#0284c7,#38bdf8)" },
 ]
 
 const RATING_BREAKDOWN = [
@@ -107,9 +107,9 @@ export default async function ProductPage({
 
       <Shell
         breadcrumb={[
-          { label: "صفحه اصلی", href: "/" },
-          { label: "محصولات", href: "/products" },
-          ...(category ? [{ label: category.title, href: `/category/${category.slug}` }] : []),
+          { label:"صفحه اصلی", href:"/" },
+          { label:"محصولات", href:"/products" },
+          ...(category ? [{ label: category.title, href:`/category/${category.slug}` }] : []),
           { label: product.title },
         ]}
         includeBreadcrumbSchema={false}
@@ -259,7 +259,7 @@ export default async function ProductPage({
                     </defs>
                     <text
                       className="fill-white/75 font-latin"
-                      style={{ fontSize: "7px", letterSpacing: "2.4px" }}
+                      style={{ fontSize:"7px", letterSpacing:"2.4px" }}
                     >
                       <textPath href="#product-orbit">ECHSHOP • ORIGINAL • INSTANT •</textPath>
                     </text>
@@ -344,7 +344,7 @@ export default async function ProductPage({
                     <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-200/70">
                       <div
                         className="h-full rounded-full bg-[#1b39f5]"
-                        style={{ width: `${row.percent}%` }}
+                        style={{ width:`${row.percent}%` }}
                       />
                     </div>
                     <span className="num w-8 shrink-0 text-left text-[10.5px] text-slate-400">
@@ -407,10 +407,10 @@ export default async function ProductPage({
 
             <div className="mt-auto pt-4">
               <div className="rounded-2xl border border-[#1b39f5]/10 bg-[#f8faff] p-4 text-[12px] leading-6 text-slate-600">
-                نیاز به راهنمایی برای انتخاب پلن مناسب دارید؟ از{" "}
+                نیاز به راهنمایی برای انتخاب پلن مناسب دارید؟ از{""}
                 <Link href="/dashboard/tickets" className="font-bold text-[#1b39f5] hover:underline">
                   تیکت پشتیبانی
-                </Link>{" "}
+                </Link>{""}
                 یا باکس پشتیبانی آنلاین پیام دهید.
               </div>
             </div>

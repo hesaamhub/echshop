@@ -61,10 +61,10 @@ export default function RichTextEditor({
   label,
   value,
   onChange,
-  placeholder = "متن خود را اینجا بنویسید…",
+  placeholder ="متن خود را اینجا بنویسید…",
   hint,
   maxLength = 4000,
-  minHeightClass = "min-h-[160px]",
+  minHeightClass ="min-h-[160px]",
 }: {
   label: string
   value: string
@@ -79,7 +79,7 @@ export default function RichTextEditor({
   const savedRangeRef = useRef<Range | null>(null)
   const lastEmittedRef = useRef<string>("")
 
-  const [mode, setMode] = useState<"visual" | "source">("visual")
+  const [mode, setMode] = useState<"visual" |"source">("visual")
   const [focused, setFocused] = useState(false)
   const [linkOpen, setLinkOpen] = useState(false)
   const [linkUrl, setLinkUrl] = useState("https://")
@@ -326,14 +326,14 @@ export default function RichTextEditor({
               placeholder="https://echshop.ir/products"
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
-              className="font-latin min-w-[200px] flex-[2] rounded-xl border border-[#1b39f5]/20 bg-[#f6f8ff] px-3 py-1.5 text-left text-[11.5px] outline-none focus:border-[#1b39f5]"
+              className="font-latin min-w-[200px] flex-[2] rounded-xl border border-[#1b39f5]/20 bg-[#f6f8ff] px-3 py-1.5 text-left text-[11.5px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
             />
             <input
               type="text"
               placeholder="متن لینک (اختیاری)"
               value={linkLabel}
               onChange={(e) => setLinkLabel(e.target.value)}
-              className="min-w-[140px] flex-1 rounded-xl border border-[#1b39f5]/20 bg-[#f6f8ff] px-3 py-1.5 text-[11.5px] outline-none focus:border-[#1b39f5]"
+              className="min-w-[140px] flex-1 rounded-xl border border-[#1b39f5]/20 bg-[#f6f8ff] px-3 py-1.5 text-[11.5px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
             />
             <button
               type="submit"

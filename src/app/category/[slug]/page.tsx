@@ -3,8 +3,9 @@ import { notFound } from "next/navigation"
 import Shell from "@/components/site/Shell"
 import ProductCard from "@/components/site/ProductCard"
 import { categories, getCategory, productsByCategory } from "@/lib/data"
+import { resolveSiteUrl } from "@/lib/seo/structuredData"
 
-const SITE_URL = "https://echshop.ir"
+const SITE_URL = resolveSiteUrl()
 
 export function generateStaticParams() {
   return categories.map((category) => ({ slug: category.slug }))
@@ -17,16 +18,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const category = getCategory(slug)
-  if (!category) return { title: "دسته‌بندی یافت نشد" }
+  if (!category) return { title:"دسته‌بندی یافت نشد" }
 
   return {
-    title: `${category.title} — خرید اکانت و اشتراک`,
-    description: `${category.description} خرید با تحویل فوری، گارانتی کامل و پشتیبانی فارسی از اچ‌شاپ.`,
-    alternates: { canonical: `/category/${category.slug}` },
+    title:`${category.title} — خرید اکانت و اشتراک`,
+    description:`${category.description} خرید با تحویل فوری، گارانتی کامل و پشتیبانی فارسی از اچ‌شاپ.`,
+    alternates: { canonical:`/category/${category.slug}` },
     openGraph: {
-      title: `${category.title} | اچ‌شاپ`,
+      title:`${category.title} | اچ‌شاپ`,
       description: category.description,
-      url: `/category/${category.slug}`,
+      url:`/category/${category.slug}`,
     },
   }
 }
@@ -44,20 +45,20 @@ export default async function CategoryPage({
 
   // دادهٔ ساخت‌یافتهٔ صفحهٔ دسته — فهرست محصولات برای گوگل
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
     name: category.title,
     description: category.description,
-    url: `${SITE_URL}/category/${category.slug}`,
-    inLanguage: "fa-IR",
+    url:`${SITE_URL}/category/${category.slug}`,
+    inLanguage:"fa-IR",
     mainEntity: {
-      "@type": "ItemList",
+      "@type":"ItemList",
       numberOfItems: items.length,
       itemListElement: items.map((item, index) => ({
-        "@type": "ListItem",
+        "@type":"ListItem",
         position: index + 1,
         name: item.title,
-        url: `${SITE_URL}/products/${item.slug}`,
+        url:`${SITE_URL}/products/${item.slug}`,
       })),
     },
   }
@@ -73,8 +74,8 @@ export default async function CategoryPage({
         title={category.title}
         subtitle={category.description}
         breadcrumb={[
-          { label: "صفحه اصلی", href: "/" },
-          { label: "دسته‌بندی‌ها", href: "/categories" },
+          { label:"صفحه اصلی", href:"/" },
+          { label:"دسته‌بندی‌ها", href:"/categories" },
           { label: category.title },
         ]}
       >

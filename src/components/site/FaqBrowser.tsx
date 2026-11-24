@@ -6,18 +6,18 @@ import { cn } from "@/lib/utils"
 
 export type FaqEntry = {
   id: string
-  category: "delivery" | "warranty" | "payment" | "appleid"
+  category:"delivery" |"warranty" |"payment" |"appleid"
   categoryLabel: string
   q: string
   a: string
 }
 
-const FILTER_TABS: { key: "all" | FaqEntry["category"]; label: string }[] = [
-  { key: "all", label: "همهٔ سوالات" },
-  { key: "delivery", label: "تحویل و فعال‌سازی" },
-  { key: "warranty", label: "گارانتی و بازگشت وجه" },
-  { key: "payment", label: "پرداخت و کیف پول" },
-  { key: "appleid", label: "اپل آیدی و امنیت" },
+const FILTER_TABS: { key:"all" | FaqEntry["category"]; label: string }[] = [
+  { key:"all", label:"همهٔ سوالات" },
+  { key:"delivery", label:"تحویل و فعال‌سازی" },
+  { key:"warranty", label:"گارانتی و بازگشت وجه" },
+  { key:"payment", label:"پرداخت و کیف پول" },
+  { key:"appleid", label:"اپل آیدی و امنیت" },
 ]
 
 export default function FaqBrowser({ items }: { items: FaqEntry[] }) {

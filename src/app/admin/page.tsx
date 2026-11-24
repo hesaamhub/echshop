@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from "react"
 import Link from "next/link"
 import { Database, RefreshCw } from "lucide-react"
+import AdminFinancialCharts from "@/components/panel/AdminFinancialCharts"
+import { AdminListSkeleton, AdminTableSkeleton } from "@/components/panel/AdminSkeletons"
 import { Badge, Button, Card, StatCard, Table, Td } from "@/components/panel/Ui"
 import {
   fetchAllOrders,
@@ -19,14 +21,15 @@ import {
 } from "@/lib/firebase/repository"
 import { seedInitialDatabase } from "@/lib/firebase/seed"
 import { deliveryLabels, orderStatusLabels, type Product } from "@/lib/types"
+import { resolveLoadingPhase } from "@/lib/ui/loadingState"
 import { faDate, toman } from "@/lib/utils"
 
 const statusTone = {
-  pending: "amber",
-  paid: "blue",
-  delivered: "green",
-  failed: "red",
-  refunded: "gray",
+  pending:"amber",
+  paid:"blue",
+  delivered:"green",
+  failed:"red",
+  refunded:"gray",
 } as const
 
 export default function AdminDashboard() {
@@ -38,6 +41,7 @@ export default function AdminDashboard() {
   const [requests, setRequests] = useState<FirestoreProductRequest[]>([])
   const [contacts, setContacts] = useState<FirestoreContactMessage[]>([])
   const [loading, setLoading] = useState(true)
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false)
   const [seeding, setSeeding] = useState(false)
   const [seedMessage, setSeedMessage] = useState("")
 
@@ -60,6 +64,7 @@ export default function AdminDashboard() {
       setRequests(reqData)
       setContacts(contactData)
     } finally {
+      setHasLoadedOnce(true)
       setLoading(false)
     }
   }, [])
@@ -89,16 +94,21 @@ export default function AdminDashboard() {
     .filter((o) => o.status === "delivered" || o.status === "paid")
     .reduce((sum, o) => sum + o.amount, 0)
   const top = [...products].sort((a, b) => b.sold - a.sold).slice(0, 5)
+  const loadingPhase = resolveLoadingPhase({ isLoading: loading, hasData: hasLoadedOnce })
+  const initialLoading = loadingPhase === "initial-skeleton"
+  const isRefreshing = loadingPhase === "refresh-overlay"
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" data-loading-phase={loadingPhase}>
       <Card
         title="وضعیت دیتابیس Firestore"
+        refreshing={isRefreshing}
+        refreshLabel="در حال همگام‌سازی وضعیت…"
         action={
           <div className="flex flex-wrap gap-2">
             <Button variant="ghost" disabled={loading} onClick={() => void loadData()}>
               <span className="inline-flex items-center gap-1.5">
-                <RefreshCw className="h-3.5 w-3.5" />
+                <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
                 بروزرسانی
               </span>
             </Button>
@@ -111,44 +121,78 @@ export default function AdminDashboard() {
           </div>
         }
       >
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-[12px]">
-          <div className="flex items-center gap-2.5">
-            <Badge tone={fromFirestore ? "green" : "amber"}>
-              {fromFirestore ? "کاتالوگ متصل به Firestore" : "کاتالوگ هنوز در Firestore ثبت نشده"}
-            </Badge>
-            <span className="text-slate-500">
-              {fromFirestore
-                ? `${toman(products.length)} محصول در دیتابیس فعال است.`
-                : "برای ثبت سفارش واقعی مشتریان، ابتدا دکمهٔ مقداردهی اولیه دیتابیس را بزنید."}
-            </span>
+        {initialLoading ? (
+          <div role="status" aria-label="در حال بررسی وضعیت دیتابیس" className="skeleton-shimmer h-12 w-full rounded-2xl" />
+        ) : (
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-slate-50 px-4 py-3 text-[12px]">
+            <div className="flex items-center gap-2.5">
+              <Badge tone={fromFirestore ? "green" : "amber"}>
+                {fromFirestore ? "کاتالوگ متصل به Firestore" : "کاتالوگ هنوز در Firestore ثبت نشده"}
+              </Badge>
+              <span className="text-slate-500">
+                {fromFirestore
+                  ? `${toman(products.length)} محصول در دیتابیس فعال است.`
+                  : "برای ثبت سفارش واقعی مشتریان، ابتدا دکمهٔ مقداردهی اولیه دیتابیس را بزنید."}
+              </span>
+            </div>
           </div>
-        </div>
+        )}
         {seedMessage ? (
           <p className="mt-3 text-[12px] font-semibold text-[#2F7A50]">{seedMessage}</p>
         ) : null}
       </Card>
 
       <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-4">
-        <StatCard label="مجموع فروش ثبت‌شده" value={`${toman(totalRevenue)} تومان`} tone="up" />
+        <StatCard
+          label="مجموع فروش ثبت‌شده"
+          value={`${toman(totalRevenue)} تومان`}
+          tone="up"
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
         <StatCard
           label="سفارش در انتظار تحویل"
           value={`${toman(pendingOrders.length)} سفارش`}
           tone={pendingOrders.length > 0 ? "down" : "neutral"}
+          loading={initialLoading}
+          refreshing={isRefreshing}
         />
-        <StatCard label="کاربران ثبت‌شده" value={`${toman(userCount)} کاربر`} tone="up" />
-        <StatCard label="موجودی انبار دیجیتال" value={`${toman(availableStock)} مورد`} />
+        <StatCard
+          label="کاربران ثبت‌شده"
+          value={`${toman(userCount)} کاربر`}
+          tone="up"
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
+        <StatCard
+          label="موجودی انبار دیجیتال"
+          value={`${toman(availableStock)} مورد`}
+          loading={initialLoading}
+          refreshing={isRefreshing}
+        />
       </div>
+
+      <AdminFinancialCharts
+        orders={orders}
+        products={products}
+        loading={initialLoading}
+        refreshing={isRefreshing}
+      />
 
       <div className="grid gap-5 xl:grid-cols-[1.5fr_1fr]">
         <Card
           title="آخرین سفارش‌ها"
+          refreshing={isRefreshing}
+          refreshLabel="در حال بروزرسانی سفارش‌ها…"
           action={
             <Link href="/admin/orders" className="text-[11.5px] font-semibold text-[#1b39f5]">
               مدیریت همه
             </Link>
           }
         >
-          {orders.length === 0 ? (
+          {initialLoading ? (
+            <AdminTableSkeleton columns={7} rows={5} />
+          ) : orders.length === 0 ? (
             <p className="py-8 text-center text-[12px] text-slate-400">هنوز سفارشی در Firestore ثبت نشده است.</p>
           ) : (
             <Table head={["شماره", "خریدار", "محصول", "تحویل", "مبلغ", "وضعیت", "تاریخ"]}>
@@ -169,26 +213,32 @@ export default function AdminDashboard() {
           )}
         </Card>
 
-        <Card title="پرفروش‌ترین محصولات">
-          <div className="space-y-3">
-            {top.map((product, index) => (
-              <div key={product.id} className="flex items-center gap-3">
-                <span className="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
-                  {index + 1}
-                </span>
-                <span className="flex-1 truncate text-[12px] font-semibold text-[#0a1b33]">
-                  {product.title}
-                </span>
-                <span className="num text-[11.5px] text-slate-400">{toman(product.sold)}</span>
-              </div>
-            ))}
-          </div>
+        <Card title="پرفروش‌ترین محصولات" refreshing={isRefreshing} refreshLabel="در حال بروزرسانی…">
+          {initialLoading ? (
+            <AdminListSkeleton rows={5} />
+          ) : (
+            <div className="space-y-3">
+              {top.map((product, index) => (
+                <div key={product.id} className="flex items-center gap-3">
+                  <span className="num grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
+                    {index + 1}
+                  </span>
+                  <span className="flex-1 truncate text-[12px] font-semibold text-[#0a1b33]">
+                    {product.title}
+                  </span>
+                  <span className="num text-[11.5px] text-slate-400">{toman(product.sold)}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </Card>
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="درخواست‌های محصول مشتریان">
-          {requests.length === 0 ? (
+        <Card title="درخواست‌های محصول مشتریان" refreshing={isRefreshing} refreshLabel="در حال بروزرسانی…">
+          {initialLoading ? (
+            <AdminListSkeleton rows={4} />
+          ) : requests.length === 0 ? (
             <p className="py-6 text-center text-[12px] text-slate-400">درخواست جدیدی ثبت نشده است.</p>
           ) : (
             <div className="space-y-3">
@@ -223,8 +273,10 @@ export default function AdminDashboard() {
           )}
         </Card>
 
-        <Card title="پیام‌های تماس با ما">
-          {contacts.length === 0 ? (
+        <Card title="پیام‌های تماس با ما" refreshing={isRefreshing} refreshLabel="در حال بروزرسانی…">
+          {initialLoading ? (
+            <AdminListSkeleton rows={4} />
+          ) : contacts.length === 0 ? (
             <p className="py-6 text-center text-[12px] text-slate-400">پیامی ثبت نشده است.</p>
           ) : (
             <div className="space-y-3">

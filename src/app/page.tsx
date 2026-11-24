@@ -154,8 +154,8 @@ export default function HomePage() {
               <span
                 className="absolute inset-0 opacity-[0.13]"
                 style={{
-                  backgroundImage: "radial-gradient(rgba(255,255,255,0.85) 1px, transparent 1px)",
-                  backgroundSize: "16px 16px",
+                  backgroundImage:"radial-gradient(rgba(255,255,255,0.85) 1px, transparent 1px)",
+                  backgroundSize:"16px 16px",
                 }}
                 aria-hidden
               />
@@ -294,16 +294,16 @@ function CategoryFolder({ category }: { category: (typeof categories)[number] })
 
   const tileStyle = [
     {
-      position: "right-0 top-10 -rotate-[16deg] group-hover:-rotate-[21deg] group-hover:-translate-y-2",
-      size: "h-[86px] w-[64px] rounded-[18px]",
+      position:"right-0 top-10 -rotate-[16deg] group-hover:-rotate-[21deg] group-hover:-translate-y-2",
+      size:"h-[86px] w-[64px] rounded-[18px]",
     },
     {
-      position: "left-1/2 top-1 -translate-x-1/2 group-hover:-translate-y-2.5",
-      size: "h-[100px] w-[74px] rounded-[20px]",
+      position:"left-1/2 top-1 -translate-x-1/2 group-hover:-translate-y-2.5",
+      size:"h-[100px] w-[74px] rounded-[20px]",
     },
     {
-      position: "left-0 top-10 rotate-[16deg] group-hover:rotate-[21deg] group-hover:-translate-y-2",
-      size: "h-[86px] w-[64px] rounded-[18px]",
+      position:"left-0 top-10 rotate-[16deg] group-hover:rotate-[21deg] group-hover:-translate-y-2",
+      size:"h-[86px] w-[64px] rounded-[18px]",
     },
   ]
 
@@ -332,7 +332,7 @@ function CategoryFolder({ category }: { category: (typeof categories)[number] })
           return (
             <span
               key={product.id}
-              style={{ boxShadow: `0 16px 30px -14px #${color}9e` }}
+              style={{ boxShadow:`0 16px 30px -14px #${color}9e` }}
               className={`absolute grid place-items-center overflow-hidden border-[3px] border-white bg-gradient-to-br ring-1 ring-black/5 transition-transform duration-500 ease-out ${product.gradient} ${style.size} ${style.position}`}
             >
               {/* برق شیشه‌ای روی کاشی */}

@@ -79,7 +79,7 @@ test("sanitizeGeminiApiKey trims quotes/whitespace and rejects placeholders", ()
 })
 
 test("classifyGeminiError classifies API_KEY_INVALID and rate limits cleanly", () => {
-  const invalid = classifyGeminiError('{"error":{"code":400,"status":"INVALID_ARGUMENT","details":[{"reason":"API_KEY_INVALID"}]}}')
+  const invalid = classifyGeminiError('{"error":{"code":400, "status":"INVALID_ARGUMENT", "details":[{"reason":"API_KEY_INVALID"}]}}')
   assert.equal(invalid.code, "GEMINI_AUTH_ERROR")
   assert.equal(invalid.status, 503)
   assert.match(invalid.message, /Settings > Secrets/)

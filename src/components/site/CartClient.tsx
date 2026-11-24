@@ -155,7 +155,7 @@ export default function CartClient() {
               onChange={(event) => setCodeInput(event.target.value)}
               placeholder="کد تخفیف (مثلاً ECH20)"
               dir="ltr"
-              className="font-latin min-w-0 flex-1 rounded-full border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-3.5 py-2.5 text-right text-[12px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)] sm:px-4"
+              className="font-latin min-w-0 flex-1 rounded-full border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-3.5 py-2.5 text-right text-[12px] text-[#0a1b33] outline-none transition-all placeholder:text-slate-400 focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)] sm:px-4"
             />
             <button
               type="button"

@@ -45,8 +45,8 @@ const VARIANTS: Variant[] = [
   // ۱) دایره‌های هم‌مرکز
   {
     background: (color) => `radial-gradient(120% 90% at 50% 8%, #${color}30 0%, #ffffff 62%)`,
-    holder: "h-[88px] w-[88px] rounded-full",
-    holderInner: "",
+    holder:"h-[88px] w-[88px] rounded-full",
+    holderInner:"",
     art: (color) => (
       <svg
         className="absolute inset-0 h-full w-full"
@@ -73,8 +73,8 @@ const VARIANTS: Variant[] = [
   // ۲) موج‌های نرم
   {
     background: (color) => `linear-gradient(180deg, #ffffff 0%, #${color}26 100%)`,
-    holder: "h-[92px] w-[92px] rounded-[30px]",
-    holderInner: "",
+    holder:"h-[92px] w-[92px] rounded-[30px]",
+    holderInner:"",
     art: (color) => (
       <svg
         className="absolute inset-x-0 bottom-0 h-[62%] w-full"
@@ -104,24 +104,24 @@ const VARIANTS: Variant[] = [
   // ۳) شبکهٔ نقطه‌ای + مربع چرخیده
   {
     background: (color) => `linear-gradient(145deg, #${color}24 0%, #ffffff 58%)`,
-    holder: "h-[88px] w-[88px] rotate-12 rounded-[24px]",
-    holderInner: "-rotate-12",
+    holder:"h-[88px] w-[88px] rotate-12 rounded-[24px]",
+    holderInner:"-rotate-12",
     art: (color) => (
       <>
         <span
           className="absolute inset-0"
           style={{
-            backgroundImage: `radial-gradient(#${color}59 1.2px, transparent 1.2px)`,
-            backgroundSize: "18px 18px",
+            backgroundImage:`radial-gradient(#${color}59 1.2px, transparent 1.2px)`,
+            backgroundSize:"18px 18px",
             opacity: 0.35,
-            maskImage: "radial-gradient(80% 60% at 50% 45%, #000 25%, transparent 75%)",
-            WebkitMaskImage: "radial-gradient(80% 60% at 50% 45%, #000 25%, transparent 75%)",
+            maskImage:"radial-gradient(80% 60% at 50% 45%, #000 25%, transparent 75%)",
+            WebkitMaskImage:"radial-gradient(80% 60% at 50% 45%, #000 25%, transparent 75%)",
           }}
           aria-hidden
         />
         <span
           className="absolute -bottom-16 -left-14 h-56 w-56 rotate-[18deg] rounded-[52px]"
-          style={{ background: `#${color}`, opacity: 0.12 }}
+          style={{ background:`#${color}`, opacity: 0.12 }}
           aria-hidden
         />
       </>
@@ -130,23 +130,23 @@ const VARIANTS: Variant[] = [
   // ۴) خطوط مورب
   {
     background: (color) => `linear-gradient(200deg, #ffffff 0%, #${color}2b 100%)`,
-    holder: "h-[98px] w-[82px] rounded-[999px]",
-    holderInner: "",
+    holder:"h-[98px] w-[82px] rounded-[999px]",
+    holderInner:"",
     art: (color) => (
       <>
         <span
           className="absolute inset-0"
           style={{
-            backgroundImage: `repeating-linear-gradient(135deg, #${color}40 0px, #${color}40 1.5px, transparent 1.5px, transparent 13px)`,
+            backgroundImage:`repeating-linear-gradient(135deg, #${color}40 0px, #${color}40 1.5px, transparent 1.5px, transparent 13px)`,
             opacity: 0.5,
-            maskImage: "linear-gradient(180deg, #000 0%, transparent 78%)",
-            WebkitMaskImage: "linear-gradient(180deg, #000 0%, transparent 78%)",
+            maskImage:"linear-gradient(180deg, #000 0%, transparent 78%)",
+            WebkitMaskImage:"linear-gradient(180deg, #000 0%, transparent 78%)",
           }}
           aria-hidden
         />
         <span
           className="absolute -top-14 -left-10 h-48 w-48 rounded-full blur-2xl"
-          style={{ background: `#${color}`, opacity: 0.22 }}
+          style={{ background:`#${color}`, opacity: 0.22 }}
           aria-hidden
         />
       </>
@@ -155,13 +155,13 @@ const VARIANTS: Variant[] = [
   // ۵) هالهٔ چندرنگ (مشبک)
   {
     background: () => `linear-gradient(180deg, #f8fafc 0%, #ffffff 70%)`,
-    holder: "h-[94px] w-[94px] rounded-[38px_14px_38px_14px]",
-    holderInner: "",
+    holder:"h-[94px] w-[94px] rounded-[38px_14px_38px_14px]",
+    holderInner:"",
     art: (color) => (
       <>
         <span
           className="absolute -top-10 right-2 h-52 w-52 rounded-full blur-3xl"
-          style={{ background: `#${color}`, opacity: 0.35 }}
+          style={{ background:`#${color}`, opacity: 0.35 }}
           aria-hidden
         />
         <span
@@ -170,7 +170,7 @@ const VARIANTS: Variant[] = [
         />
         <span
           className="absolute bottom-8 right-10 h-44 w-44 rounded-full blur-3xl"
-          style={{ background: `#${color}`, opacity: 0.2 }}
+          style={{ background:`#${color}`, opacity: 0.2 }}
           aria-hidden
         />
       </>
@@ -179,8 +179,8 @@ const VARIANTS: Variant[] = [
   // ۶) کمان‌های باز
   {
     background: (color) => `radial-gradient(110% 80% at 20% 100%, #${color}2e 0%, #ffffff 60%)`,
-    holder: "h-[88px] w-[88px] rotate-45 rounded-[20px]",
-    holderInner: "-rotate-45",
+    holder:"h-[88px] w-[88px] rotate-45 rounded-[20px]",
+    holderInner:"-rotate-45",
     art: (color) => (
       <svg
         className="absolute inset-0 h-full w-full"
@@ -236,7 +236,7 @@ function DeckCard({ product, position }: { product: Product; position: number })
           {product.badge ? (
             <span
               className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-bold text-white"
-              style={{ background: `#${color}` }}
+              style={{ background:`#${color}` }}
             >
               <Flame className="h-3 w-3" />
               {product.badge}
@@ -255,7 +255,7 @@ function DeckCard({ product, position }: { product: Product; position: number })
         <div className="relative flex flex-1 items-center justify-center py-2">
           <motion.span
             animate={prefersReduced ? undefined : { y: [0, -10, 0] }}
-            transition={prefersReduced ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            transition={prefersReduced ? undefined : { duration: 5.5, repeat: Infinity, ease:"easeInOut" }}
             className={`grid place-items-center bg-gradient-to-br shadow-[0_24px_50px_-22px_rgba(10,27,51,0.55)] ${product.gradient} ${variant.holder}`}
           >
             <span className={`grid place-items-center ${variant.holderInner}`}>
@@ -290,7 +290,9 @@ function DeckCard({ product, position }: { product: Product; position: number })
 
           <span
             className={`shrink-0 rounded-full px-2.5 py-1 text-[10.5px] font-bold ${
-              low ? "bg-[#E56458]/12 text-[#E56458]" : "bg-[#137a4b]/12 text-[#137a4b]"
+              low
+                ? "bg-[#E56458]/12 text-[#E56458]"
+                : "bg-[#137a4b]/12 text-[#137a4b]"
             }`}
           >
             {stockLabel(plan.stock)}
@@ -398,14 +400,14 @@ export default function ShowcaseDeck() {
             else if (info.offset.x > 70) go(-1)
             setPaused(false)
           }}
-          animate={{ x: `${index * (100 / visible)}%` }}
-          transition={{ type: "tween", duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
+          animate={{ x:`${index * (100 / visible)}%` }}
+          transition={{ type:"tween", duration: 0.55, ease: [0.32, 0.72, 0, 1] }}
         >
           {deck.map((product, position) => (
             <div
               key={product.id}
               className="shrink-0 px-2 md:px-3"
-              style={{ width: `${100 / visible}%` }}
+              style={{ width:`${100 / visible}%` }}
             >
               <DeckCard product={product} position={position} />
             </div>

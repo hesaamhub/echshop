@@ -11,13 +11,13 @@ import {
 import { toman } from "@/lib/utils"
 
 const EMPTY_FORM: FirestoreDiscount = {
-  code: "",
-  type: "percent",
+  code:"",
+  type:"percent",
   value: 20,
   limit: 100,
   used: 0,
   minOrder: 0,
-  expiresAt: "",
+  expiresAt:"",
   firstPurchaseOnly: false,
   isActive: true,
 }
@@ -191,9 +191,9 @@ export default function AdminDiscountsPage() {
             <select
               value={form.type}
               onChange={(e) =>
-                setForm((prev) => ({ ...prev, type: e.target.value as "percent" | "fixed" }))
+                setForm((prev) => ({ ...prev, type: e.target.value as"percent" |"fixed" }))
               }
-              className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]/45 focus:bg-white"
+              className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]/45 focus:bg-white"
             >
               <option value="percent">درصدی</option>
               <option value="fixed">مبلغ ثابت (تومان)</option>

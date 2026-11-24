@@ -29,7 +29,7 @@ export default function PlanPicker({ productId, plans }: { productId: string; pl
   const totalSaving = unitSaving * quantity
   const isFav = Boolean(publicProfile?.favorites?.includes(productId))
 
-  function handleAddToCart(destination: "/cart" | "/checkout") {
+  function handleAddToCart(destination:"/cart" |"/checkout") {
     add(productId, selected.id, quantity)
     router.push(destination)
   }

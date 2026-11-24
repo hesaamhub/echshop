@@ -11,11 +11,11 @@ import { deliveryLabels, orderStatusLabels, type OrderStatus } from "@/lib/types
 import { faDate, toman } from "@/lib/utils"
 
 const statusTone = {
-  pending: "amber",
-  paid: "blue",
-  delivered: "green",
-  failed: "red",
-  refunded: "gray",
+  pending:"amber",
+  paid:"blue",
+  delivered:"green",
+  failed:"red",
+  refunded:"gray",
 } as const
 
 export default function OrdersPage() {

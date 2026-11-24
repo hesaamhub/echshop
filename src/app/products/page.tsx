@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import Shell from "@/components/site/Shell"
 import ProductsHero from "@/components/site/ProductsHero"
 import ProductsBrowser from "@/components/site/ProductsBrowser"
+import { ProductsBrowserSkeleton } from "@/components/site/ProductListSkeleton"
 import { categories, products } from "@/lib/data"
 import {
   buildProductsCatalogGraphJsonLd,
@@ -65,7 +66,7 @@ export default function ProductsPage() {
         <ProductsHero />
         <div className="mt-10">
           {/* ProductsBrowser برای خواندن پارامتر جستجو به Suspense نیاز دارد */}
-          <Suspense fallback={null}>
+          <Suspense fallback={<ProductsBrowserSkeleton count={6} />}>
             <ProductsBrowser products={products} categories={categories} />
           </Suspense>
         </div>

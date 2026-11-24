@@ -20,19 +20,19 @@ type Props = {
 }
 
 const bannerToneStyles: Record<OrderTrackerTone, string> = {
-  amber: "border-[#f2e2c6] bg-[#fdf8ef] text-[#8a5719]",
-  blue: "border-[#cfe0fc] bg-[#f2f6fe] text-[#1733b8]",
-  green: "border-[#cce8d7] bg-[#effaf3] text-[#246340]",
-  red: "border-[#f6d1cd] bg-[#fdf2f1] text-[#9b2f24]",
-  gray: "border-slate-200 bg-slate-50 text-slate-700",
+  amber:"border-[#f2e2c6] bg-[#fdf8ef] text-[#8a5719]",
+  blue:"border-[#cfe0fc] bg-[#f2f6fe] text-[#1733b8]",
+  green:"border-[#cce8d7] bg-[#effaf3] text-[#246340]",
+  red:"border-[#f6d1cd] bg-[#fdf2f1] text-[#9b2f24]",
+  gray:"border-slate-200 bg-slate-50 text-slate-700",
 }
 
 const trackFillToneStyles: Record<OrderTrackerTone, string> = {
-  amber: "bg-[#d97706]",
-  blue: "bg-[#1b39f5]",
-  green: "bg-[#2f7a50]",
-  red: "bg-[#dc2626]",
-  gray: "bg-slate-500",
+  amber:"bg-[#d97706]",
+  blue:"bg-[#1b39f5]",
+  green:"bg-[#2f7a50]",
+  red:"bg-[#dc2626]",
+  gray:"bg-slate-500",
 }
 
 function getStepIcon(step: OrderTrackerStep) {
@@ -143,7 +143,7 @@ export default function OrderStatusTracker({
         >
           <motion.div
             className={cn("h-full w-full rounded-full", trackFillToneStyles[model.tone])}
-            style={{ transformOrigin: "right center" }}
+            style={{ transformOrigin:"right center" }}
             initial={false}
             animate={{ scaleX: model.trackFillRatio }}
             transition={{ duration: prefersReducedMotion ? 0 : 0.35, ease: [0.16, 1, 0.3, 1] }}

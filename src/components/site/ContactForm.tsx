@@ -83,7 +83,7 @@ export default function ContactForm() {
           onChange={(event) => setMessage(event.target.value)}
           required
           placeholder="توضیح درخواست خود را بنویسید…"
-          className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] leading-7 outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
+          className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] leading-7 text-[#0a1b33] outline-none transition-all placeholder:text-slate-400 focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
         />
       </label>
 
@@ -128,7 +128,7 @@ function Field({
         placeholder={placeholder}
         required={required}
         dir={latin ? "ltr" : undefined}
-        className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] outline-none transition-all focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
+        className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12.5px] text-[#0a1b33] outline-none transition-all placeholder:text-slate-400 focus:border-[#1b39f5]/45 focus:bg-white focus:shadow-[0_0_0_4px_rgba(27,57,245,0.1)]"
       />
     </label>
   )

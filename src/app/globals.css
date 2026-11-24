@@ -1,12 +1,12 @@
-@import "tailwindcss";
+@import"tailwindcss";
 
 /* فونت‌ها از بسته‌های npm لود می‌شوند — بدون هیچ درخواست شبکه‌ای */
 
 @theme {
-  --font-sans: "Vazirmatn Variable", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Vazirmatn Variable", "Vazirmatn", ui-sans-serif, sans-serif;
-  --font-latin: "Sora Variable", "Sora", ui-sans-serif, sans-serif;
-  --font-wordmark: "Sora Variable", "Sora", ui-sans-serif, sans-serif;
+  --font-sans:"Vazirmatn Variable","Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-display:"Vazirmatn Variable","Vazirmatn", ui-sans-serif, sans-serif;
+  --font-latin:"Sora Variable","Sora", ui-sans-serif, sans-serif;
+  --font-wordmark:"Sora Variable","Sora", ui-sans-serif, sans-serif;
 
   --color-ink: #0a1b33;
   --color-ink-deep: #0a152d;
@@ -23,6 +23,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
   }
 
   body {
@@ -222,6 +223,83 @@
   }
 }
 
+@keyframes echshop-shimmer {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes echshop-sweep {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(250%, 0, 0);
+  }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(148, 163, 184, 0.16);
+}
+
+.skeleton-shimmer::after {
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 100%
+  );
+  transform: translate3d(-100%, 0, 0);
+  animation: echshop-shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.skeleton-shimmer-dark {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+.skeleton-shimmer- {
+  content:"";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 100%
+  );
+  transform: translate3d(-100%, 0, 0);
+  animation: echshop-shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.loading-sweep-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-sweep-bar::after {
+  content:"";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #1b39f5, #7d92ff, transparent);
+  animation: echshop-sweep 1.25s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .echshop-marquee-track {
     animation: none;
@@ -231,6 +309,12 @@
     background-position:
       0 0,
       0 0;
+  }
+  .skeleton-shimmer::after,
+  .skeleton-shimmer-
+  .loading-sweep-bar::after {
+    animation: none;
+    opacity: 0;
   }
   html {
     scroll-behavior: auto;

@@ -5,14 +5,14 @@ import ContactForm from "@/components/site/ContactForm"
 import { siteContent } from "@/lib/data"
 
 export const metadata: Metadata = {
-  title: "تماس با ما — پشتیبانی ۲۴/۷",
+  title:"تماس با ما — پشتیبانی ۲۴/۷",
   description:
     "ارتباط با پشتیبانی اچ‌شاپ: تیکت شبانه‌روزی، تماس تلفنی ۹ تا ۲۱، ایمیل و تلگرام. پاسخ سریع برای پیگیری سفارش، همکاری و فروش عمده.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical:"/contact" },
   openGraph: {
-    title: "تماس با اچ‌شاپ",
-    description: "پشتیبانی شبانه‌روزی تیکت و پاسخ سریع برای پیگیری سفارش و همکاری.",
-    url: "/contact",
+    title:"تماس با اچ‌شاپ",
+    description:"پشتیبانی شبانه‌روزی تیکت و پاسخ سریع برای پیگیری سفارش و همکاری.",
+    url:"/contact",
   },
 }
 
@@ -20,18 +20,18 @@ export default function ContactPage() {
   const { contact } = siteContent
 
   const items = [
-    { icon: PhoneCall, label: "تلفن پشتیبانی", value: contact.phone },
-    { icon: Mail, label: "ایمیل", value: contact.email, latin: true },
-    { icon: Send, label: "تلگرام", value: contact.telegram, latin: true },
-    { icon: MapPin, label: "نشانی", value: contact.address },
-    { icon: Clock, label: "ساعات پاسخ‌گویی", value: contact.hours },
+    { icon: PhoneCall, label:"تلفن پشتیبانی", value: contact.phone },
+    { icon: Mail, label:"ایمیل", value: contact.email, latin: true },
+    { icon: Send, label:"تلگرام", value: contact.telegram, latin: true },
+    { icon: MapPin, label:"نشانی", value: contact.address },
+    { icon: Clock, label:"ساعات پاسخ‌گویی", value: contact.hours },
   ]
 
   return (
     <Shell
       title="تماس با ما"
       subtitle="برای پیگیری سفارش بهتر است از تیکت پنل کاربری استفاده کنید؛ برای همکاری و فروش عمده از فرم زیر."
-      breadcrumb={[{ label: "صفحه اصلی", href: "/" }, { label: "تماس با ما" }]}
+      breadcrumb={[{ label:"صفحه اصلی", href:"/" }, { label:"تماس با ما" }]}
     >
       <div className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px]">
         <ContactForm />

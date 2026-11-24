@@ -30,11 +30,11 @@ type PanelItem = {
 export default function PanelMenu({
   onNavigate,
   unreadNotifications = 0,
-  variant = "desktop",
+  variant ="desktop",
 }: {
   onNavigate?: () => void
   unreadNotifications?: number
-  variant?: "desktop" | "mobile"
+  variant?:"desktop" |"mobile"
 }) {
   const { user, publicProfile, privateProfile, isAdmin, signOutUser } = useFirebase()
 
@@ -47,20 +47,20 @@ export default function PanelMenu({
 
   const groups: PanelItem[][] = [
     [
-      { label: "پیشخوان", href: "/dashboard", icon: LayoutDashboard },
-      { label: "سفارش‌ها و تحویل", href: "/dashboard/orders", icon: Package },
-      { label: "علاقه‌مندی‌ها", href: "/dashboard/favorites", icon: Heart, badge: favoritesCount || undefined },
+      { label:"پیشخوان", href:"/dashboard", icon: LayoutDashboard },
+      { label:"سفارش‌ها و تحویل", href:"/dashboard/orders", icon: Package },
+      { label:"علاقه‌مندی‌ها", href:"/dashboard/favorites", icon: Heart, badge: favoritesCount || undefined },
     ],
     [
-      { label: "تیکت‌های پشتیبانی", href: "/dashboard/tickets", icon: LifeBuoy },
+      { label:"تیکت‌های پشتیبانی", href:"/dashboard/tickets", icon: LifeBuoy },
       {
-        label: "اطلاع‌رسانی‌ها",
-        href: "/dashboard/notifications",
+        label:"اطلاع‌رسانی‌ها",
+        href:"/dashboard/notifications",
         icon: Bell,
         badge: unreadNotifications || undefined,
         accent: unreadNotifications > 0,
       },
-      { label: "پروفایل و امنیت", href: "/dashboard/profile", icon: UserRound },
+      { label:"پروفایل و امنیت", href:"/dashboard/profile", icon: UserRound },
     ],
   ]
 

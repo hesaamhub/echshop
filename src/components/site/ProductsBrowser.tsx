@@ -1,38 +1,44 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion } from "motion/react"
 import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react"
 import ProductCard from "@/components/site/ProductCard"
+import {
+  ProductGridSkeleton,
+  ProductListTransitionOverlay,
+} from "@/components/site/ProductListSkeleton"
+import { useCatalog } from "@/lib/firebase/useCatalog"
+import { resolveLoadingPhase } from "@/lib/ui/loadingState"
 import { deliveryLabels, type Category, type DeliveryMethod, type Product } from "@/lib/types"
 import { cn, num } from "@/lib/utils"
 
-type SortKey = "newest" | "bestselling" | "cheapest" | "priciest"
+type SortKey ="newest" |"bestselling" |"cheapest" |"priciest"
 
 const sortOptions: { key: SortKey; label: string }[] = [
-  { key: "newest", label: "جدیدترین" },
-  { key: "bestselling", label: "پرفروش‌ترین" },
-  { key: "cheapest", label: "ارزان‌ترین" },
-  { key: "priciest", label: "گران‌ترین" },
+  { key:"newest", label:"جدیدترین" },
+  { key:"bestselling", label:"پرفروش‌ترین" },
+  { key:"cheapest", label:"ارزان‌ترین" },
+  { key:"priciest", label:"گران‌ترین" },
 ]
 
 type PriceRange = { id: string; label: string; test: (price: number) => boolean }
 
 const priceRanges: PriceRange[] = [
-  { id: "all", label: "همهٔ قیمت‌ها", test: () => true },
-  { id: "lt-500", label: "تا ۵۰۰ هزار تومان", test: (price) => price < 500_000 },
+  { id:"all", label:"همهٔ قیمت‌ها", test: () => true },
+  { id:"lt-500", label:"تا ۵۰۰ هزار تومان", test: (price) => price < 500_000 },
   {
-    id: "500-1000",
-    label: "۵۰۰ هزار تا ۱ میلیون",
+    id:"500-1000",
+    label:"۵۰۰ هزار تا ۱ میلیون",
     test: (price) => price >= 500_000 && price < 1_000_000,
   },
   {
-    id: "1000-3000",
-    label: "۱ تا ۳ میلیون",
+    id:"1000-3000",
+    label:"۱ تا ۳ میلیون",
     test: (price) => price >= 1_000_000 && price < 3_000_000,
   },
-  { id: "gt-3000", label: "بیش از ۳ میلیون", test: (price) => price >= 3_000_000 },
+  { id:"gt-3000", label:"بیش از ۳ میلیون", test: (price) => price >= 3_000_000 },
 ]
 
 /** کمترین قیمت میان پلن‌های محصول — مبنای فیلتر و مرتب‌سازی قیمت */
@@ -41,19 +47,54 @@ function minPrice(product: Product) {
 }
 
 export default function ProductsBrowser({
-  products,
-  categories,
+  products: initialProducts,
+  categories: initialCategories,
+  isLoading = false,
 }: {
   products: Product[]
   categories: Category[]
+  isLoading?: boolean
 }) {
   const searchParams = useSearchParams()
+  const { products: liveProducts, categories: liveCategories, loaded: catalogLoaded } = useCatalog()
+  const products = catalogLoaded && liveProducts.length > 0 ? liveProducts : initialProducts
+  const categories = catalogLoaded && liveCategories.length > 0 ? liveCategories : initialCategories
+
   const [query, setQuery] = useState(searchParams.get("q") ?? "")
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [deliveries, setDeliveries] = useState<DeliveryMethod[]>([])
   const [priceRangeId, setPriceRangeId] = useState("all")
   const [sort, setSort] = useState<SortKey>("newest")
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [filterTransitioning, setFilterTransitioning] = useState(false)
+  const transitionTimerRef = useRef<number | null>(null)
+
+  const triggerFilterTransition = (update: () => void) => {
+    setFilterTransitioning(true)
+    startTransition(update)
+    if (transitionTimerRef.current) {
+      window.clearTimeout(transitionTimerRef.current)
+    }
+    transitionTimerRef.current = window.setTimeout(() => {
+      setFilterTransitioning(false)
+    }, 180)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        window.clearTimeout(transitionTimerRef.current)
+      }
+    }
+  }, [])
+
+  const loadingPhase = resolveLoadingPhase({
+    isLoading: isLoading || (!catalogLoaded && products.length === 0),
+    hasData: products.length > 0,
+    isTransitioning: isPending || filterTransitioning,
+  })
+  const isSyncingLiveCatalog = !catalogLoaded && products.length > 0
 
   const activeCount =
     (query.trim() ? 1 : 0) +
@@ -96,30 +137,32 @@ export default function ProductsBrowser({
     list.includes(item) ? list.filter((entry) => entry !== item) : [...list, item]
 
   const resetFilters = () => {
-    setQuery("")
-    setSelectedCategories([])
-    setDeliveries([])
-    setPriceRangeId("all")
+    triggerFilterTransition(() => {
+      setQuery("")
+      setSelectedCategories([])
+      setDeliveries([])
+      setPriceRangeId("all")
+    })
   }
 
   const activeBadges: { key: string; label: string; clear: () => void }[] = [
     ...(query.trim()
-      ? [{ key: "q", label: `جستجو: ${query.trim()}`, clear: () => setQuery("") }]
+      ? [{ key:"q", label:`جستجو: ${query.trim()}`, clear: () => setQuery("") }]
       : []),
     ...selectedCategories.map((slug) => ({
-      key: `cat-${slug}`,
+      key:`cat-${slug}`,
       label: categories.find((category) => category.slug === slug)?.title ?? slug,
       clear: () => setSelectedCategories((current) => current.filter((item) => item !== slug)),
     })),
     ...deliveries.map((method) => ({
-      key: `dl-${method}`,
+      key:`dl-${method}`,
       label: deliveryLabels[method],
       clear: () => setDeliveries((current) => current.filter((item) => item !== method)),
     })),
     ...(priceRangeId !== "all"
       ? [
           {
-            key: "price",
+            key:"price",
             label: priceRanges.find((range) => range.id === priceRangeId)?.label ?? "",
             clear: () => setPriceRangeId("all"),
           },
@@ -156,9 +199,9 @@ export default function ProductsBrowser({
           "scrollbar-thin max-h-[75dvh] self-start overflow-y-auto overscroll-contain lg:sticky lg:top-28 lg:block lg:max-h-[calc(100dvh-8rem)] lg:pe-1",
           filtersOpen ? "block" : "hidden",
         )}
-        style={{ direction: "ltr" }}
+        style={{ direction:"ltr" }}
       >
-        <div className="space-y-4" style={{ direction: "rtl" }}>
+        <div className="space-y-4" style={{ direction:"rtl" }}>
           <FilterCard title="دسته‌بندی">
             <div className="flex flex-wrap gap-1.5">
               {categories.map((category) => {
@@ -168,7 +211,11 @@ export default function ProductsBrowser({
                   <button
                     key={category.slug}
                     type="button"
-                    onClick={() => setSelectedCategories((current) => toggle(current, category.slug))}
+                    onClick={() =>
+                      triggerFilterTransition(() =>
+                        setSelectedCategories((current) => toggle(current, category.slug)),
+                      )
+                    }
                     aria-pressed={active}
                     className={cn(
                       "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
@@ -196,7 +243,11 @@ export default function ProductsBrowser({
                   <button
                     key={key}
                     type="button"
-                    onClick={() => setDeliveries((current) => toggle(current, key))}
+                    onClick={() =>
+                      triggerFilterTransition(() =>
+                        setDeliveries((current) => toggle(current, key)),
+                      )
+                    }
                     aria-pressed={active}
                     className={cn(
                       "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
@@ -221,7 +272,7 @@ export default function ProductsBrowser({
                   <button
                     key={range.id}
                     type="button"
-                    onClick={() => setPriceRangeId(range.id)}
+                    onClick={() => triggerFilterTransition(() => setPriceRangeId(range.id))}
                     aria-pressed={active}
                     className={cn(
                       "rounded-full px-3 py-1.5 text-[11.5px] font-semibold transition-all",
@@ -266,7 +317,7 @@ export default function ProductsBrowser({
               <button
                 key={option.key}
                 type="button"
-                onClick={() => setSort(option.key)}
+                onClick={() => triggerFilterTransition(() => setSort(option.key))}
                 aria-pressed={sort === option.key}
                 className={
                   sort === option.key
@@ -307,39 +358,66 @@ export default function ProductsBrowser({
               </button>
             </div>
           ) : null}
+          {isSyncingLiveCatalog ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="loading-sweep-bar h-0.5 w-full rounded-full bg-[#1b39f5]/10"
+              aria-label="در حال همگام‌سازی موجودی و قیمت محصولات"
+            />
+          ) : null}
         </div>
 
-        {visible.length > 0 ? (
-          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 xl:grid-cols-3">
-            {visible.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.4), ease: [0.16, 1, 0.3, 1] }}
-                className="h-full"
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-3xl border border-dashed border-[#1b39f5]/30 bg-[#1b39f5]/4 p-12 text-center">
-            <p className="text-[14px] font-semibold text-[#0a1b33]">
-              محصولی با این فیلترها پیدا نشد
-            </p>
-            <p className="mt-2 text-[12px] text-slate-500">
-              فیلتر دیگری را امتحان کنید یا همهٔ فیلترها را حذف کنید.
-            </p>
-            <button
-              type="button"
-              onClick={resetFilters}
-              className="glass-plate glass-plate-hover mt-5 rounded-full px-5 py-2 text-[12px] font-semibold text-[#1b39f5]"
+        <div
+          className="relative min-h-[260px]"
+          aria-busy={loadingPhase !== "ready"}
+          data-loading-phase={loadingPhase}
+        >
+          <ProductListTransitionOverlay visible={loadingPhase === "refresh-overlay"} />
+
+          {loadingPhase === "initial-skeleton" ? (
+            <ProductGridSkeleton count={6} />
+          ) : visible.length > 0 ? (
+            <div
+              className={cn(
+                "grid grid-cols-2 gap-2.5 transition-opacity duration-200 sm:gap-4 xl:grid-cols-3",
+                loadingPhase === "refresh-overlay" && "opacity-55",
+              )}
             >
-              حذف فیلترها
-            </button>
-          </div>
-        )}
+              {visible.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.28,
+                    delay: Math.min(index * 0.03, 0.24),
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="h-full"
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-3xl border border-dashed border-[#1b39f5]/30 bg-[#1b39f5]/4 p-12 text-center">
+              <p className="text-[14px] font-semibold text-[#0a1b33]">
+                محصولی با این فیلترها پیدا نشد
+              </p>
+              <p className="mt-2 text-[12px] text-slate-500">
+                فیلتر دیگری را امتحان کنید یا همهٔ فیلترها را حذف کنید.
+              </p>
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="glass-plate glass-plate-hover mt-5 rounded-full px-5 py-2 text-[12px] font-semibold text-[#1b39f5]"
+              >
+                حذف فیلترها
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

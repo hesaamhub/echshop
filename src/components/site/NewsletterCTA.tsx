@@ -16,10 +16,10 @@ import {
 
 /** شبکه‌های اجتماعی اچ‌شاپ */
 const SOCIALS = [
-  { label: "تلگرام", href: "https://t.me/echshop", Icon: Send, color: "#2AABEE" },
-  { label: "اینستاگرام", href: "https://instagram.com/echshop", Icon: Instagram, color: "#E1306C" },
-  { label: "واتساپ", href: "https://wa.me/", Icon: MessageCircle, color: "#25D366" },
-  { label: "یوتیوب", href: "https://youtube.com/", Icon: Youtube, color: "#FF0033" },
+  { label:"تلگرام", href:"https://t.me/echshop", Icon: Send, color:"#2AABEE" },
+  { label:"اینستاگرام", href:"https://instagram.com/echshop", Icon: Instagram, color:"#E1306C" },
+  { label:"واتساپ", href:"https://wa.me/", Icon: MessageCircle, color:"#25D366" },
+  { label:"یوتیوب", href:"https://youtube.com/", Icon: Youtube, color:"#FF0033" },
 ]
 
 /** آواتارهای گرادیانی برای نمایش اجتماعی */
@@ -52,7 +52,11 @@ export default function NewsletterCTA() {
         {/* نقاشی پاستلی پس‌زمینه (public/newsletter-bg.svg) */}
         <span
           className="pointer-events-none absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/newsletter-bg.svg)" }}
+          style={{ backgroundImage:"url(/newsletter-bg.svg)" }}
+          aria-hidden
+        />
+        <span
+          className="pointer-events-none absolute inset-0 hidden bg-[#060b16]/65"
           aria-hidden
         />
 
@@ -77,8 +81,8 @@ export default function NewsletterCTA() {
             جدیدترین محصولات، تخفیف‌ها و کدهای ویژه را زودتر از همه دریافت کن.
           </p>
           <p className="mt-2.5 text-[12px] text-[#0a152d]/55">
-            به بیش از <span className="font-latin font-bold text-[#0a152d]/80">10,000</span> مشتری راضی با امتیاز{" "}
-            <span className="font-latin font-bold text-[#0a152d]/80">4.9</span> از{" "}
+            به بیش از <span className="font-latin font-bold text-[#0a152d]/80">10,000</span> مشتری راضی با امتیاز{""}
+            <span className="font-latin font-bold text-[#0a152d]/80">4.9</span> از{""}
             <span className="font-latin">5</span> بپیوند.
           </p>
 

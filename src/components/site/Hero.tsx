@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { ArrowLeft, Headphones, ShieldCheck, Star, Zap } from "lucide-react"
 import { brandLogos, type BrandLogo } from "@/lib/brands"
@@ -26,9 +26,9 @@ const rotatingProducts = [
 ]
 
 const trustItems = [
-  { icon: ShieldCheck, label: "پرداخت امن" },
-  { icon: Zap, label: "تحویل آنی" },
-  { icon: Headphones, label: "پشتیبانی ۲۴/۷" },
+  { icon: ShieldCheck, label:"پرداخت امن" },
+  { icon: Zap, label:"تحویل آنی" },
+  { icon: Headphones, label:"پشتیبانی ۲۴/۷" },
 ]
 
 const topRow = brandLogos.slice(0, 13)
@@ -103,10 +103,10 @@ export default function Hero() {
         <span
           className="pointer-events-none absolute inset-0 opacity-70"
           style={{
-            backgroundImage: "radial-gradient(rgba(27,57,245,0.13) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
-            maskImage: "radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
-            WebkitMaskImage: "radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
+            backgroundImage:"radial-gradient(rgba(27,57,245,0.13) 1px, transparent 1px)",
+            backgroundSize:"22px 22px",
+            maskImage:"radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
+            WebkitMaskImage:"radial-gradient(75% 60% at 50% 30%, #000 0%, transparent 76%)",
           }}
           aria-hidden
         />
@@ -120,7 +120,7 @@ export default function Hero() {
           <DeliveryBadge label={heroCopy.badge} reduceMotion={reduceMotion ?? false} />
 
           <h1 className="mt-4 font-display text-[26px] md:text-[40px] font-bold leading-[1.4] tracking-tight text-[#0a1b33] lg:whitespace-nowrap">
-            {heroCopy.headlineLead}{" "}
+            {heroCopy.headlineLead}{""}
             <span className="inline-grid align-baseline text-center">
               {rotatingProducts.map((name) => (
                 <span
@@ -143,7 +143,7 @@ export default function Hero() {
                   {rotatingProducts[productIndex]}
                 </motion.span>
               </AnimatePresence>
-            </span>{" "}
+            </span>{""}
             {heroCopy.headlineTail}
           </h1>
 
@@ -298,7 +298,7 @@ function DeliveryBadge({ label, reduceMotion }: { label: string; reduceMotion: b
             "0 0 0 0 rgba(70,161,113,0)",
           ],
         },
-        transition: { duration: 2.8, repeat: Infinity, ease: "easeInOut" as const },
+        transition: { duration: 2.8, repeat: Infinity, ease:"easeInOut" as const },
       }
 
   return (
@@ -309,9 +309,9 @@ function DeliveryBadge({ label, reduceMotion }: { label: string; reduceMotion: b
       {reduceMotion ? null : (
         <motion.span
           aria-hidden
-          initial={{ x: "-160%" }}
-          animate={{ x: "260%" }}
-          transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+          initial={{ x:"-160%" }}
+          animate={{ x:"260%" }}
+          transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 1.8, ease:"easeInOut" }}
           className="pointer-events-none absolute inset-y-0 w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/75 to-transparent"
         />
       )}
@@ -320,7 +320,7 @@ function DeliveryBadge({ label, reduceMotion }: { label: string; reduceMotion: b
           <motion.span
             aria-hidden
             animate={{ scale: [1, 2.2, 1], opacity: [0.55, 0, 0.55] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+            transition={{ duration: 2, repeat: Infinity, ease:"easeOut" }}
             className="absolute h-2 w-2 rounded-full bg-[#46A171]"
           />
         )}
@@ -334,12 +334,12 @@ function DeliveryBadge({ label, reduceMotion }: { label: string; reduceMotion: b
 function LogoRow({
   logos,
   startIndex,
-  align = "center",
+  align ="center",
   reduceMotion,
 }: {
   logos: BrandLogo[]
   startIndex: number
-  align?: "center" | "start" | "end"
+  align?:"center" |"start" |"end"
   reduceMotion: boolean
 }) {
   const middle = (logos.length - 1) / 2
@@ -397,16 +397,22 @@ function BrandTile({
               transition: {
                 duration: 5 + (order % 4) * 0.6,
                 repeat: Infinity,
-                ease: "easeInOut" as const,
+                ease:"easeInOut" as const,
                 delay: (order % 6) * 0.55,
               },
             })}
-        className="grid place-items-center"
+        className="grid place-items-center text-[var(--brand-light)]"
+        style={
+          {
+            "--brand-light":`#${logo.color}`,
+            "--brand-dark":`#${logo.darkColor ?? logo.color}`,
+          } as CSSProperties
+        }
       >
         <BrandIcon
           slug={logo.slug}
           size={28}
-          color={`#${logo.color}`}
+          color="currentColor"
           className="transition-transform duration-500 group-hover:scale-110"
         />
       </motion.span>

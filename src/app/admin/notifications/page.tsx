@@ -116,7 +116,7 @@ export default function AdminNotificationsPage() {
             <select
               value={targetUid}
               onChange={(e) => setTargetUid(e.target.value)}
-              className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] outline-none focus:border-[#1b39f5]/45 focus:bg-white"
+              className="mt-2 w-full rounded-2xl border border-[#1b39f5]/12 bg-[#1b39f5]/4 px-4 py-3 text-[12px] text-[#0a1b33] outline-none focus:border-[#1b39f5]/45 focus:bg-white"
             >
               <option value="all">همهٔ کاربران ({users.length} نفر)</option>
               {users.map((u) => (
@@ -146,7 +146,7 @@ export default function AdminNotificationsPage() {
                 setInspectUid(e.target.value)
                 void loadNotificationsFor(e.target.value)
               }}
-              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11.5px] outline-none focus:border-[#1b39f5]"
+              className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11.5px] text-[#0a1b33] outline-none focus:border-[#1b39f5]"
             >
               {users.map((u) => (
                 <option key={u.uid} value={u.uid}>

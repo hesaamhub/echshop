@@ -7,8 +7,9 @@ import SupportChatWidget from "@/components/site/SupportChatWidget"
 import FirebaseProvider from "@/components/providers/FirebaseProvider"
 import { siteContent } from "@/lib/data"
 import { LOGO_MARK_URI } from "@/lib/brandMark"
+import { resolveSiteUrl } from "@/lib/seo/structuredData"
 
-const SITE_URL = "https://echshop.ir"
+const SITE_URL = resolveSiteUrl()
 
 export const metadata: Metadata = {
   // مبنای ساخت نشانی مطلق تصاویر OpenGraph — با دامنهٔ نهایی سایت به‌روزرسانی شود
@@ -108,7 +109,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-[#f9fafb] text-[#0a1b33]">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
